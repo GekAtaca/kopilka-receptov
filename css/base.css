@@ -1,0 +1,171 @@
+/* База для витрины стилей. Общая разметка превью. */
+
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+  background:#141414;color:#eee;
+  font-family:Nunito,sans-serif;
+  padding:40px 20px;
+}
+
+h1{
+  text-align:center;
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;font-weight:700;font-size:40px;
+  color:#e69db5;margin-bottom:8px;
+}
+.subtitle{
+  text-align:center;color:#888;font-size:13px;
+  margin:0 auto 40px;max-width:680px;line-height:1.6;
+}
+
+.grid{
+  display:grid;grid-template-columns:repeat(2,1fr);
+  gap:36px;max-width:1000px;margin:0 auto;
+}
+@media(max-width:820px){.grid{grid-template-columns:1fr}}
+
+.style-block{
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:14px;padding:20px;
+}
+.style-block.new{
+  border-color:rgba(230,157,181,.35);
+  background:rgba(230,157,181,.05);
+}
+.style-title{
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;font-weight:700;font-size:24px;
+  color:#fff;margin-bottom:4px;
+}
+.style-desc{
+  font-size:12px;color:#999;margin-bottom:16px;
+  line-height:1.5;min-height:58px;
+}
+
+/* ───── Разметка превью ───── */
+.preview{
+  border-radius:14px;overflow:hidden;
+  font-size:12px;line-height:1.4;
+  box-shadow:0 10px 40px rgba(0,0,0,.5);
+  background:#f4f4f6;color:#2a2a2e;
+}
+.p-header{
+  padding:14px 16px 12px;color:#fff;
+  position:relative;
+  background:linear-gradient(135deg,#6a6a78,#b0b0b8);
+}
+.p-header .p-title{font-family:var(--font-head);font-weight:700;font-size:17px;line-height:1.2}
+.p-header .p-sub{font-family:var(--font-head);font-size:10px;opacity:.9;margin-top:3px}
+.p-header .p-icons{position:absolute;top:14px;right:14px;font-size:11px;letter-spacing:2px}
+
+.p-search{
+  display:flex;gap:5px;padding:8px 10px;
+  background:rgba(255,255,255,.75);
+  border-bottom:1px solid #e2e2e6;
+}
+.p-search span{
+  flex:1;padding:5px 6px;font-size:10px;font-weight:700;
+  text-align:center;border-radius:var(--radius-btn);
+  background:#eceef2;color:#6a6a78;border:1px solid #d8dae0;
+  font-family:var(--font-head);
+}
+.p-search span.primary{background:#6a6a78;color:#fff;border-color:#6a6a78}
+
+.p-body{padding:14px;min-height:270px;background:rgba(244,244,246,.85)}
+
+.p-section-title{
+  font-family:var(--font-head);font-size:12px;font-weight:800;
+  color:#4a4a58;text-align:center;margin-bottom:14px;
+  display:flex;align-items:center;gap:10px;
+  font-style:var(--font-style,normal);
+}
+.p-section-title span{
+  display:inline-block;
+  padding:var(--title-pad,2px 12px);
+  background:rgba(255,255,255,.9);
+  border-radius:var(--title-radius,20px);
+  box-shadow:0 0 8px 3px rgba(255,255,255,.75);
+}
+.p-section-title::before,
+.p-section-title::after{
+  content:var(--line-deco,'');flex:1;
+  height:var(--line-h,1px);background:#b0b0b8;
+  opacity:var(--line-op,.55);
+  border-radius:var(--line-radius,2px);
+}
+
+.p-card{
+  background:#ffffff;border-radius:var(--radius);
+  overflow:hidden;border:1px solid #e2e2e6;
+  box-shadow:0 2px 10px rgba(80,80,100,.08);
+}
+.p-img{
+  height:100px;position:relative;overflow:hidden;
+  background:linear-gradient(135deg,#e8e8ec,#c8c8d0);
+}
+.p-img img{width:100%;height:100%;object-fit:cover;display:block}
+.p-badge{
+  position:absolute;top:6px;left:6px;
+  background:#6a6a78;color:#fff;padding:2px 7px;
+  border-radius:var(--radius-btn);font-size:8px;font-weight:700;
+  font-family:var(--font-head);letter-spacing:.05em;
+}
+.p-heart{
+  position:absolute;top:6px;right:6px;
+  width:20px;height:20px;border-radius:50%;
+  background:rgba(255,255,255,.95);
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;color:#b35c7d;
+}
+
+.p-info{padding:10px 12px}
+.p-info h5{
+  font-family:var(--font-head);font-weight:700;font-size:13px;
+  margin-bottom:3px;color:#2a2a2e;line-height:1.3;
+  font-style:var(--font-style,normal);
+}
+.p-kcal{
+  font-size:10px;color:#6a6a78;font-weight:700;
+  margin-bottom:6px;font-style:var(--font-style,normal);
+}
+.p-tags{display:flex;gap:3px;margin-bottom:8px;flex-wrap:wrap}
+.p-tags span{
+  padding:1px 7px;background:#eceef2;color:#4a4a58;
+  border:1px solid #d8dae0;border-radius:var(--radius-btn);
+  font-size:9px;font-family:var(--font-head);font-weight:700;
+  font-style:var(--font-style,normal);
+}
+.p-actions{display:flex;gap:4px}
+.p-actions span{
+  flex:1;padding:var(--btn-pad,5px);font-size:9px;font-weight:700;
+  text-align:center;border-radius:var(--radius-btn);
+  background:#eceef2;color:#4a4a58;border:1px solid #d8dae0;
+  font-family:var(--font-head);font-style:var(--font-style,normal);
+}
+.p-actions span.primary{background:#6a6a78;color:#fff;border-color:#6a6a78}
+
+.p-nav{display:flex;background:#ffffff;border-top:1px solid #e2e2e6}
+.p-nav span{
+  flex:1;padding:6px 2px 8px;font-size:8px;font-weight:700;
+  text-align:center;color:#888;font-family:var(--font-head);
+  border-right:1px solid #e2e2e6;
+  font-style:var(--font-style,normal);
+}
+.p-nav span:last-child{border-right:none}
+.p-nav span.active{color:#4a4a58;background:#eceef2}
+.p-nav span .ic{display:block;font-size:14px;margin-bottom:1px}
+
+/* ───── ЭМОДЗИ РОВНО И БЕЗ РАМОК ───── */
+.em{
+  font-style:normal !important;
+  background:none !important;
+  border:none !important;
+  padding:0 !important;
+  border-radius:0 !important;
+  box-shadow:none !important;
+}
+.ic,.p-heart,.p-icons{font-style:normal !important}
+.p-section-title::before,
+.p-section-title::after{font-style:normal !important}

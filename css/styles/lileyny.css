@@ -1,0 +1,31 @@
+/* 🌷 Лилейный · EB Garamond Italic */
+.s8{
+  --font-head:'EB Garamond',serif;
+  --font-style:italic;
+  --radius:12px;
+  --radius-btn:999px;
+  --title-radius:8px;
+  --title-pad:3px 16px;
+  --btn-pad:6px 5px;
+  --line-radius:999px;
+  --line-op:.7;
+}
+.s8 .p-header .p-title{font-weight:500;font-size:20px;letter-spacing:.05em}
+.s8 .p-header .p-sub{font-weight:400;font-size:11px;letter-spacing:.08em}
+.s8 .p-section-title{font-family:'EB Garamond',serif;font-weight:500;font-style:italic;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:#5a5a68}
+.s8 .p-section-title span{background:#fff;box-shadow:0 0 12px 6px rgba(255,255,255,.85);padding:4px 16px}
+.s8 .p-section-title span::before{content:"•  ";color:#b0b0b8;font-size:8px}
+.s8 .p-section-title span::after{content:"  •";color:#b0b0b8;font-size:8px}
+.s8 .p-section-title::before,
+.s8 .p-section-title::after{height:1px;background:linear-gradient(to right,transparent,#b0b0b8,transparent);opacity:.7;border-radius:999px}
+.s8 .p-info h5{font-family:'EB Garamond';font-weight:500;font-style:italic;font-size:16px;letter-spacing:.02em}
+.s8 .p-kcal,
+.s8 .p-tags span,
+.s8 .p-actions span,
+.s8 .p-nav span,
+.s8 .p-search span,
+.s8 .p-badge{font-family:'EB Garamond',serif;font-weight:500;font-style:italic;letter-spacing:.04em}
+.s8 .p-tags span{border-radius:999px;padding:2px 9px}
+.s8 .p-badge{border-radius:999px;padding:3px 10px;font-weight:600;font-size:8px}
+.s8 .p-card{border:1px solid #ececef;box-shadow:0 2px 14px rgba(120,120,150,.06)}
+.s8 .p-nav span{font-size:9px}

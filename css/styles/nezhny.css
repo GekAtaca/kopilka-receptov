@@ -1,0 +1,21 @@
+/* 🌸 Нежный · Cormorant Garamond Italic */
+.s1{
+  --font-head:'Cormorant Garamond',serif;
+  --font-style:italic;
+  --radius:14px;
+  --radius-btn:9px;
+  --title-radius:20px;
+  --title-pad:2px 14px;
+  --btn-pad:5px;
+}
+.s1 .p-header .p-title,
+.s1 .p-header .p-sub,
+.s1 .p-info h5,
+.s1 .p-kcal,
+.s1 .p-tags span,
+.s1 .p-actions span,
+.s1 .p-nav span,
+.s1 .p-search span,
+.s1 .p-badge{font-style:italic}
+.s1 .p-section-title span::before{content:"✦  ";color:#b0b0b8}
+.s1 .p-section-title span::after{content:"  ✦";color:#b0b0b8}

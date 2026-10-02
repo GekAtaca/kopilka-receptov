@@ -1,0 +1,19 @@
+/* 📰 Журнал · Cormorant Garamond */
+.s2{
+  --font-head:'Cormorant Garamond',serif;
+  --font-style:normal;
+  --radius:2px;
+  --radius-btn:2px;
+  --title-radius:0;
+  --title-pad:2px 14px;
+  --btn-pad:6px 5px;
+  --line-radius:0;
+}
+.s2 .p-header .p-title{font-style:normal;letter-spacing:.02em}
+.s2 .p-header .p-sub{font-style:normal;letter-spacing:.05em}
+.s2 .p-section-title{font-style:normal;letter-spacing:.15em;text-transform:uppercase;font-size:11px}
+.s2 .p-section-title::before,
+.s2 .p-section-title::after{height:5px;background:none;border-top:1px solid #4a4a58;border-bottom:1px solid #4a4a58;border-radius:0;opacity:.7}
+.s2 .p-section-title span{background:none;box-shadow:none;padding:0;font-weight:700}
+.s2 .p-info h5{font-style:normal}
+.s2 .p-nav span{text-transform:uppercase;letter-spacing:.08em}

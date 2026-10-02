@@ -1,0 +1,25 @@
+/* 📻 Ретро · Bitter */
+.s5{
+  --font-head:'Bitter',serif;
+  --font-style:normal;
+  --radius:6px;
+  --radius-btn:4px;
+  --title-radius:4px;
+  --title-pad:3px 14px;
+  --btn-pad:6px 5px;
+}
+.s5 .p-header .p-title{font-weight:800;font-size:16px;letter-spacing:.01em}
+.s5 .p-header .p-sub{font-weight:400;font-size:10px;letter-spacing:.08em;text-transform:uppercase;opacity:.85}
+.s5 .p-section-title{font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.2em;color:#4a4a58}
+.s5 .p-section-title span{background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.1);padding:4px 14px;border:1px solid #d8dae0}
+.s5 .p-section-title::before,
+.s5 .p-section-title::after{background:#6a6a78;height:1px;opacity:.5}
+.s5 .p-badge{background:transparent;color:#4a4a58;border:1px solid #6a6a78;border-radius:2px;font-weight:800}
+.s5 .p-info h5{font-family:'Bitter';font-weight:700}
+.s5 .p-info h5,
+.s5 .p-tags span,
+.s5 .p-actions span,
+.s5 .p-nav span,
+.s5 .p-search span{font-family:'Bitter',serif}
+.s5 .p-actions span{text-transform:uppercase;letter-spacing:.05em;font-size:8px;font-weight:700}
+.s5 .p-nav span{text-transform:uppercase;letter-spacing:.08em}

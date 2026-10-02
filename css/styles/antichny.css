@@ -1,0 +1,29 @@
+/* 🏛️ Античный · Playfair Display */
+.s7{
+  --font-head:'Playfair Display',serif;
+  --font-style:normal;
+  --radius:2px;
+  --radius-btn:2px;
+  --title-radius:0;
+  --title-pad:0 14px;
+  --btn-pad:6px 5px;
+  --line-radius:0;
+}
+.s7 .p-header .p-title{font-weight:700;font-size:16px;letter-spacing:.05em}
+.s7 .p-header .p-sub{font-weight:400;font-size:10px;letter-spacing:.18em;text-transform:uppercase;opacity:.88}
+.s7 .p-section-title{font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.28em;color:#4a4a58}
+.s7 .p-section-title span{background:none;box-shadow:none;padding:0 14px;font-weight:700}
+.s7 .p-section-title span::before{content:"◆  ";color:#6a6a78;font-size:8px}
+.s7 .p-section-title span::after{content:"  ◆";color:#6a6a78;font-size:8px}
+.s7 .p-section-title::before,
+.s7 .p-section-title::after{background:none;height:0;border-top:1px solid #4a4a58;opacity:.55;border-radius:0}
+.s7 .p-card{border:1px solid #4a4a58;box-shadow:3px 3px 0 #d8dae0}
+.s7 .p-info h5{font-family:'Playfair Display';font-weight:700;font-size:14px;letter-spacing:.02em}
+.s7 .p-info h5,
+.s7 .p-tags span,
+.s7 .p-actions span,
+.s7 .p-nav span,
+.s7 .p-search span{font-family:'Playfair Display',serif}
+.s7 .p-badge{background:#4a4a58;border-radius:0;padding:3px 10px;letter-spacing:.2em;font-size:7px;font-weight:700}
+.s7 .p-nav span{text-transform:uppercase;letter-spacing:.08em;font-size:7px;font-weight:700}
+.s7 .p-kcal{letter-spacing:.05em}
