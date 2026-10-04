@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Карточка · версия 13</title>
+<title>Карточка · версия 15</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -15,41 +15,40 @@
   --c2:#fbdfe8;
   --c3:#f0b0c8;
   --c4:#7a3e58;
-
-  --card-w:360px;
-  --card-h:620px;
 }
 
 body{
   background:#141414;color:#eee;
   font-family:'Nunito',sans-serif;
-  padding:60px 20px 40px;
+  padding:20px 16px 40px;
   display:flex;flex-direction:column;align-items:center;
   min-height:100vh;
 }
 h1{
   font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:700;
-  font-size:26px;color:#e69db5;text-align:center;margin-bottom:6px;
+  font-size:20px;color:#e69db5;text-align:center;margin-bottom:4px;
 }
 .sub{
-  color:#888;font-size:12px;text-align:center;font-style:italic;
-  margin-bottom:28px;max-width:400px;
+  color:#888;font-size:11px;text-align:center;font-style:italic;
+  margin-bottom:16px;max-width:340px;
 }
 
+/* ───── Карточка ─────
+   Ширина 320px, высота 760px. Внутри — свой скролл. */
 .card{
-  width:var(--card-w);
-  height:var(--card-h);
+  width:320px;
+  height:760px;
   background:var(--c1);
   border:1px solid var(--c3);
   border-radius:14px;
-  overflow:hidden;
   box-shadow:0 10px 40px rgba(0,0,0,.5);
   color:var(--c4);
   display:flex;flex-direction:column;
+  overflow:hidden;
 }
 
 .card-img{
-  height:160px;flex-shrink:0;
+  height:170px;flex-shrink:0;
   position:relative;
   background:linear-gradient(135deg,var(--c2),var(--c3));
   cursor:zoom-in;
@@ -75,7 +74,7 @@ h1{
   background:var(--c3);color:#fff;
   padding:4px 12px;border-radius:10px;
   font-family:'Cormorant Garamond',serif;font-style:italic;
-  font-size:13px;font-weight:700;letter-spacing:.06em;
+  font-size:14px;font-weight:700;letter-spacing:.06em;
   pointer-events:none;
 }
 .img-icons{
@@ -83,7 +82,7 @@ h1{
   display:flex;gap:4px;
 }
 .img-icons .ic{
-  width:30px;height:30px;border-radius:50%;
+  width:31px;height:31px;border-radius:50%;
   background:var(--c1);color:#b35c7d;
   display:flex;align-items:center;justify-content:center;
   font-size:15px;cursor:pointer;
@@ -94,39 +93,37 @@ h1{
 .img-icons .ic.active{background:var(--c3);color:#fff}
 .img-icons .ic .em{font-style:normal;font-size:14px}
 
+/* Тело карточки — скролл всегда */
 .card-body{
-  padding:16px 18px 16px;
-  display:flex;flex-direction:column;gap:11px;
+  padding:16px 16px 16px;
+  display:flex;flex-direction:column;gap:12px;
   flex:1 1 auto;
   min-height:0;
-  overflow:hidden;
-}
-.card-body.open{
   overflow-y:auto;
 }
-.card-body::-webkit-scrollbar{width:4px}
+.card-body::-webkit-scrollbar{width:5px}
 .card-body::-webkit-scrollbar-thumb{background:var(--c3);border-radius:3px}
 .card-body::-webkit-scrollbar-track{background:transparent}
 
 .title{
   font-family:'Cormorant Garamond',serif;
   font-style:italic;font-weight:700;
-  font-size:26px;line-height:1.2;
+  font-size:28px;line-height:1.15;
 }
 
 .tags{display:flex;flex-wrap:wrap;gap:6px}
 .tags span{
-  padding:4px 11px;
+  padding:4px 12px;
   background:var(--c2);
   border:1px solid var(--c3);
-  border-radius:11px;
+  border-radius:12px;
   font-family:'Cormorant Garamond',serif;font-style:italic;
-  font-size:14px;font-weight:600;
+  font-size:15px;font-weight:600;
 }
 
 .kcal-row{
   display:flex;flex-wrap:wrap;gap:10px;align-items:center;
-  font-size:14px;font-weight:700;
+  font-size:15px;font-weight:700;
   font-family:'Cormorant Garamond',serif;font-style:italic;
   color:var(--c4);
 }
@@ -139,21 +136,21 @@ h1{
 
 .ing-header{
   display:flex;justify-content:space-between;align-items:center;
-  gap:10px;margin-top:2px;
+  gap:10px;margin-top:4px;
 }
 .ing-title{
   font-family:'Cormorant Garamond',serif;font-style:italic;
-  font-size:17px;font-weight:700;opacity:.9;
+  font-size:18px;font-weight:700;opacity:.9;
 }
 .portions{
   display:flex;align-items:center;gap:8px;
   font-family:'Cormorant Garamond',serif;font-style:italic;
-  font-size:17px;font-weight:700;
+  font-size:18px;font-weight:700;
 }
 .portions button{
-  width:24px;height:24px;border-radius:50%;
+  width:26px;height:26px;border-radius:50%;
   border:1px solid var(--c3);background:var(--c2);color:var(--c4);
-  font-size:15px;font-weight:700;line-height:1;
+  font-size:16px;font-weight:700;line-height:1;
   cursor:pointer;display:flex;align-items:center;justify-content:center;
   padding:0;transition:background .15s;
 }
@@ -162,18 +159,18 @@ h1{
 
 .ing-list{
   list-style:none;
-  display:flex;flex-direction:column;gap:7px;
+  display:flex;flex-direction:column;gap:8px;
 }
 .ing-list li{
   display:flex;align-items:center;gap:10px;
   font-family:'Cormorant Garamond',serif;font-style:italic;
-  font-size:16px;cursor:pointer;
+  font-size:17px;cursor:pointer;
 }
 .ing-list li.hidden-ing{display:none}
 .ing-list.open li.hidden-ing{display:flex}
 
 .ing-list li .chk{
-  width:18px;height:18px;
+  width:19px;height:19px;
   border:1.5px solid var(--c3);border-radius:50%;
   background:var(--c1);flex-shrink:0;
   display:flex;align-items:center;justify-content:center;
@@ -181,7 +178,7 @@ h1{
 }
 .ing-list li.checked .chk{background:var(--c3)}
 .ing-list li.checked .chk::after{
-  content:"✓";color:#fff;font-size:11px;font-weight:900;
+  content:"✓";color:#fff;font-size:12px;font-weight:900;
   font-family:Nunito,sans-serif;font-style:normal;
 }
 .ing-list li .ing-name{flex:1}
@@ -192,38 +189,38 @@ h1{
 .ing-toggle{
   background:none;border:none;
   font-family:'Cormorant Garamond',serif;font-style:italic;
-  font-size:14px;font-weight:700;
+  font-size:15px;font-weight:700;
   color:var(--c4);opacity:.7;
-  cursor:pointer;padding:4px 0;
+  cursor:pointer;padding:5px 0;
   text-align:center;width:100%;
   letter-spacing:.03em;
 }
 .ing-toggle:hover{opacity:1}
 
-.steps-block{display:none;flex-direction:column;gap:9px;margin-top:2px}
+.steps-block{display:none;flex-direction:column;gap:10px;margin-top:4px}
 .steps-block.open{display:flex}
 .steps-head{
   font-family:'Cormorant Garamond',serif;font-style:italic;
-  font-size:17px;font-weight:700;opacity:.9;
+  font-size:18px;font-weight:700;opacity:.9;
 }
 .steps{
   list-style:none;
-  display:flex;flex-direction:column;gap:8px;
+  display:flex;flex-direction:column;gap:9px;
   counter-reset:step;
 }
 .steps li{
-  display:flex;gap:10px;
+  display:flex;gap:11px;
   font-family:'Cormorant Garamond',serif;font-style:italic;
-  font-size:15px;line-height:1.45;
+  font-size:16px;line-height:1.45;
 }
 .steps li::before{
   counter-increment:step;
   content:counter(step);
   flex-shrink:0;
-  width:20px;height:20px;border-radius:50%;
+  width:22px;height:22px;border-radius:50%;
   background:var(--c3);color:#fff;
   font-family:Nunito,sans-serif;font-style:normal;
-  font-size:11px;font-weight:800;
+  font-size:12px;font-weight:800;
   display:flex;align-items:center;justify-content:center;
   margin-top:1px;
 }
@@ -232,8 +229,8 @@ h1{
   background:var(--c2);
   border:1px solid var(--c3);
   border-radius:11px;
-  padding:12px 14px;
-  display:flex;flex-direction:column;gap:9px;
+  padding:13px 15px;
+  display:flex;flex-direction:column;gap:10px;
 }
 .cook-unit .unit-head{
   display:flex;justify-content:space-between;align-items:center;gap:8px;
@@ -241,7 +238,7 @@ h1{
 }
 .cook-unit .unit-name{
   font-family:'Cormorant Garamond',serif;font-style:italic;
-  font-size:17px;font-weight:700;
+  font-size:18px;font-weight:700;
   display:flex;align-items:center;gap:7px;
 }
 .cook-unit .unit-name .chev{
@@ -257,9 +254,9 @@ h1{
 }
 .cook-unit.open .unit-list{display:flex}
 .cook-unit .unit-list .opt{
-  padding:7px 11px;border-radius:8px;
+  padding:8px 12px;border-radius:8px;
   font-family:'Cormorant Garamond',serif;font-style:italic;
-  font-size:15px;cursor:pointer;
+  font-size:16px;cursor:pointer;
   background:transparent;
   border:none;text-align:left;color:var(--c4);
   transition:background .15s;
@@ -273,29 +270,29 @@ h1{
 }
 .cook-params.open{display:flex}
 .cook-params .p{
-  padding:5px 12px;
+  padding:5px 13px;
   background:var(--c1);
   border:1px solid var(--c3);
-  border-radius:11px;
+  border-radius:12px;
   font-family:'Cormorant Garamond',serif;font-style:italic;
-  font-size:14px;font-weight:600;
+  font-size:15px;font-weight:600;
   color:var(--c4);
   white-space:nowrap;
 }
 
 .note{
-  padding:11px 13px;
+  padding:12px 14px;
   background:var(--c2);
   border-left:3px solid var(--c3);
   border-radius:8px;
   font-family:'Cormorant Garamond',serif;font-style:italic;
-  font-size:15px;line-height:1.45;
+  font-size:16px;line-height:1.45;
   cursor:pointer;
   transition:filter .15s;
 }
 .note:hover{filter:brightness(.97)}
 .note .note-label{
-  font-weight:700;opacity:.7;font-size:12px;
+  font-weight:700;opacity:.7;font-size:13px;
   display:block;margin-bottom:3px;
   font-style:normal;font-family:'Nunito',sans-serif;
   letter-spacing:.04em;
@@ -310,9 +307,9 @@ h1{
 }
 .actions button{
   flex:1;
-  padding:12px 6px;
+  padding:13px 6px;
   font-family:'Cormorant Garamond',serif;font-style:italic;
-  font-size:15px;font-weight:700;
+  font-size:16px;font-weight:700;
   border-radius:11px;
   border:1px solid var(--c3);
   background:var(--c2);
@@ -325,7 +322,7 @@ h1{
 .actions .em{font-style:normal}
 
 .demo-toggle{
-  margin-top:18px;padding:8px 16px;
+  margin-top:20px;padding:8px 16px;
   background:rgba(230,157,181,.15);color:#e69db5;
   border:1px dashed rgba(230,157,181,.5);border-radius:20px;
   font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;
@@ -373,8 +370,8 @@ h1{
 </head>
 <body>
 
-<h1>Карточка · версия 13</h1>
-<p class="sub">Шрифты ещё крупнее, карточка 360×620.</p>
+<h1>Карточка · версия 15</h1>
+<p class="sub">Скролл внутри карточки. Ширина 320, высота 760.</p>
 
 <div class="card">
 
@@ -591,7 +588,6 @@ h1{
     document.getElementById('ingList').classList.toggle('open', expanded);
     document.getElementById('stepsBlock').classList.toggle('open', expanded);
     document.getElementById('unitParams').classList.toggle('open', expanded);
-    document.getElementById('cardBody').classList.toggle('open', expanded);
     this.textContent = expanded ? '▲ скрыть' : '▼ показать все';
   });
 
