@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Карточка · версия 11</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --c1:#fff5f8;
+  --c2:#fbdfe8;
+  --c3:#f0b0c8;
+  --c4:#7a3e58;
+
+  --card-w:340px;
+  --card-h:580px;
+}
+
+body{
+  background:#141414;color:#eee;
+  font-family:'Nunito',sans-serif;
+  padding:60px 20px 40px;
+  display:flex;flex-direction:column;align-items:center;
+  min-height:100vh;
+}
+h1{
+  font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:700;
+  font-size:26px;color:#e69db5;text-align:center;margin-bottom:6px;
+}
+.sub{
+  color:#888;font-size:12px;text-align:center;font-style:italic;
+  margin-bottom:28px;max-width:400px;
+}
+
+.card{
+  width:var(--card-w);
+  height:var(--card-h);
+  background:var(--c1);
+  border:1px solid var(--c3);
+  border-radius:14px;
+  overflow:hidden;
+  box-shadow:0 10px 40px rgba(0,0,0,.5);
+  color:var(--c4);
+  display:flex;flex-direction:column;
+}
+
+.card-img{
+  height:140px;flex-shrink:0;
+  position:relative;
+  background:linear-gradient(135deg,var(--c2),var(--c3));
+  cursor:zoom-in;
+  transition:filter .2s;
+}
+.card-img:hover{filter:brightness(1.05)}
+.card-img img{width:100%;height:100%;object-fit:cover;display:block}
+
+.card-img::after{
+  content:"⤢";
+  position:absolute;bottom:8px;right:8px;
+  width:22px;height:22px;border-radius:50%;
+  background:rgba(255,255,255,.85);color:var(--c4);
+  font-size:12px;font-family:Nunito,sans-serif;
+  display:flex;align-items:center;justify-content:center;
+  opacity:.55;transition:opacity .2s;
+  pointer-events:none;
+}
+.card-img:hover::after{opacity:1}
+
+.badge{
+  position:absolute;top:8px;left:8px;
+  background:var(--c3);color:#fff;
+  padding:3px 9px;border-radius:9px;
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:10px;font-weight:700;letter-spacing:.06em;
+  pointer-events:none;
+}
+.img-icons{
+  position:absolute;top:8px;right:8px;
+  display:flex;gap:3px;
+}
+.img-icons .ic{
+  width:26px;height:26px;border-radius:50%;
+  background:var(--c1);color:#b35c7d;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;cursor:pointer;
+  transition:transform .15s, background .15s;
+  border:none;padding:0;
+}
+.img-icons .ic:hover{transform:scale(1.1)}
+.img-icons .ic.active{background:var(--c3);color:#fff}
+.img-icons .ic .em{font-style:normal;font-size:12px}
+
+.card-body{
+  padding:12px 14px 14px;
+  display:flex;flex-direction:column;gap:9px;
+  flex:1 1 auto;
+  min-height:0;
+  overflow:hidden;
+}
+.card-body.open{
+  overflow-y:auto;
+}
+.card-body::-webkit-scrollbar{width:4px}
+.card-body::-webkit-scrollbar-thumb{background:var(--c3);border-radius:3px}
+.card-body::-webkit-scrollbar-track{background:transparent}
+
+.title{
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;font-weight:700;
+  font-size:18px;line-height:1.2;
+}
+
+.tags{display:flex;flex-wrap:wrap;gap:4px}
+.tags span{
+  padding:2px 8px;
+  background:var(--c2);
+  border:1px solid var(--c3);
+  border-radius:9px;
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:10.5px;font-weight:600;
+}
+
+.kcal-row{
+  display:flex;flex-wrap:wrap;gap:8px;align-items:center;
+  font-size:10.5px;font-weight:700;
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  color:var(--c4);
+}
+.time-display{font-weight:700;color:inherit;letter-spacing:inherit}
+.time-display.time-auto{
+  font-weight:700;
+  -webkit-text-stroke:0.55px currentColor;
+  letter-spacing:.02em;
+}
+
+.ing-header{
+  display:flex;justify-content:space-between;align-items:center;
+  gap:10px;margin-top:2px;
+}
+.ing-title{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:13px;font-weight:700;opacity:.9;
+}
+.portions{
+  display:flex;align-items:center;gap:6px;
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:13px;font-weight:700;
+}
+.portions button{
+  width:20px;height:20px;border-radius:50%;
+  border:1px solid var(--c3);background:var(--c2);color:var(--c4);
+  font-size:13px;font-weight:700;line-height:1;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  padding:0;transition:background .15s;
+}
+.portions button:hover{background:var(--c3);color:#fff}
+.portions .num{min-width:16px;text-align:center}
+
+.ing-list{
+  list-style:none;
+  display:flex;flex-direction:column;gap:5px;
+}
+.ing-list li{
+  display:flex;align-items:center;gap:8px;
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:12.5px;cursor:pointer;
+}
+.ing-list li.hidden-ing{display:none}
+.ing-list.open li.hidden-ing{display:flex}
+
+.ing-list li .chk{
+  width:14px;height:14px;
+  border:1.5px solid var(--c3);border-radius:50%;
+  background:var(--c1);flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .15s;
+}
+.ing-list li.checked .chk{background:var(--c3)}
+.ing-list li.checked .chk::after{
+  content:"✓";color:#fff;font-size:9px;font-weight:900;
+  font-family:Nunito,sans-serif;font-style:normal;
+}
+.ing-list li .ing-name{flex:1}
+.ing-list li .ing-amount{opacity:.6}
+.ing-list li.checked .ing-name,
+.ing-list li.checked .ing-amount{opacity:.4;text-decoration:line-through}
+
+.ing-toggle{
+  background:none;border:none;
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:10px;font-weight:700;
+  color:var(--c4);opacity:.7;
+  cursor:pointer;padding:3px 0;
+  text-align:center;width:100%;
+  letter-spacing:.03em;
+}
+.ing-toggle:hover{opacity:1}
+
+.steps-block{display:none;flex-direction:column;gap:6px;margin-top:2px}
+.steps-block.open{display:flex}
+.steps-head{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:12.5px;font-weight:700;opacity:.9;
+}
+.steps{
+  list-style:none;
+  display:flex;flex-direction:column;gap:6px;
+  counter-reset:step;
+}
+.steps li{
+  display:flex;gap:8px;
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:12px;line-height:1.45;
+}
+.steps li::before{
+  counter-increment:step;
+  content:counter(step);
+  flex-shrink:0;
+  width:16px;height:16px;border-radius:50%;
+  background:var(--c3);color:#fff;
+  font-family:Nunito,sans-serif;font-style:normal;
+  font-size:9px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+  margin-top:1px;
+}
+
+.cook-unit{
+  background:var(--c2);
+  border:1px solid var(--c3);
+  border-radius:9px;
+  padding:9px 11px;
+  display:flex;flex-direction:column;gap:7px;
+}
+.cook-unit .unit-head{
+  display:flex;justify-content:space-between;align-items:center;gap:8px;
+  cursor:pointer;
+}
+.cook-unit .unit-name{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:13px;font-weight:700;
+  display:flex;align-items:center;gap:6px;
+}
+.cook-unit .unit-name .chev{
+  font-size:9px;opacity:.5;
+  transition:transform .2s;
+}
+.cook-unit.open .unit-name .chev{transform:rotate(180deg)}
+
+.cook-unit .unit-list{
+  display:none;
+  flex-direction:column;gap:4px;
+  padding:6px 0 2px;
+}
+.cook-unit.open .unit-list{display:flex}
+.cook-unit .unit-list .opt{
+  padding:5px 8px;border-radius:6px;
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:12px;cursor:pointer;
+  background:transparent;
+  border:none;text-align:left;color:var(--c4);
+  transition:background .15s;
+}
+.cook-unit .unit-list .opt:hover{background:var(--c1)}
+.cook-unit .unit-list .opt.active{background:var(--c3);color:#fff;font-weight:700}
+
+.cook-params{
+  display:none;
+  flex-wrap:wrap;gap:5px;
+}
+.cook-params.open{display:flex}
+.cook-params .p{
+  padding:3px 9px;
+  background:var(--c1);
+  border:1px solid var(--c3);
+  border-radius:9px;
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:10.5px;font-weight:600;
+  color:var(--c4);
+  white-space:nowrap;
+}
+
+.note{
+  padding:8px 10px;
+  background:var(--c2);
+  border-left:3px solid var(--c3);
+  border-radius:6px;
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:11.5px;line-height:1.45;
+  cursor:pointer;
+  transition:filter .15s;
+}
+.note:hover{filter:brightness(.97)}
+.note .note-label{
+  font-weight:700;opacity:.7;font-size:10px;
+  display:block;margin-bottom:2px;
+  font-style:normal;font-family:'Nunito',sans-serif;
+  letter-spacing:.04em;
+}
+
+.actions{
+  display:flex;gap:6px;
+  padding:10px 14px 14px;
+  background:var(--c1);
+  border-top:1px solid var(--c3);
+  flex-shrink:0;
+}
+.actions button{
+  flex:1;
+  padding:9px 6px;
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:12px;font-weight:700;
+  border-radius:9px;
+  border:1px solid var(--c3);
+  background:var(--c2);
+  color:var(--c4);cursor:pointer;
+  transition:filter .15s;
+  white-space:nowrap;
+}
+.actions button:hover{filter:brightness(.96)}
+.actions button.primary{background:var(--c3);color:#fff;border-color:var(--c3)}
+.actions .em{font-style:normal}
+
+/* ДЕМО-кнопка переключения авто/ручное.
+   Нужна ТОЛЬКО для проверки жирности времени. На сайте её не будет. */
+.demo-toggle{
+  margin-top:18px;padding:7px 16px;
+  background:rgba(230,157,181,.15);color:#e69db5;
+  border:1px dashed rgba(230,157,181,.5);border-radius:20px;
+  font-family:'Nunito',sans-serif;font-size:11px;font-weight:700;
+  cursor:pointer;letter-spacing:.03em;
+}
+.demo-toggle:hover{background:rgba(230,157,181,.25)}
+
+.modal-bg{
+  position:fixed;inset:0;
+  background:rgba(20,15,20,.55);
+  display:none;align-items:center;justify-content:center;
+  padding:20px;z-index:100;
+}
+.modal-bg.open{display:flex}
+.modal{
+  background:var(--c1);border:1px solid var(--c3);
+  border-radius:14px;padding:18px 20px;
+  max-width:420px;width:100%;color:var(--c4);
+  box-shadow:0 20px 60px rgba(0,0,0,.6);
+}
+.modal h3{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:18px;font-weight:700;margin-bottom:10px;
+}
+.modal textarea{
+  width:100%;min-height:120px;
+  padding:10px 12px;
+  border:1px solid var(--c3);border-radius:9px;
+  background:var(--c2);color:var(--c4);
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:14px;line-height:1.45;
+  resize:vertical;outline:none;
+}
+.modal textarea:focus{background:#fff}
+.modal-actions{display:flex;gap:8px;margin-top:12px}
+.modal-actions button{
+  flex:1;padding:9px;
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:13px;font-weight:700;
+  border-radius:9px;border:1px solid var(--c3);
+  background:var(--c2);color:var(--c4);cursor:pointer;
+}
+.modal-actions button.primary{background:var(--c3);color:#fff}
+</style>
+</head>
+<body>
+
+<h1>Карточка · версия 11</h1>
+<p class="sub">Демо-кнопка авто/ручное возвращена. На сайте её не будет.</p>
+
+<div class="card">
+
+  <div class="card-img" id="cardImg" title="Открыть рецепт">
+    <img src="images/01.jpg" alt="" onerror="this.style.display='none'">
+    <span class="badge">ЗАВТРАК</span>
+    <div class="img-icons">
+      <button class="ic active" title="В избранное">❤</button>
+      <button class="ic" title="Таймер">⏱</button>
+      <button class="ic" title="Готовила">👨‍🍳</button>
+      <button class="ic" title="В план">📅</button>
+      <button class="ic" title="Хочу приготовить">🔖</button>
+    </div>
+  </div>
+
+  <div class="card-body" id="cardBody">
+
+    <div class="title">Овсянка с ягодами</div>
+
+    <div class="tags">
+      <span>сладкое</span>
+      <span>быстро</span>
+      <span>ПП</span>
+      <span>с ягодами</span>
+      <span>лёгкое</span>
+    </div>
+
+    <div class="kcal-row">
+      <span id="kKal">292 ккал</span><span>·</span>
+      <span id="kBel">Б 10.9</span><span>·</span>
+      <span id="kZhir">Ж 13.2</span><span>·</span>
+      <span id="kUgl">У 31.2</span><span>·</span>
+      <span class="time-display time-auto" id="timeDisplay">⏱ 10 мин</span>
+    </div>
+
+    <div class="ing-header">
+      <span class="ing-title">Ингредиенты:</span>
+      <span class="portions">
+        <button id="pMinus">−</button>
+        <span class="num" id="pNum">1</span>
+        <button id="pPlus">+</button>
+      </span>
+    </div>
+
+    <ul class="ing-list" id="ingList">
+      <li data-ing data-qty="60" data-unit="г" data-name="Овсянка"><span class="chk"></span><span class="ing-name">Овсянка</span><span class="ing-amount">60 г</span></li>
+      <li data-ing data-qty="200" data-unit="мл" data-name="Молоко 3.2%"><span class="chk"></span><span class="ing-name">Молоко 3.2%</span><span class="ing-amount">200 мл</span></li>
+      <li data-ing data-qty="50" data-unit="г" data-name="Ягоды"><span class="chk"></span><span class="ing-name">Ягоды</span><span class="ing-amount">50 г</span></li>
+      <li data-ing data-qty="1" data-unit="ч. л." data-name="Мёд"><span class="chk"></span><span class="ing-name">Мёд</span><span class="ing-amount">1 ч. л.</span></li>
+      <li data-ing data-qty="0.5" data-unit="шт." data-name="Банан"><span class="chk"></span><span class="ing-name">Банан</span><span class="ing-amount">1/2 шт.</span></li>
+      <li data-ing data-qty="0" data-unit="" data-name="Корица" class="hidden-ing"><span class="chk"></span><span class="ing-name">Корица</span><span class="ing-amount">по вкусу</span></li>
+      <li data-ing data-qty="0" data-unit="" data-name="Соль" class="hidden-ing"><span class="chk"></span><span class="ing-name">Соль</span><span class="ing-amount">щепотка</span></li>
+      <li data-ing data-qty="1" data-unit="ч. л." data-name="Семена чиа" class="hidden-ing"><span class="chk"></span><span class="ing-name">Семена чиа</span><span class="ing-amount">1 ч. л.</span></li>
+      <li data-ing data-qty="30" data-unit="г" data-name="Орехи" class="hidden-ing"><span class="chk"></span><span class="ing-name">Орехи</span><span class="ing-amount">30 г</span></li>
+    </ul>
+
+    <button class="ing-toggle" id="toggle">▼ показать все</button>
+
+    <div class="steps-block" id="stepsBlock">
+      <div class="steps-head">Шаги:</div>
+      <ol class="steps" id="stepsList">
+        <li>Овсянку залить молоком, довести до кипения.</li>
+        <li>Варить 5 минут на медленном огне, помешивая.</li>
+        <li>Добавить ягоды, мёд, корицу. Перемешать.</li>
+        <li>Дать настояться 2 минуты. Украсить бананом.</li>
+      </ol>
+    </div>
+
+    <div class="cook-unit" id="cookUnit">
+      <div class="unit-head" id="unitHead">
+        <div class="unit-name">
+          <span id="unitName">Сковорода</span>
+          <span class="chev">▼</span>
+        </div>
+      </div>
+      <div class="unit-list" id="unitList">
+        <button class="opt active" data-unit="skovoroda">Сковорода</button>
+        <button class="opt" data-unit="duhovka">Духовка</button>
+        <button class="opt" data-unit="aerogrill">Аэрогриль</button>
+      </div>
+      <div class="cook-params" id="unitParams">
+        <span class="p" id="pProgram">Жарка</span>
+        <span class="p" id="pTemp">средний огонь</span>
+        <span class="p" id="pTime">10 мин</span>
+      </div>
+    </div>
+
+    <div class="note" id="noteBlock">
+      <span class="note-label">МОЯ ЗАМЕТКА</span>
+      Брать молоко 3.2%, не 2.5% — с ним вкуснее.
+    </div>
+
+  </div>
+
+  <div class="actions">
+    <button class="primary" id="buyBtn"><span class="em">🛒</span> <span id="buyCount">9</span></button>
+    <button id="editBtn"><span class="em">✎</span> Изменить</button>
+    <button id="verBtn" title="Версия 3 из 5"><span class="em">🕐</span> 3 из 5</button>
+  </div>
+
+</div>
+
+<!-- ДЕМО: для проверки жирности времени. На сайте этой кнопки не будет. -->
+<button class="demo-toggle" id="toggleTimeBtn">[ДЕМО] Переключить время: авто ↔ ручное</button>
+
+<div class="modal-bg" id="modalBg">
+  <div class="modal">
+    <h3>Моя заметка</h3>
+    <textarea id="noteText">Брать молоко 3.2%, не 2.5% — с ним вкуснее.</textarea>
+    <div class="modal-actions">
+      <button id="noteCancel">Отмена</button>
+      <button class="primary" id="noteSave">Сохранить</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const RECIPE = {
+    skovoroda: {
+      kcal: 292, bel: 10.9, zhir: 13.2, ugl: 31.2,
+      program: 'Жарка', temp: 'средний огонь', time: '10 мин',
+      ingredients: [
+        {name:'Овсянка', qty:60, unit:'г'},
+        {name:'Молоко 3.2%', qty:200, unit:'мл'},
+        {name:'Ягоды', qty:50, unit:'г'},
+        {name:'Мёд', qty:1, unit:'ч. л.'},
+        {name:'Банан', qty:0.5, unit:'шт.'},
+        {name:'Корица', qty:0, unit:''},
+        {name:'Соль', qty:0, unit:''},
+        {name:'Семена чиа', qty:1, unit:'ч. л.'},
+        {name:'Орехи', qty:30, unit:'г'}
+      ]
+    },
+    duhovka: {
+      kcal: 275, bel: 10.4, zhir: 11.8, ugl: 30.1,
+      program: 'Запекание', temp: '180°C', time: '15 мин',
+      ingredients: [
+        {name:'Овсянка', qty:60, unit:'г'},
+        {name:'Молоко 3.2%', qty:180, unit:'мл'},
+        {name:'Ягоды', qty:50, unit:'г'},
+        {name:'Мёд', qty:1, unit:'ч. л.'},
+        {name:'Банан', qty:0.5, unit:'шт.'},
+        {name:'Корица', qty:0, unit:''},
+        {name:'Орехи', qty:30, unit:'г'}
+      ]
+    },
+    aerogrill: {
+      kcal: 258, bel: 10.2, zhir: 9.5, ugl: 29.4,
+      program: 'Выпечка', temp: '170°C', time: '12 мин',
+      ingredients: [
+        {name:'Овсянка', qty:60, unit:'г'},
+        {name:'Молоко 3.2%', qty:180, unit:'мл'},
+        {name:'Ягоды', qty:50, unit:'г'},
+        {name:'Мёд', qty:1, unit:'ч. л.'},
+        {name:'Банан', qty:0.5, unit:'шт.'},
+        {name:'Семена чиа', qty:1, unit:'ч. л.'}
+      ]
+    }
+  };
+
+  const VISIBLE_COUNT = 5;
+
+  let currentUnit = 'skovoroda';
+  let portions = 1;
+  let expanded = false;
+  let timeAuto = true;
+
+  function formatQty(qty, unit){
+    if (qty === 0) return 'по вкусу';
+    if (qty === 0.5) return '1/2 ' + unit;
+    if (qty === 1.5) return '1½ ' + unit;
+    if (qty === 2.5) return '2½ ' + unit;
+    if (Math.abs(qty - Math.round(qty)) < 0.01) return Math.round(qty) + ' ' + unit;
+    return qty + ' ' + unit;
+  }
+
+  function render(){
+    const r = RECIPE[currentUnit];
+
+    document.getElementById('kKal').textContent = Math.round(r.kcal * portions) + ' ккал';
+    document.getElementById('kBel').textContent = 'Б ' + (r.bel * portions).toFixed(1);
+    document.getElementById('kZhir').textContent = 'Ж ' + (r.zhir * portions).toFixed(1);
+    document.getElementById('kUgl').textContent = 'У ' + (r.ugl * portions).toFixed(1);
+
+    document.getElementById('pProgram').textContent = r.program;
+    document.getElementById('pTemp').textContent = r.temp;
+    document.getElementById('pTime').textContent = r.time;
+
+    const list = document.getElementById('ingList');
+    list.innerHTML = '';
+    r.ingredients.forEach((ing, idx) => {
+      const li = document.createElement('li');
+      li.dataset.ing = '';
+      if (idx >= VISIBLE_COUNT) li.classList.add('hidden-ing');
+      li.innerHTML =
+        '<span class="chk"></span>' +
+        '<span class="ing-name">' + ing.name + '</span>' +
+        '<span class="ing-amount">' + formatQty(ing.qty ? ing.qty * portions : 0, ing.unit) + '</span>';
+      li.addEventListener('click', () => { li.classList.toggle('checked'); updateBuyCount(); });
+      list.appendChild(li);
+    });
+
+    if (expanded) list.classList.add('open');
+    updateBuyCount();
+  }
+
+  function updateBuyCount(){
+    const all = document.querySelectorAll('#ingList li').length;
+    const checked = document.querySelectorAll('#ingList li.checked').length;
+    document.getElementById('buyCount').textContent = checked === 0 ? all : checked;
+  }
+
+  document.getElementById('toggle').addEventListener('click', function(){
+    expanded = !expanded;
+    document.getElementById('ingList').classList.toggle('open', expanded);
+    document.getElementById('stepsBlock').classList.toggle('open', expanded);
+    document.getElementById('unitParams').classList.toggle('open', expanded);
+    document.getElementById('cardBody').classList.toggle('open', expanded);
+    this.textContent = expanded ? '▲ скрыть' : '▼ показать все';
+  });
+
+  document.getElementById('pMinus').addEventListener('click', () => {
+    if (portions > 1) { portions--; document.getElementById('pNum').textContent = portions; render(); }
+  });
+  document.getElementById('pPlus').addEventListener('click', () => {
+    if (portions < 20) { portions++; document.getElementById('pNum').textContent = portions; render(); }
+  });
+
+  document.getElementById('unitHead').addEventListener('click', () => {
+    document.getElementById('cookUnit').classList.toggle('open');
+  });
+  document.querySelectorAll('#unitList .opt').forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentUnit = btn.dataset.unit;
+      document.querySelectorAll('#unitList .opt').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('cookUnit').classList.remove('open');
+      document.getElementById('unitName').textContent =
+        currentUnit === 'skovoroda' ? 'Сковорода' :
+        currentUnit === 'duhovka'   ? 'Духовка' :
+                                      'Аэрогриль';
+      render();
+    });
+  });
+
+  document.querySelectorAll('.img-icons .ic').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      btn.classList.toggle('active');
+    });
+  });
+
+  document.getElementById('cardImg').addEventListener('click', () => {
+    console.log('→ открыть большую карточку рецепта');
+  });
+
+  document.getElementById('editBtn').addEventListener('click', () => {
+    console.log('→ открыть форму редактирования');
+  });
+
+  document.getElementById('verBtn').addEventListener('click', () => {
+    console.log('→ открыть список версий: 3 из 5');
+  });
+
+  const modalBg = document.getElementById('modalBg');
+  const noteBlock = document.getElementById('noteBlock');
+  const noteText = document.getElementById('noteText');
+  noteBlock.addEventListener('click', () => modalBg.classList.add('open'));
+  document.getElementById('noteCancel').addEventListener('click', () => modalBg.classList.remove('open'));
+  document.getElementById('noteSave').addEventListener('click', () => {
+    noteBlock.innerHTML = '<span class="note-label">МОЯ ЗАМЕТКА</span>' + noteText.value;
+    modalBg.classList.remove('open');
+  });
+  modalBg.addEventListener('click', e => { if (e.target === modalBg) modalBg.classList.remove('open'); });
+
+  document.getElementById('toggleTimeBtn').addEventListener('click', () => {
+    timeAuto = !timeAuto;
+    document.getElementById('timeDisplay').classList.toggle('time-auto', timeAuto);
+  });
+
+  render();
+</script>
+
+</body>
+</html>

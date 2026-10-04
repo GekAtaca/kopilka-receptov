@@ -1,12 +1,96 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Копилка рецептов</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Копилка рецептов</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="app/css/style.css">
 </head>
 <body>
-  <h1>Моя копилка рецептов</h1>
-    <p>Если я это вижу в браузере — всё работает.</p>
+
+  <!-- Заставка -->
+  <div id="loader">
+    <div class="logo">📖</div>
+    <div class="name">Копилка рецептов</div>
+    <div class="sub">Зажги свечку. Включи музыку. Наслаждайся — время ТВОРИТЬ ✨</div>
+  </div>
+
+   <!-- Шапка -->
+  <header class="app-header">
+    <div class="top">
+      <div class="titles">
+        <h1>Копилка рецептов</h1>
+        <div class="subtitle">Зажги свечку. Включи музыку. Наслаждайся — время ТВОРИТЬ ✨</div>
+      </div>
+      <div class="icons">
+        <button title="Тема">🌙</button>
+        <button title="Палитра">🎨</button>
+        <button title="Уведомления">🔔</button>
+        <button title="Настройки">⚙</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Поиск и кнопки -->
+  <div class="toolbar">
+    <button class="primary">🔍 Поиск</button>
+    <button>🏷 Фильтры</button>
+    <button>🎲 Случайный</button>
+  </div>
+
+  <!-- Содержание -->
+  <section class="contents open" id="contents">
+    <div class="contents-head" id="contentsHead">
+      <span class="head-label">📖 СОДЕРЖАНИЕ</span>
+      <span class="toggle">▼</span>
+    </div>
+    <div class="contents-body">
+
+      <div class="contents-group">
+        <div class="group-label">По приёму</div>
+        <div class="contents-chips">
+          <span class="chip"><span class="em">🌅</span> Завтраки</span>
+          <span class="chip"><span class="em">🍽</span> Обеды</span>
+          <span class="chip"><span class="em">🌙</span> Ужины</span>
+          <span class="chip"><span class="em">🍎</span> Перекусы</span>
+        </div>
+      </div>
+
+      <div class="contents-group">
+        <div class="group-label">По типу</div>
+        <div class="contents-chips">
+          <span class="chip"><span class="em">🥗</span> Салаты</span>
+          <span class="chip"><span class="em">🍲</span> Супы</span>
+          <span class="chip"><span class="em">🍰</span> Десерты</span>
+          <span class="chip"><span class="em">🍞</span> Выпечка</span>
+          <span class="chip"><span class="em">🥟</span> Закуски</span>
+          <span class="chip"><span class="em">🍚</span> Гарниры</span>
+          <span class="chip"><span class="em">🥤</span> Напитки</span>
+          <span class="chip"><span class="em">🥫</span> Соусы</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Пока пустой контейнер для карточек рецептов -->
+  <main id="app"></main>
+
+  <script>
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('loader').classList.add('hide');
+      }, 1200);
+    });
+     // Свернуть / развернуть содержание
+    document.getElementById('contentsHead').addEventListener('click', () => {
+      document.getElementById('contents').classList.toggle('open');
+    });
+  </script>
+
 </body>
 </html>
