@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Карточка · версия 11</title>
+<title>Карточка · версия 12</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -49,7 +49,7 @@ h1{
 }
 
 .card-img{
-  height:140px;flex-shrink:0;
+  height:150px;flex-shrink:0;
   position:relative;
   background:linear-gradient(135deg,var(--c2),var(--c3));
   cursor:zoom-in;
@@ -73,30 +73,30 @@ h1{
 .badge{
   position:absolute;top:8px;left:8px;
   background:var(--c3);color:#fff;
-  padding:3px 9px;border-radius:9px;
+  padding:4px 11px;border-radius:10px;
   font-family:'Cormorant Garamond',serif;font-style:italic;
-  font-size:10px;font-weight:700;letter-spacing:.06em;
+  font-size:12px;font-weight:700;letter-spacing:.06em;
   pointer-events:none;
 }
 .img-icons{
   position:absolute;top:8px;right:8px;
-  display:flex;gap:3px;
+  display:flex;gap:4px;
 }
 .img-icons .ic{
-  width:26px;height:26px;border-radius:50%;
+  width:28px;height:28px;border-radius:50%;
   background:var(--c1);color:#b35c7d;
   display:flex;align-items:center;justify-content:center;
-  font-size:13px;cursor:pointer;
+  font-size:14px;cursor:pointer;
   transition:transform .15s, background .15s;
   border:none;padding:0;
 }
 .img-icons .ic:hover{transform:scale(1.1)}
 .img-icons .ic.active{background:var(--c3);color:#fff}
-.img-icons .ic .em{font-style:normal;font-size:12px}
+.img-icons .ic .em{font-style:normal;font-size:13px}
 
 .card-body{
-  padding:12px 14px 14px;
-  display:flex;flex-direction:column;gap:9px;
+  padding:14px 16px 16px;
+  display:flex;flex-direction:column;gap:10px;
   flex:1 1 auto;
   min-height:0;
   overflow:hidden;
@@ -111,29 +111,29 @@ h1{
 .title{
   font-family:'Cormorant Garamond',serif;
   font-style:italic;font-weight:700;
-  font-size:18px;line-height:1.2;
+  font-size:22px;line-height:1.2;
 }
 
-.tags{display:flex;flex-wrap:wrap;gap:4px}
+.tags{display:flex;flex-wrap:wrap;gap:5px}
 .tags span{
-  padding:2px 8px;
+  padding:3px 10px;
   background:var(--c2);
   border:1px solid var(--c3);
-  border-radius:9px;
+  border-radius:10px;
   font-family:'Cormorant Garamond',serif;font-style:italic;
-  font-size:10.5px;font-weight:600;
+  font-size:12.5px;font-weight:600;
 }
 
 .kcal-row{
-  display:flex;flex-wrap:wrap;gap:8px;align-items:center;
-  font-size:10.5px;font-weight:700;
+  display:flex;flex-wrap:wrap;gap:9px;align-items:center;
+  font-size:12.5px;font-weight:700;
   font-family:'Cormorant Garamond',serif;font-style:italic;
   color:var(--c4);
 }
 .time-display{font-weight:700;color:inherit;letter-spacing:inherit}
 .time-display.time-auto{
   font-weight:700;
-  -webkit-text-stroke:0.55px currentColor;
+  -webkit-text-stroke:0.6px currentColor;
   letter-spacing:.02em;
 }
 
@@ -143,37 +143,37 @@ h1{
 }
 .ing-title{
   font-family:'Cormorant Garamond',serif;font-style:italic;
-  font-size:13px;font-weight:700;opacity:.9;
+  font-size:15px;font-weight:700;opacity:.9;
 }
 .portions{
-  display:flex;align-items:center;gap:6px;
+  display:flex;align-items:center;gap:7px;
   font-family:'Cormorant Garamond',serif;font-style:italic;
-  font-size:13px;font-weight:700;
+  font-size:15px;font-weight:700;
 }
 .portions button{
-  width:20px;height:20px;border-radius:50%;
+  width:22px;height:22px;border-radius:50%;
   border:1px solid var(--c3);background:var(--c2);color:var(--c4);
-  font-size:13px;font-weight:700;line-height:1;
+  font-size:14px;font-weight:700;line-height:1;
   cursor:pointer;display:flex;align-items:center;justify-content:center;
   padding:0;transition:background .15s;
 }
 .portions button:hover{background:var(--c3);color:#fff}
-.portions .num{min-width:16px;text-align:center}
+.portions .num{min-width:18px;text-align:center}
 
 .ing-list{
   list-style:none;
-  display:flex;flex-direction:column;gap:5px;
+  display:flex;flex-direction:column;gap:6px;
 }
 .ing-list li{
-  display:flex;align-items:center;gap:8px;
+  display:flex;align-items:center;gap:9px;
   font-family:'Cormorant Garamond',serif;font-style:italic;
-  font-size:12.5px;cursor:pointer;
+  font-size:14px;cursor:pointer;
 }
 .ing-list li.hidden-ing{display:none}
 .ing-list.open li.hidden-ing{display:flex}
 
 .ing-list li .chk{
-  width:14px;height:14px;
+  width:16px;height:16px;
   border:1.5px solid var(--c3);border-radius:50%;
   background:var(--c1);flex-shrink:0;
   display:flex;align-items:center;justify-content:center;
@@ -181,7 +181,7 @@ h1{
 }
 .ing-list li.checked .chk{background:var(--c3)}
 .ing-list li.checked .chk::after{
-  content:"✓";color:#fff;font-size:9px;font-weight:900;
+  content:"✓";color:#fff;font-size:10px;font-weight:900;
   font-family:Nunito,sans-serif;font-style:normal;
 }
 .ing-list li .ing-name{flex:1}
@@ -192,38 +192,38 @@ h1{
 .ing-toggle{
   background:none;border:none;
   font-family:'Cormorant Garamond',serif;font-style:italic;
-  font-size:10px;font-weight:700;
+  font-size:12px;font-weight:700;
   color:var(--c4);opacity:.7;
-  cursor:pointer;padding:3px 0;
+  cursor:pointer;padding:4px 0;
   text-align:center;width:100%;
   letter-spacing:.03em;
 }
 .ing-toggle:hover{opacity:1}
 
-.steps-block{display:none;flex-direction:column;gap:6px;margin-top:2px}
+.steps-block{display:none;flex-direction:column;gap:8px;margin-top:2px}
 .steps-block.open{display:flex}
 .steps-head{
   font-family:'Cormorant Garamond',serif;font-style:italic;
-  font-size:12.5px;font-weight:700;opacity:.9;
+  font-size:15px;font-weight:700;opacity:.9;
 }
 .steps{
   list-style:none;
-  display:flex;flex-direction:column;gap:6px;
+  display:flex;flex-direction:column;gap:7px;
   counter-reset:step;
 }
 .steps li{
-  display:flex;gap:8px;
+  display:flex;gap:9px;
   font-family:'Cormorant Garamond',serif;font-style:italic;
-  font-size:12px;line-height:1.45;
+  font-size:13.5px;line-height:1.45;
 }
 .steps li::before{
   counter-increment:step;
   content:counter(step);
   flex-shrink:0;
-  width:16px;height:16px;border-radius:50%;
+  width:18px;height:18px;border-radius:50%;
   background:var(--c3);color:#fff;
   font-family:Nunito,sans-serif;font-style:normal;
-  font-size:9px;font-weight:800;
+  font-size:10px;font-weight:800;
   display:flex;align-items:center;justify-content:center;
   margin-top:1px;
 }
@@ -231,9 +231,9 @@ h1{
 .cook-unit{
   background:var(--c2);
   border:1px solid var(--c3);
-  border-radius:9px;
-  padding:9px 11px;
-  display:flex;flex-direction:column;gap:7px;
+  border-radius:10px;
+  padding:11px 13px;
+  display:flex;flex-direction:column;gap:8px;
 }
 .cook-unit .unit-head{
   display:flex;justify-content:space-between;align-items:center;gap:8px;
@@ -241,25 +241,25 @@ h1{
 }
 .cook-unit .unit-name{
   font-family:'Cormorant Garamond',serif;font-style:italic;
-  font-size:13px;font-weight:700;
+  font-size:15px;font-weight:700;
   display:flex;align-items:center;gap:6px;
 }
 .cook-unit .unit-name .chev{
-  font-size:9px;opacity:.5;
+  font-size:10px;opacity:.5;
   transition:transform .2s;
 }
 .cook-unit.open .unit-name .chev{transform:rotate(180deg)}
 
 .cook-unit .unit-list{
   display:none;
-  flex-direction:column;gap:4px;
+  flex-direction:column;gap:5px;
   padding:6px 0 2px;
 }
 .cook-unit.open .unit-list{display:flex}
 .cook-unit .unit-list .opt{
-  padding:5px 8px;border-radius:6px;
+  padding:6px 10px;border-radius:7px;
   font-family:'Cormorant Garamond',serif;font-style:italic;
-  font-size:12px;cursor:pointer;
+  font-size:13.5px;cursor:pointer;
   background:transparent;
   border:none;text-align:left;color:var(--c4);
   transition:background .15s;
@@ -269,51 +269,51 @@ h1{
 
 .cook-params{
   display:none;
-  flex-wrap:wrap;gap:5px;
+  flex-wrap:wrap;gap:6px;
 }
 .cook-params.open{display:flex}
 .cook-params .p{
-  padding:3px 9px;
+  padding:4px 11px;
   background:var(--c1);
   border:1px solid var(--c3);
-  border-radius:9px;
+  border-radius:10px;
   font-family:'Cormorant Garamond',serif;font-style:italic;
-  font-size:10.5px;font-weight:600;
+  font-size:12.5px;font-weight:600;
   color:var(--c4);
   white-space:nowrap;
 }
 
 .note{
-  padding:8px 10px;
+  padding:10px 12px;
   background:var(--c2);
   border-left:3px solid var(--c3);
-  border-radius:6px;
+  border-radius:7px;
   font-family:'Cormorant Garamond',serif;font-style:italic;
-  font-size:11.5px;line-height:1.45;
+  font-size:13.5px;line-height:1.45;
   cursor:pointer;
   transition:filter .15s;
 }
 .note:hover{filter:brightness(.97)}
 .note .note-label{
-  font-weight:700;opacity:.7;font-size:10px;
-  display:block;margin-bottom:2px;
+  font-weight:700;opacity:.7;font-size:11px;
+  display:block;margin-bottom:3px;
   font-style:normal;font-family:'Nunito',sans-serif;
   letter-spacing:.04em;
 }
 
 .actions{
-  display:flex;gap:6px;
-  padding:10px 14px 14px;
+  display:flex;gap:7px;
+  padding:11px 14px 14px;
   background:var(--c1);
   border-top:1px solid var(--c3);
   flex-shrink:0;
 }
 .actions button{
   flex:1;
-  padding:9px 6px;
+  padding:10px 6px;
   font-family:'Cormorant Garamond',serif;font-style:italic;
-  font-size:12px;font-weight:700;
-  border-radius:9px;
+  font-size:13.5px;font-weight:700;
+  border-radius:10px;
   border:1px solid var(--c3);
   background:var(--c2);
   color:var(--c4);cursor:pointer;
@@ -324,13 +324,11 @@ h1{
 .actions button.primary{background:var(--c3);color:#fff;border-color:var(--c3)}
 .actions .em{font-style:normal}
 
-/* ДЕМО-кнопка переключения авто/ручное.
-   Нужна ТОЛЬКО для проверки жирности времени. На сайте её не будет. */
 .demo-toggle{
-  margin-top:18px;padding:7px 16px;
+  margin-top:18px;padding:8px 16px;
   background:rgba(230,157,181,.15);color:#e69db5;
   border:1px dashed rgba(230,157,181,.5);border-radius:20px;
-  font-family:'Nunito',sans-serif;font-size:11px;font-weight:700;
+  font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;
   cursor:pointer;letter-spacing:.03em;
 }
 .demo-toggle:hover{background:rgba(230,157,181,.25)}
@@ -344,30 +342,30 @@ h1{
 .modal-bg.open{display:flex}
 .modal{
   background:var(--c1);border:1px solid var(--c3);
-  border-radius:14px;padding:18px 20px;
-  max-width:420px;width:100%;color:var(--c4);
+  border-radius:14px;padding:20px 22px;
+  max-width:440px;width:100%;color:var(--c4);
   box-shadow:0 20px 60px rgba(0,0,0,.6);
 }
 .modal h3{
   font-family:'Cormorant Garamond',serif;font-style:italic;
-  font-size:18px;font-weight:700;margin-bottom:10px;
+  font-size:20px;font-weight:700;margin-bottom:12px;
 }
 .modal textarea{
-  width:100%;min-height:120px;
-  padding:10px 12px;
-  border:1px solid var(--c3);border-radius:9px;
+  width:100%;min-height:130px;
+  padding:11px 13px;
+  border:1px solid var(--c3);border-radius:10px;
   background:var(--c2);color:var(--c4);
   font-family:'Cormorant Garamond',serif;font-style:italic;
-  font-size:14px;line-height:1.45;
+  font-size:15px;line-height:1.5;
   resize:vertical;outline:none;
 }
 .modal textarea:focus{background:#fff}
-.modal-actions{display:flex;gap:8px;margin-top:12px}
+.modal-actions{display:flex;gap:8px;margin-top:14px}
 .modal-actions button{
-  flex:1;padding:9px;
+  flex:1;padding:10px;
   font-family:'Cormorant Garamond',serif;font-style:italic;
-  font-size:13px;font-weight:700;
-  border-radius:9px;border:1px solid var(--c3);
+  font-size:14px;font-weight:700;
+  border-radius:10px;border:1px solid var(--c3);
   background:var(--c2);color:var(--c4);cursor:pointer;
 }
 .modal-actions button.primary{background:var(--c3);color:#fff}
@@ -375,8 +373,8 @@ h1{
 </head>
 <body>
 
-<h1>Карточка · версия 11</h1>
-<p class="sub">Демо-кнопка авто/ручное возвращена. На сайте её не будет.</p>
+<h1>Карточка · версия 12</h1>
+<p class="sub">Все шрифты внутри карточки увеличены. Размер карточки не менялся.</p>
 
 <div class="card">
 
@@ -479,7 +477,6 @@ h1{
 
 </div>
 
-<!-- ДЕМО: для проверки жирности времени. На сайте этой кнопки не будет. -->
 <button class="demo-toggle" id="toggleTimeBtn">[ДЕМО] Переключить время: авто ↔ ручное</button>
 
 <div class="modal-bg" id="modalBg">
