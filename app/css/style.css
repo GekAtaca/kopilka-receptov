@@ -286,3 +286,6 @@ html{
   position:relative;
   z-index:1;
 }
+/* Карточки по высоте контента, а не по высоте ряда */
+.recipes-grid{align-items:start}
+.card{height:auto}
