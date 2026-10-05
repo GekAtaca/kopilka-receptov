@@ -1,5 +1,5 @@
 /* 🍃 Японский · Shippori Mincho · без рамок карточки */
-.card--yaponsky{
+[data-style="yaponsky"] .card{
   --font-head:'Shippori Mincho',serif;
   --font-body:'Shippori Mincho',serif;
   --font-style-head:normal;
@@ -40,22 +40,22 @@
   --actions-btn-font:14px;
   --actions-btn-pad:11px 6px;
 }
-.card--yaponsky .tags span{letter-spacing:.08em}
-.card--yaponsky .ing-title,
-.card--yaponsky .unit-name{letter-spacing:.1em}
-.card--yaponsky .kcal-row{
+[data-style="yaponsky"] .card .tags span{letter-spacing:.08em}
+[data-style="yaponsky"] .card .ing-title,
+[data-style="yaponsky"] .card .unit-name{letter-spacing:.1em}
+[data-style="yaponsky"] .card .kcal-row{
   flex-wrap:nowrap;
   white-space:nowrap;
   letter-spacing:0;
 }
-.card--yaponsky .note{
+[data-style="yaponsky"] .card .note{
   border-left:none;border-radius:0;
   padding-left:20px;position:relative;
 }
-.card--yaponsky .note::before{
+[data-style="yaponsky"] .card .note::before{
   content:"— ";position:absolute;left:6px;opacity:.6;
 }
-.card--yaponsky .note-text{
+[data-style="yaponsky"] .card .note-text{
   display:-webkit-box;-webkit-line-clamp:2;
   -webkit-box-orient:vertical;overflow:hidden;
 }

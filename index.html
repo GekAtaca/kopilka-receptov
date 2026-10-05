@@ -7,13 +7,45 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@400;500;600;700&family=Caveat:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Nunito:wght@400;600;700;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Shippori+Mincho:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="app/css/style.css">
 <link rel="stylesheet" href="app/css/card.css">
 <link rel="stylesheet" href="app/css/palettes/pudrovaya.css">
 <link rel="stylesheet" href="app/css/styles/nezhny.css">
+<link rel="stylesheet" href="app/css/styles/zhurnal.css">
+<link rel="stylesheet" href="app/css/styles/minimalizm.css">
+<link rel="stylesheet" href="app/css/styles/boho.css">
+<link rel="stylesheet" href="app/css/styles/retro.css">
+<link rel="stylesheet" href="app/css/styles/yaponsky.css">
+<link rel="stylesheet" href="app/css/styles/antichny.css">
+<link rel="stylesheet" href="app/css/styles/lileyny.css">
 </head>
-<body data-palette="pudrovaya-nezhnaya">
+<body data-palette="pudrovaya-nezhnaya" data-style="nezhny">
+
+   <!-- ═══════════════════════════════════════════════════
+       ВРЕМЕННАЯ панель стилей — только для проверки!
+       Удалим, когда закончим сравнение 8 стилей.
+       ═══════════════════════════════════════════════════ -->
+  <div id="styleSwitcher" style="
+    position:fixed; top:0; left:0; right:0;
+    background:#1a1618; color:#fff;
+    padding:8px 12px;
+    display:flex; flex-wrap:wrap; gap:6px;
+    z-index:99999;
+    font-family:system-ui, sans-serif;
+    font-size:13px;
+    box-shadow:0 2px 8px rgba(0,0,0,.3);
+  ">
+    <span style="opacity:.6;margin-right:6px;align-self:center">Стиль:</span>
+    <button data-s="nezhny"     style="padding:4px 10px;border-radius:6px;border:1px solid #555;background:#333;color:#fff;cursor:pointer">🌸 Нежный</button>
+    <button data-s="zhurnal"    style="padding:4px 10px;border-radius:6px;border:1px solid #555;background:#333;color:#fff;cursor:pointer">📰 Журнал</button>
+    <button data-s="minimalizm" style="padding:4px 10px;border-radius:6px;border:1px solid #555;background:#333;color:#fff;cursor:pointer">🤍 Минимализм</button>
+    <button data-s="boho"       style="padding:4px 10px;border-radius:6px;border:1px solid #555;background:#333;color:#fff;cursor:pointer">🌿 Бохо</button>
+    <button data-s="retro"      style="padding:4px 10px;border-radius:6px;border:1px solid #555;background:#333;color:#fff;cursor:pointer">📻 Ретро</button>
+    <button data-s="yaponsky"   style="padding:4px 10px;border-radius:6px;border:1px solid #555;background:#333;color:#fff;cursor:pointer">🍃 Японский</button>
+    <button data-s="antichny"   style="padding:4px 10px;border-radius:6px;border:1px solid #555;background:#333;color:#fff;cursor:pointer">🏛 Античный</button>
+    <button data-s="lileyny"    style="padding:4px 10px;border-radius:6px;border:1px solid #555;background:#333;color:#fff;cursor:pointer">🌷 Лилейный</button>
+  </div>
 
   <!-- Заставка -->
   <div id="loader">
@@ -92,7 +124,7 @@
       <div class="recipes-grid">
 
         <!-- Карточка -->
-        <div class="card card--nezhny">
+        <div class="card">
           <div class="card-img">
             <img src="images/01.jpg" alt="" onerror="this.style.display='none'">
             <span class="badge">ЗАВТРАК</span>
@@ -146,7 +178,7 @@
         </div>
 
         <!-- Карточка-заглушка №2 (то же самое, другой заголовок) -->
-        <div class="card card--nezhny">
+        <div class="card">
           <div class="card-img">
             <img src="images/02.jpg" alt="" onerror="this.style.display='none'">
             <span class="badge">ЗАВТРАК</span>
@@ -184,7 +216,7 @@
         </div>
 
         <!-- Карточка-заглушка №3 -->
-        <div class="card card--nezhny">
+        <div class="card">
           <div class="card-img">
             <img src="images/03.jpg" alt="" onerror="this.style.display='none'">
             <span class="badge">ЗАВТРАК</span>
@@ -227,7 +259,7 @@
       </div>
       <div class="recipes-grid">
 
-        <div class="card card--nezhny">
+        <div class="card">
           <div class="card-img">
             <img src="images/04.jpg" alt="" onerror="this.style.display='none'">
             <span class="badge">ОБЕД</span>
@@ -269,7 +301,7 @@
           </div>
         </div>
 
-        <div class="card card--nezhny">
+        <div class="card">
           <div class="card-img">
             <img src="images/05.jpg" alt="" onerror="this.style.display='none'">
             <span class="badge">ОБЕД</span>
@@ -311,7 +343,7 @@
       </div>
       <div class="recipes-grid">
 
-        <div class="card card--nezhny">
+        <div class="card">
           <div class="card-img">
             <img src="images/06.jpg" alt="" onerror="this.style.display='none'">
             <span class="badge">УЖИН</span>
@@ -353,7 +385,7 @@
           </div>
         </div>
 
-        <div class="card card--nezhny">
+        <div class="card">
           <div class="card-img">
             <img src="images/07.jpg" alt="" onerror="this.style.display='none'">
             <span class="badge">УЖИН</span>
@@ -396,7 +428,7 @@
       </div>
       <div class="recipes-grid">
 
-        <div class="card card--nezhny">
+        <div class="card">
           <div class="card-img">
             <img src="images/08.jpg" alt="" onerror="this.style.display='none'">
             <span class="badge">ПЕРЕКУС</span>
@@ -433,7 +465,7 @@
           </div>
         </div>
 
-        <div class="card card--nezhny">
+        <div class="card">
           <div class="card-img">
             <img src="images/09.jpg" alt="" onerror="this.style.display='none'">
             <span class="badge">ПЕРЕКУС</span>
@@ -479,6 +511,12 @@
      // Свернуть / развернуть содержание
     document.getElementById('contentsHead').addEventListener('click', () => {
       document.getElementById('contents').classList.toggle('open');
+    });
+     // Временный переключатель стилей (удалим после проверки)
+    document.querySelectorAll('#styleSwitcher button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.body.dataset.style = btn.dataset.s;
+      });
     });
   </script>
 

@@ -1,5 +1,5 @@
 /* 📻 Ретро · Bitter · капс */
-.card--retro{
+[data-style="retro"] .card{
   --font-head:'Bitter',serif;
   --font-body:'Bitter',serif;
   --font-style-head:normal;
@@ -36,10 +36,10 @@
   --actions-btn-font:14px;
   --actions-btn-pad:11px 6px;
 }
-.card--retro .ing-title,
-.card--retro .unit-name{text-transform:uppercase;letter-spacing:.06em}
-.card--retro .badge{text-transform:uppercase;letter-spacing:.1em}
-.card--retro .note-text{
+[data-style="retro"] .card .ing-title,
+[data-style="retro"] .card .unit-name{text-transform:uppercase;letter-spacing:.06em}
+[data-style="retro"] .card .badge{text-transform:uppercase;letter-spacing:.1em}
+[data-style="retro"] .card .note-text{
   display:-webkit-box;-webkit-line-clamp:2;
   -webkit-box-orient:vertical;overflow:hidden;
 }

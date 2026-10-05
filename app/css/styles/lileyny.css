@@ -1,5 +1,5 @@
 /* 🌷 Лилейный · EB Garamond italic · кнопки-пилюли, точки */
-.card--lileyny{
+[data-style="lileyny"] .card{
   --font-head:'EB Garamond',serif;
   --font-body:'EB Garamond',serif;
   --font-style-head:italic;
@@ -38,9 +38,9 @@
   --actions-btn-font:14px;
   --actions-btn-pad:11px 6px;
 }
-.card--lileyny .title::before{content:"• "}
-.card--lileyny .title::after{content:" •"}
-.card--lileyny .note-text{
+[data-style="lileyny"] .card .title::before{content:"• "}
+[data-style="lileyny"] .card .title::after{content:" •"}
+[data-style="lileyny"] .card .note-text{
   display:-webkit-box;-webkit-line-clamp:2;
   -webkit-box-orient:vertical;overflow:hidden;
 }

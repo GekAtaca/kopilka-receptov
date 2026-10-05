@@ -1,5 +1,5 @@
 /* 🌿 Бохо · Caveat · рукописный */
-.card--boho{
+[data-style="boho"] .card{
   --font-head:'Caveat',cursive;
   --font-body:'Caveat',cursive;
   --font-style-head:normal;
@@ -36,10 +36,10 @@
   --actions-btn-font:15px;
   --actions-btn-pad:11px 6px;
 }
-.card--boho .title::before{content:"🌿 "}
-.card--boho .title::after{content:" 🌿"}
-.card--boho .badge{font-family:'Caveat',cursive;font-weight:700}
-.card--boho .note-text{
+[data-style="boho"] .card .title::before{content:"🌿 "}
+[data-style="boho"] .card .title::after{content:" 🌿"}
+[data-style="boho"] .card .badge{font-family:'Caveat',cursive;font-weight:700}
+[data-style="boho"] .card .note-text{
   display:-webkit-box;-webkit-line-clamp:2;
   -webkit-box-orient:vertical;overflow:hidden;
 }

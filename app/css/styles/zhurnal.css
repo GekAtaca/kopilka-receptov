@@ -1,5 +1,5 @@
 /* 📰 Журнал · Cormorant Garamond прямо · капс */
-.card--zhurnal{
+[data-style="zhurnal"] .card{
   --font-style-head:normal;
   --font-style-body:normal;
   --font-weight-head:600;
@@ -35,13 +35,13 @@
   --actions-btn-font:14px;
   --actions-btn-pad:11px 6px;
 }
-.card--zhurnal .title{text-transform:uppercase;letter-spacing:.06em}
-.card--zhurnal .ing-title,
-.card--zhurnal .unit-name{text-transform:uppercase;letter-spacing:.08em}
-.card--zhurnal .tags span{text-transform:uppercase;letter-spacing:.08em}
-.card--zhurnal .badge{text-transform:uppercase;letter-spacing:.1em}
-.card--zhurnal .ing-toggle{text-transform:uppercase;letter-spacing:.08em}
-.card--zhurnal .note-text{
+[data-style="zhurnal"] .card .title{text-transform:uppercase;letter-spacing:.06em}
+[data-style="zhurnal"] .card .ing-title,
+[data-style="zhurnal"] .card .unit-name{text-transform:uppercase;letter-spacing:.08em}
+[data-style="zhurnal"] .card .tags span{text-transform:uppercase;letter-spacing:.08em}
+[data-style="zhurnal"] .card .badge{text-transform:uppercase;letter-spacing:.1em}
+[data-style="zhurnal"] .card .ing-toggle{text-transform:uppercase;letter-spacing:.08em}
+[data-style="zhurnal"] .card .note-text{
   display:-webkit-box;-webkit-line-clamp:2;
   -webkit-box-orient:vertical;overflow:hidden;
 }
