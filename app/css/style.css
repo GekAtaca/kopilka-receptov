@@ -200,12 +200,14 @@ html{
 .recipes-section{margin-bottom:34px}
 .recipes-section-head{
   display:flex;
-  align-items:baseline;
-  justify-content:space-between;
-  gap:12px;
-  margin-bottom:16px;
-  padding-bottom:10px;
-  border-bottom:1px solid var(--c3);
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  margin:0 auto 20px;
+  padding:6px 22px;
+  width:fit-content;
+  background:rgba(255,255,255,.78);
+  border-radius:20px;
 }
 .recipes-section-title{
   font-family:'Cormorant Garamond',serif;
@@ -219,9 +221,9 @@ html{
   font-family:'Cormorant Garamond',serif;
   font-style:italic;
   font-weight:700;
-  font-size:16px;
+  font-size:20px;
   color:var(--c4);
-  opacity:.55;
+  opacity:.75;
 }
 .recipes-grid{
   display:grid;
@@ -251,9 +253,7 @@ html{
 /* ───── Подложка под заголовки секций (для читаемости на фоне) ───── */
 .recipes-section-title,
 .recipes-section-count{
-  background:rgba(255,255,255,.75);
-  padding:3px 12px;
-  border-radius:8px;
+  /* фон и отступы теперь у всего блока .recipes-section-head */
 }
 /* ───── Фон сайта (на html, чтобы не конфликтовать с фоном body) ───── */
 html{
@@ -266,7 +266,7 @@ html{
 .bg-layer{
   position:fixed;
   inset:0;
-  z-index:-1;
+  z-index:0;
   overflow:hidden;
   pointer-events:none;
   background:var(--c1);
@@ -277,4 +277,9 @@ html{
   object-fit:cover;
   object-position:center;
   display:block;
+}
+/* Контент поверх фона */
+.app{
+  position:relative;
+  z-index:1;
 }
