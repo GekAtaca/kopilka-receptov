@@ -231,3 +231,14 @@ body{
 @media(min-width:1280px){
   .recipes-grid{grid-template-columns:repeat(4,1fr)}
 }
+
+/* ───── Центрирование заголовков секций ───── */
+.recipes-section-head{
+  justify-content:center;
+  gap:8px;
+}
+.recipes-section-count::before{
+  content:"·";
+  margin-right:6px;
+  opacity:.5;
+}
