@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Копилка рецептов · Карта v4 · 5 октября 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#1a1618;color:#e8e3e5;font-family:Nunito,sans-serif;padding:40px 20px;line-height:1.65;font-size:15px}
+.wrap{max-width:980px;margin:0 auto}
+h1{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:700;font-size:46px;color:#e69db5;margin-bottom:8px;line-height:1.1}
+.subtitle{color:#a89aa0;font-size:14px;margin-bottom:48px;font-style:italic}
+h2{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:700;font-size:30px;color:#e69db5;margin:56px 0 20px;padding-bottom:12px;border-bottom:1px solid rgba(230,157,181,.25)}
+h3{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:22px;color:#f0e8eb;margin:32px 0 12px;font-style:italic}
+h4{font-family:Nunito,sans-serif;font-weight:800;font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:#a89aa0;margin:22px 0 10px}
+p{margin:0 0 12px}
+ul,ol{margin:8px 0 16px 24px}
+li{margin-bottom:6px}
+code{font-family:ui-monospace,Consolas,monospace;font-size:13px;background:rgba(230,157,181,.12);color:#f5c6d6;padding:2px 6px;border-radius:4px}
+pre{background:#0f0d0e;border:1px solid rgba(230,157,181,.15);border-radius:8px;padding:16px 18px;overflow-x:auto;font-size:12.5px;line-height:1.55;color:#d8d0d3;margin:12px 0 20px}
+pre code{background:none;padding:0;color:inherit;font-size:inherit}
+.box{background:rgba(230,157,181,.05);border:1px solid rgba(230,157,181,.2);border-radius:10px;padding:18px 22px;margin:16px 0 24px}
+.box.warn{background:rgba(255,180,100,.06);border-color:rgba(255,180,100,.3)}
+.box.done{background:rgba(120,200,140,.06);border-color:rgba(120,200,140,.3)}
+.box.ok{background:rgba(120,180,255,.06);border-color:rgba(120,180,255,.3)}
+.box.note{background:rgba(180,140,255,.06);border-color:rgba(180,140,255,.3)}
+.box.bug{background:rgba(255,80,80,.06);border-color:rgba(255,80,80,.3)}
+.chip{display:inline-block;padding:2px 10px;background:rgba(230,157,181,.15);color:#f5c6d6;border-radius:20px;font-size:12px;font-weight:700;margin:2px 4px 2px 0}
+.chip.done{background:rgba(120,200,140,.18);color:#b0e8c0}
+.chip.no{background:rgba(255,120,120,.15);color:#ffb0b0}
+.chip.wait{background:rgba(255,200,100,.15);color:#ffe0a0}
+.chip.work{background:rgba(120,180,255,.15);color:#b0d8ff}
+.chip.q{background:rgba(180,140,255,.18);color:#d8c0ff}
+.table{width:100%;border-collapse:collapse;margin:14px 0 20px;font-size:13.5px;background:rgba(0,0,0,.2);border-radius:8px;overflow:hidden}
+.table th{background:rgba(230,157,181,.12);color:#f5c6d6;padding:10px 14px;text-align:left;font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid rgba(230,157,181,.2)}
+.table td{padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.05);vertical-align:top}
+.table tr:last-child td{border-bottom:none}
+.quote{border-left:3px solid #e69db5;padding:6px 0 6px 18px;margin:14px 0;color:#c8b8bf;font-style:italic;font-size:14px}
+.stamp{display:inline-block;padding:4px 12px;background:rgba(230,157,181,.15);border-radius:20px;font-size:12px;color:#f5c6d6;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:8px}
+nav.toc{background:rgba(0,0,0,.3);border:1px solid rgba(230,157,181,.15);border-radius:10px;padding:20px 28px;margin:32px 0 40px}
+nav.toc ol{margin:0;padding-left:24px;column-count:2;column-gap:32px}
+@media(max-width:680px){nav.toc ol{column-count:1}}
+nav.toc a{color:#e8e3e5;text-decoration:none;font-weight:600;font-size:14px}
+nav.toc a:hover{color:#e69db5}
+.footer{margin-top:60px;padding-top:24px;border-top:1px solid rgba(230,157,181,.2);color:#a89aa0;font-size:13px;text-align:center}
+.comment{border-left:3px solid #b48cff;background:rgba(180,140,255,.05);padding:10px 16px;border-radius:0 8px 8px 0;margin:12px 0 18px;font-size:14px}
+.comment::before{content:"💡 Комментарий ИИ";display:block;font-weight:800;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#c8b0ff;margin-bottom:6px;font-family:Nunito,sans-serif}
+.conflict{border-left:3px solid #ffb064;background:rgba(255,180,100,.06);padding:10px 16px;border-radius:0 8px 8px 0;margin:12px 0 18px;font-size:14px}
+.conflict::before{content:"⚠️ Нестыковка / риск";display:block;font-weight:800;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#ffc890;margin-bottom:6px;font-family:Nunito,sans-serif}
+.status-line{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<span class="stamp">Карта v4 · 5 октября 2026 · после сессии фонов и стилей</span>
+<h1>Копилка рецептов</h1>
+<p class="subtitle">Единый документ проекта. Заменяет карту v3. Что сделано, что нет, где конфликты, как связаны функции. Открытые вопросы — внутри своих тем.</p>
+
+<nav class="toc">
+<ol>
+<li><a href="#meta">О документе</a></li>
+<li><a href="#who">Кто пользователь</a></li>
+<li><a href="#ai">Как работать с ИИ</a></li>
+<li><a href="#tech">Техническая база</a></li>
+<li><a href="#design">Оформление</a></li>
+<li><a href="#nav">Навигация и шапка</a></li>
+<li><a href="#main">Главный экран</a></li>
+<li><a href="#card-small">Карточка в списке</a></li>
+<li><a href="#card-big">Карточка рецепта (большая)</a></li>
+<li><a href="#cat">Категории и теги</a></li>
+<li><a href="#search">Поиск и фильтры</a></li>
+<li><a href="#plan">План</a></li>
+<li><a href="#pantry">Кладовая</a></li>
+<li><a href="#add">Добавление рецепта</a></li>
+<li><a href="#settings">Настройки</a></li>
+<li><a href="#data">Данные и хранилище</a></li>
+<li><a href="#sync">Синхронизация</a></li>
+<li><a href="#bugs">Известные баги браузеров</a></li>
+<li><a href="#order">Порядок работы</a></li>
+<li><a href="#where">Итог: где мы сейчас</a></li>
+</ol>
+</nav>
+
+<!-- ============================================ -->
+<h2 id="meta">1 · О документе</h2>
+
+<p>Это <b>четвёртая версия</b> карты. Заменяет <code>Структурная карта 3.html</code>.</p>
+
+<h4>Легенда</h4>
+<div class="status-line">
+<span class="chip done">✅ сделано</span>
+<span class="chip work">🔄 в работе</span>
+<span class="chip wait">⏳ отложено</span>
+<span class="chip q">❓ открытый вопрос</span>
+<span class="chip no">❌ убрано</span>
+</div>
+
+<p>Внутри разделов — статусы. После разделов бывают блоки:</p>
+<ul>
+<li><b>💡 Комментарий ИИ</b> — предложение или улучшение.</li>
+<li><b>⚠️ Нестыковка / риск</b> — то, что может помешать или противоречит.</li>
+</ul>
+
+<h4>Что делали по датам</h4>
+<table class="table">
+<tr><th>Дата</th><th>Что было</th></tr>
+<tr><td>~сентябрь 2026</td><td>Первая карта, showcase, 7 стилей, 2 палитры</td></tr>
+<tr><td>2 октября 2026</td><td>Карта v2 + дополнения. Реальный сайт, index.html, структура папок</td></tr>
+<tr><td>3 октября 2026</td><td>Карта v3. 8-й стиль (Лилейный), 9-я палитра (Фиолетовая), шапка, содержание, карточка</td></tr>
+<tr><td>5 октября 2026</td><td>Карта v4. Перенос карточки в реальный проект, переключатель 8 стилей, фикс iOS Safari, работа с фонами, разная высота карточек, обновление панели фонов</td></tr>
+</table>
+
+<!-- ============================================ -->
+<h2 id="who">2 · Кто пользователь</h2>
+
+<div class="box warn">
+<p><b>Личный проект для себя.</b> Не для клиента, не для портфолио.</p>
+</div>
+
+<h4>Главное</h4>
+<ul>
+<li><b>Не программист.</b> Работает в VS Code и GitHub Desktop, код копирует.</li>
+<li><b>Windows 11.</b> iPhone 13, iPad Air 11 (M2), ПК.</li>
+<li><b>Внимательна к деталям.</b> Заметит нечитаемый текст, кривую линию, лишние полосы.</li>
+<li><b>Устаёт от длинных инструкций.</b> Один шаг за раз: сделала → сохранила → обновила → показала → следующий.</li>
+<li><b>Лучше понимает визуально.</b> Скриншоты работают. Длинные тексты — хуже.</li>
+<li><b>Есть вкус.</b> Отклоняет то, что не подходит, объясняет почему.</li>
+<li><b>Честная.</b> Скажет прямо: «не нравится», «убери», «ты торопишься».</li>
+</ul>
+
+<div class="comment">
+В прошлой сессии (5 октября) ИИ несколько раз нарушал правило «сначала решение, потом код» — стрелял кодом, отвечал на незаданные вопросы. Пользователь это заметил и попросил остановиться. <b>Важно: не спешить. Сначала согласовать — потом код.</b>
+</div>
+
+<!-- ============================================ -->
+<h2 id="ai">3 · Как работать с ИИ</h2>
+
+<ol>
+<li><b>Перед отправкой кода — свериться с этой картой.</b> Не по памяти.</li>
+<li><b>Один шаг за раз.</b> Сделала → сохранила → обновила → показала → следующий.</li>
+<li><b>Код — целым файлом или целым блоком,</b> не «замени строчку».</li>
+<li><b>Сложное дроби на шаги.</b> План → черновик → проверка → правки.</li>
+<li><b>Давай альтернативы,</b> где они есть (2–3 варианта).</li>
+<li><b>Пользователь поправил — исправляйся сразу.</b></li>
+<li><b>Если сомневаешься — спроси,</b> не додумывай.</li>
+<li><b>Сначала решение — потом код.</b> Это важное правило, добавлено после 5 октября.</li>
+<li><b>Не спешить.</b> Лучше уточнить и сделать один раз, чем дважды.</li>
+</ol>
+
+<h4>Что пользователь уже знает</h4>
+<p>
+<span class="chip done">VS Code</span>
+<span class="chip done">GitHub Desktop</span>
+<span class="chip done">Live Server</span>
+<span class="chip done">Commit / Push</span>
+<span class="chip done">GitHub Pages</span>
+<span class="chip done">HTML / CSS</span>
+<span class="chip done">Тег, класс</span>
+<span class="chip done">DevTools (F12)</span>
+</p>
+
+<!-- ============================================ -->
+<h2 id="tech">4 · Техническая база</h2>
+
+<h4>Инструменты</h4>
+<table class="table">
+<tr><th>Инструмент</th><th>Статус</th><th>Детали</th></tr>
+<tr><td>VS Code</td><td><span class="chip done">✅</span></td><td>Русский, расширение Live Server</td></tr>
+<tr><td>GitHub</td><td><span class="chip done">✅</span></td><td>Логин: <code>GekAtaca</code>, 2FA</td></tr>
+<tr><td>GitHub Desktop</td><td><span class="chip done">✅</span></td><td>Связан с аккаунтом</td></tr>
+<tr><td>GitHub Pages</td><td><span class="chip done">✅</span></td><td><code>gekataca.github.io/kopilka-receptov</code></td></tr>
+</table>
+
+<h4>Рабочий цикл</h4>
+<ol>
+<li>Правка в VS Code → <b>Ctrl+S</b>.</li>
+<li>Просмотр через <b>Live Server</b> (правой по коду → «Open with Live Server»).</li>
+<li>Обновить страницу: <b>Ctrl+F5</b> (на ПК). На iPhone/iPad — потянуть вниз.</li>
+<li>GitHub Desktop: описание → <b>Commit to main</b> → <b>Push origin</b>.</li>
+<li>Через 1–2 минуты сайт обновлён. Проверить на iPhone/iPad.</li>
+</ol>
+
+<div class="box warn">
+<p><b>Важно:</b> рабочая папка — <code>Документы → GitHub → kopilka-receptov</code>. Не на Рабочем столе.</p>
+</div>
+
+<div class="box ok">
+<p><b>Совет:</b> iPhone/iPad Safari агрессивно кэширует CSS/JS. Если изменения не видны — проверь сайт в <b>приватном окне</b>. Это не сброс кэша, но показывает актуальную версию.</p>
+</div>
+
+<h4>Структура проекта (актуальная)</h4>
+<pre><code>kopilka-receptov/
+├── index.html              ← главная страница сайта
+├── favicon.svg             ← иконка сайта
+├── robots.txt              ← запрет индексации
+├── showcase.html           ← витрина стилей (временная)
+├── README.md
+├── app/                    ← папка реального сайта
+│   ├── css/
+│   │   ├── style.css       ← база сайта (шапка, тулбар, содержание, секции)
+│   │   ├── card.css        ← база карточки
+│   │   ├── palettes/       ← 9 файлов палитр
+│   │   │   ├── pudrovaya.css
+│   │   │   ├── medovaya.css
+│   │   │   ├── shalfeynaya.css
+│   │   │   ├── nebesnaya.css
+│   │   │   ├── lavandovaya.css
+│   │   │   ├── vishnyovaya.css
+│   │   │   ├── kakao.css
+│   │   │   ├── grafit.css
+│   │   │   └── fioletovaya.css
+│   │   └── styles/         ← 8 файлов стилей карточки
+│   │       ├── nezhny.css      ← заглушка (эталон = переменные по умолчанию)
+│   │       ├── zhurnal.css
+│   │       ├── minimalizm.css
+│   │       ├── boho.css
+│   │       ├── retro.css
+│   │       ├── yaponsky.css
+│   │       ├── antichny.css
+│   │       └── lileyny.css
+│   ├── js/                 ← пока пусто
+│   └── img/                ← пока пусто
+├── css/                    ← база витрины (временная, будет удалена)
+│   ├── base.css
+│   ├── palettes/           ← копия для витрины
+│   └── styles/             ← копия для витрины
+└── images/                 ← 20 фоновых картинок (01–20, без 06)</code></pre>
+
+<h4>Файлы, которых пока нет</h4>
+<table class="table">
+<tr><th>Файл</th><th>Когда появится</th></tr>
+<tr><td><code>manifest.json</code></td><td>При PWA (отложено)</td></tr>
+<tr><td><code>app/js/*.js</code></td><td>При разработке логики</td></tr>
+</table>
+
+<h4>Временные файлы, подлежащие удалению</h4>
+<ul>
+<li><code>test-card8.html</code> — прогон карточки по 8 стилям (уже не нужен).</li>
+<li><code>test-card.html</code> — если есть.</li>
+<li><code>showcase.html</code> — витрина стилей/палитр (после финализации панели 🎨).</li>
+<li>Папка <code>css/</code> в корне (копия палитр и стилей для витрины).</li>
+</ul>
+
+<!-- ============================================ -->
+<h2 id="design">5 · Оформление: стили, палитры, фоны, темы</h2>
+
+<div class="box ok">
+<b>Идея.</b> Оформление собирается из 4 независимых слоёв. Пользователь выбирает любую комбинацию:
+<ol>
+<li><b>Стиль</b> — 8 штук</li>
+<li><b>Палитра + оттенок</b> — 9 палитр × 5 оттенков = <b>45 цветовых комбинаций</b></li>
+<li><b>Фон</b> — 20 базовых + свои</li>
+<li><b>Тема</b> — светлая / тёмная (инверсия)</li>
+</ol>
+</div>
+
+<h3>5.1. Стили <span class="chip done">✅ 8 согласованы и работают</span></h3>
+
+<table class="table">
+<tr><th>№</th><th>Стиль</th><th>Класс</th><th>Шрифт</th><th>Особенность</th></tr>
+<tr><td>1</td><td>🌸 Нежный</td><td><code>data-style="nezhny"</code></td><td>Cormorant italic</td><td>Эталон. Углы 14px, курсив</td></tr>
+<tr><td>2</td><td>📰 Журнал</td><td><code>data-style="zhurnal"</code></td><td>Cormorant прямой</td><td>Углы 2px, капс</td></tr>
+<tr><td>3</td><td>🤍 Минимализм</td><td><code>data-style="minimalizm"</code></td><td>Nunito</td><td>Углы 4px, без декора</td></tr>
+<tr><td>4</td><td>🌿 Бохо</td><td><code>data-style="boho"</code></td><td>Caveat</td><td>Рукописный, листики 🌿</td></tr>
+<tr><td>5</td><td>📻 Ретро</td><td><code>data-style="retro"</code></td><td>Bitter</td><td>Капс, прямой</td></tr>
+<tr><td>6</td><td>🍃 Японский</td><td><code>data-style="yaponsky"</code></td><td>Shippori Mincho</td><td>Без рамки карточки</td></tr>
+<tr><td>7</td><td>🏛 Античный</td><td><code>data-style="antichny"</code></td><td>Playfair Display</td><td>Двойная рамка, ромбы ◆</td></tr>
+<tr><td>8</td><td>🌷 Лилейный</td><td><code>data-style="lileyny"</code></td><td>EB Garamond italic</td><td>Кнопки-пилюли, точки ••</td></tr>
+</table>
+
+<div class="box done">
+<b>Как работает.</b> Стиль задаётся атрибутом <code>data-style="xxx"</code> на <code>&lt;body&gt;</code>. Все 8 CSS-файлов подключены в <code>&lt;head&gt;</code> через <code>&lt;link&gt;</code>. Активируется только тот, что совпадает с <code>data-style</code>. Переключение — мгновенное, без перезагрузки.
+</div>
+
+<div class="comment">
+«Нежный» — эталон. В <code>nezhny.css</code> только комментарий — он ничего не переопределяет. Все переменные по умолчанию стоят в <code>card.css</code>.
+</div>
+
+<h3>5.2. Палитры <span class="chip done">✅ 9 согласованы, 45 комбинаций</span></h3>
+
+<p>Каждая палитра имеет <b>5 оттенков</b>: Нежная · Светлая · Насыщенная · Глубокая · Яркая. Итого <b>9 × 5 = 45 комбинаций</b>.</p>
+
+<table class="table">
+<tr><th>№</th><th>Палитра</th><th>Файл</th></tr>
+<tr><td>1</td><td>🌸 Пудровая</td><td><code>pudrovaya.css</code></td></tr>
+<tr><td>2</td><td>🌾 Медовая</td><td><code>medovaya.css</code></td></tr>
+<tr><td>3</td><td>🌿 Шалфейная</td><td><code>shalfeynaya.css</code></td></tr>
+<tr><td>4</td><td>☁️ Небесная</td><td><code>nebesnaya.css</code></td></tr>
+<tr><td>5</td><td>🍇 Лавандовая</td><td><code>lavandovaya.css</code></td></tr>
+<tr><td>6</td><td>🍒 Вишнёвая</td><td><code>vishnyovaya.css</code></td></tr>
+<tr><td>7</td><td>🌰 Какао</td><td><code>kakao.css</code></td></tr>
+<tr><td>8</td><td>🌑 Графит</td><td><code>grafit.css</code></td></tr>
+<tr><td>9</td><td>💜 Фиолетовая</td><td><code>fioletovaya.css</code></td></tr>
+</table>
+
+<p><b>Как работает.</b> Палитра задаётся атрибутом <code>data-palette="pudrovaya-nezhnaya"</code> на <code>&lt;body&gt;</code>. Задаёт 4 CSS-переменные: <code>--c1</code>, <code>--c2</code>, <code>--c3</code>, <code>--c4</code>. Формат: <code>[data-palette="название-оттенок"]</code>.</p>
+
+<div class="box warn">
+<b>Сейчас подключена одна палитра</b> — Пудровая нежная (<code>data-palette="pudrovaya-nezhnaya"</code>). Переключение палитр пока не реализовано (это часть панели 🎨).
+</div>
+
+<div class="comment">
+Правило: <b>без неона</b>. Цвета приглушённые, спокойные, «вечерние».
+</div>
+
+<h3>5.3. Фоны <span class="chip work">🔄 работает, но не финализировано</span></h3>
+
+<p>В папке <code>images/</code> — <b>20 картинок</b> (файлы 01–20, номер 06 отсутствует).</p>
+
+<div class="box done">
+<b>Как работает фон в коде.</b>
+<ol>
+<li>На странице два слоя: <code>bg-blur</code> (размытая) и <code>bg-sharp</code> (чёткая) — оба внутри <code>.bg-layer</code>.</li>
+<li>Слой <code>.bg-layer</code> — <code>position:fixed; z-index:0; inset:0</code>.</li>
+<li><b>Фон — НЕ через <code>background-image</code></b> (в этом проекте Safari не отрисовывает) — только через <code>&lt;img&gt;</code>.</li>
+<li>При выборе картинки в панели — оба изображения получают одинаковый <code>src</code>.</li>
+</ol>
+</div>
+
+<div class="conflict">
+<b>Открытый вопрос: как показывать фон.</b> Мы обсуждали три подхода, ни один не принят окончательно:
+<ul>
+<li><b>A. Простой.</b> Картинка обрезается по <code>object-fit:cover</code> — заполняет весь экран. Полос не бывает, но вертикальные картинки на горизонтальных экранах сильно обрезаются.</li>
+<li><b>Б. Размытая подложка.</b> Внизу — размытая картинка на весь экран, сверху — чёткая. Пробовали, не понравилось («полоски»).</li>
+<li><b>В. Плавное растворение.</b> Чёткая картинка целиком (<code>object-fit:contain</code>) + маска по краям + размытая подложка. Обсуждали, код не написан.</li>
+</ul>
+</div>
+
+<div class="conflict">
+<b>Открытый вопрос: редактор позиции фона.</b> Идея была: рамка, которую пользователь таскает, чтобы выбрать нужную часть картинки. Попробовали — не заработало (превью уже обрезано, координаты не совпадают). <b>Не решено.</b>
+</div>
+
+<div class="comment">
+<b>Компромисс на будущее:</b> три отдельных набора позиций (ПК / iPad / iPhone), потому что пропорции экранов разные. Настройка на одном устройстве не должна влиять на другое.
+</div>
+
+<h4>Обновление панели фонов <span class="chip done">✅ сделано</span></h4>
+<ul>
+<li>Кнопка <code>06</code> удалена (файла нет).</li>
+<li>Добавлены кнопки для <code>17</code>, <code>18</code>, <code>19</code>, <code>20</code>.</li>
+</ul>
+
+<h3>5.4. Светлая / тёмная тема <span class="chip wait">⏳ отложено</span></h3>
+
+<div class="box ok">
+<b>Решение:</b> тёмная тема = <b>инверсия</b> светлой. Оттенки меняются местами: фон — из <code>--c4</code>, текст — из <code>--c1</code>. Акценты <code>--c3</code> остаются. Работает автоматически для всех 45 комбинаций.
+</div>
+
+<p>Реализация — позже, вместе с панелью 🎨.</p>
+
+<h3>5.5. Конструктор стилей — панель 🎨 <span class="chip wait">⏳ отложено, но зарезервировано</span></h3>
+
+<div class="box">
+<b>Что будет в панели 🎨:</b>
+<pre><code>🎨 Оформление
+├── Стиль      (8 вариантов)
+├── Палитра    (9 вариантов)
+├── Оттенок    (5 на каждую палитру)
+├── Фон        (20 базовых + свои)
+│   └── Позиция картинки (если решим — рамка или стрелки)
+└── Тема       (🌞 светлая / 🌙 тёмная)</code></pre>
+</div>
+
+<div class="box warn">
+<b>Изменение от v3:</b> кнопка <b>🌙 убрана</b> из шапки. Тема переезжает в панель 🎨. Раньше было 4 иконки (<code>🌙 🎨 🔔 ⚙</code>), стало <b>3</b> (<code>🎨 🔔 ⚙</code>).
+</div>
+
+<div class="box note">
+<b>Зарезервировано: кнопка ⏲ «Общий таймер».</b> Расположение — <b>слева от 🎨</b>. Показывает: какие таймеры запущены, к каким рецептам привязаны. Реализация — позже.
+</div>
+
+<div class="comment">
+<b>Временная тёмная панель</b> сверху страницы — тестовая. Внутри: 8 кнопок стилей + 21 кнопка фонов. Когда сделаем панель 🎨 — тёмная панель удалится.
+</div>
+
+<!-- ============================================ -->
+<h2 id="nav">6 · Навигация и шапка</h2>
+
+<h3>6.1. Шапка <span class="chip done">✅ в index.html</span></h3>
+
+<div class="box done">
+<ul>
+<li>Название «Копилка рецептов» курсивом Cormorant, 22px.</li>
+<li>Подпись «Зажги свечку. Включи музыку. Наслаждайся — время ТВОРИТЬ ✨».</li>
+<li><b>3 круглых иконки справа:</b> 🎨 🔔 ⚙ (было 4, убрали 🌙).</li>
+<li>Шапка не закрепляется — уезжает при скролле.</li>
+</ul>
+</div>
+
+<h3>6.2. Тулбар поиска <span class="chip done">✅ отрисовано</span></h3>
+
+<p>Под шапкой три кнопки: <b>🔍 Поиск</b> · <b>🏷 Фильтры</b> · <b>🎲 Случайный</b>. Первая — залита акцентом. Логика не подключена.</p>
+
+<h3>6.3. Нижняя навигация <span class="chip wait">⏳ не сделано</span></h3>
+
+<div class="box">
+<div style="font-family:monospace;font-size:13px">
+[🍳 Рецепты] [❤ Избранное] [📅 План] [🧺 Кладовая]
+</div>
+</div>
+
+<table class="table">
+<tr><th>Кнопка</th><th>Что открывает</th></tr>
+<tr><td>🍳 Рецепты</td><td>Главный экран со всеми категориями</td></tr>
+<tr><td>❤ Избранное</td><td>Две вкладки: <b>❤ Любимые</b> / <b>🔖 Хочу приготовить</b></td></tr>
+<tr><td>📅 План</td><td>Три вкладки: <b>👨‍👩‍👧 Семейный</b> / <b>🧒 Для ребёнка</b> / <b>🎉 События</b></td></tr>
+<tr><td>🧺 Кладовая</td><td>Две вкладки: <b>🛒 Купить</b> / <b>🏠 Есть дома</b></td></tr>
+</table>
+
+<h3>6.4. Плавающие кнопки <span class="chip wait">⏳ не сделано</span></h3>
+
+<div class="box">
+<div style="font-family:monospace;font-size:13px">
+[📖] — Содержание
+[🔍] — Поиск
+[➕] — Добавить рецепт
+[↑]  — Наверх
+</div>
+</div>
+
+<!-- ============================================ -->
+<h2 id="main">7 · Главный экран</h2>
+
+<h3>7.1. Содержание <span class="chip done">✅ сделано</span></h3>
+
+<div class="box done">
+<p>Блок «📖 СОДЕРЖАНИЕ» с треугольником, сворачивается. Внутри два ряда плашек:</p>
+<ul>
+<li><b>По приёму:</b> 🌅 Завтраки · 🍽 Обеды · 🌙 Ужины · 🍎 Перекусы</li>
+<li><b>По типу:</b> 🥗 Салаты · 🍲 Супы · 🍰 Десерты · 🍞 Выпечка · 🥟 Закуски · 🍚 Гарниры · 🥤 Напитки · 🥫 Соусы</li>
+</ul>
+<p>Раскрыто по умолчанию.</p>
+</div>
+
+<h3>7.2. Секции рецептов <span class="chip done">✅ сделано</span></h3>
+
+<div class="box done">
+<p>Четыре секции по приёму пищи:</p>
+<pre><code>🌅 ЗАВТРАКИ · 34   (3 карточки-демо)
+🍽 ОБЕДЫ · 28      (2 карточки-демо)
+🌙 УЖИНЫ · 26      (2 карточки-демо)
+🍎 ПЕРЕКУСЫ · 19   (2 карточки-демо)</code></pre>
+</div>
+
+<h4>Плашка заголовка секции</h4>
+<ul>
+<li>Одна общая плашка (не две отдельные).</li>
+<li>По центру: <code>🌅 ЗАВТРАКИ · 34</code>.</li>
+<li>Фон <code>rgba(255,255,255,.78)</code>, скругление 20px.</li>
+<li>Счётчик — 20px, <code>opacity:.75</code>, на одной вертикальной оси с заголовком.</li>
+<li>Ширина — по контенту, <code>margin:0 auto</code>.</li>
+</ul>
+
+<h4>Сетка карточек</h4>
+<table class="table">
+<tr><th>Устройство</th><th>В ряд</th></tr>
+<tr><td>iPhone</td><td>1</td></tr>
+<tr><td>iPad</td><td>2–3</td></tr>
+<tr><td>ПК</td><td>3–4</td></tr>
+</table>
+
+<div class="box ok">
+<b>Карточки — разной высоты.</b> Не растягиваются до самой высокой в ряду. Это сделано осознанно: короткие карточки — меньше, фон между ними виден. В CSS: <code>.recipes-grid{align-items:start}</code> и <code>.card{height:auto}</code>.
+</div>
+
+<div class="box warn">
+<b>Что ещё не сделано:</b> секции «Все категории» (по типу блюда — салаты, супы и т.д.), кнопка «Показать всё / Скрыть» на каждой секции, реальные рецепты (сейчас заглушки).
+</div>
+
+<!-- ============================================ -->
+<h2 id="card-small">8 · Карточка в списке (маленькая) <span class="chip done">✅ одобрена</span></h2>
+
+<div class="box done">
+<b>Статус:</b> вид заморожен. Работает во всех 8 стилях. Проверена на iPhone, iPad и ПК.
+</div>
+
+<h4>Структура</h4>
+<ol>
+<li><b>Фото</b> (150px высотой). Поверх:
+  <ul>
+    <li>Слева вверху — бейдж категории (без эмодзи).</li>
+    <li>Справа вверху — 5 иконок: ❤ ⏱ 👨‍🍳 📅 🔖.</li>
+  </ul>
+</li>
+<li><b>Название</b> курсивом Cormorant.</li>
+<li><b>Теги</b> (до 5 главных).</li>
+<li><b>КБЖУ + время</b>.</li>
+<li><b>Ингредиенты</b> с чекбоксами.</li>
+<li><b>Кнопка «▼ показать все»</b>.</li>
+<li><b>Блок устройства готовки.</b></li>
+<li><b>Заметка</b> (если есть).</li>
+<li><b>Кнопки внизу:</b> <code>[🛒 N] [✎ Изменить] [🕐 3 из 5]</code>.</li>
+</ol>
+
+<h4>Логика (утверждённая)</h4>
+<table class="table">
+<tr><th>Элемент</th><th>Как работает</th></tr>
+<tr><td>Порции +/−</td><td>Меняют КБЖУ и граммовки. Время — не меняют.</td></tr>
+<tr><td>Галочки ингредиентов</td><td>Ставятся / снимаются.</td></tr>
+<tr><td>🛒 N</td><td>N = все ингредиенты, если ничего не отмечено; иначе — только отмеченные.</td></tr>
+<tr><td>5 иконок на фото</td><td>Переключаются вкл/выкл.</td></tr>
+<tr><td>Смена устройства</td><td>Ингредиенты + шаги + КБЖУ меняются целиком.</td></tr>
+</table>
+
+<div class="conflict">
+<b>Смена устройства и корзина.</b> Если на «Сковороде» выбраны ингредиенты, а потом переключили на «Духовку» (там другой список) — что с корзиной? <b>Не решено.</b>
+</div>
+
+<div class="conflict">
+<b>Округление штучных продуктов.</b> «1/2 шт.» → «1 шт.» → «1½ шт.». Округлять ли до целых? <b>Не решено.</b>
+</div>
+
+<!-- ============================================ -->
+<h2 id="card-big">9 · Карточка рецепта (большая) <span class="chip wait">⏳ спроектирована</span></h2>
+
+<div class="box warn">
+<b>Статус:</b> спроектирована, не реализована. Маленькая карточка — демка вида.
+</div>
+
+<h4>Структура</h4>
+<pre><code>[ФОТО]  ✕  ←  (поверх фото)
+❤  ⏱  👨‍🍳  🔖  📅  ← кнопки в шапке
+──────────────────────────
+Название
+Категория
+КБЖУ
+⏱ Общее время (разбивка при наведении)
+──────────────────────────
+🏷 ТЕГИ: [5 главных] [+ ещё]
+──────────────────────────
+📝 Ингредиенты (квадратики/кружки)
+🔢 Порции: [−] 1 [+]
+──────────────────────────
+👨‍🍳 Шаги (нумерованные + таймер)
+──────────────────────────
+🍳 Блок устройств
+──────────────────────────
+📌 Моя заметка
+──────────────────────────
+[🛒 3] [📝] [📅] [✎] [🕐 Версия] [⋯]</code></pre>
+
+<h4>Мультивариантность</h4>
+<div class="box">
+<p>У рецепта может быть 1–4 варианта: 🔥 Аэрогриль · ♨️ Духовка · 🍳 Сковорода · 🥘 Мультиварка. У каждого — свои ингредиенты, шаги, КБЖУ, время, фото, избранное.</p>
+</div>
+
+<div class="conflict">
+<b>Куда открывается большая карточка</b> — модалка поверх списка или отдельный экран? <b>Не решено.</b>
+</div>
+
+<!-- ============================================ -->
+<h2 id="cat">10 · Категории и теги</h2>
+
+<div class="box ok">
+<b>Правило:</b> категории и теги <b>не дублируются</b>.
+</div>
+
+<h3>10.1. Категории</h3>
+
+<h4>Приём пищи (4)</h4>
+<p><span class="chip">🌅 Завтраки</span> <span class="chip">🍽 Обеды</span> <span class="chip">🌙 Ужины</span> <span class="chip">🍎 Перекусы</span></p>
+
+<h4>Тип блюда (8)</h4>
+<p><span class="chip">🥗 Салаты</span> <span class="chip">🍲 Супы</span> <span class="chip">🍰 Десерты</span> <span class="chip">🍞 Выпечка</span> <span class="chip">🥟 Закуски</span> <span class="chip">🍚 Гарниры</span> <span class="chip">🥤 Напитки</span> <span class="chip">🥫 Соусы</span></p>
+
+<h4>Дополнительные</h4>
+<p><span class="chip">🎉 Праздничные</span> <span class="chip">🥦 ПП</span> <span class="chip">🧒 Детские</span> <span class="chip">🧊 Заморозка</span> <span class="chip">🍱 На работу</span> <span class="chip">🎒 В дорогу</span> <span class="chip">🏡 На дачу</span></p>
+
+<h3>10.2. Теги — 16 групп, ~80 штук</h3>
+
+<table class="table">
+<tr><th>№</th><th>Группа</th><th>Примеры</th></tr>
+<tr><td>1</td><td>Вкус</td><td>сладкое, солёное, острое, кислое</td></tr>
+<tr><td>2</td><td>Настроение</td><td>сытное, лёгкое, согревающее</td></tr>
+<tr><td>3</td><td>Диета</td><td>ПП, безглютеновое, вегетарианское</td></tr>
+<tr><td>4</td><td>Способ готовки</td><td>в аэрогриле, без готовки</td></tr>
+<tr><td>5</td><td>Сложность</td><td>простое, среднее, сложное</td></tr>
+<tr><td>6</td><td>Повод</td><td>на праздник, для гостей</td></tr>
+<tr><td>7</td><td>Сезон</td><td>летнее, зимнее, новогоднее</td></tr>
+<tr><td>8</td><td>Кухня</td><td>итальянское, азиатское</td></tr>
+<tr><td>9</td><td>Текстура</td><td>хрустящее, кремовое</td></tr>
+<tr><td>10</td><td>Температура</td><td>горячее, холодное, тёплое</td></tr>
+<tr><td>11</td><td>Порция</td><td>на одного, для семьи</td></tr>
+<tr><td>12</td><td>Кому</td><td>для детей, для взрослых</td></tr>
+<tr><td>13</td><td>Время суток</td><td>утреннее, вечернее</td></tr>
+<tr><td>14</td><td>Стиль питания</td><td>раздельное, интервальное</td></tr>
+<tr><td>15</td><td>Полезность</td><td>много белка, без сахара</td></tr>
+<tr><td>16</td><td>Особенность</td><td>быстро, из простых</td></tr>
+</table>
+
+<!-- ============================================ -->
+<h2 id="search">11 · Поиск и фильтры</h2>
+
+<h3>11.1. Поиск</h3>
+<table class="table">
+<tr><th>Уровень</th><th>Что делает</th></tr>
+<tr><td>1</td><td>Точное совпадение (название, ингредиенты)</td></tr>
+<tr><td>2</td><td>Синонимы («курица = филе = грудка»)</td></tr>
+<tr><td>3</td><td>По типу блюда (по кнопке «🔎 Искать шире»)</td></tr>
+</table>
+
+<h4>Голосовой ввод</h4>
+<ul>
+<li>Кнопка 🎤 в поиске (если поддерживается браузером)</li>
+<li>Микрофон клавиатуры iPhone/iPad</li>
+</ul>
+
+<h3>11.2. Фильтры (фасетные)</h3>
+<table class="table">
+<tr><th>Кнопка</th><th>Подкатегории</th></tr>
+<tr><td>⏱ Время</td><td>15 / 30 / 40 / 60 / 90 / 120 / 120+</td></tr>
+<tr><td>🥩 Основное</td><td>курица / индейка / говядина / свинина / рыба...</td></tr>
+<tr><td>🥦 Полезное</td><td>с овощами / много белка / без жарки...</td></tr>
+<tr><td>🍰 Тип</td><td>по категориям типа блюда</td></tr>
+<tr><td>🏠 Из дома</td><td>вкл/выкл</td></tr>
+<tr><td>💰 Из простых</td><td>вкл/выкл</td></tr>
+<tr><td>🚫 Без масла</td><td>вкл/выкл</td></tr>
+<tr><td>👩‍🍳 От Джулии</td><td>вкл/выкл</td></tr>
+<tr><td>✍️ Мои</td><td>вкл/выкл</td></tr>
+<tr><td>🏷 Теги</td><td>все 16 групп</td></tr>
+<tr><td>📋 Неполные карточки</td><td>без фото / без КБЖУ / без шагов</td></tr>
+</table>
+
+<!-- ============================================ -->
+<h2 id="plan">12 · План</h2>
+
+<pre><code>[📅 План]
+[👨‍👩‍👧 Семейный]  [🧒 Для ребёнка]  [🎉 События]</code></pre>
+
+<h3>12.1. Семейный план</h3>
+
+<p><b>6 приёмов пищи:</b> завтрак · перекус · обед · перекус · ужин · перекус. Свои можно добавлять.</p>
+
+<h4>Недели</h4>
+<ul>
+<li>Пн–Вс с датами.</li>
+<li>Переключение: ← Прошлая / Эта / Следующая →</li>
+<li>Хранить 4 недели.</li>
+</ul>
+
+<h4>Кнопки в шапке плана</h4>
+<ul>
+<li>← → (переключение недель)</li>
+<li>🖨 Печать (A6)</li>
+<li>🗑 Очистить</li>
+<li>🛒 Собрать список покупок из плана</li>
+</ul>
+
+<h3>12.2. План для ребёнка</h3>
+<p>Тот же функционал. Список покупок — отдельный.</p>
+
+<h3>12.3. События <span class="chip wait">⏳ отложено</span></h3>
+<p>Шашлыки, пикники, дни рождения. Отдельная дата, гости, меню, список покупок.</p>
+
+<!-- ============================================ -->
+<h2 id="pantry">13 · Кладовая</h2>
+
+<pre><code>[🧺 Кладовая]
+[🛒 Купить]  [🏠 Есть дома]</code></pre>
+
+<h3>13.1. Вкладка «Купить»</h3>
+
+<pre><code>[🛒 Купить]
+[📋 Ежедневные]  [📦 Опт]</code></pre>
+
+<p>Подвкладки: <span class="chip">🥦 Продукты</span> <span class="chip">🧴 Бытовая химия</span> <span class="chip">🧼 Гигиена</span></p>
+
+<h4>Отделы магазина</h4>
+<p><span class="chip">🥬 Овощи</span> <span class="chip">🥛 Молочные</span> <span class="chip">🥩 Мясо</span> <span class="chip">🌾 Бакалея</span> <span class="chip">🌰 Орехи</span> <span class="chip">📦 Прочее</span> + свои.</p>
+
+<h3>13.2. Вкладка «Есть дома»</h3>
+
+<p>Подвкладки: 🥦 Продукты / 🧴 Бытовая химия / 🧼 Гигиена / + свои.</p>
+
+<h4>Карточка продукта</h4>
+<pre><code>Молоко 3.2%
+🥛 Молочные
+
+✅ Есть дома: 500 мл
+КБЖУ на 100 мл: 60 ккал · Б3 · Ж3.2 · У4.7
+
+Марка: Простоквашино
+Цена: 89 ₽
+Куплено: 20 сентября
+
+Аллергии: у Маши — лактоза
+Заметка: «Брать 3.2%, не 2.5%»
+
+[✎ Изменить]  [🗑 Удалить]</code></pre>
+
+<!-- ============================================ -->
+<h2 id="add">14 · Добавление рецепта</h2>
+
+<p><b>Открытие:</b> только плавающая кнопка ➕.</p>
+
+<h4>Три вкладки</h4>
+<table class="table">
+<tr><th>Вкладка</th><th>Что делает</th></tr>
+<tr><td>✍ Вручную</td><td>Заполняешь поля сам</td></tr>
+<tr><td>📋 Текст</td><td>Вставляешь текст → парсинг → проверяешь</td></tr>
+<tr><td>🔗 Ссылка</td><td>Вставляешь ссылку → загрузка через прокси</td></tr>
+</table>
+
+<h4>Черновики</h4>
+<ul>
+<li>Автосохранение при каждом изменении.</li>
+<li>Хранить вечно.</li>
+</ul>
+
+<!-- ============================================ -->
+<h2 id="settings">15 · Настройки</h2>
+
+<pre><code>⚙ Настройки
+├── 📤 Данные (экспорт, импорт, автосохранение)
+├── 💾 Черновики
+├── 📂 Категории
+├── 🏷 Фильтры
+├── 🏷 Теги
+├── 🖼 Фоны (вернуть базовые) — новое
+├── 📱 Приложение (PWA)
+├── ⚠️ Опасное (сбросить всё)
+└── ℹ️ О программе</code></pre>
+
+<div class="box note">
+<b>«Вернуть базовые»</b> — здесь, в настройках, а не в панели 🎨. Возвращает все 20 базовых картинок, если пользователь их удалил. Личные фоны — остаются.
+</div>
+
+<!-- ============================================ -->
+<h2 id="data">16 · Данные и хранилище</h2>
+
+<table class="table">
+<tr><th>Что</th><th>Где</th></tr>
+<tr><td>Текст (рецепты, покупки, план, настройки)</td><td>localStorage</td></tr>
+<tr><td>Фото, свои фоны</td><td>IndexedDB</td></tr>
+<tr><td>Автосохранение</td><td>Раз в 3–4 дня, потом раз в неделю</td></tr>
+<tr><td>Экспорт</td><td>Для архива (JSON / ZIP)</td></tr>
+</table>
+
+<div class="box ok">
+<b>IndexedDB — бесплатно, лимит 50+ МБ.</b> Всё вместится с запасом. На iPhone Safari может удалять данные, если сайт не открывать больше 7 дней. Решение — <b>добавить на экран «Домой»</b> (тогда правило 7 дней не работает). В будущем сделаем PWA-манифест.
+</div>
+
+<!-- ============================================ -->
+<h2 id="sync">17 · Синхронизация (отложено)</h2>
+
+<div class="box ok">
+<b>Главное:</b> синхронизация — отдельный этап. Сейчас — без неё.
+</div>
+
+<table class="table">
+<tr><th>Кто</th><th>Что</th></tr>
+<tr><td><b>Пользователь + парень</b></td><td>Один общий аккаунт. Один список покупок, рецептов, план, кладовая. Синхронизируется между устройствами.</td></tr>
+<tr><td><b>Мама</b></td><td>Свой сайт. Только база Джулии. Свой список покупок, свои рецепты.</td></tr>
+<tr><td><b>Обмен рецептами</b></td><td>Пользователь ↔ мама. Кнопки «Сохранить» / «Не сохранять».</td></tr>
+</table>
+
+<div class="box done">
+<h3 style="margin-top:0">⚡ Важно: оформление — локальное</h3>
+<p><b>Синхронизируются только данные</b> — рецепты, план, покупки, кладовая.</p>
+<p><b>Оформление — локальное у каждого:</b></p>
+<ul>
+<li><b>Стиль</b> (Нежный / Журнал / ...) — у каждого свой.</li>
+<li><b>Палитра + оттенок</b> — у каждого своя.</li>
+<li><b>Фон</b> — у каждого свой (или без фона).</li>
+<li><b>Позиция фона</b> (если решим) — у каждого своя.</li>
+<li><b>Тема</b> (светлая / тёмная) — у каждого своя.</li>
+</ul>
+<p><b>Пример:</b> у тебя — фон с русалкой, у парня — без фона. Или у тебя фон с водой, у парня фон с лесом. Данные — общие, вид — свой.</p>
+</div>
+
+<!-- ============================================ -->
+<h2 id="bugs">18 · Известные баги браузеров</h2>
+
+<h3>18.1. iOS Safari: <code>position:fixed</code> с <code>z-index:-1</code></h3>
+
+<div class="box bug">
+<b>Симптом.</b> Фоновый слой с <code>position:fixed; z-index:-1</code> на iPhone/iPad ведёт себя непредсказуемо:
+<ul>
+<li>При скролле фон <b>уезжает вверх</b> — снизу видно пустоту (розовый <code>body</code>).</li>
+<li>Или наоборот — фон <b>перекрывает контент</b> (шапка, тулбар, содержание исчезают).</li>
+<li>На ПК и iPad чаще всего работает, на iPhone — почти всегда ломается.</li>
+</ul>
+<b>Причина.</b> iOS Safari при скролле сворачивает адресную строку и пересчитывает все <code>position:fixed</code> элементы. Минусовый <code>z-index</code> при этом «теряется».
+</div>
+
+<div class="box done">
+<b>Решение (работает).</b>
+<ol>
+<li>Фон — <code>position:fixed; z-index:0</code> (не минусовый!).</li>
+<li>Весь контент — в обёртке <code>&lt;div class="app"&gt;</code> с <code>position:relative; z-index:1</code>.</li>
+<li>На <code>.bg-layer</code> — <code>-webkit-transform: translateZ(0); transform: translateZ(0); will-change: transform;</code> (создаёт GPU-слой, чтобы Safari не «терял» элемент).</li>
+</ol>
+</div>
+
+<h3>18.2. iOS Safari: полоса внизу экрана</h3>
+
+<div class="box warn">
+<b>Симптом.</b> Даже при правильной работе фона, снизу остаётся **светлая полоса** между картинкой и нижней панелью Safari. Она видна особенно на тёмных фонах.
+</div>
+
+<div class="box">
+<b>Что пробовали — не помогло:</b>
+<ul>
+<li><code>bottom:-100px</code> на <code>.bg-layer</code>.</li>
+<li><code>height:100lvh</code> (Large Viewport Height).</li>
+<li>Тёмный псевдоэлемент <code>::after</code> под панелью.</li>
+</ul>
+<b>Решение — оставили как есть.</b> Полоса мелкая, сливается со светлой палитрой. Не критично.
+</div>
+
+<h3>18.3. iOS/iPadOS Safari: агрессивный кэш CSS/JS</h3>
+
+<div class="box">
+<b>Симптом.</b> Изменения в CSS не видны на iPhone/iPad, хотя на ПК всё обновилось.
+<br><b>Решение:</b> открыть сайт в <b>приватном окне</b> Safari. Или очистить кэш в настройках. Или подождать.
+</div>
+
+<h3>18.4. iOS Safari: <code>background-image</code> не отрисовывается</h3>
+
+<div class="box bug">
+<b>Симптом.</b> В этом проекте Chrome/Safari на iPhone <b>не отображают</b> фон через <code>background-image: url(...)</code> на <code>&lt;body&gt;</code> или <code>&lt;html&gt;</code>. Картинка загружается (видно в Network), но не рисуется.
+<br><b>Решение:</b> использовать <code>&lt;img&gt;</code> с <code>position:fixed</code> и <code>object-fit:cover</code>. Работает всегда.
+</div>
+
+<!-- ============================================ -->
+<h2 id="order">19 · Порядок работы</h2>
+
+<pre><code>1. Настройка VS Code + GitHub Pages           ✅ СДЕЛАНО
+   ↓
+2. Структура проекта                          ✅ СДЕЛАНО
+   ↓
+3. Оформление: 8 стилей + 9 палитр            ✅ СДЕЛАНО
+   ↓
+4. Перенос карточки в реальный проект         ✅ СДЕЛАНО
+   ↓
+5. Переключатель 8 стилей (data-style)        ✅ СДЕЛАНО
+   ↓
+6. Секции на главной + плашка + сетка         ✅ СДЕЛАНО
+   ↓
+7. Фоны: <img>-слой + фикс iOS Safari         ✅ СДЕЛАНО
+   ↓
+8. Панель фонов: убрана 06, добавлены 17–20   ✅ СДЕЛАНО
+   ↓
+9. Карточки разной высоты                     ✅ СДЕЛАНО
+   ↓
+10. Редактор позиции фона                     🔄 ПРОБОВАЛИ, НЕ РЕШЕНО
+   ↓
+11. Панель 🎨 (стиль + палитра + оттенок      ⏳ СЛЕДУЮЩЕЕ (большое)
+    + фон + тема)
+   ↓
+12. Нижняя навигация                          ⏳
+   ↓
+13. Большая карточка рецепта                  ⏳
+   ↓
+14. Перенос данных (150+ рецептов, синонимы)  ⏳
+   ↓
+15. Хранилище (localStorage / IndexedDB)      ⏳
+   ↓
+16. Фичи по одной:
+    - Кладовая
+    - План
+    - Добавление рецепта
+    - Настройки
+    - Фото
+   ↓
+17. PWA (манифест + добавление на экран)      ⏳
+   ↓
+18. Синхронизация (общие данные + свой вид)   ⏳
+   ↓
+19. Трекер питания                            ⏳</code></pre>
+
+<div class="comment">
+Порядок можно менять. Логично: сначала <b>визуальный каркас</b>, потом <b>логика</b>, потом <b>данные</b>.
+</div>
+
+<!-- ============================================ -->
+<h2 id="where">20 · Итог: где мы сейчас</h2>
+
+<div class="box done">
+<h3 style="margin-top:0">✅ Что работает</h3>
+<ul>
+<li>Сайт в интернете: <code>gekataca.github.io/kopilka-receptov</code></li>
+<li>VS Code, GitHub Desktop, Live Server</li>
+<li>8 стилей переключаются через <code>data-style</code> — на ПК, iPhone, iPad</li>
+<li>9 палитр (подключена одна — Пудровая нежная)</li>
+<li>Фон работает на всех устройствах (с поправкой на полосу iOS)</li>
+<li>Панель фонов: 20 кнопок (01–05, 07–20)</li>
+<li>Карточки: разной высоты, 4 секции (Завтраки, Обеды, Ужины, Перекусы)</li>
+<li>Плашка секций — одна, по центру</li>
+</ul>
+</div>
+
+<div class="box warn">
+<h3 style="margin-top:0">🔄 Что решаем прямо сейчас</h3>
+<ul>
+<li><b>Редактор позиции фона.</b> Пробовали рамку — не заработало. Открытый вопрос.</li>
+<li>Скорее всего, отложим и перейдём к панели 🎨.</li>
+</ul>
+</div>
+
+<div class="box">
+<h3 style="margin-top:0">⏳ Что дальше</h3>
+<ol>
+<li><b>Уборка временного</b> — удалить <code>test-card8.html</code>, папку <code>css/</code> в корне (копию палитр и стилей), возможно <code>test-card.html</code>.</li>
+<li><b>Панель 🎨</b> — большая задача: стиль + палитра + оттенок + фон + тема в одном месте.</li>
+<li>Разная работа с фонами (или оставить как есть — картинка целиком + размытое продолжение).</li>
+<li>Нижняя навигация.</li>
+<li>Большая карточка рецепта.</li>
+</ol>
+</div>
+
+<div class="box note">
+<h3 style="margin-top:0">📌 Незакрытые вопросы из карты v3</h3>
+<ul>
+<li>Смена устройства и корзина (карточка).</li>
+<li>Округление штучных продуктов.</li>
+<li>Куда открывается большая карточка — модалка или экран?</li>
+<li>Позиционирование фона — как именно?</li>
+<li>Пропорции карточки — аспект или фиксированная высота фото?</li>
+<li>Размытая подложка — оставлять или нет?</li>
+</ul>
+</div>
+
+<div class="footer">
+<p><b>Копилка рецептов · Карта v4 · 5 октября 2026</b></p>
+<p>Единый документ. Заменяет все предыдущие карты и дополнения.</p>
+</div>
+
+</div>
+</body>
+</html>
