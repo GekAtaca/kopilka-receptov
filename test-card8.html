@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Прогон карточки по 8 стилям · v3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@400;500;600;700&family=Caveat:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Nunito:wght@400;600;700;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Shippori+Mincho:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --c1:#fff5f8;
+  --c2:#fbdfe8;
+  --c3:#f0b0c8;
+  --c4:#7a3e58;
+}
+
+body{
+  background:#141414;color:#eee;
+  font-family:Nunito,sans-serif;
+  padding:40px 20px 60px;
+  min-height:100vh;
+}
+h1{
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;font-weight:700;
+  font-size:30px;color:#e69db5;
+  text-align:center;margin-bottom:6px;
+}
+.sub{
+  color:#888;font-size:13px;
+  text-align:center;font-style:italic;
+  margin-bottom:36px;max-width:560px;
+  margin-left:auto;margin-right:auto;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(340px, 1fr));
+  gap:40px 28px;
+  justify-items:center;
+  max-width:1600px;
+  margin:0 auto;
+}
+.card-wrap{display:flex;flex-direction:column;align-items:center}
+.style-label{
+  text-align:center;
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;font-weight:700;
+  font-size:22px;color:#e69db5;
+  margin-bottom:12px;
+}
+
+/* ============ БАЗОВАЯ КАРТОЧКА ============ */
+.card{
+  width:340px;
+  height:720px;
+  background:var(--c1);
+  border:1px solid var(--c3);
+  border-radius:var(--radius,14px);
+  overflow:hidden;
+  box-shadow:0 10px 40px rgba(0,0,0,.5);
+  color:var(--c4);
+  display:flex;flex-direction:column;
+
+  --font-head:'Cormorant Garamond',serif;
+  --font-body:'Cormorant Garamond',serif;
+  --font-ui:'Nunito',sans-serif;
+  --font-style-head:italic;
+  --font-style-body:italic;
+  --font-weight-head:700;
+  --font-weight-body:400;
+  --radius:14px;
+  --radius-btn:11px;
+  --radius-chip:11px;
+  --letter-spacing-head:0em;
+
+  --card-body-gap:11px;
+  --card-body-pad-y:16px;
+  --card-body-pad-x:18px;
+  --title-size:24px;
+  --kcal-size:15px;
+  --kcal-gap:6px;
+  --tags-gap:6px;
+  --chip-font-size:15px;
+  --chip-pad-y:4px;
+  --chip-pad-x:11px;
+  --badge-font-size:14px;
+  --badge-pad-y:4px;
+  --badge-pad-x:12px;
+  --ing-title-size:18px;
+  --portions-size:18px;
+  --portions-btn-size:26px;
+  --ing-size:17px;
+  --ing-gap:7px;
+  --ing-chk-size:20px;
+  --toggle-size:15px;
+  --unit-name-size:18px;
+  --unit-pad-y:12px;
+  --unit-pad-x:14px;
+  --unit-radius:var(--radius-btn);
+  --note-font-size:16px;
+  --note-pad-y:11px;
+  --note-pad-x:13px;
+  --note-radius:var(--radius-btn);
+  --actions-btn-font:16px;
+  --actions-btn-pad:12px 6px;
+}
+
+.card-img{
+  height:150px;flex-shrink:0;
+  position:relative;
+  background:linear-gradient(135deg,var(--c2),var(--c3));
+  overflow:hidden;
+}
+.card-img img{width:100%;height:100%;object-fit:cover;display:block}
+
+.badge{
+  position:absolute;top:10px;left:10px;
+  background:var(--c3);color:#fff;
+  padding:var(--badge-pad-y) var(--badge-pad-x);
+  border-radius:var(--radius-chip);
+  font-family:var(--font-head);
+  font-style:var(--font-style-head);
+  font-weight:var(--font-weight-head);
+  font-size:var(--badge-font-size);
+  letter-spacing:.06em;
+}
+.img-icons{
+  position:absolute;top:10px;right:10px;
+  display:flex;gap:4px;
+}
+.img-icons .ic{
+  width:28px;height:28px;border-radius:50%;
+  background:var(--c1);color:#b35c7d;
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;border:none;padding:0;
+}
+.img-icons .ic.active{background:var(--c3);color:#fff}
+
+.card-body{
+  padding:var(--card-body-pad-y) var(--card-body-pad-x);
+  display:flex;flex-direction:column;gap:var(--card-body-gap);
+  flex:1 1 auto;min-height:0;
+  overflow:hidden;
+}
+
+.title{
+  font-family:var(--font-head);
+  font-style:var(--font-style-head);
+  font-weight:var(--font-weight-head);
+  font-size:var(--title-size);
+  line-height:1.2;
+  letter-spacing:var(--letter-spacing-head);
+}
+
+.tags{display:flex;flex-wrap:wrap;gap:var(--tags-gap)}
+.tags span{
+  padding:var(--chip-pad-y) var(--chip-pad-x);
+  background:var(--c2);
+  border:1px solid var(--c3);
+  border-radius:var(--radius-chip);
+  font-family:var(--font-body);
+  font-style:var(--font-style-body);
+  font-weight:var(--font-weight-body);
+  font-size:var(--chip-font-size);
+}
+
+.kcal-row{
+  display:flex;flex-wrap:wrap;gap:var(--kcal-gap);align-items:center;
+  font-size:var(--kcal-size);font-weight:700;
+  font-family:var(--font-body);
+  font-style:var(--font-style-body);
+  color:var(--c4);
+}
+.time-display.time-auto{
+  -webkit-text-stroke:0.7px currentColor;
+  letter-spacing:.02em;
+}
+
+.ing-header{
+  display:flex;justify-content:space-between;align-items:center;
+  gap:10px;margin-top:2px;
+}
+.ing-title{
+  font-family:var(--font-head);
+  font-style:var(--font-style-head);
+  font-weight:var(--font-weight-head);
+  font-size:var(--ing-title-size);
+  opacity:.9;
+}
+.portions{
+  display:flex;align-items:center;gap:8px;
+  font-family:var(--font-head);
+  font-style:var(--font-style-head);
+  font-weight:var(--font-weight-head);
+  font-size:var(--portions-size);
+}
+.portions button{
+  width:var(--portions-btn-size);height:var(--portions-btn-size);
+  border-radius:50%;
+  border:1px solid var(--c3);background:var(--c2);color:var(--c4);
+  font-size:16px;font-weight:700;line-height:1;
+  display:flex;align-items:center;justify-content:center;
+  padding:0;
+}
+.portions .num{min-width:22px;text-align:center}
+
+.ing-list{
+  list-style:none;
+  display:flex;flex-direction:column;gap:var(--ing-gap);
+}
+.ing-list li{
+  display:flex;align-items:center;gap:10px;
+  font-family:var(--font-body);
+  font-style:var(--font-style-body);
+  font-weight:var(--font-weight-body);
+  font-size:var(--ing-size);
+}
+.ing-list li .chk{
+  width:var(--ing-chk-size);height:var(--ing-chk-size);
+  border:1.5px solid var(--c3);border-radius:50%;
+  background:var(--c1);flex-shrink:0;
+}
+.ing-list li .ing-name{flex:1}
+.ing-list li .ing-amount{opacity:.6}
+
+.ing-toggle{
+  background:none;border:none;
+  font-family:var(--font-head);
+  font-style:var(--font-style-head);
+  font-weight:var(--font-weight-head);
+  font-size:var(--toggle-size);
+  color:var(--c4);opacity:.7;
+  padding:4px 0;text-align:center;width:100%;
+}
+
+.cook-unit{
+  background:var(--c2);
+  border:1px solid var(--c3);
+  border-radius:var(--unit-radius);
+  padding:var(--unit-pad-y) var(--unit-pad-x);
+}
+.cook-unit .unit-head{
+  display:flex;justify-content:space-between;align-items:center;gap:8px;
+}
+.cook-unit .unit-name{
+  font-family:var(--font-head);
+  font-style:var(--font-style-head);
+  font-weight:var(--font-weight-head);
+  font-size:var(--unit-name-size);
+  display:flex;align-items:center;gap:7px;
+}
+.cook-unit .unit-name .chev{font-size:12px;opacity:.5}
+
+.note{
+  padding:var(--note-pad-y) var(--note-pad-x);
+  background:var(--c2);
+  border-left:3px solid var(--c3);
+  border-radius:var(--note-radius);
+  font-family:var(--font-body);
+  font-style:var(--font-style-body);
+  font-weight:var(--font-weight-body);
+  font-size:var(--note-font-size);
+  line-height:1.5;
+}
+.note .note-label{
+  font-weight:700;opacity:.7;font-size:13px;
+  display:block;margin-bottom:3px;
+  font-style:normal;font-family:var(--font-ui);
+  letter-spacing:.04em;
+}
+.note-text{display:block}
+
+.actions{
+  display:flex;gap:8px;
+  padding:12px 14px 14px;
+  background:var(--c1);
+  border-top:1px solid var(--c3);
+  flex-shrink:0;
+}
+.actions button{
+  flex:1;
+  padding:var(--actions-btn-pad);
+  font-family:var(--font-head);
+  font-style:var(--font-style-head);
+  font-weight:var(--font-weight-head);
+  font-size:var(--actions-btn-font);
+  border-radius:var(--radius-btn);
+  border:1px solid var(--c3);
+  background:var(--c2);
+  color:var(--c4);
+  white-space:nowrap;
+}
+.actions button.primary{background:var(--c3);color:#fff;border-color:var(--c3)}
+
+/* ============================================================
+   1 · НЕЖНЫЙ — эталон
+   ============================================================ */
+
+/* ============================================================
+   2 · ЖУРНАЛ — шрифты подтянуты
+   ============================================================ */
+.card--zhurnal{
+  --font-style-head:normal;
+  --font-style-body:normal;
+  --font-weight-head:600;
+  --font-weight-body:600;
+  --radius:2px;
+  --radius-btn:2px;
+  --radius-chip:2px;
+  --letter-spacing-head:.03em;
+
+  --card-body-gap:9px;
+  --title-size:22px;
+  --kcal-size:14px;
+  --kcal-gap:5px;
+  --chip-font-size:12px;
+  --chip-pad-y:3px;
+  --chip-pad-x:9px;
+  --badge-font-size:13px;
+  --badge-pad-y:3px;
+  --badge-pad-x:11px;
+  --ing-title-size:15px;
+  --portions-size:17px;
+  --portions-btn-size:24px;
+  --ing-size:16px;
+  --ing-gap:6px;
+  --ing-chk-size:19px;
+  --toggle-size:14px;
+  --unit-name-size:15px;
+  --unit-pad-y:10px;
+  --unit-pad-x:12px;
+  --note-font-size:14px;
+  --note-pad-y:9px;
+  --note-pad-x:11px;
+  --actions-btn-font:14px;
+  --actions-btn-pad:11px 6px;
+}
+.card--zhurnal .title{text-transform:uppercase;letter-spacing:.06em}
+.card--zhurnal .ing-title,
+.card--zhurnal .unit-name{text-transform:uppercase;letter-spacing:.08em}
+.card--zhurnal .tags span{text-transform:uppercase;letter-spacing:.08em}
+.card--zhurnal .badge{text-transform:uppercase;letter-spacing:.1em}
+.card--zhurnal .ing-toggle{text-transform:uppercase;letter-spacing:.08em}
+.card--zhurnal .note-text{
+  display:-webkit-box;-webkit-line-clamp:2;
+  -webkit-box-orient:vertical;overflow:hidden;
+}
+
+/* ============================================================
+   3 · МИНИМАЛИЗМ
+   ============================================================ */
+.card--minimalizm{
+  --font-head:'Nunito',sans-serif;
+  --font-body:'Nunito',sans-serif;
+  --font-style-head:normal;
+  --font-style-body:normal;
+  --font-weight-head:800;
+  --font-weight-body:400;
+  --radius:4px;
+  --radius-btn:4px;
+  --radius-chip:4px;
+
+  --card-body-gap:9px;
+  --title-size:21px;
+  --kcal-size:14px;
+  --kcal-gap:5px;
+  --chip-font-size:13px;
+  --chip-pad-y:3px;
+  --chip-pad-x:9px;
+  --badge-font-size:12px;
+  --badge-pad-y:3px;
+  --badge-pad-x:10px;
+  --ing-title-size:17px;
+  --portions-size:17px;
+  --portions-btn-size:24px;
+  --ing-size:16px;
+  --ing-gap:6px;
+  --ing-chk-size:19px;
+  --toggle-size:14px;
+  --unit-name-size:17px;
+  --unit-pad-y:10px;
+  --unit-pad-x:12px;
+  --note-font-size:14px;
+  --note-pad-y:9px;
+  --note-pad-x:11px;
+  --actions-btn-font:14px;
+  --actions-btn-pad:11px 6px;
+}
+.card--minimalizm .badge{font-family:'Nunito',sans-serif;font-weight:700;letter-spacing:.08em}
+.card--minimalizm .note-text{
+  display:-webkit-box;-webkit-line-clamp:2;
+  -webkit-box-orient:vertical;overflow:hidden;
+}
+
+/* ============================================================
+   4 · БОХО
+   ============================================================ */
+.card--boho{
+  --font-head:'Caveat',cursive;
+  --font-body:'Caveat',cursive;
+  --font-style-head:normal;
+  --font-style-body:normal;
+  --font-weight-head:700;
+  --font-weight-body:500;
+  --radius:10px;
+  --radius-btn:10px;
+  --radius-chip:10px;
+
+  --card-body-gap:8px;
+  --title-size:28px;
+  --kcal-size:15px;
+  --kcal-gap:6px;
+  --chip-font-size:14px;
+  --chip-pad-y:2px;
+  --chip-pad-x:9px;
+  --badge-font-size:16px;
+  --badge-pad-y:2px;
+  --badge-pad-x:11px;
+  --ing-title-size:20px;
+  --portions-size:20px;
+  --portions-btn-size:24px;
+  --ing-size:17px;
+  --ing-gap:5px;
+  --ing-chk-size:18px;
+  --toggle-size:16px;
+  --unit-name-size:18px;
+  --unit-pad-y:9px;
+  --unit-pad-x:12px;
+  --note-font-size:15px;
+  --note-pad-y:9px;
+  --note-pad-x:11px;
+  --actions-btn-font:15px;
+  --actions-btn-pad:11px 6px;
+}
+.card--boho .title::before{content:"🌿 "}
+.card--boho .title::after{content:" 🌿"}
+.card--boho .badge{font-family:'Caveat',cursive;font-weight:700}
+.card--boho .note-text{
+  display:-webkit-box;-webkit-line-clamp:2;
+  -webkit-box-orient:vertical;overflow:hidden;
+}
+
+/* ============================================================
+   5 · РЕТРО
+   ============================================================ */
+.card--retro{
+  --font-head:'Bitter',serif;
+  --font-body:'Bitter',serif;
+  --font-style-head:normal;
+  --font-style-body:normal;
+  --font-weight-head:700;
+  --font-weight-body:400;
+  --radius:4px;
+  --radius-btn:4px;
+  --radius-chip:4px;
+
+  --card-body-gap:9px;
+  --title-size:20px;
+  --kcal-size:14px;
+  --kcal-gap:5px;
+  --chip-font-size:12px;
+  --chip-pad-y:3px;
+  --chip-pad-x:9px;
+  --badge-font-size:12px;
+  --badge-pad-y:3px;
+  --badge-pad-x:10px;
+  --ing-title-size:15px;
+  --portions-size:17px;
+  --portions-btn-size:24px;
+  --ing-size:16px;
+  --ing-gap:6px;
+  --ing-chk-size:19px;
+  --toggle-size:14px;
+  --unit-name-size:15px;
+  --unit-pad-y:10px;
+  --unit-pad-x:12px;
+  --note-font-size:14px;
+  --note-pad-y:9px;
+  --note-pad-x:11px;
+  --actions-btn-font:14px;
+  --actions-btn-pad:11px 6px;
+}
+.card--retro .ing-title,
+.card--retro .unit-name{text-transform:uppercase;letter-spacing:.06em}
+.card--retro .badge{text-transform:uppercase;letter-spacing:.1em}
+.card--retro .note-text{
+  display:-webkit-box;-webkit-line-clamp:2;
+  -webkit-box-orient:vertical;overflow:hidden;
+}
+
+/* ============================================================
+   6 · ЯПОНСКИЙ — КБЖУ/время в одну строку, ингредиенты плотнее
+   ============================================================ */
+.card--yaponsky{
+  --font-head:'Shippori Mincho',serif;
+  --font-body:'Shippori Mincho',serif;
+  --font-style-head:normal;
+  --font-style-body:normal;
+  --font-weight-head:600;
+  --font-weight-body:400;
+  --radius:0;
+  --radius-btn:0;
+  --radius-chip:0;
+  --letter-spacing-head:.12em;
+  border:none;
+
+  --card-body-gap:8px;
+  --card-body-pad-y:16px;
+  --card-body-pad-x:18px;
+  --title-size:21px;
+  --kcal-size:11px;
+  --kcal-gap:2px;
+  --chip-font-size:12px;
+  --chip-pad-y:3px;
+  --chip-pad-x:9px;
+  --badge-font-size:13px;
+  --badge-pad-y:3px;
+  --badge-pad-x:10px;
+  --ing-title-size:15px;
+  --portions-size:16px;
+  --portions-btn-size:22px;
+  --ing-size:15px;
+  --ing-gap:3px;
+  --ing-chk-size:18px;
+  --toggle-size:13px;
+  --unit-name-size:15px;
+  --unit-pad-y:9px;
+  --unit-pad-x:12px;
+  --note-font-size:13px;
+  --note-pad-y:8px;
+  --note-pad-x:20px;
+  --actions-btn-font:14px;
+  --actions-btn-pad:11px 6px;
+}
+.card--yaponsky .tags span{letter-spacing:.08em}
+.card--yaponsky .ing-title,
+.card--yaponsky .unit-name{letter-spacing:.1em}
+.card--yaponsky .kcal-row{
+  flex-wrap:nowrap;
+  white-space:nowrap;
+  letter-spacing:0;
+}
+.card--yaponsky .note{
+  border-left:none;border-radius:0;
+  padding-left:20px;position:relative;
+}
+.card--yaponsky .note::before{
+  content:"— ";position:absolute;left:6px;opacity:.6;
+}
+.card--yaponsky .note-text{
+  display:-webkit-box;-webkit-line-clamp:2;
+  -webkit-box-orient:vertical;overflow:hidden;
+}
+
+/* ============================================================
+   7 · АНТИЧНЫЙ
+   ============================================================ */
+.card--antichny{
+  --font-head:'Playfair Display',serif;
+  --font-body:'Playfair Display',serif;
+  --font-style-head:normal;
+  --font-style-body:normal;
+  --font-weight-head:700;
+  --font-weight-body:400;
+  --radius:0;
+  --radius-btn:0;
+  --radius-chip:0;
+  border:2px double var(--c3);
+
+  --card-body-gap:9px;
+  --title-size:21px;
+  --kcal-size:14px;
+  --kcal-gap:5px;
+  --chip-font-size:13px;
+  --chip-pad-y:3px;
+  --chip-pad-x:9px;
+  --badge-font-size:12px;
+  --badge-pad-y:3px;
+  --badge-pad-x:10px;
+  --ing-title-size:16px;
+  --portions-size:17px;
+  --portions-btn-size:24px;
+  --ing-size:16px;
+  --ing-gap:6px;
+  --ing-chk-size:19px;
+  --toggle-size:14px;
+  --unit-name-size:16px;
+  --unit-pad-y:10px;
+  --unit-pad-x:12px;
+  --note-font-size:14px;
+  --note-pad-y:9px;
+  --note-pad-x:11px;
+  --actions-btn-font:14px;
+  --actions-btn-pad:11px 6px;
+}
+.card--antichny .title::before{content:"◆ "}
+.card--antichny .title::after{content:" ◆"}
+.card--antichny .badge{
+  border:1px solid var(--c3);
+  background:transparent;
+  color:var(--c3);
+  letter-spacing:.1em;
+}
+.card--antichny .note-text{
+  display:-webkit-box;-webkit-line-clamp:2;
+  -webkit-box-orient:vertical;overflow:hidden;
+}
+
+/* ============================================================
+   8 · ЛИЛЕЙНЫЙ — шрифты крупнее, точки одинарные
+   ============================================================ */
+.card--lileyny{
+  --font-head:'EB Garamond',serif;
+  --font-body:'EB Garamond',serif;
+  --font-style-head:italic;
+  --font-style-body:italic;
+  --font-weight-head:500;
+  --font-weight-body:400;
+  --radius:18px;
+  --radius-btn:999px;
+  --radius-chip:999px;
+
+  --card-body-gap:9px;
+  --title-size:26px;
+  --kcal-size:14px;
+  --kcal-gap:5px;
+  --chip-font-size:14px;
+  --chip-pad-y:3px;
+  --chip-pad-x:11px;
+  --badge-font-size:14px;
+  --badge-pad-y:3px;
+  --badge-pad-x:12px;
+  --ing-title-size:17px;
+  --portions-size:17px;
+  --portions-btn-size:24px;
+  --ing-size:16px;
+  --ing-gap:6px;
+  --ing-chk-size:19px;
+  --toggle-size:15px;
+  --unit-name-size:17px;
+  --unit-pad-y:10px;
+  --unit-pad-x:12px;
+  --unit-radius:12px;
+  --note-font-size:15px;
+  --note-pad-y:9px;
+  --note-pad-x:11px;
+  --note-radius:12px;
+  --actions-btn-font:14px;
+  --actions-btn-pad:11px 6px;
+}
+.card--lileyny .title::before{content:"• "}
+.card--lileyny .title::after{content:" •"}
+.card--lileyny .note-text{
+  display:-webkit-box;-webkit-line-clamp:2;
+  -webkit-box-orient:vertical;overflow:hidden;
+}
+</style>
+</head>
+<body>
+
+<h1>Прогон карточки по 8 стилям · v3</h1>
+<p class="sub">5 ингредиентов, шрифты подтянуты. Журнал и Лилейный стали крупнее. Лилейный — одинарные точки. Проверяй заполнение пустоты и обрезку.</p>
+
+<div class="grid" id="grid"></div>
+
+<template id="tpl">
+  <div class="card-wrap">
+    <div class="style-label"></div>
+    <div class="card">
+      <div class="card-img">
+        <img src="images/01.jpg" alt="" onerror="this.style.display='none'">
+        <span class="badge">ЗАВТРАК</span>
+        <div class="img-icons">
+          <button class="ic active">❤</button>
+          <button class="ic">⏱</button>
+          <button class="ic">👨‍🍳</button>
+          <button class="ic">📅</button>
+          <button class="ic">🔖</button>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="title">Овсянка с ягодами</div>
+        <div class="tags">
+          <span>сладкое</span>
+          <span>быстро</span>
+          <span>ПП</span>
+          <span>с ягодами</span>
+        </div>
+        <div class="kcal-row">
+          <span>292 ккал</span><span>·</span>
+          <span>Б 10.9</span><span>·</span>
+          <span>Ж 13.2</span><span>·</span>
+          <span>У 31.2</span><span>·</span>
+          <span class="time-display time-auto">⏱ 10 мин</span>
+        </div>
+        <div class="ing-header">
+          <span class="ing-title">Ингредиенты:</span>
+          <span class="portions">
+            <button>−</button>
+            <span class="num">1</span>
+            <button>+</button>
+          </span>
+        </div>
+        <ul class="ing-list">
+          <li><span class="chk"></span><span class="ing-name">Овсянка</span><span class="ing-amount">60 г</span></li>
+          <li><span class="chk"></span><span class="ing-name">Молоко 3.2%</span><span class="ing-amount">200 мл</span></li>
+          <li><span class="chk"></span><span class="ing-name">Ягоды</span><span class="ing-amount">50 г</span></li>
+          <li><span class="chk"></span><span class="ing-name">Мёд</span><span class="ing-amount">1 ч. л.</span></li>
+          <li><span class="chk"></span><span class="ing-name">Банан</span><span class="ing-amount">1/2 шт.</span></li>
+        </ul>
+        <button class="ing-toggle">▼ показать все</button>
+        <div class="cook-unit">
+          <div class="unit-head">
+            <div class="unit-name">
+              <span>Сковорода</span>
+              <span class="chev">▼</span>
+            </div>
+          </div>
+        </div>
+        <div class="note">
+          <span class="note-label">МОЯ ЗАМЕТКА</span>
+          <span class="note-text">Брать молоко 3.2%, не 2.5% — с ним вкуснее.</span>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="primary">🛒 9</button>
+        <button>✎ Изменить</button>
+        <button>🕐 3 из 5</button>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  const styles = [
+    {cls:'nezhny',     label:'🌸 Нежный (эталон)'},
+    {cls:'zhurnal',    label:'📰 Журнал'},
+    {cls:'minimalizm', label:'🤍 Минимализм'},
+    {cls:'boho',       label:'🌿 Бохо'},
+    {cls:'retro',      label:'📻 Ретро'},
+    {cls:'yaponsky',   label:'🍃 Японский'},
+    {cls:'antichny',   label:'🏛 Античный'},
+    {cls:'lileyny',    label:'🌷 Лилейный'}
+  ];
+  const tpl = document.getElementById('tpl');
+  const grid = document.getElementById('grid');
+  styles.forEach(s => {
+    const node = tpl.content.cloneNode(true);
+    node.querySelector('.card').classList.add('card--' + s.cls);
+    node.querySelector('.style-label').textContent = s.label;
+    grid.appendChild(node);
+  });
+</script>
+
+</body>
+</html>
