@@ -268,15 +268,24 @@ html{
   top:0;
   left:0;
   right:0;
-  height:100vh;   /* запасной вариант для старых браузеров */
-  height:100lvh;  /* настоящая высота на iPhone — учитывает нижнюю панель Safari */
+  bottom:0;
   z-index:0;
-  overflow:hidden;
+  overflow:visible;
   pointer-events:none;
   background:var(--c1);
   -webkit-transform:translateZ(0);
   transform:translateZ(0);
   will-change:transform;
+}
+/* Тёмная плашка снизу — прячется за панелью Safari на iPhone */
+.bg-layer::after{
+  content:'';
+  position:absolute;
+  top:100%;
+  left:0;
+  right:0;
+  height:300px;
+  background:#1a1618;
 }
 .bg-sharp{
   width:100%;
