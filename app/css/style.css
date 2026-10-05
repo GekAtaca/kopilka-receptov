@@ -12,10 +12,16 @@
 html,body{height:100%}
 body{
   font-family:'Nunito',sans-serif;
-  background:var(--c1);
+  background-color:var(--c1);
   color:var(--c4);
   line-height:1.5;
   -webkit-font-smoothing:antialiased;
+}
+html{
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+  min-height:100vh;
 }
 
 /* ───── Заставка ───── */
@@ -92,7 +98,7 @@ body{
   display:flex;
   gap:8px;
   padding:12px 16px 14px;
-  background:var(--c1);
+   background:color-mix(in srgb, var(--c1) 78%, transparent);
   border-bottom:1px solid var(--c3);
 }
 .toolbar button{
@@ -118,7 +124,7 @@ body{
 
 /* ───── Содержание ───── */
 .contents{
-  background:var(--c1);
+  background:color-mix(in srgb, var(--c1) 78%, transparent);
   padding:14px 16px 18px;
   border-bottom:1px solid var(--c3);
 }
@@ -241,4 +247,34 @@ body{
   content:"·";
   margin-right:6px;
   opacity:.5;
+}
+/* ───── Подложка под заголовки секций (для читаемости на фоне) ───── */
+.recipes-section-title,
+.recipes-section-count{
+  background:rgba(255,255,255,.75);
+  padding:3px 12px;
+  border-radius:8px;
+}
+/* ───── Фон сайта (на html, чтобы не конфликтовать с фоном body) ───── */
+html{
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+  min-height:100vh;
+}
+/* ───── Фоновый слой ───── */
+.bg-layer{
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  overflow:hidden;
+  pointer-events:none;
+  background:var(--c1);
+}
+.bg-sharp{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  display:block;
 }
