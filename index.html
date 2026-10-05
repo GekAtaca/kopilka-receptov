@@ -9,8 +9,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="app/css/style.css">
+<link rel="stylesheet" href="app/css/card.css">
+<link rel="stylesheet" href="app/css/palettes/pudrovaya.css">
+<link rel="stylesheet" href="app/css/styles/nezhny.css">
 </head>
-<body>
+<body data-palette="pudrovaya-nezhnaya">
 
   <!-- Заставка -->
   <div id="loader">
@@ -27,7 +30,6 @@
         <div class="subtitle">Зажги свечку. Включи музыку. Наслаждайся — время ТВОРИТЬ ✨</div>
       </div>
       <div class="icons">
-        <button title="Тема">🌙</button>
         <button title="Палитра">🎨</button>
         <button title="Уведомления">🔔</button>
         <button title="Настройки">⚙</button>
@@ -78,7 +80,395 @@
   </section>
 
   <!-- Пока пустой контейнер для карточек рецептов -->
-  <main id="app"></main>
+  <main id="app">
+  <div class="recipes">
+
+    <!-- ───── 🌅 ЗАВТРАКИ ───── -->
+    <section class="recipes-section">
+      <div class="recipes-section-head">
+        <span class="recipes-section-title">🌅 ЗАВТРАКИ</span>
+        <span class="recipes-section-count">34</span>
+      </div>
+      <div class="recipes-grid">
+
+        <!-- Карточка -->
+        <div class="card card--nezhny">
+          <div class="card-img">
+            <img src="images/01.jpg" alt="" onerror="this.style.display='none'">
+            <span class="badge">ЗАВТРАК</span>
+            <div class="img-icons">
+              <button class="ic active">❤</button>
+              <button class="ic">⏱</button>
+              <button class="ic">👨‍🍳</button>
+              <button class="ic">📅</button>
+              <button class="ic">🔖</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="title">Овсянка с ягодами</div>
+            <div class="tags">
+              <span>сладкое</span><span>быстро</span><span>ПП</span><span>с ягодами</span>
+            </div>
+            <div class="kcal-row">
+              <span>292 ккал</span><span>·</span>
+              <span>Б 10.9</span><span>·</span>
+              <span>Ж 13.2</span><span>·</span>
+              <span>У 31.2</span><span>·</span>
+              <span class="time-display time-auto">⏱ 10 мин</span>
+            </div>
+            <div class="ing-header">
+              <span class="ing-title">Ингредиенты:</span>
+              <span class="portions"><button>−</button><span class="num">1</span><button>+</button></span>
+            </div>
+            <ul class="ing-list">
+              <li><span class="chk"></span><span class="ing-name">Овсянка</span><span class="ing-amount">60 г</span></li>
+              <li><span class="chk"></span><span class="ing-name">Молоко 3.2%</span><span class="ing-amount">200 мл</span></li>
+              <li><span class="chk"></span><span class="ing-name">Ягоды</span><span class="ing-amount">50 г</span></li>
+              <li><span class="chk"></span><span class="ing-name">Мёд</span><span class="ing-amount">1 ч. л.</span></li>
+              <li><span class="chk"></span><span class="ing-name">Банан</span><span class="ing-amount">1/2 шт.</span></li>
+            </ul>
+            <button class="ing-toggle">▼ показать все</button>
+            <div class="cook-unit">
+              <div class="unit-head">
+                <div class="unit-name"><span>Сковорода</span><span class="chev">▼</span></div>
+              </div>
+            </div>
+            <div class="note">
+              <span class="note-label">МОЯ ЗАМЕТКА</span>
+              <span class="note-text">Брать молоко 3.2%, не 2.5% — с ним вкуснее.</span>
+            </div>
+          </div>
+          <div class="actions">
+            <button class="primary">🛒 9</button>
+            <button>✎ Изменить</button>
+            <button>🕐 3 из 5</button>
+          </div>
+        </div>
+
+        <!-- Карточка-заглушка №2 (то же самое, другой заголовок) -->
+        <div class="card card--nezhny">
+          <div class="card-img">
+            <img src="images/02.jpg" alt="" onerror="this.style.display='none'">
+            <span class="badge">ЗАВТРАК</span>
+            <div class="img-icons">
+              <button class="ic">❤</button><button class="ic">⏱</button><button class="ic">👨‍🍳</button><button class="ic">📅</button><button class="ic">🔖</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="title">Сырники со сгущёнкой</div>
+            <div class="tags"><span>сладкое</span><span>творожное</span><span>утро</span></div>
+            <div class="kcal-row">
+              <span>340 ккал</span><span>·</span><span>Б 18</span><span>·</span><span>Ж 12</span><span>·</span><span>У 42</span><span>·</span>
+              <span class="time-display time-auto">⏱ 25 мин</span>
+            </div>
+            <div class="ing-header">
+              <span class="ing-title">Ингредиенты:</span>
+              <span class="portions"><button>−</button><span class="num">1</span><button>+</button></span>
+            </div>
+            <ul class="ing-list">
+              <li><span class="chk"></span><span class="ing-name">Творог 5%</span><span class="ing-amount">200 г</span></li>
+              <li><span class="chk"></span><span class="ing-name">Яйцо</span><span class="ing-amount">1 шт.</span></li>
+              <li><span class="chk"></span><span class="ing-name">Мука</span><span class="ing-amount">2 ст. л.</span></li>
+            </ul>
+            <button class="ing-toggle">▼ показать все</button>
+            <div class="cook-unit">
+              <div class="unit-head">
+                <div class="unit-name"><span>Сковорода</span><span class="chev">▼</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="actions">
+            <button class="primary">🛒 3</button>
+            <button>✎ Изменить</button>
+          </div>
+        </div>
+
+        <!-- Карточка-заглушка №3 -->
+        <div class="card card--nezhny">
+          <div class="card-img">
+            <img src="images/03.jpg" alt="" onerror="this.style.display='none'">
+            <span class="badge">ЗАВТРАК</span>
+            <div class="img-icons">
+              <button class="ic">❤</button><button class="ic">⏱</button><button class="ic">👨‍🍳</button><button class="ic">📅</button><button class="ic">🔖</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="title">Омлет с овощами</div>
+            <div class="tags"><span>быстро</span><span>белковое</span><span>ПП</span></div>
+            <div class="kcal-row">
+              <span>210 ккал</span><span>·</span><span>Б 15</span><span>·</span><span>Ж 14</span><span>·</span><span>У 5</span><span>·</span>
+              <span class="time-display time-auto">⏱ 10 мин</span>
+            </div>
+            <div class="ing-header">
+              <span class="ing-title">Ингредиенты:</span>
+              <span class="portions"><button>−</button><span class="num">1</span><button>+</button></span>
+            </div>
+            <ul class="ing-list">
+              <li><span class="chk"></span><span class="ing-name">Яйца</span><span class="ing-amount">3 шт.</span></li>
+              <li><span class="chk"></span><span class="ing-name">Помидор</span><span class="ing-amount">1 шт.</span></li>
+              <li><span class="chk"></span><span class="ing-name">Перец</span><span class="ing-amount">1/2 шт.</span></li>
+            </ul>
+            <button class="ing-toggle">▼ показать все</button>
+          </div>
+          <div class="actions">
+            <button class="primary">🛒 3</button>
+            <button>✎ Изменить</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ───── 🍽 ОБЕДЫ ───── -->
+    <section class="recipes-section">
+      <div class="recipes-section-head">
+        <span class="recipes-section-title">🍽 ОБЕДЫ</span>
+        <span class="recipes-section-count">28</span>
+      </div>
+      <div class="recipes-grid">
+
+        <div class="card card--nezhny">
+          <div class="card-img">
+            <img src="images/04.jpg" alt="" onerror="this.style.display='none'">
+            <span class="badge">ОБЕД</span>
+            <div class="img-icons">
+              <button class="ic">❤</button><button class="ic">⏱</button><button class="ic">👨‍🍳</button><button class="ic">📅</button><button class="ic">🔖</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="title">Паста с курицей</div>
+            <div class="tags"><span>сытное</span><span>итальянское</span><span>для семьи</span></div>
+            <div class="kcal-row">
+              <span>480 ккал</span><span>·</span><span>Б 32</span><span>·</span><span>Ж 14</span><span>·</span><span>У 55</span><span>·</span>
+              <span class="time-display time-auto">⏱ 30 мин</span>
+            </div>
+            <div class="ing-header">
+              <span class="ing-title">Ингредиенты:</span>
+              <span class="portions"><button>−</button><span class="num">2</span><button>+</button></span>
+            </div>
+            <ul class="ing-list">
+              <li><span class="chk"></span><span class="ing-name">Паста</span><span class="ing-amount">200 г</span></li>
+              <li><span class="chk"></span><span class="ing-name">Куриное филе</span><span class="ing-amount">300 г</span></li>
+              <li><span class="chk"></span><span class="ing-name">Сливки 20%</span><span class="ing-amount">150 мл</span></li>
+              <li><span class="chk"></span><span class="ing-name">Пармезан</span><span class="ing-amount">30 г</span></li>
+            </ul>
+            <button class="ing-toggle">▼ показать все</button>
+            <div class="cook-unit">
+              <div class="unit-head">
+                <div class="unit-name"><span>Сковорода</span><span class="chev">▼</span></div>
+              </div>
+            </div>
+            <div class="note">
+              <span class="note-label">МОЯ ЗАМЕТКА</span>
+              <span class="note-text">Курицу сначала обжарить до золотистой.</span>
+            </div>
+          </div>
+          <div class="actions">
+            <button class="primary">🛒 4</button>
+            <button>✎ Изменить</button>
+          </div>
+        </div>
+
+        <div class="card card--nezhny">
+          <div class="card-img">
+            <img src="images/05.jpg" alt="" onerror="this.style.display='none'">
+            <span class="badge">ОБЕД</span>
+            <div class="img-icons">
+              <button class="ic">❤</button><button class="ic">⏱</button><button class="ic">👨‍🍳</button><button class="ic">📅</button><button class="ic">🔖</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="title">Суп-пюре из тыквы</div>
+            <div class="tags"><span>согревающее</span><span>осеннее</span><span>ПП</span></div>
+            <div class="kcal-row">
+              <span>160 ккал</span><span>·</span><span>Б 4</span><span>·</span><span>Ж 8</span><span>·</span><span>У 18</span><span>·</span>
+              <span class="time-display time-auto">⏱ 40 мин</span>
+            </div>
+            <div class="ing-header">
+              <span class="ing-title">Ингредиенты:</span>
+              <span class="portions"><button>−</button><span class="num">3</span><button>+</button></span>
+            </div>
+            <ul class="ing-list">
+              <li><span class="chk"></span><span class="ing-name">Тыква</span><span class="ing-amount">600 г</span></li>
+              <li><span class="chk"></span><span class="ing-name">Лук</span><span class="ing-amount">1 шт.</span></li>
+              <li><span class="chk"></span><span class="ing-name">Сливки</span><span class="ing-amount">100 мл</span></li>
+            </ul>
+            <button class="ing-toggle">▼ показать все</button>
+          </div>
+          <div class="actions">
+            <button class="primary">🛒 3</button>
+            <button>✎ Изменить</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  <!-- ───── 🌙 УЖИНЫ ───── -->
+    <section class="recipes-section">
+      <div class="recipes-section-head">
+        <span class="recipes-section-title">🌙 УЖИНЫ</span>
+        <span class="recipes-section-count">26</span>
+      </div>
+      <div class="recipes-grid">
+
+        <div class="card card--nezhny">
+          <div class="card-img">
+            <img src="images/06.jpg" alt="" onerror="this.style.display='none'">
+            <span class="badge">УЖИН</span>
+            <div class="img-icons">
+              <button class="ic">❤</button><button class="ic">⏱</button><button class="ic">👨‍🍳</button><button class="ic">📅</button><button class="ic">🔖</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="title">Запечённая рыба с овощами</div>
+            <div class="tags"><span>лёгкое</span><span>ПП</span><span>белковое</span></div>
+            <div class="kcal-row">
+              <span>280 ккал</span><span>·</span><span>Б 28</span><span>·</span><span>Ж 12</span><span>·</span><span>У 14</span><span>·</span>
+              <span class="time-display time-auto">⏱ 35 мин</span>
+            </div>
+            <div class="ing-header">
+              <span class="ing-title">Ингредиенты:</span>
+              <span class="portions"><button>−</button><span class="num">2</span><button>+</button></span>
+            </div>
+            <ul class="ing-list">
+              <li><span class="chk"></span><span class="ing-name">Филе рыбы</span><span class="ing-amount">400 г</span></li>
+              <li><span class="chk"></span><span class="ing-name">Кабачок</span><span class="ing-amount">1 шт.</span></li>
+              <li><span class="chk"></span><span class="ing-name">Перец болгарский</span><span class="ing-amount">1 шт.</span></li>
+              <li><span class="chk"></span><span class="ing-name">Лимон</span><span class="ing-amount">1/2 шт.</span></li>
+            </ul>
+            <button class="ing-toggle">▼ показать все</button>
+            <div class="cook-unit">
+              <div class="unit-head">
+                <div class="unit-name"><span>Духовка</span><span class="chev">▼</span></div>
+              </div>
+            </div>
+            <div class="note">
+              <span class="note-label">МОЯ ЗАМЕТКА</span>
+              <span class="note-text">Запекать 20 мин при 180°C, потом 5 мин под грилем.</span>
+            </div>
+          </div>
+          <div class="actions">
+            <button class="primary">🛒 4</button>
+            <button>✎ Изменить</button>
+          </div>
+        </div>
+
+        <div class="card card--nezhny">
+          <div class="card-img">
+            <img src="images/07.jpg" alt="" onerror="this.style.display='none'">
+            <span class="badge">УЖИН</span>
+            <div class="img-icons">
+              <button class="ic">❤</button><button class="ic">⏱</button><button class="ic">👨‍🍳</button><button class="ic">📅</button><button class="ic">🔖</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="title">Куриное филе в сливках</div>
+            <div class="tags"><span>сытное</span><span>быстро</span><span>для семьи</span></div>
+            <div class="kcal-row">
+              <span>360 ккал</span><span>·</span><span>Б 34</span><span>·</span><span>Ж 18</span><span>·</span><span>У 12</span><span>·</span>
+              <span class="time-display time-auto">⏱ 25 мин</span>
+            </div>
+            <div class="ing-header">
+              <span class="ing-title">Ингредиенты:</span>
+              <span class="portions"><button>−</button><span class="num">2</span><button>+</button></span>
+            </div>
+            <ul class="ing-list">
+              <li><span class="chk"></span><span class="ing-name">Куриное филе</span><span class="ing-amount">400 г</span></li>
+              <li><span class="chk"></span><span class="ing-name">Сливки 20%</span><span class="ing-amount">150 мл</span></li>
+              <li><span class="chk"></span><span class="ing-name">Чеснок</span><span class="ing-amount">2 зуб.</span></li>
+            </ul>
+            <button class="ing-toggle">▼ показать все</button>
+          </div>
+          <div class="actions">
+            <button class="primary">🛒 3</button>
+            <button>✎ Изменить</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ───── 🍎 ПЕРЕКУСЫ ───── -->
+    <section class="recipes-section">
+      <div class="recipes-section-head">
+        <span class="recipes-section-title">🍎 ПЕРЕКУСЫ</span>
+        <span class="recipes-section-count">19</span>
+      </div>
+      <div class="recipes-grid">
+
+        <div class="card card--nezhny">
+          <div class="card-img">
+            <img src="images/08.jpg" alt="" onerror="this.style.display='none'">
+            <span class="badge">ПЕРЕКУС</span>
+            <div class="img-icons">
+              <button class="ic">❤</button><button class="ic">⏱</button><button class="ic">👨‍🍳</button><button class="ic">📅</button><button class="ic">🔖</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="title">Творог с мёдом и орехами</div>
+            <div class="tags"><span>белковое</span><span>быстро</span><span>ПП</span></div>
+            <div class="kcal-row">
+              <span>220 ккал</span><span>·</span><span>Б 20</span><span>·</span><span>Ж 8</span><span>·</span><span>У 16</span><span>·</span>
+              <span class="time-display time-auto">⏱ 3 мин</span>
+            </div>
+            <div class="ing-header">
+              <span class="ing-title">Ингредиенты:</span>
+              <span class="portions"><button>−</button><span class="num">1</span><button>+</button></span>
+            </div>
+            <ul class="ing-list">
+              <li><span class="chk"></span><span class="ing-name">Творог 5%</span><span class="ing-amount">150 г</span></li>
+              <li><span class="chk"></span><span class="ing-name">Мёд</span><span class="ing-amount">1 ст. л.</span></li>
+              <li><span class="chk"></span><span class="ing-name">Грецкие орехи</span><span class="ing-amount">20 г</span></li>
+            </ul>
+            <button class="ing-toggle">▼ показать все</button>
+            <div class="cook-unit">
+              <div class="unit-head">
+                <div class="unit-name"><span>Без готовки</span><span class="chev">▼</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="actions">
+            <button class="primary">🛒 3</button>
+            <button>✎ Изменить</button>
+          </div>
+        </div>
+
+        <div class="card card--nezhny">
+          <div class="card-img">
+            <img src="images/09.jpg" alt="" onerror="this.style.display='none'">
+            <span class="badge">ПЕРЕКУС</span>
+            <div class="img-icons">
+              <button class="ic">❤</button><button class="ic">⏱</button><button class="ic">👨‍🍳</button><button class="ic">📅</button><button class="ic">🔖</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="title">Смузи с бананом и шпинатом</div>
+            <div class="tags"><span>лёгкое</span><span>витаминное</span><span>быстро</span></div>
+            <div class="kcal-row">
+              <span>150 ккал</span><span>·</span><span>Б 4</span><span>·</span><span>Ж 2</span><span>·</span><span>У 30</span><span>·</span>
+              <span class="time-display time-auto">⏱ 5 мин</span>
+            </div>
+            <div class="ing-header">
+              <span class="ing-title">Ингредиенты:</span>
+              <span class="portions"><button>−</button><span class="num">1</span><button>+</button></span>
+            </div>
+            <ul class="ing-list">
+              <li><span class="chk"></span><span class="ing-name">Банан</span><span class="ing-amount">1 шт.</span></li>
+              <li><span class="chk"></span><span class="ing-name">Шпинат</span><span class="ing-amount">30 г</span></li>
+              <li><span class="chk"></span><span class="ing-name">Молоко</span><span class="ing-amount">150 мл</span></li>
+            </ul>
+            <button class="ing-toggle">▼ показать все</button>
+          </div>
+          <div class="actions">
+            <button class="primary">🛒 3</button>
+            <button>✎ Изменить</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </div>
+</main>
 
   <script>
     window.addEventListener('load', () => {

@@ -1,0 +1,46 @@
+/* 🌷 Лилейный · EB Garamond italic · кнопки-пилюли, точки */
+.card--lileyny{
+  --font-head:'EB Garamond',serif;
+  --font-body:'EB Garamond',serif;
+  --font-style-head:italic;
+  --font-style-body:italic;
+  --font-weight-head:500;
+  --font-weight-body:400;
+  --radius:18px;
+  --radius-btn:999px;
+  --radius-chip:999px;
+
+  --card-body-gap:9px;
+  --title-size:26px;
+  --kcal-size:14px;
+  --kcal-gap:5px;
+  --chip-font-size:14px;
+  --chip-pad-y:3px;
+  --chip-pad-x:11px;
+  --badge-font-size:14px;
+  --badge-pad-y:3px;
+  --badge-pad-x:12px;
+  --ing-title-size:17px;
+  --portions-size:17px;
+  --portions-btn-size:24px;
+  --ing-size:16px;
+  --ing-gap:6px;
+  --ing-chk-size:19px;
+  --toggle-size:15px;
+  --unit-name-size:17px;
+  --unit-pad-y:10px;
+  --unit-pad-x:12px;
+  --unit-radius:12px;
+  --note-font-size:15px;
+  --note-pad-y:9px;
+  --note-pad-x:11px;
+  --note-radius:12px;
+  --actions-btn-font:14px;
+  --actions-btn-pad:11px 6px;
+}
+.card--lileyny .title::before{content:"• "}
+.card--lileyny .title::after{content:" •"}
+.card--lileyny .note-text{
+  display:-webkit-box;-webkit-line-clamp:2;
+  -webkit-box-orient:vertical;overflow:hidden;
+}

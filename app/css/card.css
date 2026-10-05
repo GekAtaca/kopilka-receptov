@@ -1,0 +1,258 @@
+/* ═══════════════════════════════════════════════════
+   БАЗА КАРТОЧКИ РЕЦЕПТА
+   Общие стили + переменные по умолчанию (= стиль «Нежный»).
+   Остальные 7 стилей переопределяют переменные —
+   каждый в своём файле в app/css/styles/.
+   Цвета (--c1..--c4) берутся из палитры
+   (app/css/palettes/*.css, атрибут data-palette на <body>).
+   ═══════════════════════════════════════════════════ */
+
+.card{
+  background:var(--c1);
+  color:var(--c4);
+  border:1px solid var(--c3);
+  border-radius:var(--radius,14px);
+  overflow:hidden;
+  box-shadow:0 2px 10px rgba(0,0,0,.05);
+  display:flex;
+  flex-direction:column;
+
+  /* ─── Переменные по умолчанию = стиль «Нежный» ─── */
+  --font-head:'Cormorant Garamond',serif;
+  --font-body:'Cormorant Garamond',serif;
+  --font-ui:'Nunito',sans-serif;
+  --font-style-head:italic;
+  --font-style-body:italic;
+  --font-weight-head:700;
+  --font-weight-body:400;
+  --radius:14px;
+  --radius-btn:11px;
+  --radius-chip:11px;
+  --letter-spacing-head:0em;
+
+  --card-body-gap:11px;
+  --card-body-pad-y:16px;
+  --card-body-pad-x:18px;
+  --title-size:24px;
+  --kcal-size:15px;
+  --kcal-gap:6px;
+  --tags-gap:6px;
+  --chip-font-size:15px;
+  --chip-pad-y:4px;
+  --chip-pad-x:11px;
+  --badge-font-size:14px;
+  --badge-pad-y:4px;
+  --badge-pad-x:12px;
+  --ing-title-size:18px;
+  --portions-size:18px;
+  --portions-btn-size:26px;
+  --ing-size:17px;
+  --ing-gap:7px;
+  --ing-chk-size:20px;
+  --toggle-size:15px;
+  --unit-name-size:18px;
+  --unit-pad-y:12px;
+  --unit-pad-x:14px;
+  --unit-radius:var(--radius-btn);
+  --note-font-size:16px;
+  --note-pad-y:11px;
+  --note-pad-x:13px;
+  --note-radius:var(--radius-btn);
+  --actions-btn-font:16px;
+  --actions-btn-pad:12px 6px;
+}
+
+/* ─── Фото ─── */
+.card-img{
+  height:150px;
+  flex-shrink:0;
+  position:relative;
+  background:linear-gradient(135deg,var(--c2),var(--c3));
+  overflow:hidden;
+}
+.card-img img{width:100%;height:100%;object-fit:cover;display:block}
+
+.badge{
+  position:absolute;top:10px;left:10px;
+  background:var(--c3);color:#fff;
+  padding:var(--badge-pad-y) var(--badge-pad-x);
+  border-radius:var(--radius-chip);
+  font-family:var(--font-head);
+  font-style:var(--font-style-head);
+  font-weight:var(--font-weight-head);
+  font-size:var(--badge-font-size);
+  letter-spacing:.06em;
+}
+.img-icons{
+  position:absolute;top:10px;right:10px;
+  display:flex;gap:4px;
+}
+.img-icons .ic{
+  width:28px;height:28px;border-radius:50%;
+  background:var(--c1);color:#b35c7d;
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;border:none;padding:0;
+}
+.img-icons .ic.active{background:var(--c3);color:#fff}
+
+/* ─── Тело карточки ─── */
+.card-body{
+  padding:var(--card-body-pad-y) var(--card-body-pad-x);
+  display:flex;flex-direction:column;gap:var(--card-body-gap);
+  flex:1 1 auto;min-height:0;
+}
+
+.title{
+  font-family:var(--font-head);
+  font-style:var(--font-style-head);
+  font-weight:var(--font-weight-head);
+  font-size:var(--title-size);
+  line-height:1.2;
+  letter-spacing:var(--letter-spacing-head);
+}
+
+.tags{display:flex;flex-wrap:wrap;gap:var(--tags-gap)}
+.tags span{
+  padding:var(--chip-pad-y) var(--chip-pad-x);
+  background:var(--c2);
+  border:1px solid var(--c3);
+  border-radius:var(--radius-chip);
+  font-family:var(--font-body);
+  font-style:var(--font-style-body);
+  font-weight:var(--font-weight-body);
+  font-size:var(--chip-font-size);
+}
+
+.kcal-row{
+  display:flex;flex-wrap:wrap;gap:var(--kcal-gap);align-items:center;
+  font-size:var(--kcal-size);font-weight:700;
+  font-family:var(--font-body);
+  font-style:var(--font-style-body);
+  color:var(--c4);
+}
+.time-display.time-auto{
+  -webkit-text-stroke:0.7px currentColor;
+  letter-spacing:.02em;
+}
+
+/* ─── Ингредиенты ─── */
+.ing-header{
+  display:flex;justify-content:space-between;align-items:center;
+  gap:10px;margin-top:2px;
+}
+.ing-title{
+  font-family:var(--font-head);
+  font-style:var(--font-style-head);
+  font-weight:var(--font-weight-head);
+  font-size:var(--ing-title-size);
+  opacity:.9;
+}
+.portions{
+  display:flex;align-items:center;gap:8px;
+  font-family:var(--font-head);
+  font-style:var(--font-style-head);
+  font-weight:var(--font-weight-head);
+  font-size:var(--portions-size);
+}
+.portions button{
+  width:var(--portions-btn-size);height:var(--portions-btn-size);
+  border-radius:50%;
+  border:1px solid var(--c3);background:var(--c2);color:var(--c4);
+  font-size:16px;font-weight:700;line-height:1;
+  display:flex;align-items:center;justify-content:center;
+  padding:0;
+}
+.portions .num{min-width:22px;text-align:center}
+
+.ing-list{
+  list-style:none;
+  display:flex;flex-direction:column;gap:var(--ing-gap);
+}
+.ing-list li{
+  display:flex;align-items:center;gap:10px;
+  font-family:var(--font-body);
+  font-style:var(--font-style-body);
+  font-weight:var(--font-weight-body);
+  font-size:var(--ing-size);
+}
+.ing-list li .chk{
+  width:var(--ing-chk-size);height:var(--ing-chk-size);
+  border:1.5px solid var(--c3);border-radius:50%;
+  background:var(--c1);flex-shrink:0;
+}
+.ing-list li .ing-name{flex:1}
+.ing-list li .ing-amount{opacity:.6}
+
+.ing-toggle{
+  background:none;border:none;
+  font-family:var(--font-head);
+  font-style:var(--font-style-head);
+  font-weight:var(--font-weight-head);
+  font-size:var(--toggle-size);
+  color:var(--c4);opacity:.7;
+  padding:4px 0;text-align:center;width:100%;
+  cursor:pointer;
+}
+
+/* ─── Устройство готовки ─── */
+.cook-unit{
+  background:var(--c2);
+  border:1px solid var(--c3);
+  border-radius:var(--unit-radius);
+  padding:var(--unit-pad-y) var(--unit-pad-x);
+}
+.cook-unit .unit-head{
+  display:flex;justify-content:space-between;align-items:center;gap:8px;
+}
+.cook-unit .unit-name{
+  font-family:var(--font-head);
+  font-style:var(--font-style-head);
+  font-weight:var(--font-weight-head);
+  font-size:var(--unit-name-size);
+  display:flex;align-items:center;gap:7px;
+}
+.cook-unit .unit-name .chev{font-size:12px;opacity:.5}
+
+/* ─── Заметка ─── */
+.note{
+  padding:var(--note-pad-y) var(--note-pad-x);
+  background:var(--c2);
+  border-left:3px solid var(--c3);
+  border-radius:var(--note-radius);
+  font-family:var(--font-body);
+  font-style:var(--font-style-body);
+  font-weight:var(--font-weight-body);
+  font-size:var(--note-font-size);
+  line-height:1.5;
+}
+.note .note-label{
+  font-weight:700;opacity:.7;font-size:13px;
+  display:block;margin-bottom:3px;
+  font-style:normal;font-family:var(--font-ui);
+  letter-spacing:.04em;
+}
+.note-text{display:block}
+
+/* ─── Нижние кнопки ─── */
+.actions{
+  display:flex;gap:8px;
+  padding:12px 14px 14px;
+  background:var(--c1);
+  border-top:1px solid var(--c3);
+  flex-shrink:0;
+}
+.actions button{
+  flex:1;
+  padding:var(--actions-btn-pad);
+  font-family:var(--font-head);
+  font-style:var(--font-style-head);
+  font-weight:var(--font-weight-head);
+  font-size:var(--actions-btn-font);
+  border-radius:var(--radius-btn);
+  border:1px solid var(--c3);
+  background:var(--c2);
+  color:var(--c4);
+  white-space:nowrap;
+  cursor:pointer;
+}
+.actions button.primary{background:var(--c3);color:#fff;border-color:var(--c3)}

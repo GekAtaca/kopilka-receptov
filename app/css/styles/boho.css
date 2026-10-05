@@ -1,0 +1,45 @@
+/* 🌿 Бохо · Caveat · рукописный */
+.card--boho{
+  --font-head:'Caveat',cursive;
+  --font-body:'Caveat',cursive;
+  --font-style-head:normal;
+  --font-style-body:normal;
+  --font-weight-head:700;
+  --font-weight-body:500;
+  --radius:10px;
+  --radius-btn:10px;
+  --radius-chip:10px;
+
+  --card-body-gap:8px;
+  --title-size:28px;
+  --kcal-size:15px;
+  --kcal-gap:6px;
+  --chip-font-size:14px;
+  --chip-pad-y:2px;
+  --chip-pad-x:9px;
+  --badge-font-size:16px;
+  --badge-pad-y:2px;
+  --badge-pad-x:11px;
+  --ing-title-size:20px;
+  --portions-size:20px;
+  --portions-btn-size:24px;
+  --ing-size:17px;
+  --ing-gap:5px;
+  --ing-chk-size:18px;
+  --toggle-size:16px;
+  --unit-name-size:18px;
+  --unit-pad-y:9px;
+  --unit-pad-x:12px;
+  --note-font-size:15px;
+  --note-pad-y:9px;
+  --note-pad-x:11px;
+  --actions-btn-font:15px;
+  --actions-btn-pad:11px 6px;
+}
+.card--boho .title::before{content:"🌿 "}
+.card--boho .title::after{content:" 🌿"}
+.card--boho .badge{font-family:'Caveat',cursive;font-weight:700}
+.card--boho .note-text{
+  display:-webkit-box;-webkit-line-clamp:2;
+  -webkit-box-orient:vertical;overflow:hidden;
+}

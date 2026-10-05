@@ -1,0 +1,61 @@
+/* 🍃 Японский · Shippori Mincho · без рамок карточки */
+.card--yaponsky{
+  --font-head:'Shippori Mincho',serif;
+  --font-body:'Shippori Mincho',serif;
+  --font-style-head:normal;
+  --font-style-body:normal;
+  --font-weight-head:600;
+  --font-weight-body:400;
+  --radius:0;
+  --radius-btn:0;
+  --radius-chip:0;
+  --letter-spacing-head:.12em;
+  border:none;
+
+  --card-body-gap:8px;
+  --card-body-pad-y:16px;
+  --card-body-pad-x:18px;
+  --title-size:21px;
+  --kcal-size:11px;
+  --kcal-gap:2px;
+  --chip-font-size:12px;
+  --chip-pad-y:3px;
+  --chip-pad-x:9px;
+  --badge-font-size:13px;
+  --badge-pad-y:3px;
+  --badge-pad-x:10px;
+  --ing-title-size:15px;
+  --portions-size:16px;
+  --portions-btn-size:22px;
+  --ing-size:15px;
+  --ing-gap:3px;
+  --ing-chk-size:18px;
+  --toggle-size:13px;
+  --unit-name-size:15px;
+  --unit-pad-y:9px;
+  --unit-pad-x:12px;
+  --note-font-size:13px;
+  --note-pad-y:8px;
+  --note-pad-x:20px;
+  --actions-btn-font:14px;
+  --actions-btn-pad:11px 6px;
+}
+.card--yaponsky .tags span{letter-spacing:.08em}
+.card--yaponsky .ing-title,
+.card--yaponsky .unit-name{letter-spacing:.1em}
+.card--yaponsky .kcal-row{
+  flex-wrap:nowrap;
+  white-space:nowrap;
+  letter-spacing:0;
+}
+.card--yaponsky .note{
+  border-left:none;border-radius:0;
+  padding-left:20px;position:relative;
+}
+.card--yaponsky .note::before{
+  content:"— ";position:absolute;left:6px;opacity:.6;
+}
+.card--yaponsky .note-text{
+  display:-webkit-box;-webkit-line-clamp:2;
+  -webkit-box-orient:vertical;overflow:hidden;
+}

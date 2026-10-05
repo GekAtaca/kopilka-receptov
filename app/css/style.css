@@ -187,3 +187,47 @@ body{
 }
 .chip:hover{background:var(--c3);color:#fff;transform:translateY(-1px)}
 .chip .em{font-style:normal;display:inline-block}
+/* ───── Секции рецептов ───── */
+.recipes{
+  padding:20px 16px 40px;
+}
+.recipes-section{margin-bottom:34px}
+.recipes-section-head{
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:16px;
+  padding-bottom:10px;
+  border-bottom:1px solid var(--c3);
+}
+.recipes-section-title{
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;
+  font-weight:700;
+  font-size:22px;
+  color:var(--c4);
+  letter-spacing:.04em;
+}
+.recipes-section-count{
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;
+  font-weight:700;
+  font-size:16px;
+  color:var(--c4);
+  opacity:.55;
+}
+.recipes-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:20px;
+}
+@media(min-width:640px){
+  .recipes-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(min-width:960px){
+  .recipes-grid{grid-template-columns:repeat(3,1fr)}
+}
+@media(min-width:1280px){
+  .recipes-grid{grid-template-columns:repeat(4,1fr)}
+}

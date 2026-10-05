@@ -1,0 +1,51 @@
+/* 🏛 Античный · Playfair Display · двойная рамка, ромбы */
+.card--antichny{
+  --font-head:'Playfair Display',serif;
+  --font-body:'Playfair Display',serif;
+  --font-style-head:normal;
+  --font-style-body:normal;
+  --font-weight-head:700;
+  --font-weight-body:400;
+  --radius:0;
+  --radius-btn:0;
+  --radius-chip:0;
+  border:2px double var(--c3);
+
+  --card-body-gap:9px;
+  --title-size:21px;
+  --kcal-size:14px;
+  --kcal-gap:5px;
+  --chip-font-size:13px;
+  --chip-pad-y:3px;
+  --chip-pad-x:9px;
+  --badge-font-size:12px;
+  --badge-pad-y:3px;
+  --badge-pad-x:10px;
+  --ing-title-size:16px;
+  --portions-size:17px;
+  --portions-btn-size:24px;
+  --ing-size:16px;
+  --ing-gap:6px;
+  --ing-chk-size:19px;
+  --toggle-size:14px;
+  --unit-name-size:16px;
+  --unit-pad-y:10px;
+  --unit-pad-x:12px;
+  --note-font-size:14px;
+  --note-pad-y:9px;
+  --note-pad-x:11px;
+  --actions-btn-font:14px;
+  --actions-btn-pad:11px 6px;
+}
+.card--antichny .title::before{content:"◆ "}
+.card--antichny .title::after{content:" ◆"}
+.card--antichny .badge{
+  border:1px solid var(--c3);
+  background:transparent;
+  color:var(--c3);
+  letter-spacing:.1em;
+}
+.card--antichny .note-text{
+  display:-webkit-box;-webkit-line-clamp:2;
+  -webkit-box-orient:vertical;overflow:hidden;
+}
