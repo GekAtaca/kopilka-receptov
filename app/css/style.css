@@ -270,6 +270,9 @@ html{
   overflow:hidden;
   pointer-events:none;
   background:var(--c1);
+  -webkit-transform:translateZ(0);
+  transform:translateZ(0);
+  will-change:transform;
 }
 .bg-sharp{
   width:100%;
