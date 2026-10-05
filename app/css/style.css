@@ -268,7 +268,8 @@ html{
   top:0;
   left:0;
   right:0;
-  bottom:-100px; /* заходим за нижнюю панель Safari */
+  height:100vh;   /* запасной вариант для старых браузеров */
+  height:100lvh;  /* настоящая высота на iPhone — учитывает нижнюю панель Safari */
   z-index:0;
   overflow:hidden;
   pointer-events:none;
