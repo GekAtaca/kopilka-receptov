@@ -11,6 +11,14 @@
 <link rel="stylesheet" href="app/css/style.css">
 <link rel="stylesheet" href="app/css/card.css">
 <link rel="stylesheet" href="app/css/palettes/pudrovaya.css">
+<link rel="stylesheet" href="app/css/palettes/medovaya.css">
+<link rel="stylesheet" href="app/css/palettes/shalfeynaya.css">
+<link rel="stylesheet" href="app/css/palettes/nebesnaya.css">
+<link rel="stylesheet" href="app/css/palettes/lavandovaya.css">
+<link rel="stylesheet" href="app/css/palettes/vishnyovaya.css">
+<link rel="stylesheet" href="app/css/palettes/kakao.css">
+<link rel="stylesheet" href="app/css/palettes/grafit.css">
+<link rel="stylesheet" href="app/css/palettes/fioletovaya.css">
 <link rel="stylesheet" href="app/css/styles/nezhny.css">
 <link rel="stylesheet" href="app/css/styles/zhurnal.css">
 <link rel="stylesheet" href="app/css/styles/minimalizm.css">
@@ -531,6 +539,27 @@
           </div>
         </div>
         <div class="dp-section">
+          <div class="dp-section-label">Палитра</div>
+          <div class="dp-chips" id="dpPalettes">
+            <button type="button" class="dp-chip" data-p="pudrovaya">🌸 Пудровая</button>
+            <button type="button" class="dp-chip" data-p="medovaya">🌾 Медовая</button>
+            <button type="button" class="dp-chip" data-p="shalfeynaya">🌿 Шалфейная</button>
+            <button type="button" class="dp-chip" data-p="nebesnaya">☁️ Небесная</button>
+            <button type="button" class="dp-chip" data-p="lavandovaya">🍇 Лавандовая</button>
+            <button type="button" class="dp-chip" data-p="vishnyovaya">🍒 Вишнёвая</button>
+            <button type="button" class="dp-chip" data-p="kakao">🌰 Какао</button>
+            <button type="button" class="dp-chip" data-p="grafit">🌑 Графит</button>
+            <button type="button" class="dp-chip" data-p="fioletovaya">💜 Фиолетовая</button>
+          </div>
+          <div class="dp-chips dp-shades" id="dpShades" style="display:none">
+            <button type="button" class="dp-chip" data-shade="nezhnaya">Нежная</button>
+            <button type="button" class="dp-chip" data-shade="svetlaya">Светлая</button>
+            <button type="button" class="dp-chip" data-shade="nasyshchennaya">Насыщенная</button>
+            <button type="button" class="dp-chip" data-shade="glubokaya">Глубокая</button>
+            <button type="button" class="dp-chip" data-shade="yarkaya">Яркая</button>
+          </div>
+        </div>
+        <div class="dp-section">
           <div class="dp-section-label">Фон</div>
           <div class="dp-bgs" id="dpBgs">
             <button type="button" class="dp-bg dp-bg-none" data-bg="">Без фона</button>
@@ -810,6 +839,59 @@
         syncStyleActive();
       });
     });
+    // ── Палитра ──
+    const dpPalettes = document.getElementById('dpPalettes');
+    const dpShades   = document.getElementById('dpShades');
+
+    const PALETTE_NAMES = ['pudrovaya','medovaya','shalfeynaya','nebesnaya','lavandovaya','vishnyovaya','kakao','grafit','fioletovaya'];
+    const SHADE_NAMES   = ['nezhnaya','svetlaya','nasyshchennaya','glubokaya','yarkaya'];
+
+    let currentPalette = '';
+    let currentShade   = 'nezhnaya';
+
+    try {
+      const saved = JSON.parse(localStorage.getItem('designPalette') || 'null');
+      if (saved && PALETTE_NAMES.includes(saved.palette) && SHADE_NAMES.includes(saved.shade)) {
+        currentPalette = saved.palette;
+        currentShade   = saved.shade;
+      }
+    } catch(e) {}
+
+    function applyPalette() {
+      if (!currentPalette) return;
+      document.body.dataset.palette = currentPalette + '-' + currentShade;
+      localStorage.setItem('designPalette', JSON.stringify({ palette: currentPalette, shade: currentShade }));
+    }
+
+    function syncPaletteActive() {
+      dpPalettes.querySelectorAll('.dp-chip').forEach(b => {
+        b.classList.toggle('active', b.dataset.p === currentPalette);
+      });
+      dpShades.querySelectorAll('.dp-chip').forEach(b => {
+        b.classList.toggle('active', b.dataset.shade === currentShade);
+      });
+      dpShades.style.display = currentPalette ? '' : 'none';
+    }
+
+    dpPalettes.querySelectorAll('.dp-chip').forEach(btn => {
+      btn.addEventListener('click', () => {
+        currentPalette = btn.dataset.p;
+        applyPalette();
+        syncPaletteActive();
+      });
+    });
+
+    dpShades.querySelectorAll('.dp-chip').forEach(btn => {
+      btn.addEventListener('click', () => {
+        currentShade = btn.dataset.shade;
+        applyPalette();
+        syncPaletteActive();
+      });
+    });
+
+    // Инициализация при загрузке
+    if (currentPalette) applyPalette();
+    syncPaletteActive();
 
     document.getElementById('btnDesign').addEventListener('click', openDesignPanel);
     document.getElementById('designPanelClose').addEventListener('click', closeDesignPanel);
