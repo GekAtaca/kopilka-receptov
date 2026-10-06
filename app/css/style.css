@@ -291,16 +291,22 @@ html{
 }
 
 /* Чёткая картинка — поверх размытой.
-   object-fit: contain — картинка видна целиком, не обрезается.
-   Края временно резкие, мягкий переход сделаем в редакторе позиции. */
+   Вписана целиком, двигается и масштабируется через переменные --tx/--ty/--tz. */
 .bg-sharp{
   position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:contain;
-  object-position:center;
+  left:50%;
+  top:50%;
+  width:auto;
+  height:auto;
+  max-width:100%;
+  max-height:100%;
   display:block;
+  transform-origin:center center;
+  transform:
+    translate(-50%, -50%)
+    translate(var(--tx, 0%), var(--ty, 0%))
+    scale(var(--tz, 1));
+  will-change:transform;
 }
 /* Контент поверх фона */
 .app{
@@ -310,3 +316,173 @@ html{
 /* Карточки по высоте контента, а не по высоте ряда */
 .recipes-grid{align-items:start}
 .card{height:auto}
+
+/* ═══════ Редактор фона ═══════ */
+.bg-editor{
+  position:fixed;
+  inset:0;
+  z-index:100000;
+  background:rgba(0,0,0,.78);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:16px;
+}
+
+.bg-editor-box{
+  background:#1a1618;
+  color:#fff;
+  border-radius:14px;
+  padding:18px;
+  width:100%;
+  max-width:520px;
+  font-family:system-ui, sans-serif;
+  box-shadow:0 20px 60px rgba(0,0,0,.55);
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  max-height:96vh;
+  overflow-y:auto;
+}
+
+.bg-editor-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.bg-editor-title{ font-size:16px; font-weight:700; }
+.bg-editor-close{
+  background:none; border:none; color:#fff;
+  font-size:20px; cursor:pointer; padding:0 4px; line-height:1;
+}
+
+.bg-editor-devices{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+}
+.bg-device{
+  flex:1;
+  min-width:80px;
+  padding:8px 10px;
+  border-radius:8px;
+  border:1px solid #555;
+  background:#2a2529;
+  color:#fff;
+  font-family:inherit;
+  font-size:13px;
+  cursor:pointer;
+  transition:background .15s, border-color .15s;
+}
+.bg-device:hover{ background:#353033; }
+.bg-device.active{
+  background:#e69db5;
+  border-color:#e69db5;
+  color:#fff;
+  font-weight:700;
+}
+
+.bg-editor-stage{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#111;
+  border-radius:10px;
+  padding:12px;
+  min-height:200px;
+}
+
+.bg-editor-frame{
+  aspect-ratio:16 / 9;
+  width:100%;
+  max-height:45vh;
+  position:relative;
+  overflow:hidden;
+  border-radius:6px;
+  cursor:grab;
+  background:#000;
+  user-select:none;
+  -webkit-user-select:none;
+  touch-action:none;
+}
+
+.bg-editor-blur{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  display:block;
+  filter:blur(20px);
+  -webkit-filter:blur(20px);
+  transform:scale(1.1);
+  -webkit-transform:scale(1.1);
+  pointer-events:none;
+}
+
+.bg-editor-sharp{
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:auto;
+  height:auto;
+  max-width:100%;
+  max-height:100%;
+  display:block;
+  transform-origin:center center;
+  transform:
+    translate(-50%, -50%)
+    translate(var(--tx, 0%), var(--ty, 0%))
+    scale(var(--tz, 1));
+  pointer-events:none;
+  will-change:transform;
+}
+
+.bg-editor-zoom{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.bg-editor-zoom-label{ font-size:13px; opacity:.7; min-width:36px; }
+.bg-editor-zoom input[type="range"]{
+  flex:1;
+  accent-color:#e69db5;
+}
+.bg-editor-zoom-value{
+  font-size:13px;
+  min-width:52px;
+  text-align:right;
+  opacity:.85;
+  font-variant-numeric:tabular-nums;
+}
+
+.bg-editor-hint{
+  font-size:12px;
+  line-height:1.5;
+  opacity:.6;
+  margin:0;
+}
+
+.bg-editor-actions{
+  display:flex;
+  gap:8px;
+  justify-content:flex-end;
+}
+.bg-editor-btn{
+  padding:9px 20px;
+  border-radius:8px;
+  border:1px solid #555;
+  background:#2a2529;
+  color:#fff;
+  font-family:inherit;
+  font-size:13px;
+  cursor:pointer;
+}
+.bg-editor-btn.primary{
+  background:#e69db5;
+  border-color:#e69db5;
+  color:#fff;
+  font-weight:700;
+}
+.bg-editor-btn:hover{ filter:brightness(1.08); }
