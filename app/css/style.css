@@ -12,7 +12,7 @@
 html,body{height:100%}
 body{
   font-family:'Nunito',sans-serif;
-  background-color:var(--c1);
+  background-color:color-mix(in srgb, var(--c1) 65%, var(--c2) 35%);
   color:var(--c4);
   line-height:1.5;
   -webkit-font-smoothing:antialiased;
@@ -269,7 +269,7 @@ html{
   z-index:0;
   overflow:hidden;
   pointer-events:none;
-  background:var(--c1);
+  background:color-mix(in srgb, var(--c1) 65%, var(--c2) 35%);
   -webkit-transform:translateZ(0);
   transform:translateZ(0);
   will-change:transform;

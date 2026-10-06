@@ -560,6 +560,18 @@
           </div>
         </div>
         <div class="dp-section">
+          <div class="dp-section-label">Тень</div>
+          <div class="dp-chips" id="dpShadows">
+            <button type="button" class="dp-chip" data-sh="parit">Парящая</button>
+            <button type="button" class="dp-chip" data-sh="prikrepl">Прикреплённая</button>
+            <button type="button" class="dp-chip" data-sh="bokovaya">Боковая</button>
+            <button type="button" class="dp-chip" data-sh="cvetnaya">Цветная</button>
+            <button type="button" class="dp-chip" data-sh="dvoinaya">Двойная</button>
+            <button type="button" class="dp-chip" data-sh="vnutrennyaya">Внутренняя</button>
+            <button type="button" class="dp-chip" data-sh="vniz">Вниз</button>
+          </div>
+        </div>
+        <div class="dp-section">
           <div class="dp-section-label">Фон</div>
           <div class="dp-bgs" id="dpBgs">
             <button type="button" class="dp-bg dp-bg-none" data-bg="">Без фона</button>
@@ -892,6 +904,39 @@
     // Инициализация при загрузке
     if (currentPalette) applyPalette();
     syncPaletteActive();
+    // ── Тени ──
+    const dpShadows = document.getElementById('dpShadows');
+    const SHADOW_NAMES = ['parit','prikrepl','bokovaya','cvetnaya','dvoinaya','vnutrennyaya','vniz'];
+    const SHADOW_DEFAULT = 'parit';
+
+    let currentShadow = SHADOW_DEFAULT;
+
+    try {
+      const saved = localStorage.getItem('designShadow');
+      if (saved && SHADOW_NAMES.includes(saved)) currentShadow = saved;
+    } catch(e) {}
+
+    function applyShadow() {
+      document.body.dataset.shadow = currentShadow;
+      localStorage.setItem('designShadow', currentShadow);
+    }
+
+    function syncShadowActive() {
+      dpShadows.querySelectorAll('.dp-chip').forEach(b => {
+        b.classList.toggle('active', b.dataset.sh === currentShadow);
+      });
+    }
+
+    dpShadows.querySelectorAll('.dp-chip').forEach(btn => {
+      btn.addEventListener('click', () => {
+        currentShadow = btn.dataset.sh;
+        applyShadow();
+        syncShadowActive();
+      });
+    });
+
+    applyShadow();
+    syncShadowActive();
 
     document.getElementById('btnDesign').addEventListener('click', openDesignPanel);
     document.getElementById('designPanelClose').addEventListener('click', closeDesignPanel);
