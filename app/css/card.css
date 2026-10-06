@@ -286,3 +286,36 @@ body[data-shadow="vnutrennyaya"] .card{
 }
 body[data-shadow="vniz"] .card{
   box-shadow:0 10px 18px rgba(0,0,0,.22), 0 3px 6px rgba(0,0,0,.16);
+}
+
+/* ═══ Тёмная тема — карточка ═══ */
+body[data-theme="dark"]{
+  --plate-bg:color-mix(in srgb, var(--c1) 15%, var(--c4) 85%);
+  --plate-text:var(--c1);
+}
+body[data-theme="dark"] .card{
+  background:var(--c4);
+  color:#fff;
+  border-color:var(--c2);
+}
+body[data-theme="dark"] .kcal-row,
+body[data-theme="dark"] .ing-toggle{
+  color:#fff;
+}
+body[data-theme="dark"] .badge{
+  background:var(--c3) !important;
+  color:#fff !important;
+}
+body[data-theme="dark"] .actions{
+  background:var(--c4);
+}
+body[data-theme="dark"] .actions button{
+  background:color-mix(in srgb, var(--c1) 15%, var(--c4) 85%) !important;
+  color:var(--c1) !important;
+  border-color:var(--c3) !important;
+}
+body[data-theme="dark"] .actions button.primary{
+  background:var(--c2) !important;
+  color:var(--c4) !important;
+  border-color:var(--c2) !important;
+}

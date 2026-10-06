@@ -60,19 +60,16 @@
     </div>
   </header>
 
-  <!-- Поиск и кнопки -->
-  <div class="toolbar">
-    <button class="primary">🔍 Поиск</button>
-    <button>🏷 Фильтры</button>
-    <button>🎲 Случайный</button>
-  </div>
-
   <!-- Содержание -->
   <section class="contents open" id="contents">
     <div class="contents-head" id="contentsHead">
       <span class="head-label">📖 СОДЕРЖАНИЕ</span>
       <span class="toggle">▼</span>
+      <button type="button" class="head-btn" title="Поиск">🔍</button>
+      <button type="button" class="head-btn" title="Фильтры">🏷</button>
+      <button type="button" class="head-btn" title="Случайный">🎲</button>
     </div>
+
     <div class="contents-body">
 
       <div class="contents-group">
@@ -336,7 +333,7 @@
 
         <div class="card">
           <div class="card-img">
-            <img src="images/06.jpg" alt="" onerror="this.style.display='none'">
+            <img src="images/13.jpg" alt="" onerror="this.style.display='none'">
             <span class="badge">УЖИН</span>
             <div class="img-icons">
               <button class="ic">❤</button><button class="ic">⏱</button><button class="ic">👨‍🍳</button><button class="ic">📅</button><button class="ic">🔖</button>
@@ -572,6 +569,13 @@
           </div>
         </div>
         <div class="dp-section">
+          <div class="dp-section-label">Тема</div>
+          <div class="dp-chips" id="dpThemes">
+            <button type="button" class="dp-chip" data-th="light">🌞 Светлая</button>
+            <button type="button" class="dp-chip" data-th="dark">🌙 Тёмная</button>
+          </div>
+        </div>
+        <div class="dp-section">
           <div class="dp-section-label">Фон</div>
           <div class="dp-bgs" id="dpBgs">
             <button type="button" class="dp-bg dp-bg-none" data-bg="">Без фона</button>
@@ -610,6 +614,9 @@
      // Свернуть / развернуть содержание
     document.getElementById('contentsHead').addEventListener('click', () => {
       document.getElementById('contents').classList.toggle('open');
+    });
+    document.querySelectorAll('.head-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => e.stopPropagation());
     });
     
  // ───── Фоны: выбор, редактор позиции, три настройки (localStorage) ─────
@@ -937,6 +944,42 @@
 
     applyShadow();
     syncShadowActive();
+    // ── Тема ──
+    const dpThemes = document.getElementById('dpThemes');
+    const THEME_NAMES = ['light','dark'];
+
+    let currentTheme = 'light';
+
+    try {
+      const saved = localStorage.getItem('designTheme');
+      if (saved && THEME_NAMES.includes(saved)) currentTheme = saved;
+    } catch(e) {}
+
+    function applyTheme() {
+      if (currentTheme === 'dark') {
+        document.body.dataset.theme = 'dark';
+      } else {
+        delete document.body.dataset.theme;
+      }
+      localStorage.setItem('designTheme', currentTheme);
+    }
+
+    function syncThemeActive() {
+      dpThemes.querySelectorAll('.dp-chip').forEach(b => {
+        b.classList.toggle('active', b.dataset.th === currentTheme);
+      });
+    }
+
+    dpThemes.querySelectorAll('.dp-chip').forEach(btn => {
+      btn.addEventListener('click', () => {
+        currentTheme = btn.dataset.th;
+        applyTheme();
+        syncThemeActive();
+      });
+    });
+
+    applyTheme();
+    syncThemeActive();
 
     document.getElementById('btnDesign').addEventListener('click', openDesignPanel);
     document.getElementById('designPanelClose').addEventListener('click', closeDesignPanel);

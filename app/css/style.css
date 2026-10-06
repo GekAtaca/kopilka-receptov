@@ -131,11 +131,12 @@ html{
 .contents-head{
   display:flex;
   align-items:center;
-  justify-content:space-between;
+  gap:8px;
   padding:6px 2px 12px;
   cursor:pointer;
   user-select:none;
 }
+
 .contents-head .head-label{
   font-family:'Cormorant Garamond',serif;
   font-style:italic;
@@ -180,14 +181,14 @@ html{
   align-items:center;
   gap:5px;
   padding:6px 13px;
-  background:var(--c2);
+  background:var(--plate-bg);
   border:1px solid var(--c3);
   border-radius:20px;
   font-family:'Cormorant Garamond',serif;
   font-style:italic;
   font-weight:600;
   font-size:13.5px;
-  color:var(--c4);
+  color:var(--plate-text);
   cursor:pointer;
   transition:background .15s, transform .15s;
 }
@@ -624,3 +625,66 @@ html{
   cursor:pointer;
 }
 .dp-bg-pos:hover{ background:#353033; }
+/* ═══ Тёмная тема — фон и шапка ═══ */
+body[data-theme="dark"]{
+  background-color:color-mix(in srgb, var(--c3) 30%, var(--c4) 70%);
+}
+body[data-theme="dark"] .bg-layer{
+  background:color-mix(in srgb, var(--c3) 30%, var(--c4) 70%);
+}
+body[data-theme="dark"] .app-header{
+  background:linear-gradient(135deg, var(--c4), var(--c3));
+}
+body[data-theme="dark"] .toolbar,
+body[data-theme="dark"] .contents{
+  background:transparent;
+  border-color:transparent;
+}
+body[data-theme="dark"] .recipes-section-head{
+  background:rgba(0,0,0,.35);
+}
+body[data-theme="dark"] .recipes-section-title,
+body[data-theme="dark"] .recipes-section-count{
+  color:var(--c1);
+}
+body[data-theme="dark"] .app-header h1,
+body[data-theme="dark"] .app-header .subtitle,
+body[data-theme="dark"] .contents-head .head-label,
+body[data-theme="dark"] .contents-group .group-label{
+  color:#fff !important;
+}
+body[data-theme="dark"] .contents-group .group-label{
+  opacity:.85 !important;
+}
+body[data-theme="dark"] .toolbar button{
+  color:var(--c4) !important;
+  background:var(--c2) !important;
+  border-color:var(--c2) !important;
+}
+body[data-theme="dark"] .toolbar button.primary{
+  color:var(--c4) !important;
+}
+body[data-theme="dark"] .chip{
+  background:color-mix(in srgb, var(--c1) 15%, var(--c4) 85%) !important;
+  color:#fff !important;
+  border-color:var(--c2) !important;
+}
+.head-btn{
+  width:32px;
+  height:32px;
+  border-radius:50%;
+  background:var(--plate-bg);
+  color:var(--plate-text);
+  border:1px solid var(--c3);
+  font-size:14px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:0;
+  cursor:pointer;
+}
+.head-btn:hover{filter:brightness(1.08)}
+body[data-theme="dark"] .contents-head .toggle{
+  color:#fff;
+  opacity:.8;
+}
