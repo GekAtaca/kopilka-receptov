@@ -563,13 +563,7 @@
         </div>
       </div>
 
-      <div class="bg-editor-zoom">
-        <span class="bg-editor-zoom-label">Зум</span>
-        <input type="range" id="bgEditorZoom" min="1" max="5" step="0.05" value="1">
-        <span class="bg-editor-zoom-value" id="bgEditorZoomValue">1.00×</span>
-      </div>
-
-      <p class="bg-editor-hint">Тащи картинку пальцем или мышью. Зум — ползунком. Настройка сохраняется отдельно для каждого устройства.</p>
+      <p class="bg-editor-hint">Тащи картинку. Колесо мыши на ПК или щипок двумя пальцами на телефоне — увеличить. Двойной клик — сбросить зум.</p>
 
       <div class="bg-editor-actions">
         <button type="button" class="bg-editor-btn" id="bgEditorCancel">Отмена</button>
@@ -658,8 +652,6 @@
     const bgEditorFrame    = document.getElementById('bgEditorFrame');
     const bgEditorImgBlur  = document.getElementById('bgEditorImgBlur');
     const bgEditorImgSharp = document.getElementById('bgEditorImgSharp');
-    const bgEditorZoom     = document.getElementById('bgEditorZoom');
-    const bgEditorZoomValue= document.getElementById('bgEditorZoomValue');
 
     let activeDevice = 'pc';
     let editX = 0, editY = 0, editZ = 1;
@@ -686,8 +678,6 @@
 
       const s = getSettingsFor(currentBg, device);
       editX = s.x; editY = s.y; editZ = s.z;
-      bgEditorZoom.value = String(editZ);
-      bgEditorZoomValue.textContent = editZ.toFixed(2) + '×';
       updateEditorTransform();
     }
 
@@ -724,10 +714,46 @@
       btn.addEventListener('click', () => setEditorDevice(btn.dataset.device));
     });
 
-    bgEditorZoom.addEventListener('input', () => {
-      editZ = parseFloat(bgEditorZoom.value);
-      bgEditorZoomValue.textContent = editZ.toFixed(2) + '×';
+    // ── Зум: колесо мыши (ПК) ──
+    bgEditorFrame.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      const factor = 1 - e.deltaY * 0.0015;
+      editZ = Math.max(1, Math.min(5, editZ * factor));
       updateEditorTransform();
+    }, { passive: false });
+
+    // ── Зум: двойной клик — сброс на 1.00× ──
+    bgEditorFrame.addEventListener('dblclick', () => {
+      editZ = 1;
+      updateEditorTransform();
+    });
+
+    // ── Зум: щипок двумя пальцами (телефон/планшет) ──
+    let pinchStart = null;
+
+    bgEditorFrame.addEventListener('touchstart', (e) => {
+      if (e.touches.length === 2) {
+        dragStart = null;
+        const dx = e.touches[0].clientX - e.touches[1].clientX;
+        const dy = e.touches[0].clientY - e.touches[1].clientY;
+        pinchStart = { dist: Math.hypot(dx, dy), z: editZ };
+        e.preventDefault();
+      }
+    }, { passive: false });
+
+    document.addEventListener('touchmove', (e) => {
+      if (pinchStart && e.touches.length === 2) {
+        const dx = e.touches[0].clientX - e.touches[1].clientX;
+        const dy = e.touches[0].clientY - e.touches[1].clientY;
+        const dist = Math.hypot(dx, dy);
+        editZ = Math.max(1, Math.min(5, pinchStart.z * (dist / pinchStart.dist)));
+        updateEditorTransform();
+        e.preventDefault();
+      }
+    }, { passive: false });
+
+    document.addEventListener('touchend', (e) => {
+      if (e.touches.length < 2) pinchStart = null;
     });
 
     // Перетаскивание мышью
