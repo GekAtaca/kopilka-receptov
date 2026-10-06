@@ -30,65 +30,6 @@
   </div>
   <div class="app">
 
-   <!-- ═══════════════════════════════════════════════════
-       ВРЕМЕННАЯ панель стилей — только для проверки!
-       Удалим, когда закончим сравнение 8 стилей.
-       ═══════════════════════════════════════════════════ -->
-    <!-- ═══════════════════════════════════════════════════
-       ВРЕМЕННАЯ панель: стили + фоны — только для проверки!
-       ═══════════════════════════════════════════════════ -->
-  <div id="styleSwitcher" style="
-    position:fixed; top:0; left:0; right:0;
-    background:#1a1618; color:#fff;
-    padding:8px 12px;
-    display:none; flex-direction:column; gap:8px;
-    z-index:99999;
-    font-family:system-ui, sans-serif;
-    font-size:13px;
-    box-shadow:0 2px 8px rgba(0,0,0,.3);
-  ">
-
-    <!-- Строка 1: стили -->
-    <div style="display:flex; flex-wrap:wrap; gap:6px; align-items:center">
-      <span style="opacity:.6;margin-right:6px">Стиль:</span>
-      <button data-s="nezhny"     style="padding:4px 10px;border-radius:6px;border:1px solid #555;background:#333;color:#fff;cursor:pointer">🌸 Нежный</button>
-      <button data-s="zhurnal"    style="padding:4px 10px;border-radius:6px;border:1px solid #555;background:#333;color:#fff;cursor:pointer">📰 Журнал</button>
-      <button data-s="minimalizm" style="padding:4px 10px;border-radius:6px;border:1px solid #555;background:#333;color:#fff;cursor:pointer">🤍 Минимализм</button>
-      <button data-s="boho"       style="padding:4px 10px;border-radius:6px;border:1px solid #555;background:#333;color:#fff;cursor:pointer">🌿 Бохо</button>
-      <button data-s="retro"      style="padding:4px 10px;border-radius:6px;border:1px solid #555;background:#333;color:#fff;cursor:pointer">📻 Ретро</button>
-      <button data-s="yaponsky"   style="padding:4px 10px;border-radius:6px;border:1px solid #555;background:#333;color:#fff;cursor:pointer">🍃 Японский</button>
-      <button data-s="antichny"   style="padding:4px 10px;border-radius:6px;border:1px solid #555;background:#333;color:#fff;cursor:pointer">🏛 Античный</button>
-      <button data-s="lileyny"    style="padding:4px 10px;border-radius:6px;border:1px solid #555;background:#333;color:#fff;cursor:pointer">🌷 Лилейный</button>
-    </div>
-
-     <!-- Строка 2: фоны -->
-    <div style="display:flex; flex-wrap:wrap; gap:6px; align-items:center; padding-top:8px; border-top:1px solid #333">
-      <span style="opacity:.6;margin-right:6px">Фон:</span>
-      <button type="button" data-bg="" style="padding:4px 10px;border-radius:6px;border:1px solid #555;background:#333;color:#fff;cursor:pointer">Без фона</button>
-      <button type="button" data-bg="01" style="width:36px;height:36px;border-radius:6px;border:2px solid #555;padding:0;cursor:pointer;background:url('images/01.jpg') center/cover"></button>
-      <button type="button" data-bg="02" style="width:36px;height:36px;border-radius:6px;border:2px solid #555;padding:0;cursor:pointer;background:url('images/02.jpg') center/cover"></button>
-      <button type="button" data-bg="03" style="width:36px;height:36px;border-radius:6px;border:2px solid #555;padding:0;cursor:pointer;background:url('images/03.jpg') center/cover"></button>
-      <button type="button" data-bg="04" style="width:36px;height:36px;border-radius:6px;border:2px solid #555;padding:0;cursor:pointer;background:url('images/04.jpg') center/cover"></button>
-      <button type="button" data-bg="05" style="width:36px;height:36px;border-radius:6px;border:2px solid #555;padding:0;cursor:pointer;background:url('images/05.jpg') center/cover"></button>
-      <button type="button" data-bg="07" style="width:36px;height:36px;border-radius:6px;border:2px solid #555;padding:0;cursor:pointer;background:url('images/07.jpg') center/cover"></button>
-      <button type="button" data-bg="08" style="width:36px;height:36px;border-radius:6px;border:2px solid #555;padding:0;cursor:pointer;background:url('images/08.jpg') center/cover"></button>
-      <button type="button" data-bg="09" style="width:36px;height:36px;border-radius:6px;border:2px solid #555;padding:0;cursor:pointer;background:url('images/09.jpg') center/cover"></button>
-      <button type="button" data-bg="10" style="width:36px;height:36px;border-radius:6px;border:2px solid #555;padding:0;cursor:pointer;background:url('images/10.jpg') center/cover"></button>
-      <button type="button" data-bg="11" style="width:36px;height:36px;border-radius:6px;border:2px solid #555;padding:0;cursor:pointer;background:url('images/11.jpg') center/cover"></button>
-      <button type="button" data-bg="12" style="width:36px;height:36px;border-radius:6px;border:2px solid #555;padding:0;cursor:pointer;background:url('images/12.jpg') center/cover"></button>
-      <button type="button" data-bg="13" style="width:36px;height:36px;border-radius:6px;border:2px solid #555;padding:0;cursor:pointer;background:url('images/13.jpg') center/cover"></button>
-      <button type="button" data-bg="14" style="width:36px;height:36px;border-radius:6px;border:2px solid #555;padding:0;cursor:pointer;background:url('images/14.jpg') center/cover"></button>
-      <button type="button" data-bg="15" style="width:36px;height:36px;border-radius:6px;border:2px solid #555;padding:0;cursor:pointer;background:url('images/15.jpg') center/cover"></button>
-      <button type="button" data-bg="16" style="width:36px;height:36px;border-radius:6px;border:2px solid #555;padding:0;cursor:pointer;background:url('images/16.jpg') center/cover"></button>
-      <button type="button" data-bg="17" style="width:36px;height:36px;border-radius:6px;border:2px solid #555;padding:0;cursor:pointer;background:url('images/17.jpg') center/cover"></button>
-      <button type="button" data-bg="18" style="width:36px;height:36px;border-radius:6px;border:2px solid #555;padding:0;cursor:pointer;background:url('images/18.jpg') center/cover"></button>
-      <button type="button" data-bg="19" style="width:36px;height:36px;border-radius:6px;border:2px solid #555;padding:0;cursor:pointer;background:url('images/19.jpg') center/cover"></button>
-      <button type="button" data-bg="20" style="width:36px;height:36px;border-radius:6px;border:2px solid #555;padding:0;cursor:pointer;background:url('images/20.jpg') center/cover"></button>
-      <button type="button" id="posOpen" style="padding:4px 12px;border-radius:6px;border:1px solid #555;background:#444;color:#fff;cursor:pointer;font-size:13px;margin-left:6px">📐 Позиция</button>
-    </div>
-
-  </div>
-
   <!-- Заставка -->
   <div id="loader">
     <div class="logo">📖</div>
@@ -629,12 +570,7 @@
     document.getElementById('contentsHead').addEventListener('click', () => {
       document.getElementById('contents').classList.toggle('open');
     });
-    // Временный переключатель стилей (удалим после проверки)
-    document.querySelectorAll('#styleSwitcher button[data-s]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.body.dataset.style = btn.dataset.s;
-      });
-    });
+    
  // ───── Фоны: выбор, редактор позиции, три настройки (localStorage) ─────
 
     // Хранилище: { bgId: { iphone:{x,y,z}, ipad:{x,y,z}, pc:{x,y,z} } }
@@ -747,7 +683,6 @@
       dragStart = null;
     }
 
-    document.getElementById('posOpen').addEventListener('click', openBgEditor);
     document.getElementById('bgEditorClose').addEventListener('click', closeBgEditor);
     document.getElementById('bgEditorCancel').addEventListener('click', closeBgEditor);
 
