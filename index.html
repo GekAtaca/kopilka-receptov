@@ -22,9 +22,11 @@
 </head>
 <body data-palette="pudrovaya-nezhnaya" data-style="nezhny">
    <!-- ═══════ Фоновый слой ═══════ -->
-   <div class="bg-layer" id="bgLayer">
+    <div class="bg-layer" id="bgLayer">
     <img class="bg-blur" id="bgBlur" src="" alt="">
-    <img class="bg-sharp" id="bgSharp" src="" alt="">
+    <div class="bg-sharp-wrap">
+      <img class="bg-sharp" id="bgSharp" src="" alt="">
+    </div>
   </div>
   <div class="app">
 
@@ -550,12 +552,6 @@
         <button type="button" class="bg-editor-close" id="bgEditorClose">✕</button>
       </div>
 
-      <div class="bg-editor-devices">
-        <button type="button" class="bg-device" data-device="pc">🖥 ПК</button>
-        <button type="button" class="bg-device" data-device="ipad">📟 iPad</button>
-        <button type="button" class="bg-device" data-device="iphone">📱 iPhone</button>
-      </div>
-
       <div class="bg-editor-stage">
         <div class="bg-editor-frame" id="bgEditorFrame">
           <img class="bg-editor-blur" id="bgEditorImgBlur" src="" alt="">
@@ -599,11 +595,17 @@
       localStorage.setItem('bgSettings', JSON.stringify(bgSettings));
     }
 
-    function getDeviceType() {
+     function getDeviceType() {
+      // Есть ли тач-ввод? На ПК без тачскрина — false.
+      const hasTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+
+      // ПК — по отсутствию тача, ширина не важна.
+      if (!hasTouch) return 'pc';
+
+      // Тач-устройства делим по ширине.
       const w = window.innerWidth;
       if (w < 600) return 'iphone';
-      if (w < 1200) return 'ipad';
-      return 'pc';
+      return 'ipad';
     }
 
     function getSettingsFor(bg, device) {
@@ -657,26 +659,19 @@
     let editX = 0, editY = 0, editZ = 1;
     let dragStart = null;
 
-    const DEVICE_RATIOS = {
-      pc:     '16 / 9',
-      ipad:   '7 / 10',
-      iphone: '9 / 19.5'
-    };
-
     function updateEditorTransform() {
       bgEditorImgSharp.style.setProperty('--tx', editX + '%');
       bgEditorImgSharp.style.setProperty('--ty', editY + '%');
       bgEditorImgSharp.style.setProperty('--tz', editZ);
     }
 
-    function setEditorDevice(device) {
-      activeDevice = device;
-      document.querySelectorAll('.bg-device').forEach(b => {
-        b.classList.toggle('active', b.dataset.device === device);
-      });
-      bgEditorFrame.style.aspectRatio = DEVICE_RATIOS[device];
+    function initEditorFrame() {
+      // Пропорции превью = пропорции реального окна браузера
+      bgEditorFrame.style.aspectRatio = window.innerWidth + ' / ' + window.innerHeight;
 
-      const s = getSettingsFor(currentBg, device);
+      // Слот определяем автоматически по текущему устройству
+      activeDevice = getDeviceType();
+      const s = getSettingsFor(currentBg, activeDevice);
       editX = s.x; editY = s.y; editZ = s.z;
       updateEditorTransform();
     }
@@ -689,7 +684,7 @@
       bgEditorImgBlur.src  = 'images/' + currentBg + '.jpg';
       bgEditorImgSharp.src = 'images/' + currentBg + '.jpg';
       bgEditor.style.display = 'flex';
-      setEditorDevice(getDeviceType());
+      requestAnimationFrame(initEditorFrame);
     }
 
     function closeBgEditor() {
@@ -708,10 +703,6 @@
       saveSettingsToStorage();
       applyBg(currentBg);
       closeBgEditor();
-    });
-
-    document.querySelectorAll('.bg-device').forEach(btn => {
-      btn.addEventListener('click', () => setEditorDevice(btn.dataset.device));
     });
 
     // ── Зум: колесо мыши (ПК) ──
