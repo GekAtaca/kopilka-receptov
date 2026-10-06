@@ -23,6 +23,7 @@
 <body data-palette="pudrovaya-nezhnaya" data-style="nezhny">
    <!-- ═══════ Фоновый слой ═══════ -->
    <div class="bg-layer" id="bgLayer">
+    <img class="bg-blur" id="bgBlur" src="" alt="">
     <img class="bg-sharp" id="bgSharp" src="" alt="">
   </div>
   <div class="app">
@@ -591,13 +592,16 @@
 
     function applyBg(bg) {
       const sharp = document.getElementById('bgSharp');
+      const blur  = document.getElementById('bgBlur');
       currentBg = bg;
       if (bg === '') {
         sharp.removeAttribute('src');
         sharp.style.objectPosition = '';
+        blur.removeAttribute('src');
       } else {
         sharp.src = 'images/' + bg + '.jpg';
         sharp.style.objectPosition = bgPositions[bg] || 'center center';
+        blur.src = 'images/' + bg + '.jpg';
       }
     }
 
