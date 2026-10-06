@@ -41,7 +41,7 @@
     position:fixed; top:0; left:0; right:0;
     background:#1a1618; color:#fff;
     padding:8px 12px;
-    display:flex; flex-direction:column; gap:8px;
+    display:none; flex-direction:column; gap:8px;
     z-index:99999;
     font-family:system-ui, sans-serif;
     font-size:13px;
@@ -104,7 +104,7 @@
         <div class="subtitle">Зажги свечку. Включи музыку. Наслаждайся — время ТВОРИТЬ ✨</div>
       </div>
       <div class="icons">
-        <button title="Палитра">🎨</button>
+        <button type="button" id="btnDesign" title="Оформление">🎨</button>
         <button title="Уведомления">🔔</button>
         <button title="Настройки">⚙</button>
       </div>
@@ -567,6 +567,58 @@
       </div>
     </div>
   </div>
+  <!-- ═══════ Панель оформления 🎨 ═══════ -->
+  <div id="designPanel" class="design-panel" style="display:none">
+    <div class="design-panel-box">
+      <div class="design-panel-head">
+        <span class="design-panel-title">🎨 Оформление</span>
+        <button type="button" class="design-panel-close" id="designPanelClose">✕</button>
+      </div>
+      <div class="design-panel-body">
+
+        <div class="dp-section">
+          <div class="dp-section-label">Стиль</div>
+          <div class="dp-chips" id="dpStyles">
+            <button type="button" class="dp-chip" data-s="nezhny">🌸 Нежный</button>
+            <button type="button" class="dp-chip" data-s="zhurnal">📰 Журнал</button>
+            <button type="button" class="dp-chip" data-s="minimalizm">🤍 Минимализм</button>
+            <button type="button" class="dp-chip" data-s="boho">🌿 Бохо</button>
+            <button type="button" class="dp-chip" data-s="retro">📻 Ретро</button>
+            <button type="button" class="dp-chip" data-s="yaponsky">🍃 Японский</button>
+            <button type="button" class="dp-chip" data-s="antichny">🏛 Античный</button>
+            <button type="button" class="dp-chip" data-s="lileyny">🌷 Лилейный</button>
+          </div>
+        </div>
+        <div class="dp-section">
+          <div class="dp-section-label">Фон</div>
+          <div class="dp-bgs" id="dpBgs">
+            <button type="button" class="dp-bg dp-bg-none" data-bg="">Без фона</button>
+            <button type="button" class="dp-bg" data-bg="01" style="background-image:url('images/01.jpg')"></button>
+            <button type="button" class="dp-bg" data-bg="02" style="background-image:url('images/02.jpg')"></button>
+            <button type="button" class="dp-bg" data-bg="03" style="background-image:url('images/03.jpg')"></button>
+            <button type="button" class="dp-bg" data-bg="04" style="background-image:url('images/04.jpg')"></button>
+            <button type="button" class="dp-bg" data-bg="05" style="background-image:url('images/05.jpg')"></button>
+            <button type="button" class="dp-bg" data-bg="07" style="background-image:url('images/07.jpg')"></button>
+            <button type="button" class="dp-bg" data-bg="08" style="background-image:url('images/08.jpg')"></button>
+            <button type="button" class="dp-bg" data-bg="09" style="background-image:url('images/09.jpg')"></button>
+            <button type="button" class="dp-bg" data-bg="10" style="background-image:url('images/10.jpg')"></button>
+            <button type="button" class="dp-bg" data-bg="11" style="background-image:url('images/11.jpg')"></button>
+            <button type="button" class="dp-bg" data-bg="12" style="background-image:url('images/12.jpg')"></button>
+            <button type="button" class="dp-bg" data-bg="13" style="background-image:url('images/13.jpg')"></button>
+            <button type="button" class="dp-bg" data-bg="14" style="background-image:url('images/14.jpg')"></button>
+            <button type="button" class="dp-bg" data-bg="15" style="background-image:url('images/15.jpg')"></button>
+            <button type="button" class="dp-bg" data-bg="16" style="background-image:url('images/16.jpg')"></button>
+            <button type="button" class="dp-bg" data-bg="17" style="background-image:url('images/17.jpg')"></button>
+            <button type="button" class="dp-bg" data-bg="18" style="background-image:url('images/18.jpg')"></button>
+            <button type="button" class="dp-bg" data-bg="19" style="background-image:url('images/19.jpg')"></button>
+            <button type="button" class="dp-bg" data-bg="20" style="background-image:url('images/20.jpg')"></button>
+            <button type="button" class="dp-bg-pos" id="dpBgPos">📐 Позиция</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
   <script>
     window.addEventListener('load', () => {
       setTimeout(() => {
@@ -645,8 +697,11 @@
       resizeTimer = setTimeout(() => applyBg(currentBg), 150);
     });
 
-    document.querySelectorAll('#styleSwitcher button[data-bg]').forEach(btn => {
-      btn.addEventListener('click', () => applyBg(btn.dataset.bg));
+    document.querySelectorAll('button[data-bg]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        applyBg(btn.dataset.bg);
+        syncBgActive();
+      });
     });
 
     // ── Редактор фона ──
@@ -785,6 +840,58 @@
     }, { passive: false });
 
     document.addEventListener('touchend', () => { dragStart = null; });
+    // ── Панель 🎨 ──
+    const designPanel = document.getElementById('designPanel');
+
+    function openDesignPanel() {
+      syncStyleActive();
+      syncBgActive();
+      designPanel.style.display = 'flex';
+    }
+    function closeDesignPanel() {
+      designPanel.style.display = 'none';
+    }
+// Кнопки стилей внутри панели
+    const dpStyles = document.getElementById('dpStyles');
+
+    function syncStyleActive() {
+      const cur = document.body.dataset.style || 'nezhny';
+      dpStyles.querySelectorAll('.dp-chip').forEach(b => {
+        b.classList.toggle('active', b.dataset.s === cur);
+      });
+    }
+    const dpBgs = document.getElementById('dpBgs');
+
+    function syncBgActive() {
+      const cur = currentBg || '';
+      dpBgs.querySelectorAll('.dp-bg').forEach(b => {
+        b.classList.toggle('active', (b.dataset.bg || '') === cur);
+      });
+    }
+
+    dpStyles.querySelectorAll('.dp-chip').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.body.dataset.style = btn.dataset.s;
+        syncStyleActive();
+      });
+    });
+
+    document.getElementById('btnDesign').addEventListener('click', openDesignPanel);
+    document.getElementById('designPanelClose').addEventListener('click', closeDesignPanel);
+
+    designPanel.addEventListener('click', (e) => {
+      if (e.target === designPanel) closeDesignPanel();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && designPanel.style.display === 'flex') {
+        closeDesignPanel();
+      }
+    });
+    document.getElementById('dpBgPos').addEventListener('click', () => {
+      closeDesignPanel();
+      openBgEditor();
+    });
   </script>
 </div><!-- /.app -->
 
