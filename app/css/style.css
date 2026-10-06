@@ -290,8 +290,20 @@ html{
   -webkit-transform:scale(1.15);
 }
 
+/* Обёртка для чёткой картинки — держит горизонтальное растворение */
+.bg-sharp-wrap{
+  position:absolute;
+  inset:0;
+
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
+  mask-image:
+    linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
+}
+
 /* Чёткая картинка — поверх размытой.
-   Края мягко растворяются: сквозь них видно размытую копию. */
+   Держит вертикальное растворение. Маски родителя и ребёнка
+   перемножаются — получается мягкое растворение со всех сторон. */
 .bg-sharp{
   position:absolute;
   inset:0;
@@ -301,16 +313,10 @@ html{
   object-position:center;
   display:block;
 
-  /* Мягкое растворение со всех четырёх сторон */
   -webkit-mask-image:
-    linear-gradient(to right,  transparent 0%, #000 8%, #000 92%, transparent 100%),
     linear-gradient(to bottom, transparent 0%, #000 8%, #000 92%, transparent 100%);
-  -webkit-mask-composite: source-in;
-
   mask-image:
-    linear-gradient(to right,  transparent 0%, #000 8%, #000 92%, transparent 100%),
     linear-gradient(to bottom, transparent 0%, #000 8%, #000 92%, transparent 100%);
-  mask-composite: intersect;
 }
 /* Контент поверх фона */
 .app{
