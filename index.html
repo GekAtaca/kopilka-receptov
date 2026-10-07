@@ -774,6 +774,7 @@
 
     document.querySelectorAll('button[data-bg]').forEach(btn => {
       btn.addEventListener('click', () => {
+        setDesignFor(activeDesignScreen, { bg: btn.dataset.bg });
         applyBg(btn.dataset.bg);
         syncBgActive();
       });
@@ -914,146 +915,148 @@
     }, { passive: false });
 
     document.addEventListener('touchend', () => { dragStart = null; });
+    // ═══ Оформление: своё для каждого экрана ═══
+    const DESIGN_KEY = 'design';
+    const DESIGN_SCREENS = ['home','favorites','plan','pantry'];
+    const DESIGN_DEFAULTS = {
+      style: 'nezhny',
+      palette: 'pudrovaya',
+      shade: 'nezhnaya',
+      shadow: 'parit',
+      fabShadow: 'parit',
+      theme: 'light',
+      bg: ''
+    };
+
+    let designData = null;
+    let activeDesignScreen = 'home';
+
+    function loadDesignData(){
+      if (designData) return designData;
+      let raw = null;
+      try { raw = localStorage.getItem(DESIGN_KEY); } catch(e) {}
+      if (raw) {
+        try { designData = JSON.parse(raw); } catch(e) { designData = null; }
+      }
+      if (!designData || typeof designData !== 'object'){
+        designData = {};
+        DESIGN_SCREENS.forEach(s => designData[s] = { ...DESIGN_DEFAULTS });
+        try {
+          localStorage.removeItem('designPalette');
+          localStorage.removeItem('designShadow');
+          localStorage.removeItem('designFabShadow');
+          localStorage.removeItem('designTheme');
+          localStorage.removeItem('bgPositions');
+          localStorage.setItem(DESIGN_KEY, JSON.stringify(designData));
+        } catch(e) {}
+      } else {
+        DESIGN_SCREENS.forEach(s => {
+          designData[s] = { ...DESIGN_DEFAULTS, ...(designData[s] || {}) };
+        });
+      }
+      return designData;
+    }
+
+    function getDesignFor(screen){
+      const d = loadDesignData();
+      return d[screen] || { ...DESIGN_DEFAULTS };
+    }
+
+    function setDesignFor(screen, patch){
+      const d = loadDesignData();
+      d[screen] = { ...(d[screen] || DESIGN_DEFAULTS), ...patch };
+      try { localStorage.setItem(DESIGN_KEY, JSON.stringify(d)); } catch(e) {}
+    }
+
+    function applyDesignFor(screen){
+      activeDesignScreen = screen;
+      const s = getDesignFor(screen);
+      document.body.dataset.style = s.style;
+      document.body.dataset.palette = s.palette + '-' + s.shade;
+      document.body.dataset.shadow = s.shadow;
+      document.body.dataset.fabShadow = s.fabShadow;
+      if (s.theme === 'dark') document.body.dataset.theme = 'dark';
+      else delete document.body.dataset.theme;
+      applyBg(s.bg || '');
+      syncStyleActive();
+      syncPaletteActive();
+      syncShadowActive();
+      syncBgActive();
+      syncThemeToggle();
+    }
+
     // ── Панель 🎨 ──
     const designPanel = document.getElementById('designPanel');
 
-    function openDesignPanel() {
+    function openDesignPanel(){
       syncStyleActive();
+      syncPaletteActive();
+      syncShadowActive();
       syncBgActive();
+      syncThemeToggle();
       designPanel.style.display = 'flex';
     }
-    function closeDesignPanel() {
-      designPanel.style.display = 'none';
-    }
-// Кнопки стилей внутри панели
-    const dpStyles = document.getElementById('dpStyles');
+    function closeDesignPanel(){ designPanel.style.display = 'none'; }
 
-    function syncStyleActive() {
-      const cur = document.body.dataset.style || 'nezhny';
+    // Стили
+    const dpStyles = document.getElementById('dpStyles');
+    function syncStyleActive(){
+      const cur = getDesignFor(activeDesignScreen).style;
       dpStyles.querySelectorAll('.dp-chip').forEach(b => {
         b.classList.toggle('active', b.dataset.s === cur);
       });
     }
-    const dpBgs = document.getElementById('dpBgs');
-
-    function syncBgActive() {
-      const cur = currentBg || '';
-      dpBgs.querySelectorAll('.dp-bg').forEach(b => {
-        b.classList.toggle('active', (b.dataset.bg || '') === cur);
-      });
-    }
-
     dpStyles.querySelectorAll('.dp-chip').forEach(btn => {
       btn.addEventListener('click', () => {
-        document.body.dataset.style = btn.dataset.s;
-        syncStyleActive();
+        setDesignFor(activeDesignScreen, { style: btn.dataset.s });
+        applyDesignFor(activeDesignScreen);
       });
     });
-    // ── Палитра ──
+
+    // Палитра
     const dpPalettes = document.getElementById('dpPalettes');
     const dpShades   = document.getElementById('dpShades');
-
-    const PALETTE_NAMES = ['pudrovaya','medovaya','shalfeynaya','nebesnaya','lavandovaya','vishnyovaya','kakao','grafit','fioletovaya'];
-    const SHADE_NAMES   = ['nezhnaya','svetlaya','nasyshchennaya','glubokaya','yarkaya'];
-
-    let currentPalette = '';
-    let currentShade   = 'nezhnaya';
-
-    try {
-      const saved = JSON.parse(localStorage.getItem('designPalette') || 'null');
-      if (saved && PALETTE_NAMES.includes(saved.palette) && SHADE_NAMES.includes(saved.shade)) {
-        currentPalette = saved.palette;
-        currentShade   = saved.shade;
-      }
-    } catch(e) {}
-
-    // Если в localStorage ничего нет — читаем палитру из HTML
-    if (!currentPalette) {
-      const htmlPalette = document.body.dataset.palette || '';
-      const parts = htmlPalette.split('-');
-      if (parts.length === 2 && PALETTE_NAMES.includes(parts[0]) && SHADE_NAMES.includes(parts[1])) {
-        currentPalette = parts[0];
-        currentShade   = parts[1];
-      }
-    }
-
-    function applyPalette() {
-      if (!currentPalette) return;
-      document.body.dataset.palette = currentPalette + '-' + currentShade;
-      localStorage.setItem('designPalette', JSON.stringify({ palette: currentPalette, shade: currentShade }));
-    }
-
-    function syncPaletteActive() {
+    function syncPaletteActive(){
+      const s = getDesignFor(activeDesignScreen);
       dpPalettes.querySelectorAll('.dp-chip').forEach(b => {
-        b.classList.toggle('active', b.dataset.p === currentPalette);
+        b.classList.toggle('active', b.dataset.p === s.palette);
       });
       dpShades.querySelectorAll('.dp-chip').forEach(b => {
-        b.classList.toggle('active', b.dataset.shade === currentShade);
+        b.classList.toggle('active', b.dataset.shade === s.shade);
       });
     }
-
     dpPalettes.querySelectorAll('.dp-chip').forEach(btn => {
       btn.addEventListener('click', () => {
-        currentPalette = btn.dataset.p;
-        applyPalette();
-        syncPaletteActive();
+        setDesignFor(activeDesignScreen, { palette: btn.dataset.p });
+        applyDesignFor(activeDesignScreen);
       });
     });
-
     dpShades.querySelectorAll('.dp-chip').forEach(btn => {
       btn.addEventListener('click', () => {
-        currentShade = btn.dataset.shade;
-        if (!currentPalette) currentPalette = 'pudrovaya';
-        applyPalette();
-        syncPaletteActive();
+        setDesignFor(activeDesignScreen, { shade: btn.dataset.shade });
+        applyDesignFor(activeDesignScreen);
       });
     });
 
-    // Инициализация при загрузке
-    if (currentPalette) applyPalette();
-    syncPaletteActive();
-    // ── Тени ──
-    const dpShadowsCards  = document.getElementById('dpShadowsCards');
-    const dpShadowsFab    = document.getElementById('dpShadowsFab');
-    const dpShadowTabs    = document.getElementById('dpShadowTabs');
-    const SHADOW_NAMES    = ['none','parit','prikrepl','bokovaya','cvetnaya','dvoinaya','vnutrennyaya','vniz'];
-    const SHADOW_DEFAULT  = 'parit';
+    // Тени
+    const dpShadowsCards = document.getElementById('dpShadowsCards');
+    const dpShadowsFab   = document.getElementById('dpShadowsFab');
+    const dpShadowTabs   = document.getElementById('dpShadowTabs');
+    const SHADOW_TAB_KEY = 'designShadowTab';
 
-    let currentShadow        = SHADOW_DEFAULT;
-    let currentShadowFab     = SHADOW_DEFAULT;
-    let currentShadowTab     = 'cards';
-
+    let currentShadowTab = 'cards';
     try {
-      const saved = localStorage.getItem('designShadow');
-      if (saved && SHADOW_NAMES.includes(saved)) currentShadow = saved;
-    } catch(e) {}
-
-    try {
-      const savedFab = localStorage.getItem('designFabShadow');
-      if (savedFab && SHADOW_NAMES.includes(savedFab)) currentShadowFab = savedFab;
-    } catch(e) {}
-
-    try {
-      const savedTab = localStorage.getItem('designShadowTab');
+      const savedTab = localStorage.getItem(SHADOW_TAB_KEY);
       if (savedTab === 'cards' || savedTab === 'fab') currentShadowTab = savedTab;
     } catch(e) {}
 
-    function applyShadow() {
-      document.body.dataset.shadow = currentShadow;
-      localStorage.setItem('designShadow', currentShadow);
-    }
-
-    function applyShadowFab() {
-      document.body.dataset.fabShadow = currentShadowFab;
-      localStorage.setItem('designFabShadow', currentShadowFab);
-    }
-
-    function syncShadowActive() {
+    function syncShadowActive(){
+      const s = getDesignFor(activeDesignScreen);
       dpShadowsCards.querySelectorAll('.dp-chip').forEach(b => {
-        b.classList.toggle('active', b.dataset.sh === currentShadow);
+        b.classList.toggle('active', b.dataset.sh === s.shadow);
       });
       dpShadowsFab.querySelectorAll('.dp-chip').forEach(b => {
-        b.classList.toggle('active', b.dataset.sh === currentShadowFab);
+        b.classList.toggle('active', b.dataset.sh === s.fabShadow);
       });
       dpShadowTabs.querySelectorAll('.dp-chip').forEach(b => {
         b.classList.toggle('active', b.dataset.shadowTarget === currentShadowTab);
@@ -1061,99 +1064,75 @@
       dpShadowsCards.style.display = (currentShadowTab === 'cards') ? '' : 'none';
       dpShadowsFab.style.display   = (currentShadowTab === 'fab')   ? '' : 'none';
     }
-
     dpShadowsCards.querySelectorAll('.dp-chip').forEach(btn => {
       btn.addEventListener('click', () => {
-        currentShadow = btn.dataset.sh;
-        applyShadow();
-        syncShadowActive();
+        setDesignFor(activeDesignScreen, { shadow: btn.dataset.sh });
+        applyDesignFor(activeDesignScreen);
       });
     });
-
     dpShadowsFab.querySelectorAll('.dp-chip').forEach(btn => {
       btn.addEventListener('click', () => {
-        currentShadowFab = btn.dataset.sh;
-        applyShadowFab();
-        syncShadowActive();
+        setDesignFor(activeDesignScreen, { fabShadow: btn.dataset.sh });
+        applyDesignFor(activeDesignScreen);
       });
     });
-
     dpShadowTabs.querySelectorAll('.dp-chip').forEach(btn => {
       btn.addEventListener('click', () => {
         currentShadowTab = btn.dataset.shadowTarget;
-        localStorage.setItem('designShadowTab', currentShadowTab);
+        try { localStorage.setItem(SHADOW_TAB_KEY, currentShadowTab); } catch(e) {}
         syncShadowActive();
       });
     });
 
-    applyShadow();
-    applyShadowFab();
-    syncShadowActive();
-     // ── Сворачивание секций панели 🎨 ──
-    const SECTIONS_KEY = 'designSectionsCollapsed';
+    // Фон в панели
+    const dpBgs = document.getElementById('dpBgs');
+    function syncBgActive(){
+      const cur = getDesignFor(activeDesignScreen).bg || '';
+      dpBgs.querySelectorAll('.dp-bg').forEach(b => {
+        b.classList.toggle('active', (b.dataset.bg || '') === cur);
+      });
+    }
 
+    // Тема
+    const dpThemeToggle = document.getElementById('dpThemeToggle');
+    function syncThemeToggle(){
+      if (dpThemeToggle) dpThemeToggle.dataset.theme = getDesignFor(activeDesignScreen).theme;
+    }
+    dpThemeToggle.addEventListener('click', () => {
+      const s = getDesignFor(activeDesignScreen);
+      const newTheme = (s.theme === 'dark') ? 'light' : 'dark';
+      setDesignFor(activeDesignScreen, { theme: newTheme });
+      applyDesignFor(activeDesignScreen);
+    });
+
+    // Сворачивание секций панели
+    const SECTIONS_KEY = 'designSectionsCollapsed';
     let collapsedSections = {};
     try {
       collapsedSections = JSON.parse(localStorage.getItem(SECTIONS_KEY) || '{}') || {};
     } catch(e) { collapsedSections = {}; }
-
     document.querySelectorAll('#designPanel .dp-section').forEach(section => {
       const id = section.dataset.section;
       if (!id) return;
-
-      if (collapsedSections[id]) {
-        section.classList.add('collapsed');
-      }
-
+      if (collapsedSections[id]) section.classList.add('collapsed');
       const label = section.querySelector('.dp-section-label');
       if (!label) return;
-
       label.addEventListener('click', (e) => {
         e.stopPropagation();
         section.classList.toggle('collapsed');
         collapsedSections[id] = section.classList.contains('collapsed');
-        localStorage.setItem(SECTIONS_KEY, JSON.stringify(collapsedSections));
+        try { localStorage.setItem(SECTIONS_KEY, JSON.stringify(collapsedSections)); } catch(e) {}
       });
     });
-    // ── Тема (тумблер в шапке панели 🎨) ──
-    const dpThemeToggle = document.getElementById('dpThemeToggle');
-    const THEME_NAMES = ['light','dark'];
 
-    let currentTheme = 'light';
-
-    try {
-      const saved = localStorage.getItem('designTheme');
-      if (saved && THEME_NAMES.includes(saved)) currentTheme = saved;
-    } catch(e) {}
-
-    function applyTheme() {
-      if (currentTheme === 'dark') {
-        document.body.dataset.theme = 'dark';
-      } else {
-        delete document.body.dataset.theme;
-      }
-      if (dpThemeToggle) dpThemeToggle.dataset.theme = currentTheme;
-      localStorage.setItem('designTheme', currentTheme);
-    }
-
-    dpThemeToggle.addEventListener('click', () => {
-      currentTheme = (currentTheme === 'dark') ? 'light' : 'dark';
-      applyTheme();
-    });
-
-    applyTheme();
-
+    // Открытие/закрытие панели
     document.getElementById('btnDesign').addEventListener('click', openDesignPanel);
     document.getElementById('designPanelClose').addEventListener('click', closeDesignPanel);
-
     designPanel.addEventListener('click', (e) => {
       if (e.target === designPanel) closeDesignPanel();
     });
-
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && designPanel.style.display === 'flex') {
-        closeDesignPanel();
-      }
+      if (e.key === 'Escape' && designPanel.style.display === 'flex') closeDesignPanel();
     });
     document.getElementById('dpBgPos').addEventListener('click', () => {
       closeDesignPanel();
@@ -1248,7 +1227,8 @@
         navBtns.forEach(b => {
           b.classList.toggle('active', b.dataset.screen === name);
         });
-        localStorage.setItem(SCREEN_KEY, name);
+        try { localStorage.setItem(SCREEN_KEY, name); } catch(e) {}
+        if (typeof applyDesignFor === 'function') applyDesignFor(name);
       }
 
       navBtns.forEach(btn => {
@@ -1262,6 +1242,8 @@
       const saved = localStorage.getItem(SCREEN_KEY);
       if (saved && VALID_SCREENS.includes(saved)) {
         showScreen(saved);
+      } else {
+        if (typeof applyDesignFor === 'function') applyDesignFor('home');
       }
     });
 
