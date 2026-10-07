@@ -669,6 +669,11 @@ body[data-theme="dark"] .chip{
   color:#fff !important;
   border-color:var(--c2) !important;
 }
+body[data-theme="dark"] .chip:hover{
+  background:var(--c2) !important;
+  color:var(--c4) !important;
+  border-color:var(--c2) !important;
+}
 .head-btn{
   width:32px;
   height:32px;
@@ -687,4 +692,60 @@ body[data-theme="dark"] .chip{
 body[data-theme="dark"] .contents-head .toggle{
   color:#fff;
   opacity:.8;
+}
+/* ═══ Нижняя навигация ═══ */
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:100;
+  width:100%;
+  max-width:640px;
+  background:var(--c1);
+  border:1px solid var(--c3);
+  border-bottom:none;
+  border-radius:16px 16px 0 0;
+  display:flex;
+  gap:4px;
+  padding:8px 8px 10px;
+  box-shadow:0 -6px 20px rgba(0,0,0,.10);
+}
+
+.nav-btn{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:3px;
+  padding:8px 4px;
+  background:none;
+  border:none;
+  border-radius:12px;
+  cursor:pointer;
+  color:var(--plate-text);
+  font-family:'Nunito',sans-serif;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.02em;
+  transition:background .15s, color .15s;
+}
+.nav-btn .em{font-size:20px;line-height:1;display:block}
+.nav-btn.active{
+  background:var(--c3);
+  color:#fff;
+}
+
+/* Тёмная тема */
+body[data-theme="dark"] .bottom-nav{
+  background:var(--c4);
+  border-color:var(--c2);
+  box-shadow:0 -6px 20px rgba(0,0,0,.4);
+}
+body[data-theme="dark"] .nav-btn{
+  color:#fff;
+}
+body[data-theme="dark"] .nav-btn.active{
+  background:var(--c3);
+  color:#fff;
 }
