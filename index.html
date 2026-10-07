@@ -664,6 +664,38 @@
       </div>
     </div>
   </div>
+
+  <!-- ═══ Модалки плавающих кнопок ═══ -->
+  <div id="modalTimer" class="modal" style="display:none">
+    <div class="modal-box">
+      <div class="modal-head">
+        <span class="modal-title">⏲ Таймер</span>
+        <button type="button" class="modal-close" data-modal-close>✕</button>
+      </div>
+      <div class="modal-stub">Тут будет Таймер</div>
+    </div>
+  </div>
+
+  <div id="modalSearch" class="modal" style="display:none">
+    <div class="modal-box">
+      <div class="modal-head">
+        <span class="modal-title">🔍 Поиск</span>
+        <button type="button" class="modal-close" data-modal-close>✕</button>
+      </div>
+      <div class="modal-stub">Тут будет Поиск</div>
+    </div>
+  </div>
+
+  <div id="modalAdd" class="modal" style="display:none">
+    <div class="modal-box">
+      <div class="modal-head">
+        <span class="modal-title">➕ Добавить</span>
+        <button type="button" class="modal-close" data-modal-close>✕</button>
+      </div>
+      <div class="modal-stub">Тут будет Добавить</div>
+    </div>
+  </div>
+
   <script>
     window.addEventListener('load', () => {
       setTimeout(() => {
@@ -1232,6 +1264,46 @@
         showScreen(saved);
       }
     });
+
+    // ── Модалки плавающих кнопок ──
+    document.addEventListener('DOMContentLoaded', function(){
+      const MODAL_MAP = {
+        timer:  document.getElementById('modalTimer'),
+        search: document.getElementById('modalSearch'),
+        add:    document.getElementById('modalAdd')
+      };
+
+      function openModal(id){
+        const m = MODAL_MAP[id];
+        if (!m) return;
+        m.style.display = 'flex';
+      }
+      function closeModal(m){
+        m.style.display = 'none';
+      }
+
+      document.querySelectorAll('.fab-btn[data-modal]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          openModal(btn.dataset.modal);
+        });
+      });
+
+      document.querySelectorAll('.modal').forEach(m => {
+        m.addEventListener('click', (e) => {
+          if (e.target === m) closeModal(m);
+        });
+        m.querySelectorAll('[data-modal-close]').forEach(x => {
+          x.addEventListener('click', () => closeModal(m));
+        });
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key !== 'Escape') return;
+        document.querySelectorAll('.modal').forEach(m => {
+          if (m.style.display === 'flex') closeModal(m);
+        });
+      });
+    });
   </script>
   <nav class="bottom-nav">
   <button type="button" class="nav-btn active" data-screen="home"><span class="em">🏠</span>Главная</button>
@@ -1241,9 +1313,9 @@
 </nav>
 <!-- ═══ Плавающие кнопки ═══ -->
 <div class="fab-stack">
-  <button type="button" class="fab-btn" title="Общий таймер"><span>⏲</span></button>
-  <button type="button" class="fab-btn" title="Поиск"><span>🔍</span></button>
-  <button type="button" class="fab-btn primary" title="Добавить рецепт"><span>➕</span></button>
+  <button type="button" class="fab-btn" data-modal="timer" title="Общий таймер"><span>⏲</span></button>
+  <button type="button" class="fab-btn" data-modal="search" title="Поиск"><span>🔍</span></button>
+  <button type="button" class="fab-btn primary" data-modal="add" title="Добавить рецепт"><span>➕</span></button>
 </div>
 </div><!-- /.app -->
 

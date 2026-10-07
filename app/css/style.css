@@ -1006,3 +1006,52 @@ body[data-theme="dark"] .screen-stub{
   color:var(--c1);
   opacity:.9;
 }
+/* ═══ Модалки плавающих кнопок (шаг 4) ═══ */
+.modal{
+  position:fixed;
+  inset:0;
+  z-index:100002;
+  background:rgba(0,0,0,.78);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:16px;
+}
+.modal-box{
+  background:#1a1618;
+  color:#fff;
+  border-radius:14px;
+  padding:18px;
+  width:100%;
+  max-width:420px;
+  font-family:system-ui,sans-serif;
+  box-shadow:0 20px 60px rgba(0,0,0,.55);
+}
+.modal-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:14px;
+}
+.modal-title{
+  font-size:16px;
+  font-weight:700;
+}
+.modal-close{
+  background:none;
+  border:none;
+  color:#fff;
+  font-size:20px;
+  cursor:pointer;
+  padding:0 4px;
+  line-height:1;
+}
+.modal-stub{
+  text-align:center;
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;
+  font-weight:600;
+  font-size:22px;
+  opacity:.7;
+  padding:24px 0;
+}
