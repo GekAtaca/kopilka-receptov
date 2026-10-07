@@ -924,11 +924,11 @@ body[data-theme="dark"] .nav-btn.active{
   flex-direction:column;
   gap:12px;
   transition:transform .25s ease, opacity .25s ease;
+  will-change:transform, opacity;
 }
 .fab-stack.fab-hidden{
   transform:translateY(300px);
   opacity:0;
-  pointer-events:none;
 }
 
 .fab-btn{
