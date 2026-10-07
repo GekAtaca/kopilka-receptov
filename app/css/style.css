@@ -196,7 +196,7 @@ html{
 .chip .em{font-style:normal;display:inline-block}
 /* ───── Секции рецептов ───── */
 .recipes{
-  padding:20px 16px 40px;
+  padding:20px 16px 100px;
 }
 .recipes-section{margin-bottom:34px}
 .recipes-section-head{
