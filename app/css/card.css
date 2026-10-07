@@ -36,7 +36,7 @@ body[data-palette$="-glubokaya"]{
   --radius-chip:11px;
   --letter-spacing-head:0em;
 
-  --card-body-gap:11px;
+   --card-body-gap:9px;
   --card-body-pad-y:16px;
   --card-body-pad-x:18px;
   --title-size:24px;
@@ -319,3 +319,6 @@ body[data-theme="dark"] .actions button.primary{
   color:var(--c4) !important;
   border-color:var(--c2) !important;
 }
+/* ═══ Ограничение количества ингредиентов ═══ */
+.ing-list li:nth-child(n+5){display:none}
+.card:has(.cook-unit):has(.note) .ing-list li:nth-child(n+4){display:none}
