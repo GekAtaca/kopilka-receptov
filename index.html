@@ -517,88 +517,128 @@
   <div id="designPanel" class="design-panel" style="display:none">
     <div class="design-panel-box">
       <div class="design-panel-head">
-        <span class="design-panel-title">🎨 Оформление</span>
-        <button type="button" class="design-panel-close" id="designPanelClose">✕</button>
-      </div>
+  <span class="design-panel-title">🎨 Оформление</span>
+  <button type="button" class="dp-theme-toggle" id="dpThemeToggle" title="Светлая / тёмная тема">
+    <span class="dp-tt-sun">🌞</span>
+    <span class="dp-tt-track"><span class="dp-tt-knob"></span></span>
+    <span class="dp-tt-moon">🌙</span>
+  </button>
+  <button type="button" class="design-panel-close" id="designPanelClose">✕</button>
+</div>
       <div class="design-panel-body">
 
-        <div class="dp-section">
-          <div class="dp-section-label">Стиль</div>
-          <div class="dp-chips" id="dpStyles">
-            <button type="button" class="dp-chip" data-s="nezhny">🌸 Нежный</button>
-            <button type="button" class="dp-chip" data-s="zhurnal">📰 Журнал</button>
-            <button type="button" class="dp-chip" data-s="minimalizm">🤍 Минимализм</button>
-            <button type="button" class="dp-chip" data-s="boho">🌿 Бохо</button>
-            <button type="button" class="dp-chip" data-s="retro">📻 Ретро</button>
-            <button type="button" class="dp-chip" data-s="yaponsky">🍃 Японский</button>
-            <button type="button" class="dp-chip" data-s="antichny">🏛 Античный</button>
-            <button type="button" class="dp-chip" data-s="lileyny">🌷 Лилейный</button>
+        <div class="dp-section" data-section="style">
+          <div class="dp-section-label">
+            <span class="dp-section-name">Стиль</span>
+            <span class="dp-section-toggle">▼</span>
+          </div>
+          <div class="dp-section-body">
+            <div class="dp-chips" id="dpStyles">
+              <button type="button" class="dp-chip" data-s="nezhny">🌸 Нежный</button>
+              <button type="button" class="dp-chip" data-s="zhurnal">📰 Журнал</button>
+              <button type="button" class="dp-chip" data-s="minimalizm">🤍 Минимализм</button>
+              <button type="button" class="dp-chip" data-s="boho">🌿 Бохо</button>
+              <button type="button" class="dp-chip" data-s="retro">📻 Ретро</button>
+              <button type="button" class="dp-chip" data-s="yaponsky">🍃 Японский</button>
+              <button type="button" class="dp-chip" data-s="antichny">🏛 Античный</button>
+              <button type="button" class="dp-chip" data-s="lileyny">🌷 Лилейный</button>
+            </div>
           </div>
         </div>
-        <div class="dp-section">
-          <div class="dp-section-label">Палитра</div>
-          <div class="dp-chips" id="dpPalettes">
-            <button type="button" class="dp-chip" data-p="pudrovaya">🌸 Пудровая</button>
-            <button type="button" class="dp-chip" data-p="medovaya">🌾 Медовая</button>
-            <button type="button" class="dp-chip" data-p="shalfeynaya">🌿 Шалфейная</button>
-            <button type="button" class="dp-chip" data-p="nebesnaya">☁️ Небесная</button>
-            <button type="button" class="dp-chip" data-p="lavandovaya">🍇 Лавандовая</button>
-            <button type="button" class="dp-chip" data-p="vishnyovaya">🍒 Вишнёвая</button>
-            <button type="button" class="dp-chip" data-p="kakao">🌰 Какао</button>
-            <button type="button" class="dp-chip" data-p="grafit">🌑 Графит</button>
-            <button type="button" class="dp-chip" data-p="fioletovaya">💜 Фиолетовая</button>
+
+        <div class="dp-section" data-section="palette">
+          <div class="dp-section-head">
+            <div class="dp-section-label">
+              <span class="dp-section-name">Палитра</span>
+              <span class="dp-section-toggle">▼</span>
+            </div>
+            <div class="dp-chips dp-shades" id="dpShades">
+              <button type="button" class="dp-chip" data-shade="nezhnaya">Нежная</button>
+              <button type="button" class="dp-chip" data-shade="svetlaya">Светлая</button>
+              <button type="button" class="dp-chip" data-shade="nasyshchennaya">Насыщенная</button>
+              <button type="button" class="dp-chip" data-shade="glubokaya">Глубокая</button>
+              <button type="button" class="dp-chip" data-shade="yarkaya">Яркая</button>
+            </div>
           </div>
-          <div class="dp-chips dp-shades" id="dpShades" style="display:none">
-            <button type="button" class="dp-chip" data-shade="nezhnaya">Нежная</button>
-            <button type="button" class="dp-chip" data-shade="svetlaya">Светлая</button>
-            <button type="button" class="dp-chip" data-shade="nasyshchennaya">Насыщенная</button>
-            <button type="button" class="dp-chip" data-shade="glubokaya">Глубокая</button>
-            <button type="button" class="dp-chip" data-shade="yarkaya">Яркая</button>
-          </div>
-        </div>
-        <div class="dp-section">
-          <div class="dp-section-label">Тень</div>
-          <div class="dp-chips" id="dpShadows">
-            <button type="button" class="dp-chip" data-sh="parit">Парящая</button>
-            <button type="button" class="dp-chip" data-sh="prikrepl">Прикреплённая</button>
-            <button type="button" class="dp-chip" data-sh="bokovaya">Боковая</button>
-            <button type="button" class="dp-chip" data-sh="cvetnaya">Цветная</button>
-            <button type="button" class="dp-chip" data-sh="dvoinaya">Двойная</button>
-            <button type="button" class="dp-chip" data-sh="vnutrennyaya">Внутренняя</button>
-            <button type="button" class="dp-chip" data-sh="vniz">Вниз</button>
+          <div class="dp-section-body">
+            <div class="dp-chips" id="dpPalettes">
+              <button type="button" class="dp-chip" data-p="pudrovaya">🌸 Пудровая</button>
+              <button type="button" class="dp-chip" data-p="medovaya">🌾 Медовая</button>
+              <button type="button" class="dp-chip" data-p="shalfeynaya">🌿 Шалфейная</button>
+              <button type="button" class="dp-chip" data-p="nebesnaya">☁️ Небесная</button>
+              <button type="button" class="dp-chip" data-p="lavandovaya">🍇 Лавандовая</button>
+              <button type="button" class="dp-chip" data-p="vishnyovaya">🍒 Вишнёвая</button>
+              <button type="button" class="dp-chip" data-p="kakao">🌰 Какао</button>
+              <button type="button" class="dp-chip" data-p="grafit">🌑 Графит</button>
+              <button type="button" class="dp-chip" data-p="fioletovaya">💜 Фиолетовая</button>
+            </div>
           </div>
         </div>
-        <div class="dp-section">
-          <div class="dp-section-label">Тема</div>
-          <div class="dp-chips" id="dpThemes">
-            <button type="button" class="dp-chip" data-th="light">🌞 Светлая</button>
-            <button type="button" class="dp-chip" data-th="dark">🌙 Тёмная</button>
+
+         <div class="dp-section" data-section="shadow">
+          <div class="dp-section-head">
+            <div class="dp-section-label">
+              <span class="dp-section-name">Тень</span>
+              <span class="dp-section-toggle">▼</span>
+            </div>
+            <div class="dp-chips dp-shadow-tabs" id="dpShadowTabs">
+              <button type="button" class="dp-chip" data-shadow-target="cards">Карточки</button>
+              <button type="button" class="dp-chip" data-shadow-target="fab">Плавающие кнопки</button>
+            </div>
+          </div>
+          <div class="dp-section-body">
+            <div class="dp-chips" id="dpShadowsCards">
+              <button type="button" class="dp-chip" data-sh="none">Без тени</button>
+              <button type="button" class="dp-chip" data-sh="parit">Парящая</button>
+              <button type="button" class="dp-chip" data-sh="prikrepl">Прикреплённая</button>
+              <button type="button" class="dp-chip" data-sh="bokovaya">Боковая</button>
+              <button type="button" class="dp-chip" data-sh="cvetnaya">Цветная</button>
+              <button type="button" class="dp-chip" data-sh="dvoinaya">Двойная</button>
+              <button type="button" class="dp-chip" data-sh="vnutrennyaya">Внутренняя</button>
+              <button type="button" class="dp-chip" data-sh="vniz">Вниз</button>
+            </div>
+            <div class="dp-chips" id="dpShadowsFab" style="display:none">
+              <button type="button" class="dp-chip" data-sh="none">Без тени</button>
+              <button type="button" class="dp-chip" data-sh="parit">Парящая</button>
+              <button type="button" class="dp-chip" data-sh="prikrepl">Прикреплённая</button>
+              <button type="button" class="dp-chip" data-sh="bokovaya">Боковая</button>
+              <button type="button" class="dp-chip" data-sh="cvetnaya">Цветная</button>
+              <button type="button" class="dp-chip" data-sh="dvoinaya">Двойная</button>
+              <button type="button" class="dp-chip" data-sh="vnutrennyaya">Внутренняя</button>
+              <button type="button" class="dp-chip" data-sh="vniz">Вниз</button>
+            </div>
           </div>
         </div>
-        <div class="dp-section">
-          <div class="dp-section-label">Фон</div>
-          <div class="dp-bgs" id="dpBgs">
-            <button type="button" class="dp-bg dp-bg-none" data-bg="">Без фона</button>
-            <button type="button" class="dp-bg" data-bg="01" style="background-image:url('images/01.jpg')"></button>
-            <button type="button" class="dp-bg" data-bg="02" style="background-image:url('images/02.jpg')"></button>
-            <button type="button" class="dp-bg" data-bg="03" style="background-image:url('images/03.jpg')"></button>
-            <button type="button" class="dp-bg" data-bg="04" style="background-image:url('images/04.jpg')"></button>
-            <button type="button" class="dp-bg" data-bg="05" style="background-image:url('images/05.jpg')"></button>
-            <button type="button" class="dp-bg" data-bg="07" style="background-image:url('images/07.jpg')"></button>
-            <button type="button" class="dp-bg" data-bg="08" style="background-image:url('images/08.jpg')"></button>
-            <button type="button" class="dp-bg" data-bg="09" style="background-image:url('images/09.jpg')"></button>
-            <button type="button" class="dp-bg" data-bg="10" style="background-image:url('images/10.jpg')"></button>
-            <button type="button" class="dp-bg" data-bg="11" style="background-image:url('images/11.jpg')"></button>
-            <button type="button" class="dp-bg" data-bg="12" style="background-image:url('images/12.jpg')"></button>
-            <button type="button" class="dp-bg" data-bg="13" style="background-image:url('images/13.jpg')"></button>
-            <button type="button" class="dp-bg" data-bg="14" style="background-image:url('images/14.jpg')"></button>
-            <button type="button" class="dp-bg" data-bg="15" style="background-image:url('images/15.jpg')"></button>
-            <button type="button" class="dp-bg" data-bg="16" style="background-image:url('images/16.jpg')"></button>
-            <button type="button" class="dp-bg" data-bg="17" style="background-image:url('images/17.jpg')"></button>
-            <button type="button" class="dp-bg" data-bg="18" style="background-image:url('images/18.jpg')"></button>
-            <button type="button" class="dp-bg" data-bg="19" style="background-image:url('images/19.jpg')"></button>
-            <button type="button" class="dp-bg" data-bg="20" style="background-image:url('images/20.jpg')"></button>
-            <button type="button" class="dp-bg-pos" id="dpBgPos">📐 Позиция</button>
+
+        <div class="dp-section" data-section="background">
+          <div class="dp-section-label">
+            <span class="dp-section-name">Фон</span>
+            <span class="dp-section-toggle">▼</span>
+          </div>
+          <div class="dp-section-body">
+            <div class="dp-bgs" id="dpBgs">
+              <button type="button" class="dp-bg dp-bg-none" data-bg="">Без фона</button>
+              <button type="button" class="dp-bg" data-bg="01" style="background-image:url('images/01.jpg')"></button>
+              <button type="button" class="dp-bg" data-bg="02" style="background-image:url('images/02.jpg')"></button>
+              <button type="button" class="dp-bg" data-bg="03" style="background-image:url('images/03.jpg')"></button>
+              <button type="button" class="dp-bg" data-bg="04" style="background-image:url('images/04.jpg')"></button>
+              <button type="button" class="dp-bg" data-bg="05" style="background-image:url('images/05.jpg')"></button>
+              <button type="button" class="dp-bg" data-bg="07" style="background-image:url('images/07.jpg')"></button>
+              <button type="button" class="dp-bg" data-bg="08" style="background-image:url('images/08.jpg')"></button>
+              <button type="button" class="dp-bg" data-bg="09" style="background-image:url('images/09.jpg')"></button>
+              <button type="button" class="dp-bg" data-bg="10" style="background-image:url('images/10.jpg')"></button>
+              <button type="button" class="dp-bg" data-bg="11" style="background-image:url('images/11.jpg')"></button>
+              <button type="button" class="dp-bg" data-bg="12" style="background-image:url('images/12.jpg')"></button>
+              <button type="button" class="dp-bg" data-bg="13" style="background-image:url('images/13.jpg')"></button>
+              <button type="button" class="dp-bg" data-bg="14" style="background-image:url('images/14.jpg')"></button>
+              <button type="button" class="dp-bg" data-bg="15" style="background-image:url('images/15.jpg')"></button>
+              <button type="button" class="dp-bg" data-bg="16" style="background-image:url('images/16.jpg')"></button>
+              <button type="button" class="dp-bg" data-bg="17" style="background-image:url('images/17.jpg')"></button>
+              <button type="button" class="dp-bg" data-bg="18" style="background-image:url('images/18.jpg')"></button>
+              <button type="button" class="dp-bg" data-bg="19" style="background-image:url('images/19.jpg')"></button>
+              <button type="button" class="dp-bg" data-bg="20" style="background-image:url('images/20.jpg')"></button>
+              <button type="button" class="dp-bg-pos" id="dpBgPos">📐 Позиция</button>
+            </div>
           </div>
         </div>
 
@@ -876,6 +916,16 @@
       }
     } catch(e) {}
 
+    // Если в localStorage ничего нет — читаем палитру из HTML
+    if (!currentPalette) {
+      const htmlPalette = document.body.dataset.palette || '';
+      const parts = htmlPalette.split('-');
+      if (parts.length === 2 && PALETTE_NAMES.includes(parts[0]) && SHADE_NAMES.includes(parts[1])) {
+        currentPalette = parts[0];
+        currentShade   = parts[1];
+      }
+    }
+
     function applyPalette() {
       if (!currentPalette) return;
       document.body.dataset.palette = currentPalette + '-' + currentShade;
@@ -889,7 +939,6 @@
       dpShades.querySelectorAll('.dp-chip').forEach(b => {
         b.classList.toggle('active', b.dataset.shade === currentShade);
       });
-      dpShades.style.display = currentPalette ? '' : 'none';
     }
 
     dpPalettes.querySelectorAll('.dp-chip').forEach(btn => {
@@ -903,6 +952,7 @@
     dpShades.querySelectorAll('.dp-chip').forEach(btn => {
       btn.addEventListener('click', () => {
         currentShade = btn.dataset.shade;
+        if (!currentPalette) currentPalette = 'pudrovaya';
         applyPalette();
         syncPaletteActive();
       });
@@ -912,15 +962,29 @@
     if (currentPalette) applyPalette();
     syncPaletteActive();
     // ── Тени ──
-    const dpShadows = document.getElementById('dpShadows');
-    const SHADOW_NAMES = ['parit','prikrepl','bokovaya','cvetnaya','dvoinaya','vnutrennyaya','vniz'];
-    const SHADOW_DEFAULT = 'parit';
+    const dpShadowsCards  = document.getElementById('dpShadowsCards');
+    const dpShadowsFab    = document.getElementById('dpShadowsFab');
+    const dpShadowTabs    = document.getElementById('dpShadowTabs');
+    const SHADOW_NAMES    = ['none','parit','prikrepl','bokovaya','cvetnaya','dvoinaya','vnutrennyaya','vniz'];
+    const SHADOW_DEFAULT  = 'parit';
 
-    let currentShadow = SHADOW_DEFAULT;
+    let currentShadow        = SHADOW_DEFAULT;
+    let currentShadowFab     = SHADOW_DEFAULT;
+    let currentShadowTab     = 'cards';
 
     try {
       const saved = localStorage.getItem('designShadow');
       if (saved && SHADOW_NAMES.includes(saved)) currentShadow = saved;
+    } catch(e) {}
+
+    try {
+      const savedFab = localStorage.getItem('designFabShadow');
+      if (savedFab && SHADOW_NAMES.includes(savedFab)) currentShadowFab = savedFab;
+    } catch(e) {}
+
+    try {
+      const savedTab = localStorage.getItem('designShadowTab');
+      if (savedTab === 'cards' || savedTab === 'fab') currentShadowTab = savedTab;
     } catch(e) {}
 
     function applyShadow() {
@@ -928,13 +992,26 @@
       localStorage.setItem('designShadow', currentShadow);
     }
 
-    function syncShadowActive() {
-      dpShadows.querySelectorAll('.dp-chip').forEach(b => {
-        b.classList.toggle('active', b.dataset.sh === currentShadow);
-      });
+    function applyShadowFab() {
+      document.body.dataset.fabShadow = currentShadowFab;
+      localStorage.setItem('designFabShadow', currentShadowFab);
     }
 
-    dpShadows.querySelectorAll('.dp-chip').forEach(btn => {
+    function syncShadowActive() {
+      dpShadowsCards.querySelectorAll('.dp-chip').forEach(b => {
+        b.classList.toggle('active', b.dataset.sh === currentShadow);
+      });
+      dpShadowsFab.querySelectorAll('.dp-chip').forEach(b => {
+        b.classList.toggle('active', b.dataset.sh === currentShadowFab);
+      });
+      dpShadowTabs.querySelectorAll('.dp-chip').forEach(b => {
+        b.classList.toggle('active', b.dataset.shadowTarget === currentShadowTab);
+      });
+      dpShadowsCards.style.display = (currentShadowTab === 'cards') ? '' : 'none';
+      dpShadowsFab.style.display   = (currentShadowTab === 'fab')   ? '' : 'none';
+    }
+
+    dpShadowsCards.querySelectorAll('.dp-chip').forEach(btn => {
       btn.addEventListener('click', () => {
         currentShadow = btn.dataset.sh;
         applyShadow();
@@ -942,10 +1019,53 @@
       });
     });
 
+    dpShadowsFab.querySelectorAll('.dp-chip').forEach(btn => {
+      btn.addEventListener('click', () => {
+        currentShadowFab = btn.dataset.sh;
+        applyShadowFab();
+        syncShadowActive();
+      });
+    });
+
+    dpShadowTabs.querySelectorAll('.dp-chip').forEach(btn => {
+      btn.addEventListener('click', () => {
+        currentShadowTab = btn.dataset.shadowTarget;
+        localStorage.setItem('designShadowTab', currentShadowTab);
+        syncShadowActive();
+      });
+    });
+
     applyShadow();
+    applyShadowFab();
     syncShadowActive();
-    // ── Тема ──
-    const dpThemes = document.getElementById('dpThemes');
+     // ── Сворачивание секций панели 🎨 ──
+    const SECTIONS_KEY = 'designSectionsCollapsed';
+
+    let collapsedSections = {};
+    try {
+      collapsedSections = JSON.parse(localStorage.getItem(SECTIONS_KEY) || '{}') || {};
+    } catch(e) { collapsedSections = {}; }
+
+    document.querySelectorAll('#designPanel .dp-section').forEach(section => {
+      const id = section.dataset.section;
+      if (!id) return;
+
+      if (collapsedSections[id]) {
+        section.classList.add('collapsed');
+      }
+
+      const label = section.querySelector('.dp-section-label');
+      if (!label) return;
+
+      label.addEventListener('click', (e) => {
+        e.stopPropagation();
+        section.classList.toggle('collapsed');
+        collapsedSections[id] = section.classList.contains('collapsed');
+        localStorage.setItem(SECTIONS_KEY, JSON.stringify(collapsedSections));
+      });
+    });
+    // ── Тема (тумблер в шапке панели 🎨) ──
+    const dpThemeToggle = document.getElementById('dpThemeToggle');
     const THEME_NAMES = ['light','dark'];
 
     let currentTheme = 'light';
@@ -961,25 +1081,16 @@
       } else {
         delete document.body.dataset.theme;
       }
+      if (dpThemeToggle) dpThemeToggle.dataset.theme = currentTheme;
       localStorage.setItem('designTheme', currentTheme);
     }
 
-    function syncThemeActive() {
-      dpThemes.querySelectorAll('.dp-chip').forEach(b => {
-        b.classList.toggle('active', b.dataset.th === currentTheme);
-      });
-    }
-
-    dpThemes.querySelectorAll('.dp-chip').forEach(btn => {
-      btn.addEventListener('click', () => {
-        currentTheme = btn.dataset.th;
-        applyTheme();
-        syncThemeActive();
-      });
+    dpThemeToggle.addEventListener('click', () => {
+      currentTheme = (currentTheme === 'dark') ? 'light' : 'dark';
+      applyTheme();
     });
 
     applyTheme();
-    syncThemeActive();
 
     document.getElementById('btnDesign').addEventListener('click', openDesignPanel);
     document.getElementById('designPanelClose').addEventListener('click', closeDesignPanel);
@@ -997,6 +1108,58 @@
       closeDesignPanel();
       openBgEditor();
     });
+     // ── Автоскрытие плавающих кнопок (только тач) ──
+    (function(){
+      const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+      if (!isTouch) return;
+
+      const fabStack = document.querySelector('.fab-stack');
+      if (!fabStack) return;
+
+      let lastY = window.scrollY;
+      let hideTimer = null;
+      const HIDE_DELAY = 3000;
+
+      function showFab(){
+        fabStack.classList.remove('fab-hidden');
+      }
+      function hideFab(){
+        fabStack.classList.add('fab-hidden');
+      }
+      function scheduleHide(){
+        clearTimeout(hideTimer);
+        hideTimer = setTimeout(hideFab, HIDE_DELAY);
+      }
+      function cancelHide(){
+        clearTimeout(hideTimer);
+      }
+
+      window.addEventListener('scroll', () => {
+        const y = window.scrollY;
+        if (y > lastY + 4){
+          hideFab();
+          cancelHide();
+        } else if (y < lastY - 4){
+          showFab();
+          cancelHide();
+        }
+        lastY = y;
+      }, { passive: true });
+
+      document.addEventListener('touchstart', () => {
+        cancelHide();
+      }, { passive: true });
+
+      function handleTouchEnd(e){
+        if (!e.touches || e.touches.length === 0){
+          if (!fabStack.classList.contains('fab-hidden')){
+            scheduleHide();
+          }
+        }
+      }
+      document.addEventListener('touchend', handleTouchEnd, { passive: true });
+      document.addEventListener('touchcancel', handleTouchEnd, { passive: true });
+    })();
   </script>
   <nav class="bottom-nav">
   <button type="button" class="nav-btn active" data-screen="home"><span class="em">🏠</span>Главная</button>
@@ -1004,6 +1167,12 @@
   <button type="button" class="nav-btn" data-screen="plan"><span class="em">📅</span>План</button>
   <button type="button" class="nav-btn" data-screen="pantry"><span class="em">🧺</span>Кладовая</button>
 </nav>
+<!-- ═══ Плавающие кнопки ═══ -->
+<div class="fab-stack">
+  <button type="button" class="fab-btn" title="Общий таймер"><span>⏲</span></button>
+  <button type="button" class="fab-btn" title="Поиск"><span>🔍</span></button>
+  <button type="button" class="fab-btn primary" title="Добавить рецепт"><span>➕</span></button>
+</div>
 </div><!-- /.app -->
 
 </body>

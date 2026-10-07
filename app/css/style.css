@@ -197,6 +197,8 @@ html{
 /* ───── Секции рецептов ───── */
 .recipes{
   padding:20px 16px 100px;
+  max-width:1600px;
+  margin:0 auto;
 }
 .recipes-section{margin-bottom:34px}
 .recipes-section-head{
@@ -523,7 +525,7 @@ html{
   border-radius:14px;
   padding:18px;
   width:100%;
-  max-width:520px;
+  max-width:640px;
   max-height:96vh;
   overflow-y:auto;
   font-family:system-ui, sans-serif;
@@ -562,6 +564,36 @@ html{
   letter-spacing:.1em;
   opacity:.55;
   font-weight:800;
+  cursor:pointer;
+  user-select:none;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  padding:2px 0;
+}
+.dp-section-label:hover{
+  opacity:.9;
+}
+.dp-section-toggle{
+  font-size:9px;
+  opacity:.7;
+  transition:transform .18s ease;
+  display:inline-block;
+}
+.dp-section.collapsed .dp-section-toggle{
+  transform:rotate(-90deg);
+}
+.dp-section-body{
+  display:grid;
+  grid-template-rows:1fr;
+  transition:grid-template-rows .18s ease;
+}
+.dp-section.collapsed .dp-section-body{
+  grid-template-rows:0fr;
+}
+.dp-section-body > *{
+  overflow:hidden;
+  min-height:0;
 }
 .dp-chips{
   display:flex;
@@ -693,6 +725,141 @@ body[data-theme="dark"] .contents-head .toggle{
   color:#fff;
   opacity:.8;
 }
+/* ═══ Тумблер темы в шапке панели 🎨 ═══ */
+.dp-theme-toggle{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  background:none;
+  border:none;
+  padding:0;
+  cursor:pointer;
+  margin-left:auto;
+  margin-right:12px;
+  color:#fff;
+  font-family:inherit;
+}
+.dp-tt-sun,
+.dp-tt-moon{
+  font-size:14px;
+  line-height:1;
+  opacity:.55;
+  transition:opacity .2s;
+}
+.dp-theme-toggle[data-theme="dark"] .dp-tt-moon,
+.dp-theme-toggle[data-theme="light"] .dp-tt-sun,
+.dp-theme-toggle:not([data-theme="dark"]) .dp-tt-sun{
+  opacity:1;
+}
+.dp-tt-track{
+  width:38px;
+  height:20px;
+  background:#2a2529;
+  border-radius:20px;
+  position:relative;
+  display:inline-block;
+  transition:background .2s;
+  border:1px solid #444;
+}
+.dp-tt-knob{
+  position:absolute;
+  top:2px;
+  left:2px;
+  width:14px;
+  height:14px;
+  background:#e69db5;
+  border-radius:50%;
+  transition:transform .2s;
+}
+.dp-theme-toggle[data-theme="dark"] .dp-tt-track{
+  background:#444;
+}
+.dp-theme-toggle[data-theme="dark"] .dp-tt-knob{
+  transform:translateX(18px);
+}
+/* ═══ Заголовок секции с оттенками на одной строке ═══ */
+.dp-section-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.dp-section-head .dp-section-label{
+  margin:0;
+}
+
+/* ═══ Оттенки — текст-ссылки ═══ */
+.dp-shades{
+  gap:0;
+}
+.dp-shades .dp-chip{
+  background:none;
+  border:none;
+  padding:3px 0;
+  font-size:11.5px;
+  border-radius:4px;
+  color:#9a8f93;
+  opacity:1;
+  font-weight:600;
+  letter-spacing:.02em;
+  transition:color .15s;
+}
+.dp-shades .dp-chip:hover{
+  background:none;
+  color:#fff;
+}
+.dp-shades .dp-chip.active{
+  background:none;
+  border:none;
+  color:#e69db5;
+  font-weight:800;
+}
+/* Точка-разделитель между оттенками — симметрично */
+.dp-shades .dp-chip:not(:last-child)::after{
+  content:"·";
+  color:#555;
+  font-weight:400;
+  margin-left:6px;
+  margin-right:6px;
+  position:relative;
+  top:-1px;
+}
+/* ═══ Табы теней (Карточки · Плавающие кнопки) ═══ */
+.dp-shadow-tabs{
+  gap:2px;
+}
+.dp-shadow-tabs .dp-chip{
+  background:none;
+  border:none;
+  padding:3px 0;
+  font-size:11.5px;
+  border-radius:4px;
+  color:#9a8f93;
+  opacity:1;
+  font-weight:600;
+  letter-spacing:.02em;
+  transition:color .15s;
+}
+.dp-shadow-tabs .dp-chip:hover{
+  background:none;
+  color:#fff;
+}
+.dp-shadow-tabs .dp-chip.active{
+  background:none;
+  border:none;
+  color:#e69db5;
+  font-weight:800;
+}
+.dp-shadow-tabs .dp-chip:not(:last-child)::after{
+  content:"·";
+  color:#555;
+  font-weight:400;
+  margin-left:6px;
+  margin-right:6px;
+  position:relative;
+  top:-1px;
+}
 /* ═══ Нижняя навигация ═══ */
 .bottom-nav{
   position:fixed;
@@ -744,6 +911,76 @@ body[data-theme="dark"] .nav-btn{
   color:#fff;
 }
 body[data-theme="dark"] .nav-btn.active{
+  background:var(--c3);
+  color:#fff;
+}
+/* ═══ Плавающие кнопки ═══ */
+.fab-stack{
+  position:fixed;
+  right:20px;
+  bottom:90px;
+  z-index:99;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  transition:transform .25s ease, opacity .25s ease;
+}
+.fab-stack.fab-hidden{
+  transform:translateY(300px);
+  opacity:0;
+  pointer-events:none;
+}
+
+.fab-btn{
+  width:52px;
+  height:52px;
+  border-radius:50%;
+  border:none;
+  font-size:22px;
+  line-height:1;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:0;
+  background:var(--plate-bg);
+  color:var(--plate-text);
+  transition:transform .15s, filter .15s;
+}
+.fab-btn:hover{
+  transform:scale(1.06);
+  filter:brightness(1.08);
+}
+.fab-btn.primary{
+  background:var(--c3);
+  color:#fff;
+}
+
+/* ПК с мышью — кнопки меньше */
+@media(hover:hover) and (pointer:fine){
+  .fab-btn{
+    width:44px;
+    height:44px;
+    font-size:20px;
+  }
+}
+
+/* Тени плавающих кнопок (из панели 🎨) */
+body[data-fab-shadow="none"] .fab-btn{box-shadow:none}
+body[data-fab-shadow="parit"] .fab-btn{box-shadow:0 10px 24px rgba(0,0,0,.28), 0 3px 8px rgba(0,0,0,.14)}
+body[data-fab-shadow="prikrepl"] .fab-btn{box-shadow:0 2px 5px rgba(0,0,0,.22)}
+body[data-fab-shadow="bokovaya"] .fab-btn{box-shadow:5px 5px 14px rgba(0,0,0,.22)}
+body[data-fab-shadow="cvetnaya"] .fab-btn{box-shadow:0 10px 24px color-mix(in srgb, var(--c4) 30%, transparent)}
+body[data-fab-shadow="dvoinaya"] .fab-btn{box-shadow:0 2px 4px rgba(0,0,0,.15), 0 8px 22px rgba(0,0,0,.18)}
+body[data-fab-shadow="vnutrennyaya"] .fab-btn{box-shadow:inset 0 4px 10px rgba(0,0,0,.18)}
+body[data-fab-shadow="vniz"] .fab-btn{box-shadow:0 8px 14px rgba(0,0,0,.22)}
+
+/* Тёмная тема — фон кнопок */
+body[data-theme="dark"] .fab-btn{
+  background:color-mix(in srgb, var(--c1) 15%, var(--c4) 85%);
+  color:#fff;
+}
+body[data-theme="dark"] .fab-btn.primary{
   background:var(--c3);
   color:#fff;
 }
