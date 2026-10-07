@@ -987,3 +987,22 @@ body[data-theme="dark"] .fab-btn.primary{
   background:var(--c3);
   color:#fff;
 }
+/* ═══ Экраны (шаг 4) ═══ */
+.screen{display:none}
+.screen.active{display:block}
+
+/* Заглушка неглавных экранов */
+.screen-stub{
+  padding:120px 24px;
+  text-align:center;
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;
+  font-weight:600;
+  font-size:28px;
+  color:var(--c4);
+  opacity:.75;
+}
+body[data-theme="dark"] .screen-stub{
+  color:var(--c1);
+  opacity:.9;
+}

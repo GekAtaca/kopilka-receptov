@@ -60,6 +60,9 @@
     </div>
   </header>
 
+  <!-- ═══ Экран: Главная ═══ -->
+  <div class="screen active" data-screen="home">
+
   <!-- Содержание -->
   <section class="contents open" id="contents">
     <div class="contents-head" id="contentsHead">
@@ -100,7 +103,7 @@
   </section>
 
   <!-- Пока пустой контейнер для карточек рецептов -->
-  <main id="app">
+  <main class="home-main">
   <div class="recipes">
 
     <!-- ───── 🌅 ЗАВТРАКИ ───── -->
@@ -489,6 +492,22 @@
     </section>
   </div>
 </main>
+  </div><!-- /.screen[home] -->
+
+  <!-- ═══ Экран: Избранное ═══ -->
+  <div class="screen" data-screen="favorites">
+    <div class="screen-stub">Тут будет Избранное</div>
+  </div>
+
+  <!-- ═══ Экран: План ═══ -->
+  <div class="screen" data-screen="plan">
+    <div class="screen-stub">Тут будет План</div>
+  </div>
+
+  <!-- ═══ Экран: Кладовая ═══ -->
+  <div class="screen" data-screen="pantry">
+    <div class="screen-stub">Тут будет Кладовая</div>
+  </div>
 
   <!-- ═══════ Редактор фона ═══════ -->
   <div id="bgEditor" class="bg-editor" style="display:none">
@@ -1108,17 +1127,22 @@
       closeDesignPanel();
       openBgEditor();
     });
-     // ── Автоскрытие плавающих кнопок (только тач) ──
+     // ── Автоскрытие плавающих кнопок ──
     document.addEventListener('DOMContentLoaded', function(){
       const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
-      if (!isTouch) return;
-
       const fabStack = document.querySelector('.fab-stack');
       if (!fabStack) return;
 
+      const PC_THRESHOLD = 1730;
+      const HIDE_DELAY = 2000;
+
       let lastY = window.scrollY;
       let hideTimer = null;
-      const HIDE_DELAY = 2000;
+
+      function shouldAutoHide(){
+        if (isTouch) return true;
+        return window.innerWidth < PC_THRESHOLD;
+      }
 
       function showFab(){ fabStack.classList.remove('fab-hidden'); }
       function hideFab(){ fabStack.classList.add('fab-hidden'); }
@@ -1129,15 +1153,32 @@
       function cancelHide(){ clearTimeout(hideTimer); }
 
       window.addEventListener('scroll', () => {
+        if (!shouldAutoHide()){
+          showFab();
+          return;
+        }
         const y = window.scrollY;
-        if (y > lastY + 4){ hideFab(); cancelHide(); }
-        else if (y < lastY - 4){ showFab(); cancelHide(); }
+        if (y > lastY + 4){
+          hideFab();
+          cancelHide();
+        } else if (y < lastY - 4){
+          showFab();
+          cancelHide();
+        }
         lastY = y;
+
+        if (!isTouch && !fabStack.classList.contains('fab-hidden')){
+          scheduleHide();
+        }
       }, { passive: true });
 
-      document.addEventListener('touchstart', () => { cancelHide(); }, { passive: true });
+      document.addEventListener('touchstart', () => {
+        if (!shouldAutoHide()) return;
+        cancelHide();
+      }, { passive: true });
 
       function handleTouchEnd(e){
+        if (!shouldAutoHide()) return;
         if (!e.touches || e.touches.length === 0){
           if (!fabStack.classList.contains('fab-hidden')){
             scheduleHide();
@@ -1146,6 +1187,50 @@
       }
       document.addEventListener('touchend', handleTouchEnd, { passive: true });
       document.addEventListener('touchcancel', handleTouchEnd, { passive: true });
+
+      window.addEventListener('resize', () => {
+        if (!shouldAutoHide()){
+          showFab();
+          cancelHide();
+        }
+      });
+
+      if (!shouldAutoHide()){
+        showFab();
+      }
+    });
+
+    // ── Переключение экранов ──
+    document.addEventListener('DOMContentLoaded', function(){
+      const SCREEN_KEY = 'activeScreen';
+      const VALID_SCREENS = ['home','favorites','plan','pantry'];
+
+      const navBtns = document.querySelectorAll('.nav-btn');
+      const screens = document.querySelectorAll('.screen');
+
+      function showScreen(name){
+        if (!VALID_SCREENS.includes(name)) name = 'home';
+        screens.forEach(s => {
+          s.classList.toggle('active', s.dataset.screen === name);
+        });
+        navBtns.forEach(b => {
+          b.classList.toggle('active', b.dataset.screen === name);
+        });
+        localStorage.setItem(SCREEN_KEY, name);
+      }
+
+      navBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          showScreen(btn.dataset.screen);
+          window.scrollTo({ top: 0, behavior: 'auto' });
+        });
+      });
+
+      // Восстановление при загрузке
+      const saved = localStorage.getItem(SCREEN_KEY);
+      if (saved && VALID_SCREENS.includes(saved)) {
+        showScreen(saved);
+      }
     });
   </script>
   <nav class="bottom-nav">
