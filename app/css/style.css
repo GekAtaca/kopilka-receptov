@@ -923,12 +923,15 @@ body[data-theme="dark"] .nav-btn.active{
   display:flex;
   flex-direction:column;
   gap:12px;
-  transition:transform .25s ease, opacity .25s ease;
+  visibility:visible;
+  transition:transform .4s ease, opacity .4s ease, visibility 0s 0s;
   will-change:transform, opacity;
 }
 .fab-stack.fab-hidden{
-  transform:translateY(300px);
+  transform:translateY(50px);
   opacity:0;
+  visibility:hidden;
+  transition:transform .4s ease, opacity .4s ease, visibility 0s .4s;
 }
 
 .fab-btn{
