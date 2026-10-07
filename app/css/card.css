@@ -57,7 +57,7 @@ body[data-palette$="-glubokaya"]{
   --ing-chk-size:20px;
   --toggle-size:15px;
   --unit-name-size:18px;
-  --unit-pad-y:12px;
+   --unit-pad-y:8px;
   --unit-pad-x:14px;
   --unit-radius:var(--radius-btn);
   --note-font-size:16px;
