@@ -1,5 +1,6 @@
 /* 🤍 Минимализм · Nunito · без декора */
-[data-style="minimalizm"] .card{
+[data-style="minimalizm"] .card,
+[data-style="minimalizm"] .design-panel-mockup{
   --font-head:'Nunito',sans-serif;
   --font-body:'Nunito',sans-serif;
   --font-style-head:normal;

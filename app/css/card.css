@@ -9,7 +9,9 @@
 
 body{--plate-text:var(--c4);--plate-bg:var(--c2)}
 body[data-palette$="-nasyshchennaya"],
-body[data-palette$="-glubokaya"]{
+body[data-palette$="-glubokaya"],
+.dm-scope[data-palette$="-nasyshchennaya"],
+.dm-scope[data-palette$="-glubokaya"]{
   --plate-text:#fff;
   --plate-bg:color-mix(in srgb, var(--c3) 15%, var(--c2) 85%);
 }
@@ -292,7 +294,8 @@ body[data-shadow="none"] .card{
 }
 
 /* ═══ Тёмная тема — карточка ═══ */
-body[data-theme="dark"]{
+body[data-theme="dark"],
+.dm-scope[data-theme="dark"]{
   --plate-bg:color-mix(in srgb, var(--c1) 15%, var(--c4) 85%);
   --plate-text:var(--c1);
 }

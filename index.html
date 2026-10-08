@@ -536,7 +536,7 @@
   <div id="designPanel" class="design-panel" style="display:none">
     <div class="design-panel-box">
       <div class="design-panel-head">
-  <span class="design-panel-title">🎨 Оформление</span>
+  <span class="design-panel-title">🖌 Оформление</span>
   <button type="button" class="dp-theme-toggle" id="dpThemeToggle" title="Светлая / тёмная тема">
     <span class="dp-tt-sun">🌞</span>
     <span class="dp-tt-track"><span class="dp-tt-knob"></span></span>
@@ -544,6 +544,7 @@
   </button>
   <button type="button" class="design-panel-close" id="designPanelClose">✕</button>
 </div>
+      <div class="design-panel-columns">
       <div class="design-panel-body">
 
         <div class="dp-section" data-section="style">
@@ -661,7 +662,52 @@
           </div>
         </div>
 
+      </div><!-- /.design-panel-body -->
+
+      <!-- ═══ Макет (виден на ПК/iPad, прячется на телефоне) ═══ -->
+      <div class="design-panel-mockup dm-scope" aria-hidden="true">
+        <div class="dm-header">
+          <span class="dm-logo"></span>
+          <span class="dm-icons">
+            <span></span><span></span><span></span>
+          </span>
+        </div>
+        <div class="dm-contents">
+          <span class="dm-chip"></span>
+          <span class="dm-chip"></span>
+          <span class="dm-chip"></span>
+        </div>
+        <div class="dm-card">
+          <div class="dm-photo"></div>
+          <div class="dm-card-body">
+            <div class="dm-title"></div>
+            <div class="dm-tags">
+              <span class="dm-tag"></span>
+              <span class="dm-tag"></span>
+              <span class="dm-tag"></span>
+            </div>
+            <div class="dm-kcal">
+              <span></span><span></span><span></span>
+            </div>
+            <div class="dm-buttons">
+              <span class="dm-btn dm-btn-primary"></span>
+              <span class="dm-btn"></span>
+            </div>
+          </div>
+        </div>
+        <div class="dm-nav">
+          <span></span><span></span><span></span><span></span>
+        </div>
       </div>
+
+      </div><!-- /.design-panel-columns -->
+
+      <!-- ═══ Нижняя полоска панели ═══ -->
+      <div class="design-panel-footer">
+        <button type="button" class="dp-action dp-action-apply" id="dpApply">Применить</button>
+        <button type="button" class="dp-action dp-action-preview" id="dpPreview">Посмотреть</button>
+      </div>
+
     </div>
   </div>
 
@@ -988,12 +1034,23 @@
     // ── Панель 🎨 ──
     const designPanel = document.getElementById('designPanel');
 
+    function syncMockupScope(){
+      const mock = document.querySelector('.design-panel-mockup');
+      if (!mock) return;
+      const s = getDesignFor(activeDesignScreen);
+      mock.dataset.style = s.style;
+      mock.dataset.palette = s.palette + '-' + s.shade;
+      if (s.theme === 'dark') mock.dataset.theme = 'dark';
+      else delete mock.dataset.theme;
+    }
+
     function openDesignPanel(){
       syncStyleActive();
       syncPaletteActive();
       syncShadowActive();
       syncBgActive();
       syncThemeToggle();
+      syncMockupScope();
       designPanel.style.display = 'flex';
     }
     function closeDesignPanel(){ designPanel.style.display = 'none'; }

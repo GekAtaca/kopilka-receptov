@@ -1,5 +1,6 @@
 /* 🌷 Лилейный · EB Garamond italic · кнопки-пилюли, точки */
-[data-style="lileyny"] .card{
+[data-style="lileyny"] .card,
+[data-style="lileyny"] .design-panel-mockup{
   --font-head:'EB Garamond',serif;
   --font-body:'EB Garamond',serif;
   --font-style-head:italic;

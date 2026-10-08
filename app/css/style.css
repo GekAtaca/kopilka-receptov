@@ -1055,3 +1055,287 @@ body[data-theme="dark"] .screen-stub{
   opacity:.7;
   padding:24px 0;
 }
+/* ═══════════════════════════════════════════════════
+   ПОДШАГ 3 · Панель 🖌 в две колонки + макет
+   ═══════════════════════════════════════════════════ */
+
+/* Контейнер двух колонок */
+.design-panel-columns{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+.design-panel-columns .design-panel-body{
+  flex:1 1 auto;
+  min-width:0;
+}
+
+/* Макет — скрыт по умолчанию (узкая панель) */
+.design-panel-mockup{
+  display:none;
+}
+
+/* Футер панели */
+.design-panel-footer{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:10px;
+  padding-top:4px;
+}
+.design-panel-footer .dp-action{
+  min-width:180px;
+  padding:10px 22px;
+  border-radius:8px;
+  border:1px solid #555;
+  background:#2a2529;
+  color:#fff;
+  font-family:inherit;
+  font-size:14px;
+  font-weight:700;
+  cursor:pointer;
+  transition:filter .15s;
+}
+.design-panel-footer .dp-action:hover{ filter:brightness(1.1); }
+.design-panel-footer .dp-action-apply{
+  display:none;
+  background:#e69db5;
+  border-color:#e69db5;
+  color:#fff;
+}
+.design-panel-footer .dp-action-preview{
+  display:inline-block;
+}
+
+/* ── Две колонки при 800px и больше ── */
+@media (min-width:800px){
+  .design-panel-box{ max-width:760px; }
+  .design-panel-columns{
+    flex-direction:row;
+    align-items:flex-start;
+    gap:18px;
+  }
+  .design-panel-mockup{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    flex:0 0 280px;
+    width:280px;
+    padding:10px;
+    border-radius:12px;
+    background:rgba(255,255,255,.03);
+    box-shadow:0 4px 12px rgba(0,0,0,.25);
+  }
+  .design-panel-footer .dp-action-apply{ display:inline-block; }
+  .design-panel-footer .dp-action-preview{ display:none; }
+}
+
+/* ═══════════════════════════════════════════════════
+   Макет · дефолтные переменные (стиль «Нежный»)
+   В подшаге 3.2 сюда добавятся правила остальных 7 стилей.
+   ═══════════════════════════════════════════════════ */
+.dm-scope{
+  --font-head:'Cormorant Garamond',serif;
+  --font-body:'Cormorant Garamond',serif;
+  --font-style-head:italic;
+  --font-style-body:italic;
+  --font-weight-head:700;
+  --font-weight-body:400;
+  --radius:14px;
+  --radius-btn:11px;
+  --radius-chip:11px;
+  --dm-card-shadow:0 16px 36px rgba(0,0,0,.28), 0 5px 14px rgba(0,0,0,.14);
+}
+
+/* ═══ Макет · шапка ═══ */
+.dm-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  height:36px;
+  padding:0 10px;
+  border-radius:8px;
+  background:linear-gradient(135deg, var(--c3), var(--c2));
+}
+.dm-logo{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:rgba(255,255,255,.65);
+}
+.dm-icons{
+  display:flex;
+  gap:4px;
+}
+.dm-icons span{
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:rgba(255,255,255,.65);
+}
+
+/* ═══ Макет · содержание ═══ */
+.dm-contents{
+  display:flex;
+  gap:5px;
+  padding:6px 8px;
+  border-radius:8px;
+  background:color-mix(in srgb, var(--c1) 78%, transparent);
+}
+.dm-chip{
+  height:14px;
+  flex:1;
+  border-radius:var(--radius-chip);
+  background:var(--plate-bg);
+  border:1px solid var(--c3);
+}
+.dm-chip:first-child{ flex:1.3; }
+.dm-chip:last-child{ flex:0.8; }
+
+/* ═══ Макет · карточка ═══ */
+.dm-card{
+  border-radius:var(--radius);
+  overflow:hidden;
+  background:var(--c1);
+  border:1px solid var(--c3);
+  color:var(--c4);
+  box-shadow:var(--dm-card-shadow);
+}
+.dm-photo{
+  height:100px;
+  background:linear-gradient(135deg, var(--c2), var(--c3));
+}
+.dm-card-body{
+  padding:12px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.dm-title{
+  font-family:var(--font-head);
+  font-style:var(--font-style-head);
+  font-weight:var(--font-weight-head);
+  font-size:17px;
+  line-height:1.15;
+}
+.dm-title::before{ content:"Название"; }
+.dm-tags{
+  display:flex;
+  gap:4px;
+  flex-wrap:wrap;
+}
+.dm-tag{
+  height:14px;
+  min-width:34px;
+  padding:0 7px;
+  border-radius:var(--radius-chip);
+  background:var(--plate-bg);
+  border:1px solid var(--c3);
+}
+.dm-kcal{
+  display:flex;
+  align-items:center;
+  gap:5px;
+  font-family:var(--font-body);
+  font-size:10px;
+  color:var(--c4);
+  opacity:.7;
+}
+.dm-kcal span{
+  display:inline-block;
+  width:20px;
+  height:3px;
+  border-radius:2px;
+  background:currentColor;
+}
+.dm-kcal span:not(:last-child)::after{
+  content:"·";
+  position:relative;
+  left:9px;
+  font-size:11px;
+  line-height:1;
+  opacity:.7;
+}
+.dm-kcal .dm-kcal-dot{
+  width:auto;
+  height:auto;
+  background:none;
+  font-size:11px;
+  line-height:1;
+}
+.dm-buttons{
+  display:flex;
+  gap:5px;
+  margin-top:2px;
+}
+.dm-btn{
+  flex:1;
+  height:18px;
+  border-radius:var(--radius-btn);
+  border:1px solid var(--c3);
+  background:var(--plate-bg);
+}
+.dm-btn-primary{
+  background:var(--c3);
+  border-color:var(--c3);
+}
+
+/* ═══ Макет · нижняя панель ═══ */
+.dm-nav{
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  height:32px;
+  border-radius:8px;
+  background:var(--c1);
+  border-top:1px solid var(--c3);
+}
+.dm-nav span{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:var(--plate-bg);
+}
+.dm-nav span:first-child{
+  background:var(--c3);
+}
+
+/* ═══ Макет · тёмная тема (атрибут поставит JS в подшаге 4) ═══ */
+.dm-scope[data-theme="dark"] .dm-header{
+  background:linear-gradient(135deg, var(--c4), var(--c3));
+}
+.dm-scope[data-theme="dark"] .dm-contents{
+  background:transparent;
+}
+.dm-scope[data-theme="dark"] .dm-card{
+  background:var(--c4);
+  border-color:var(--c2);
+  color:#fff;
+}
+.dm-scope[data-theme="dark"] .dm-title{
+  color:#fff;
+}
+.dm-scope[data-theme="dark"] .dm-kcal{
+  color:#fff;
+  opacity:.75;
+}
+.dm-scope[data-theme="dark"] .dm-chip,
+.dm-scope[data-theme="dark"] .dm-tag,
+.dm-scope[data-theme="dark"] .dm-btn{
+  background:color-mix(in srgb, var(--c1) 15%, var(--c4) 85%);
+  border-color:var(--c2);
+}
+.dm-scope[data-theme="dark"] .dm-btn-primary{
+  background:var(--c2);
+  border-color:var(--c2);
+}
+.dm-scope[data-theme="dark"] .dm-nav{
+  background:var(--c4);
+  border-top-color:var(--c2);
+}
+.dm-scope[data-theme="dark"] .dm-nav span{
+  background:color-mix(in srgb, var(--c1) 15%, var(--c4) 85%);
+}
+.dm-scope[data-theme="dark"] .dm-nav span:first-child{
+  background:var(--c3);
+}
