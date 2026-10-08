@@ -763,6 +763,7 @@
     try { bgSettings = JSON.parse(localStorage.getItem('bgSettings') || '{}'); } catch(e) { bgSettings = {}; }
 
     let currentBg = '';
+    let designDraft = null;
 
     function saveSettingsToStorage() {
       localStorage.setItem('bgSettings', JSON.stringify(bgSettings));
@@ -820,8 +821,8 @@
 
     document.querySelectorAll('button[data-bg]').forEach(btn => {
       btn.addEventListener('click', () => {
-        setDesignFor(activeDesignScreen, { bg: btn.dataset.bg });
-        applyBg(btn.dataset.bg);
+        if (!designDraft) return;
+        designDraft.bg = btn.dataset.bg;
         syncBgActive();
       });
     });
@@ -1008,6 +1009,11 @@
       return d[screen] || { ...DESIGN_DEFAULTS };
     }
 
+    function getActiveDesign(){
+      return designDraft || getDesignFor(activeDesignScreen);
+    }
+
+
     function setDesignFor(screen, patch){
       const d = loadDesignData();
       d[screen] = { ...(d[screen] || DESIGN_DEFAULTS), ...patch };
@@ -1037,14 +1043,16 @@
     function syncMockupScope(){
       const mock = document.querySelector('.design-panel-mockup');
       if (!mock) return;
-      const s = getDesignFor(activeDesignScreen);
+      const s = getActiveDesign();
       mock.dataset.style = s.style;
       mock.dataset.palette = s.palette + '-' + s.shade;
+      mock.dataset.shadow = s.shadow;
       if (s.theme === 'dark') mock.dataset.theme = 'dark';
       else delete mock.dataset.theme;
     }
 
     function openDesignPanel(){
+      designDraft = { ...getActiveDesign() };
       syncStyleActive();
       syncPaletteActive();
       syncShadowActive();
@@ -1053,20 +1061,25 @@
       syncMockupScope();
       designPanel.style.display = 'flex';
     }
-    function closeDesignPanel(){ designPanel.style.display = 'none'; }
+    function closeDesignPanel(){
+      designDraft = null;
+      designPanel.style.display = 'none';
+    }
 
     // Стили
     const dpStyles = document.getElementById('dpStyles');
     function syncStyleActive(){
-      const cur = getDesignFor(activeDesignScreen).style;
+      const cur = getActiveDesign().style;
       dpStyles.querySelectorAll('.dp-chip').forEach(b => {
         b.classList.toggle('active', b.dataset.s === cur);
       });
     }
     dpStyles.querySelectorAll('.dp-chip').forEach(btn => {
       btn.addEventListener('click', () => {
-        setDesignFor(activeDesignScreen, { style: btn.dataset.s });
-        applyDesignFor(activeDesignScreen);
+        if (!designDraft) return;
+        designDraft.style = btn.dataset.s;
+        syncStyleActive();
+        syncMockupScope();
       });
     });
 
@@ -1074,7 +1087,7 @@
     const dpPalettes = document.getElementById('dpPalettes');
     const dpShades   = document.getElementById('dpShades');
     function syncPaletteActive(){
-      const s = getDesignFor(activeDesignScreen);
+      const s = getActiveDesign();
       dpPalettes.querySelectorAll('.dp-chip').forEach(b => {
         b.classList.toggle('active', b.dataset.p === s.palette);
       });
@@ -1084,14 +1097,18 @@
     }
     dpPalettes.querySelectorAll('.dp-chip').forEach(btn => {
       btn.addEventListener('click', () => {
-        setDesignFor(activeDesignScreen, { palette: btn.dataset.p });
-        applyDesignFor(activeDesignScreen);
+        if (!designDraft) return;
+        designDraft.palette = btn.dataset.p;
+        syncPaletteActive();
+        syncMockupScope();
       });
     });
     dpShades.querySelectorAll('.dp-chip').forEach(btn => {
       btn.addEventListener('click', () => {
-        setDesignFor(activeDesignScreen, { shade: btn.dataset.shade });
-        applyDesignFor(activeDesignScreen);
+        if (!designDraft) return;
+        designDraft.shade = btn.dataset.shade;
+        syncPaletteActive();
+        syncMockupScope();
       });
     });
 
@@ -1108,7 +1125,7 @@
     } catch(e) {}
 
     function syncShadowActive(){
-      const s = getDesignFor(activeDesignScreen);
+      const s = getActiveDesign();
       dpShadowsCards.querySelectorAll('.dp-chip').forEach(b => {
         b.classList.toggle('active', b.dataset.sh === s.shadow);
       });
@@ -1123,14 +1140,17 @@
     }
     dpShadowsCards.querySelectorAll('.dp-chip').forEach(btn => {
       btn.addEventListener('click', () => {
-        setDesignFor(activeDesignScreen, { shadow: btn.dataset.sh });
-        applyDesignFor(activeDesignScreen);
+        if (!designDraft) return;
+        designDraft.shadow = btn.dataset.sh;
+        syncShadowActive();
+        syncMockupScope();
       });
     });
     dpShadowsFab.querySelectorAll('.dp-chip').forEach(btn => {
       btn.addEventListener('click', () => {
-        setDesignFor(activeDesignScreen, { fabShadow: btn.dataset.sh });
-        applyDesignFor(activeDesignScreen);
+        if (!designDraft) return;
+        designDraft.fabShadow = btn.dataset.sh;
+        syncShadowActive();
       });
     });
     dpShadowTabs.querySelectorAll('.dp-chip').forEach(btn => {
@@ -1144,7 +1164,7 @@
     // Фон в панели
     const dpBgs = document.getElementById('dpBgs');
     function syncBgActive(){
-      const cur = getDesignFor(activeDesignScreen).bg || '';
+      const cur = getActiveDesign().bg || '';
       dpBgs.querySelectorAll('.dp-bg').forEach(b => {
         b.classList.toggle('active', (b.dataset.bg || '') === cur);
       });
@@ -1153,13 +1173,13 @@
     // Тема
     const dpThemeToggle = document.getElementById('dpThemeToggle');
     function syncThemeToggle(){
-      if (dpThemeToggle) dpThemeToggle.dataset.theme = getDesignFor(activeDesignScreen).theme;
+      if (dpThemeToggle) dpThemeToggle.dataset.theme = getActiveDesign().theme;
     }
     dpThemeToggle.addEventListener('click', () => {
-      const s = getDesignFor(activeDesignScreen);
-      const newTheme = (s.theme === 'dark') ? 'light' : 'dark';
-      setDesignFor(activeDesignScreen, { theme: newTheme });
-      applyDesignFor(activeDesignScreen);
+      if (!designDraft) return;
+      designDraft.theme = (designDraft.theme === 'dark') ? 'light' : 'dark';
+      syncThemeToggle();
+      syncMockupScope();
     });
 
     // Сворачивание секций панели

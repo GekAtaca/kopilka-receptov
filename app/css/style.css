@@ -1145,6 +1145,8 @@ body[data-theme="dark"] .screen-stub{
   --radius-btn:11px;
   --radius-chip:11px;
   --dm-card-shadow:0 16px 36px rgba(0,0,0,.28), 0 5px 14px rgba(0,0,0,.14);
+  --plate-bg:var(--c2);
+  --plate-text:var(--c4);
 }
 
 /* ═══ Макет · шапка ═══ */
@@ -1339,3 +1341,12 @@ body[data-theme="dark"] .screen-stub{
 .dm-scope[data-theme="dark"] .dm-nav span:first-child{
   background:var(--c3);
 }
+/* ═══ Макет · тень карточки (по data-shadow) ═══ */
+.dm-scope[data-shadow="none"] .dm-card{ box-shadow:none; }
+.dm-scope[data-shadow="parit"] .dm-card{ box-shadow:0 16px 36px rgba(0,0,0,.28), 0 5px 14px rgba(0,0,0,.14); }
+.dm-scope[data-shadow="prikrepl"] .dm-card{ box-shadow:0 2px 6px rgba(0,0,0,.22), 0 1px 2px rgba(0,0,0,.14); }
+.dm-scope[data-shadow="bokovaya"] .dm-card{ box-shadow:8px 8px 20px rgba(0,0,0,.20), 2px 2px 6px rgba(0,0,0,.10); }
+.dm-scope[data-shadow="cvetnaya"] .dm-card{ box-shadow:0 14px 32px color-mix(in srgb, var(--c4) 30%, transparent), 0 4px 10px color-mix(in srgb, var(--c4) 18%, transparent); }
+.dm-scope[data-shadow="dvoinaya"] .dm-card{ box-shadow:0 2px 4px rgba(0,0,0,.14), 0 12px 32px rgba(0,0,0,.16); }
+.dm-scope[data-shadow="vnutrennyaya"] .dm-card{ box-shadow:inset 0 6px 16px rgba(0,0,0,.14), inset 0 -4px 12px rgba(0,0,0,.08); }
+.dm-scope[data-shadow="vniz"] .dm-card{ box-shadow:0 10px 18px rgba(0,0,0,.22), 0 3px 6px rgba(0,0,0,.16); }
