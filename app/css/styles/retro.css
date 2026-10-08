@@ -1,6 +1,6 @@
 /* 📻 Ретро · Bitter · капс */
 [data-style="retro"] .card,
-[data-style="retro"] .design-panel-mockup{
+.dm-scope[data-style="retro"]{
   --font-head:'Bitter',serif;
   --font-body:'Bitter',serif;
   --font-style-head:normal;

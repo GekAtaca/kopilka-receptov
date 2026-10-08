@@ -1,6 +1,6 @@
 /* 🍃 Японский · Shippori Mincho · без рамок карточки */
 [data-style="yaponsky"] .card,
-[data-style="yaponsky"] .design-panel-mockup{
+.dm-scope[data-style="yaponsky"]{
   --font-head:'Shippori Mincho',serif;
   --font-body:'Shippori Mincho',serif;
   --font-style-head:normal;

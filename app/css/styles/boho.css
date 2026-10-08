@@ -1,6 +1,6 @@
 /* 🌿 Бохо · Caveat · рукописный */
 [data-style="boho"] .card,
-[data-style="boho"] .design-panel-mockup{
+.dm-scope[data-style="boho"]{
   --font-head:'Caveat',cursive;
   --font-body:'Caveat',cursive;
   --font-style-head:normal;

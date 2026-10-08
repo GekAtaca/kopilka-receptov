@@ -1,6 +1,6 @@
 /* 📰 Журнал · Cormorant Garamond прямо · капс */
 [data-style="zhurnal"] .card,
-[data-style="zhurnal"] .design-panel-mockup{
+.dm-scope[data-style="zhurnal"]{
   --font-style-head:normal;
   --font-style-body:normal;
   --font-weight-head:600;
