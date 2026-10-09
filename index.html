@@ -713,6 +713,39 @@
   </div>
 
   <!-- ═══ Модалки плавающих кнопок ═══ -->
+  
+  <!-- ═══ Окошко «Применить к…» ═══ -->
+  <div id="modalApplyTo" class="modal" style="display:none">
+    <div class="modal-box">
+      <div class="modal-head">
+        <span class="modal-title">Применить к:</span>
+        <button type="button" class="modal-close" id="applyToClose">✕</button>
+      </div>
+      <div class="apply-to-list">
+        <label class="apply-to-row">
+          <input type="checkbox" class="apply-to-check" value="home">
+          <span>🏠 Главная</span>
+        </label>
+        <label class="apply-to-row">
+          <input type="checkbox" class="apply-to-check" value="favorites">
+          <span>❤ Избранное</span>
+        </label>
+        <label class="apply-to-row">
+          <input type="checkbox" class="apply-to-check" value="plan">
+          <span>📅 План</span>
+        </label>
+        <label class="apply-to-row">
+          <input type="checkbox" class="apply-to-check" value="pantry">
+          <span>🧺 Кладовая</span>
+        </label>
+      </div>
+      <div class="apply-to-actions">
+        <button type="button" class="apply-to-btn" id="applyToCancel">Отмена</button>
+        <button type="button" class="apply-to-btn primary" id="applyToConfirm" disabled>Применить</button>
+      </div>
+    </div>
+  </div>
+
   <div id="modalTimer" class="modal" style="display:none">
     <div class="modal-box">
       <div class="modal-head">
@@ -1090,6 +1123,51 @@
       designPanel.style.display = 'none';
     }
 
+// ── Окошко «Применить к…» ──
+    const modalApplyTo = document.getElementById('modalApplyTo');
+    const applyToChecks = modalApplyTo.querySelectorAll('.apply-to-check');
+    const applyToConfirm = document.getElementById('applyToConfirm');
+
+    function openApplyTo(){
+      applyToChecks.forEach(c => { c.checked = false; });
+      applyToConfirm.disabled = true;
+      modalApplyTo.style.display = 'flex';
+    }
+    function closeApplyTo(){
+      modalApplyTo.style.display = 'none';
+    }
+
+    function applyToToggleBtn(){
+      const anyChecked = Array.from(applyToChecks).some(c => c.checked);
+      applyToConfirm.disabled = !anyChecked;
+    }
+    applyToChecks.forEach(c => {
+      c.addEventListener('change', applyToToggleBtn);
+    });
+
+    document.getElementById('dpApply').addEventListener('click', openApplyTo);
+    document.getElementById('applyToClose').addEventListener('click', closeApplyTo);
+    document.getElementById('applyToCancel').addEventListener('click', closeApplyTo);
+    modalApplyTo.addEventListener('click', (e) => {
+      if (e.target === modalApplyTo) closeApplyTo();
+    });
+
+    applyToConfirm.addEventListener('click', () => {
+      if (!designDraft) { closeApplyTo(); return; }
+      const chosen = [];
+      applyToChecks.forEach(c => { if (c.checked) chosen.push(c.value); });
+      if (!chosen.length) return;
+
+      chosen.forEach(screen => {
+        setDesignFor(screen, designDraft);
+      });
+
+      closeApplyTo();
+      closeDesignPanel();
+      applyDesignFor(activeDesignScreen);
+    });
+
+
     // Стили
     const dpStyles = document.getElementById('dpStyles');
     function syncStyleActive(){
@@ -1233,7 +1311,12 @@
       if (e.target === designPanel) closeDesignPanel();
     });
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && designPanel.style.display === 'flex') closeDesignPanel();
+      if (e.key !== 'Escape') return;
+      if (modalApplyTo && modalApplyTo.style.display === 'flex'){
+        closeApplyTo();
+        return;
+      }
+      if (designPanel.style.display === 'flex') closeDesignPanel();
     });
     document.getElementById('dpBgPos').addEventListener('click', () => {
       closeDesignPanel();

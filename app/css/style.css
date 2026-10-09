@@ -1055,6 +1055,68 @@ body[data-theme="dark"] .screen-stub{
   opacity:.7;
   padding:24px 0;
 }
+
+/* ═══ Окошко «Применить к…» ═══ */
+.apply-to-list{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  margin-bottom:16px;
+}
+.apply-to-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 12px;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:14px;
+  transition:background .15s;
+}
+.apply-to-row:hover{
+  background:rgba(255,255,255,.06);
+}
+.apply-to-row input[type="checkbox"]{
+  width:16px;
+  height:16px;
+  accent-color:#e69db5;
+  cursor:pointer;
+  flex-shrink:0;
+}
+.apply-to-row span{
+  user-select:none;
+}
+
+.apply-to-actions{
+  display:flex;
+  gap:8px;
+  justify-content:flex-end;
+}
+.apply-to-btn{
+  padding:9px 20px;
+  border-radius:8px;
+  border:1px solid #555;
+  background:#2a2529;
+  color:#fff;
+  font-family:inherit;
+  font-size:13px;
+  cursor:pointer;
+  transition:filter .15s;
+}
+.apply-to-btn:hover{
+  filter:brightness(1.1);
+}
+.apply-to-btn.primary{
+  background:#e69db5;
+  border-color:#e69db5;
+  font-weight:700;
+}
+.apply-to-btn:disabled{
+  opacity:.4;
+  cursor:not-allowed;
+  filter:none;
+}
+
 /* ═══════════════════════════════════════════════════
    ПОДШАГ 3 · Панель 🖌 в две колонки + макет
    ═══════════════════════════════════════════════════ */
