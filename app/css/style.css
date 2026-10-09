@@ -1131,12 +1131,12 @@ body[data-theme="dark"] .screen-stub{
   .design-panel-mockup{
     display:flex;
     flex-direction:column;
-    gap:8px;
+    gap:5px;
     flex:0 0 400px;
     width:400px;
     aspect-ratio:16 / 9;
-    padding:14px;
-    border-radius:12px;
+    padding:10px;
+    border-radius:10px;
     position:relative;
     overflow:hidden;
     background:color-mix(in srgb, var(--c1) 65%, var(--c2) 35%);
@@ -1191,14 +1191,14 @@ body[data-theme="dark"] .screen-stub{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  height:36px;
-  padding:0 10px;
-  border-radius:8px;
+  height:22px;
+  padding:0 8px;
+  border-radius:6px;
   background:linear-gradient(135deg, var(--c3), var(--c2));
 }
 .dm-logo{
-  width:10px;
-  height:10px;
+  width:7px;
+  height:7px;
   border-radius:50%;
   background:rgba(255,255,255,.65);
 }
@@ -1207,8 +1207,8 @@ body[data-theme="dark"] .screen-stub{
   gap:4px;
 }
 .dm-icons span{
-  width:6px;
-  height:6px;
+  width:4px;
+  height:4px;
   border-radius:50%;
   background:rgba(255,255,255,.65);
 }
@@ -1216,13 +1216,13 @@ body[data-theme="dark"] .screen-stub{
 /* ═══ Макет · содержание ═══ */
 .dm-contents{
   display:flex;
-  gap:5px;
-  padding:6px 8px;
-  border-radius:8px;
+  gap:4px;
+  padding:4px 6px;
+  border-radius:6px;
   background:color-mix(in srgb, var(--c1) 78%, transparent);
 }
 .dm-chip{
-  height:14px;
+  height:10px;
   flex:1;
   border-radius:var(--radius-chip);
   background:var(--plate-bg);
@@ -1241,20 +1241,20 @@ body[data-theme="dark"] .screen-stub{
   box-shadow:var(--dm-card-shadow);
 }
 .dm-photo{
-  height:100px;
+  height:52px;
   background:linear-gradient(135deg, var(--c2), var(--c3));
 }
 .dm-card-body{
-  padding:12px;
+  padding:8px;
   display:flex;
   flex-direction:column;
-  gap:8px;
+  gap:5px;
 }
 .dm-title{
   font-family:var(--font-head);
   font-style:var(--font-style-head);
   font-weight:var(--font-weight-head);
-  font-size:17px;
+  font-size:12px;
   line-height:1.15;
 }
 .dm-title::before{ content:"Название"; }
@@ -1264,9 +1264,9 @@ body[data-theme="dark"] .screen-stub{
   flex-wrap:wrap;
 }
 .dm-tag{
-  height:14px;
-  min-width:34px;
-  padding:0 7px;
+  height:9px;
+  min-width:22px;
+  padding:0 5px;
   border-radius:var(--radius-chip);
   background:var(--plate-bg);
   border:1px solid var(--c3);
@@ -1274,16 +1274,16 @@ body[data-theme="dark"] .screen-stub{
 .dm-kcal{
   display:flex;
   align-items:center;
-  gap:5px;
+  gap:4px;
   font-family:var(--font-body);
-  font-size:10px;
+  font-size:7px;
   color:var(--c4);
   opacity:.7;
 }
 .dm-kcal span{
   display:inline-block;
-  width:20px;
-  height:3px;
+  width:14px;
+  height:2px;
   border-radius:2px;
   background:currentColor;
 }
@@ -1304,12 +1304,12 @@ body[data-theme="dark"] .screen-stub{
 }
 .dm-buttons{
   display:flex;
-  gap:5px;
-  margin-top:2px;
+  gap:4px;
+  margin-top:1px;
 }
 .dm-btn{
   flex:1;
-  height:18px;
+  height:12px;
   border-radius:var(--radius-btn);
   border:1px solid var(--c3);
   background:var(--plate-bg);
@@ -1324,14 +1324,14 @@ body[data-theme="dark"] .screen-stub{
   display:flex;
   justify-content:space-around;
   align-items:center;
-  height:32px;
-  border-radius:8px;
+  height:20px;
+  border-radius:6px;
   background:var(--c1);
   border-top:1px solid var(--c3);
 }
 .dm-nav span{
-  width:8px;
-  height:8px;
+  width:5px;
+  height:5px;
   border-radius:50%;
   background:var(--plate-bg);
 }
