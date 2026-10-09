@@ -344,7 +344,7 @@ html{
 .bg-editor{
   position:fixed;
   inset:0;
-  z-index:100000;
+  z-index:100003;
   background:rgba(0,0,0,.78);
   display:flex;
   align-items:center;

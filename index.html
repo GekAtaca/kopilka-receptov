@@ -797,6 +797,7 @@
     try { bgSettings = JSON.parse(localStorage.getItem('bgSettings') || '{}'); } catch(e) { bgSettings = {}; }
 
     let currentBg = '';
+    let bgEditorBg = '';
     let designDraft = null;
 
     function saveSettingsToStorage() {
@@ -879,23 +880,21 @@
     }
 
     function initEditorFrame() {
-      // Пропорции превью = пропорции реального окна браузера
       bgEditorFrame.style.aspectRatio = window.innerWidth + ' / ' + window.innerHeight;
-
-      // Слот определяем автоматически по текущему устройству
       activeDevice = getDeviceType();
-      const s = getSettingsFor(currentBg, activeDevice);
+      const s = getSettingsFor(bgEditorBg, activeDevice);
       editX = s.x; editY = s.y; editZ = s.z;
       updateEditorTransform();
     }
 
     function openBgEditor() {
-      if (!currentBg) {
-        alert('Сначала выбери фон в панели сверху.');
+      bgEditorBg = (designDraft && designDraft.bg) ? designDraft.bg : currentBg;
+      if (!bgEditorBg) {
+        alert('Сначала выбери фон в панели.');
         return;
       }
-      bgEditorImgBlur.src  = 'images/' + currentBg + '.jpg';
-      bgEditorImgSharp.src = 'images/' + currentBg + '.jpg';
+      bgEditorImgBlur.src  = 'images/' + bgEditorBg + '.jpg';
+      bgEditorImgSharp.src = 'images/' + bgEditorBg + '.jpg';
       bgEditor.style.display = 'flex';
       requestAnimationFrame(initEditorFrame);
     }
@@ -909,11 +908,10 @@
     document.getElementById('bgEditorCancel').addEventListener('click', closeBgEditor);
 
     document.getElementById('bgEditorSave').addEventListener('click', () => {
-      if (!currentBg) { closeBgEditor(); return; }
-      if (!bgSettings[currentBg]) bgSettings[currentBg] = {};
-      bgSettings[currentBg][activeDevice] = { x: editX, y: editY, z: editZ };
+      if (!bgEditorBg) { closeBgEditor(); return; }
+      if (!bgSettings[bgEditorBg]) bgSettings[bgEditorBg] = {};
+      bgSettings[bgEditorBg][activeDevice] = { x: editX, y: editY, z: editZ };
       saveSettingsToStorage();
-      applyBg(currentBg);
       closeBgEditor();
     });
 
@@ -1312,6 +1310,10 @@
     });
     document.addEventListener('keydown', (e) => {
       if (e.key !== 'Escape') return;
+      if (bgEditor && bgEditor.style.display === 'flex'){
+        closeBgEditor();
+        return;
+      }
       if (modalApplyTo && modalApplyTo.style.display === 'flex'){
         closeApplyTo();
         return;
@@ -1319,7 +1321,6 @@
       if (designPanel.style.display === 'flex') closeDesignPanel();
     });
     document.getElementById('dpBgPos').addEventListener('click', () => {
-      closeDesignPanel();
       openBgEditor();
     });
      // ── Автоскрытие плавающих кнопок ──
