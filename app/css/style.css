@@ -1119,7 +1119,7 @@ body[data-theme="dark"] .screen-stub{
     flex:1 1 auto;
     min-height:0;
     flex-direction:row;
-    align-items:stretch;
+    align-items:flex-start;
     gap:18px;
   }
   .design-panel-body{
