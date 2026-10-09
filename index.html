@@ -1064,6 +1064,16 @@
       }
     }
 
+    function syncMockupAspect(){
+      const mock = document.querySelector('.design-panel-mockup');
+      if (!mock) return;
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      if (w > 0 && h > 0){
+        mock.style.aspectRatio = w + ' / ' + h;
+      }
+    }
+
     function openDesignPanel(){
       designDraft = { ...getActiveDesign() };
       syncStyleActive();
@@ -1072,6 +1082,7 @@
       syncBgActive();
       syncThemeToggle();
       syncMockupScope();
+      syncMockupAspect();
       designPanel.style.display = 'flex';
     }
     function closeDesignPanel(){
@@ -1376,6 +1387,12 @@
         });
       });
     });
+  
+   // Пересчёт пропорций макета при изменении окна
+    window.addEventListener('resize', () => {
+      if (typeof syncMockupAspect === 'function') syncMockupAspect();
+    });
+
   </script>
   <nav class="bottom-nav">
   <button type="button" class="nav-btn active" data-screen="home"><span class="em">🏠</span>Главная</button>
