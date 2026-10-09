@@ -1117,6 +1117,40 @@ body[data-theme="dark"] .screen-stub{
   filter:none;
 }
 
+/* ═══ Плашка предпросмотра (телефон) ═══ */
+.preview-bar{
+  position:fixed;
+  left:50%;
+  bottom:20px;
+  transform:translateX(-50%);
+  z-index:100004;
+  display:flex;
+  gap:8px;
+  padding:8px;
+  border-radius:14px;
+  background:rgba(26,22,24,.92);
+  box-shadow:0 10px 30px rgba(0,0,0,.45);
+}
+.preview-btn{
+  padding:11px 22px;
+  border-radius:9px;
+  border:1px solid #555;
+  background:#2a2529;
+  color:#fff;
+  font-family:system-ui, sans-serif;
+  font-size:14px;
+  font-weight:700;
+  cursor:pointer;
+  transition:filter .15s;
+}
+.preview-btn:hover{
+  filter:brightness(1.1);
+}
+.preview-btn.primary{
+  background:#e69db5;
+  border-color:#e69db5;
+}
+
 /* ═══════════════════════════════════════════════════
    ПОДШАГ 3 · Панель 🖌 в две колонки + макет
    ═══════════════════════════════════════════════════ */
@@ -1160,7 +1194,7 @@ body[data-theme="dark"] .screen-stub{
 }
 .design-panel-footer .dp-action:hover{ filter:brightness(1.1); }
 .design-panel-footer .dp-action-apply{
-  display:none;
+  display:inline-block;
   background:#e69db5;
   border-color:#e69db5;
   color:#fff;

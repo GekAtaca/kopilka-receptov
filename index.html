@@ -746,6 +746,12 @@
     </div>
   </div>
 
+<!-- ═══ Плашка предпросмотра (телефон) ═══ -->
+  <div id="previewBar" class="preview-bar" style="display:none">
+    <button type="button" class="preview-btn primary" id="previewApply">Применить</button>
+    <button type="button" class="preview-btn" id="previewBack">Вернуться</button>
+  </div>
+
   <div id="modalTimer" class="modal" style="display:none">
     <div class="modal-box">
       <div class="modal-head">
@@ -1126,6 +1132,10 @@
     const applyToChecks = modalApplyTo.querySelectorAll('.apply-to-check');
     const applyToConfirm = document.getElementById('applyToConfirm');
 
+    // ── Режим предпросмотра (телефон) ──
+    const previewBar = document.getElementById('previewBar');
+    let isPreviewing = false;
+
     function openApplyTo(){
       applyToChecks.forEach(c => { c.checked = false; });
       applyToConfirm.disabled = true;
@@ -1133,7 +1143,36 @@
     }
     function closeApplyTo(){
       modalApplyTo.style.display = 'none';
+      if (isPreviewing) exitPreview();
     }
+
+    function applyDraftToBody(){
+      if (!designDraft) return;
+      const s = designDraft;
+      document.body.dataset.style = s.style;
+      document.body.dataset.palette = s.palette + '-' + s.shade;
+      document.body.dataset.shadow = s.shadow;
+      document.body.dataset.fabShadow = s.fabShadow;
+      if (s.theme === 'dark') document.body.dataset.theme = 'dark';
+      else delete document.body.dataset.theme;
+      applyBg(s.bg || '');
+    }
+    function enterPreview(){
+      if (!designDraft) return;
+      applyDraftToBody();
+      designPanel.style.display = 'none';
+      previewBar.style.display = 'flex';
+      isPreviewing = true;
+    }
+    function exitPreview(){
+      applyDesignFor(activeDesignScreen);
+      previewBar.style.display = 'none';
+      designPanel.style.display = 'flex';
+      isPreviewing = false;
+    }
+    document.getElementById('dpPreview').addEventListener('click', enterPreview);
+    document.getElementById('previewBack').addEventListener('click', exitPreview);
+    document.getElementById('previewApply').addEventListener('click', openApplyTo);
 
     function applyToToggleBtn(){
       const anyChecked = Array.from(applyToChecks).some(c => c.checked);
@@ -1160,7 +1199,9 @@
         setDesignFor(screen, designDraft);
       });
 
-      closeApplyTo();
+      modalApplyTo.style.display = 'none';
+      previewBar.style.display = 'none';
+      isPreviewing = false;
       closeDesignPanel();
       applyDesignFor(activeDesignScreen);
     });
