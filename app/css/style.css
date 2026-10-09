@@ -1111,8 +1111,7 @@ body[data-theme="dark"] .screen-stub{
 @media (min-width:800px){
   .design-panel-box{
     max-width:900px;
-    height:96vh;
-    max-height:none;
+    max-height:96vh;
     overflow:hidden;
   }
   .design-panel-columns{
@@ -1325,6 +1324,7 @@ body[data-theme="dark"] .screen-stub{
   justify-content:space-around;
   align-items:center;
   height:20px;
+  margin-top:auto;
   border-radius:6px;
   background:var(--c1);
   border-top:1px solid var(--c3);
