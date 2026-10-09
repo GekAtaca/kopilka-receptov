@@ -1,0 +1,1501 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Копилка рецептов · Карта v10 · 10 октября 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#1a1618;color:#e8e3e5;font-family:Nunito,sans-serif;padding:40px 20px;line-height:1.65;font-size:15px}
+.wrap{max-width:980px;margin:0 auto}
+h1{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:700;font-size:46px;color:#e69db5;margin-bottom:8px;line-height:1.1}
+.subtitle{color:#a89aa0;font-size:14px;margin-bottom:48px;font-style:italic}
+h2{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:700;font-size:30px;color:#e69db5;margin:56px 0 20px;padding-bottom:12px;border-bottom:1px solid rgba(230,157,181,.25)}
+h3{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:22px;color:#f0e8eb;margin:32px 0 12px;font-style:italic}
+h4{font-family:Nunito,sans-serif;font-weight:800;font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:#a89aa0;margin:22px 0 10px}
+p{margin:0 0 12px}
+ul,ol{margin:8px 0 16px 24px}
+li{margin-bottom:6px}
+code{font-family:ui-monospace,Consolas,monospace;font-size:13px;background:rgba(230,157,181,.12);color:#f5c6d6;padding:2px 6px;border-radius:4px}
+pre{background:#0f0d0e;border:1px solid rgba(230,157,181,.15);border-radius:8px;padding:16px 18px;overflow-x:auto;font-size:12.5px;line-height:1.55;color:#d8d0d3;margin:12px 0 20px}
+pre code{background:none;padding:0;color:inherit;font-size:inherit}
+.box{background:rgba(230,157,181,.05);border:1px solid rgba(230,157,181,.2);border-radius:10px;padding:18px 22px;margin:16px 0 24px}
+.box.warn{background:rgba(255,180,100,.06);border-color:rgba(255,180,100,.3)}
+.box.done{background:rgba(120,200,140,.06);border-color:rgba(120,200,140,.3)}
+.box.ok{background:rgba(120,180,255,.06);border-color:rgba(120,180,255,.3)}
+.box.note{background:rgba(180,140,255,.06);border-color:rgba(180,140,255,.3)}
+.box.bug{background:rgba(255,80,80,.06);border-color:rgba(255,80,80,.3)}
+.chip{display:inline-block;padding:2px 10px;background:rgba(230,157,181,.15);color:#f5c6d6;border-radius:20px;font-size:12px;font-weight:700;margin:2px 4px 2px 0}
+.chip.done{background:rgba(120,200,140,.18);color:#b0e8c0}
+.chip.no{background:rgba(255,120,120,.15);color:#ffb0b0}
+.chip.wait{background:rgba(255,200,100,.15);color:#ffe0a0}
+.chip.work{background:rgba(120,180,255,.15);color:#b0d8ff}
+.chip.q{background:rgba(180,140,255,.18);color:#d8c0ff}
+.table{width:100%;border-collapse:collapse;margin:14px 0 20px;font-size:13.5px;background:rgba(0,0,0,.2);border-radius:8px;overflow:hidden}
+.table th{background:rgba(230,157,181,.12);color:#f5c6d6;padding:10px 14px;text-align:left;font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid rgba(230,157,181,.2)}
+.table td{padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.05);vertical-align:top}
+.table tr:last-child td{border-bottom:none}
+.quote{border-left:3px solid #e69db5;padding:6px 0 6px 18px;margin:14px 0;color:#c8b8bf;font-style:italic;font-size:14px}
+.stamp{display:inline-block;padding:4px 12px;background:rgba(230,157,181,.15);border-radius:20px;font-size:12px;color:#f5c6d6;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:8px}
+nav.toc{background:rgba(0,0,0,.3);border:1px solid rgba(230,157,181,.15);border-radius:10px;padding:20px 28px;margin:32px 0 40px}
+nav.toc ol{margin:0;padding-left:24px;column-count:2;column-gap:32px}
+@media(max-width:680px){nav.toc ol{column-count:1}}
+nav.toc a{color:#e8e3e5;text-decoration:none;font-weight:600;font-size:14px}
+nav.toc a:hover{color:#e69db5}
+.footer{margin-top:60px;padding-top:24px;border-top:1px solid rgba(230,157,181,.2);color:#a89aa0;font-size:13px;text-align:center}
+.comment{border-left:3px solid #b48cff;background:rgba(180,140,255,.05);padding:10px 16px;border-radius:0 8px 8px 0;margin:12px 0 18px;font-size:14px}
+.comment::before{content:"💡 Комментарий ИИ";display:block;font-weight:800;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#c8b0ff;margin-bottom:6px;font-family:Nunito,sans-serif}
+.conflict{border-left:3px solid #ffb064;background:rgba(255,180,100,.06);padding:10px 16px;border-radius:0 8px 8px 0;margin:12px 0 18px;font-size:14px}
+.conflict::before{content:"⚠️ Нестыковка / риск";display:block;font-weight:800;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#ffc890;margin-bottom:6px;font-family:Nunito,sans-serif}
+.rule{border-left:3px solid #e69db5;background:rgba(230,157,181,.08);padding:10px 16px;border-radius:0 8px 8px 0;margin:12px 0 18px;font-size:14px}
+.rule::before{content:"📌 Правило";display:block;font-weight:800;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#f5c6d6;margin-bottom:6px;font-family:Nunito,sans-serif}
+.status-line{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<span class="stamp">Карта v10 · 10 октября 2026 · после сессии «фон в макете + фикс размеров + 4.3 + 5 + редактор позиции поверх панели + подшаг 6»</span>
+<h1>Копилка рецептов</h1>
+<p class="subtitle">Единый документ проекта. Заменяет карту v9. Что сделано, что нет, где конфликты, как связаны функции.</p>
+
+<nav class="toc">
+<ol>
+<li><a href="#meta">О документе</a></li>
+<li><a href="#who">Кто пользователь</a></li>
+<li><a href="#ai">Как работать с ИИ</a></li>
+<li><a href="#tech">Техническая база</a></li>
+<li><a href="#design">Оформление: стили, палитры, тени, темы, фоны</a></li>
+<li><a href="#per-screen">Оформление по экранам</a></li>
+<li><a href="#nav">Навигация и шапка</a></li>
+<li><a href="#main">Главный экран</a></li>
+<li><a href="#card-small">Карточка в списке</a></li>
+<li><a href="#card-big">Карточка рецепта (большая)</a></li>
+<li><a href="#cat">Категории и теги</a></li>
+<li><a href="#search">Поиск и фильтры</a></li>
+<li><a href="#plan">План</a></li>
+<li><a href="#pantry">Кладовая</a></li>
+<li><a href="#add">Добавление рецепта</a></li>
+<li><a href="#settings">Настройки</a></li>
+<li><a href="#data">Данные и хранилище</a></li>
+<li><a href="#sync">Синхронизация</a></li>
+<li><a href="#bugs">Известные баги браузеров</a></li>
+<li><a href="#order">Порядок работы</a></li>
+<li><a href="#debt">Технический долг</a></li>
+<li><a href="#postpone">Отложено</a></li>
+<li><a href="#where">Итог: где мы сейчас</a></li>
+</ol>
+</nav>
+
+<!-- ============================================ -->
+<h2 id="meta">1 · О документе</h2>
+
+<p>Это <b>десятая версия</b> карты. Заменяет <code>Структурная карта 9.html</code>.</p>
+
+<h4>Легенда</h4>
+<div class="status-line">
+<span class="chip done">✅ сделано</span>
+<span class="chip work">🔄 в работе</span>
+<span class="chip wait">⏳ отложено</span>
+<span class="chip q">❓ открытый вопрос</span>
+<span class="chip no">❌ убрано</span>
+</div>
+
+<p>Внутри разделов — статусы. После разделов бывают блоки:</p>
+<ul>
+<li><b>💡 Комментарий ИИ</b> — предложение или улучшение.</li>
+<li><b>⚠️ Нестыковка / риск</b> — то, что может помешать или противоречит.</li>
+<li><b>📌 Правило</b> — то, что точно зафиксировано и не обсуждается.</li>
+</ul>
+
+<h4>Что делали по датам</h4>
+<table class="table">
+<tr><th>Дата</th><th>Что было</th></tr>
+<tr><td>~сентябрь 2026</td><td>Первая карта, showcase, 7 стилей, 2 палитры</td></tr>
+<tr><td>2 октября 2026</td><td>Карта v2 + дополнения. Реальный сайт, index.html, структура папок</td></tr>
+<tr><td>3 октября 2026</td><td>Карта v3. 8-й стиль (Лилейный), 9-я палитра (Фиолетовая), шапка, содержание, карточка</td></tr>
+<tr><td>5 октября 2026</td><td>Карта v4. Перенос карточки, переключатель 8 стилей, фикс iOS Safari, работа с фонами, разная высота карточек</td></tr>
+<tr><td>6 октября 2026 (v5)</td><td>Фоны финализированы. Три слота (iPhone/iPad/ПК). Панель 🎨 в шапке (Стиль + Фон + Позиция).</td></tr>
+<tr><td>6 октября 2026 (v6)</td><td>Сессия оформления. Палитры (9×5), тени (7), тема (светлая/тёмная). Контраст плашек. Фон сайта темнее карточки. Иконки 🔍 🏷 🎲 в строку содержания. Чистка дублей.</td></tr>
+<tr><td>7 октября 2026 (v7)</td><td><b>Сессия навигации.</b> Нижняя панель (4 кнопки). Плавающие кнопки ⏲ 🔍 ➕. Автоскрытие на тач + ПК. Тумблер темы в шапку панели. Оттенки на строку «ПАЛИТРА». Сворачивание секций. Двойная «Тень». Ширина панели 640px. Ограничение ширины контента 1600px. 🖌 вместо 🎨.</td></tr>
+<tr><td>8 октября 2026 (v8)</td><td><b>Сессия шага 4.</b> Четыре экрана. Заглушки. Переключение экранов, прокрутка вверх, запоминание вкладки. Содержание только на Главной. Три модалки для ⏲ 🔍 ➕. <b>Начали оформление по экранам.</b> Подшаг 1 — хранилище — сделан.</td></tr>
+<tr><td>9 октября 2026 (v9)</td><td><b>Сессия подшагов 4.1a + 4.1b + 4.2.</b> Обёртка <code>.dm-scope</code>, свои переменные, свои атрибуты. Стили переписаны на <code>.dm-scope[data-style]</code>. Черновик: клики в панели не трогают страницу. Крестик/фон/Escape выбрасывают черновик. Плашки и подложка макета переопределены. Тени макета усилены.</td></tr>
+<tr><td><b>10 октября 2026 (v10)</b></td><td><b>Сессия: фон в макете + фикс размеров + 4.3 + 5 + редактор позиции + подшаг 6.</b> Фон в макете (вариант А). Панель стала 900px, высота по содержимому до 96vh. Макет — 400px, пропорции окна браузера. Все элементы макета ужаты под низкое окно ПК. Нижняя полоска макета прижата к низу. <b>Кнопка «Применить» работает.</b> Окошко «Применить к…» с галочками. <b>Редактор позиции открывается поверх панели</b>, панель не закрывается. <b>Кнопка «Посмотреть» работает</b> — режим предпросмотра на телефоне с плашкой [Применить] [Вернуться].</td></tr>
+</table>
+
+<!-- ============================================ -->
+<h2 id="who">2 · Кто пользователь</h2>
+
+<div class="box warn">
+<p><b>Личный проект для себя.</b> Не для клиента, не для портфолио.</p>
+</div>
+
+<h4>Главное</h4>
+<ul>
+<li><b>Не программист.</b> Работает в VS Code и GitHub Desktop, код копирует.</li>
+<li><b>Windows 11.</b> Техника: iPhone 13, iPhone 16 Pro Max, iPad Air 11 (M2), ПК.</li>
+<li><b>Внимательна к деталям.</b> Заметит нечитаемый текст, кривую линию, лишние полосы.</li>
+<li><b>Устаёт от длинных инструкций.</b> Один шаг за раз.</li>
+<li><b>Лучше понимает визуально.</b> Скрины со стрелочками работают лучше всего. <b>Схемы с отступами (деревом) — НЕ понимает.</b></li>
+<li><b>Есть вкус.</b> Отклоняет то, что не подходит.</li>
+<li><b>Честная.</b> Скажет прямо: «не нравится», «убери», «ты торопишься», «ты меня запутал».</li>
+<li><b>Разбирается в DevTools.</b> Console, Network, Elements. Умеет Disable cache.</li>
+<li><b>Не разбирается в коде.</b> Инструкции — максимально пошаговые, без номеров строк.</li>
+<li><b>Хочет вместе решать дизайн.</b> Обсуждать, задавать вопросы, спорить.</li>
+</ul>
+
+<h4>Устройства</h4>
+<table class="table">
+<tr><th>Устройство</th><th>Детали</th></tr>
+<tr><td>ПК</td><td>Монитор 2560×1440 (16:9). Windows 11. VS Code + Live Server. Chrome.</td></tr>
+<tr><td>iPad Air 11 (M2)</td><td>1640×2360 (портрет). Работает в режиме «приложения в окнах» (Stage Manager). Safari.</td></tr>
+<tr><td>iPhone 13</td><td>1170×2532. Safari.</td></tr>
+<tr><td>iPhone 16 Pro Max</td><td>1320×2868. Safari.</td></tr>
+</table>
+
+<!-- ============================================ -->
+<h2 id="ai">3 · Как работать с ИИ</h2>
+
+<h4>Главные правила (не нарушать)</h4>
+
+<div class="rule">
+<b>Перед отправкой кода — свериться с этой картой.</b> Не по памяти.
+</div>
+
+<div class="rule">
+<b>Сначала решение — потом код.</b> Пока пользователь не сказал «ок, давай код» — обсуждаем словами.
+</div>
+
+<div class="rule">
+<b>Обсуждаем одну фичу (или один подшаг) — до конца. Потом сразу код.</b>
+</div>
+
+<div class="rule">
+<b>Один шаг за раз.</b> Сделала → сохранила → обновила → показала → следующий.
+</div>
+
+<div class="rule">
+<b>Код — целым блоком.</b> «Найди этот текст → замени на этот». Или «поставь курсор в конце строки X → Enter → вставь».
+</div>
+
+<div class="rule">
+<b>Никаких номеров строк.</b> Только поиск по тексту.
+</div>
+
+<div class="rule">
+<b>Не повторять код, если он уже был дан.</b>
+</div>
+
+<div class="rule">
+<b>Сомневаешься — спроси. Не гадай.</b>
+</div>
+
+<div class="rule">
+<b>Если пользователь говорит «этого нет» — немедленно остановиться и попросить скрин.</b> Не придумывать ещё один вариант правки.
+</div>
+
+<div class="rule">
+<b>При застревании — просить файлы.</b> «Пришли index.html, style.css».
+</div>
+
+<div class="rule">
+<b>Не забывать про <code>!important</code>, когда старое правило мешает.</b>
+</div>
+
+<div class="rule">
+<b>ИИ не может отправлять скрины.</b> Только пользователь.
+</div>
+
+<div class="rule">
+<b>Схемы с отступами (деревом) пользователь НЕ понимает.</b> Словами, таблицами, плоским списком.
+</div>
+
+<div class="rule">
+<b>Сначала обсуждать дизайн полностью — потом писать код.</b>
+</div>
+
+<div class="rule">
+<b>Если чувствуешь, что теряешь нить — ОБЯЗАТЕЛЬНО сказать пользователю и предложить обновить структурную карту.</b> Не делать вид, что помнишь.
+</div>
+
+<div class="rule">
+<b>Перед заменой через «Replace All» — предупреждать, что может задеть лишнее.</b> Урок 9 октября 2026: замена <code>getDesignFor(activeDesignScreen)</code> затронула саму функцию <code>getActiveDesign</code> и вызвала рекурсию.
+</div>
+
+<div class="rule">
+<b>Если задача большая — разбивать на подшаги и идти по одному.</b> Урок 10 октября 2026: вместо «сделать 4.3 + 5 + 6 + 7 разом» пошли по одному подшагу — и ни разу не запутались.
+</div>
+
+<h4>Commit + Push — обязательно перед проверкой на устройстве</h4>
+
+<div class="rule">
+<b>У пользователя нет прямого доступа к файлам на iPhone/iPad.</b> Проверить — только через GitHub Pages.
+</div>
+
+<div class="rule">
+<b>Если пользователь смотрит на iPhone/iPad — сначала:</b> «сохрани, обнови на ПК; Commit + Push; подожди 1–2 минуты; открой на устройстве».
+</div>
+
+<h3>3.1. Словарь терминов</h3>
+
+<table class="table">
+<tr><th>Слово</th><th>Что это</th></tr>
+<tr><td><b>Экран</b></td><td>🏠 Главная / ❤ Избранное / 📅 План / 🧺 Кладовая</td></tr>
+<tr><td><b>Содержание</b></td><td>Блок «📖 СОДЕРЖАНИЕ» с категориями. Только на Главной</td></tr>
+<tr><td><b>Шапка</b></td><td>Верхняя полоса сайта: название + три иконки 🖌 🔔 ⚙</td></tr>
+<tr><td><b>Панель</b></td><td>Панель оформления 🖌. Секции: Стиль, Палитра, Тень, Фон</td></tr>
+<tr><td><b>Модалка</b></td><td>Всплывающее окошко поверх всего</td></tr>
+<tr><td><b>Редактор фона</b></td><td>Отдельная модалка для позиции фона. Открывается поверх панели</td></tr>
+<tr><td><b>Заглушка</b></td><td>Надпись на пустом экране</td></tr>
+<tr><td><b>Макет</b></td><td>Уменьшенная картинка сайта в панели 🖌. Справа на ПК/iPad. Пропорции как у окна браузера</td></tr>
+<tr><td><b>Черновик</b></td><td>Несохранённые настройки в панели 🖌. Живёт в памяти, пока панель открыта</td></tr>
+<tr><td><b>FAB / плавающие кнопки</b></td><td>Три круглые кнопки справа снизу: ⏲ 🔍 ➕</td></tr>
+<tr><td><b>Плашка</b></td><td>Общий термин для «залитых» элементов</td></tr>
+<tr><td><b>Чип (chip)</b></td><td>Маленькая плашка-таблетка</td></tr>
+<tr><td><b>Карточка (маленькая)</b></td><td>Карточка рецепта в списке</td></tr>
+<tr><td><b>Карточка (большая)</b></td><td>Отдельный экран одного рецепта. Пока не сделано</td></tr>
+<tr><td><b>Нижняя панель</b></td><td>Полоска с 4 кнопками внизу: 🏠 ❤ 📅 🧺</td></tr>
+<tr><td><b><code>.dm-scope</code></b></td><td>Обёртка макета. Держит свои атрибуты и переменные, независимо от body</td></tr>
+<tr><td><b><code>designDraft</code></b></td><td>Черновик оформления в памяти. Пока панель открыта</td></tr>
+<tr><td><b><code>.dm-bg</code></b></td><td>Картинка фона внутри макета. Лежит на дне, за всеми элементами</td></tr>
+<tr><td><b><code>bgEditorBg</code></b></td><td>Фон, для которого открыт редактор позиции (из черновика)</td></tr>
+<tr><td><b><code>previewBar</code></b></td><td>Плашка предпросмотра внизу экрана на телефоне: [Применить] [Вернуться]</td></tr>
+<tr><td><b><code>isPreviewing</code></b></td><td>Флаг: открыт ли сейчас режим предпросмотра</td></tr>
+</table>
+
+<h3>3.2. Что работает / что не работает в объяснениях</h3>
+
+<div class="box done">
+<b>Работает:</b>
+<ul>
+<li>«Найди этот текст → замени на этот».</li>
+<li>«Поставь курсор в конце строки X → Enter → вставь это».</li>
+<li>«Удали эти строки целиком».</li>
+<li>Скрины от пользователя — со стрелочками.</li>
+<li>«Найди такую-то функцию, поставь курсор после её закрывающей скобки, вставь новое».</li>
+</ul>
+</div>
+
+<div class="box bug">
+<b>Не работает:</b>
+<ul>
+<li>Схемы «деревом» с отступами.</li>
+<li>Номера строк в инструкциях.</li>
+<li>ИИ не может отправлять скрины.</li>
+<li>Ссылаться на «мы же помним».</li>
+</ul>
+</div>
+
+<h3>3.3. Как войти в курс дела (для нового ИИ)</h3>
+
+<div class="rule">
+<b>Порядок:</b> прочитать карту → <b>сказать своими словами, что понял</b> → спросить, что уточнить → и только потом работать.
+</div>
+
+<h3>3.4. Отдельные правила поведения</h3>
+
+<div class="rule">
+<b>Если пользователь устала — остановиться.</b> Короткие неопределённые ответы — это не значит «всё работает». Спросить конкретнее.
+</div>
+
+<div class="rule">
+<b>Если «не то» без объяснений — предложить 2–3 варианта.</b> Не мучить вопросом «что именно не то?».
+</div>
+
+<div class="rule">
+<b>Не переспрашивать то, что уже решено. НО:</b> если пользователь сама вернулась к вопросу — значит, передумала. Обсуждаем заново.
+</div>
+
+<!-- ============================================ -->
+<h2 id="tech">4 · Техническая база</h2>
+
+<h4>Инструменты</h4>
+<table class="table">
+<tr><th>Инструмент</th><th>Статус</th><th>Детали</th></tr>
+<tr><td>VS Code</td><td><span class="chip done">✅</span></td><td>Русский, расширение Live Server</td></tr>
+<tr><td>GitHub</td><td><span class="chip done">✅</span></td><td>Логин: <code>GekAtaca</code>, 2FA</td></tr>
+<tr><td>GitHub Desktop</td><td><span class="chip done">✅</span></td><td>Связан с аккаунтом</td></tr>
+<tr><td>GitHub Pages</td><td><span class="chip done">✅</span></td><td><code>gekataca.github.io/kopilka-receptov</code></td></tr>
+</table>
+
+<h4>Рабочий цикл</h4>
+<ol>
+<li>Правка в VS Code → <b>Ctrl+S</b>.</li>
+<li>Просмотр через <b>Live Server</b>.</li>
+<li>Обновить: <b>Ctrl+F5</b> на ПК. На iPhone/iPad — потянуть вниз.</li>
+<li>Перед проверкой на iPhone/iPad: Commit + Push → подождать 1–2 минуты → обновить.</li>
+</ol>
+
+<div class="box warn">
+<p><b>Важно:</b> рабочая папка — <code>Документы → GitHub → kopilka-receptov</code>. Не на Рабочем столе.</p>
+</div>
+
+<h4>Структура проекта</h4>
+<pre><code>kopilka-receptov/
+├── index.html              ← главная страница (4 экрана внутри)
+├── favicon.svg
+├── robots.txt
+├── README.md
+├── Структурная карта 10.html ← эта карта
+├── app/
+│   ├── css/
+│   │   ├── style.css       ← база + --c1..--c4 по умолчанию + фоны + редактор + панель + тумблер + fab-кнопки + тёмная тема + экраны + модалки + МАКЕТ + .dm-scope + .dm-bg + preview-bar
+│   │   ├── card.css        ← база карточки + тени + тёмная тема карточки + .dm-scope расширения
+│   │   ├── palettes/       ← 9 файлов палитр
+│   │   └── styles/         ← 8 файлов стилей (nezhny — заглушка, остальные 7 расширены на .dm-scope)
+│   ├── js/                 ← пока пусто
+│   └── img/                ← пока пусто
+└── images/                 ← 19 фоновых картинок (01–05, 07–20, без 06)</code></pre>
+
+<div class="box warn">
+<b>Осталось удалить (техдолг):</b>
+<ul>
+<li><code>Структурная карта 6.html</code>, <code>7.html</code>, <code>8.html</code>, <code>9.html</code> — устарели.</li>
+</ul>
+</div>
+
+<!-- ============================================ -->
+<h2 id="design">5 · Оформление: стили, палитры, тени, темы, фоны</h2>
+
+<div class="box done">
+<b>Идея.</b> Оформление собирается из 6 независимых слоёв:
+<ol>
+<li><b>Стиль</b> — 8 штук</li>
+<li><b>Палитра + оттенок</b> — 9 палитр × 5 оттенков = <b>45 комбинаций</b></li>
+<li><b>Тень карточек</b> — 8 вариантов</li>
+<li><b>Тень плавающих кнопок</b> — 8 вариантов</li>
+<li><b>Тема</b> — светлая / тёмная</li>
+<li><b>Фон</b> — 19 базовых + свои</li>
+</ol>
+<b>Все 6 слоёв — свои на каждом экране.</b>
+</div>
+
+<h3>5.1. Стили <span class="chip done">✅ 8 работают</span></h3>
+
+<table class="table">
+<tr><th>№</th><th>Стиль</th><th>data-style</th><th>Шрифт</th></tr>
+<tr><td>1</td><td>🌸 Нежный</td><td><code>nezhny</code></td><td>Cormorant italic (эталон, дефолт в card.css)</td></tr>
+<tr><td>2</td><td>📰 Журнал</td><td><code>zhurnal</code></td><td>Cormorant прямой, капс</td></tr>
+<tr><td>3</td><td>🤍 Минимализм</td><td><code>minimalizm</code></td><td>Nunito</td></tr>
+<tr><td>4</td><td>🌿 Бохо</td><td><code>boho</code></td><td>Caveat, листики 🌿</td></tr>
+<tr><td>5</td><td>📻 Ретро</td><td><code>retro</code></td><td>Bitter</td></tr>
+<tr><td>6</td><td>🍃 Японский</td><td><code>yaponsky</code></td><td>Shippori Mincho</td></tr>
+<tr><td>7</td><td>🏛 Античный</td><td><code>antichny</code></td><td>Playfair Display, ромбы ◆</td></tr>
+<tr><td>8</td><td>🌷 Лилейный</td><td><code>lileyny</code></td><td>EB Garamond italic, точки ••</td></tr>
+</table>
+
+<h3>5.2. Палитры <span class="chip done">✅ 9 × 5 = 45 комбинаций</span></h3>
+
+<table class="table">
+<tr><th>№</th><th>Палитра</th><th>Файл</th></tr>
+<tr><td>1</td><td>🌸 Пудровая</td><td><code>pudrovaya.css</code></td></tr>
+<tr><td>2</td><td>🌾 Медовая</td><td><code>medovaya.css</code></td></tr>
+<tr><td>3</td><td>🌿 Шалфейная</td><td><code>shalfeynaya.css</code></td></tr>
+<tr><td>4</td><td>☁️ Небесная</td><td><code>nebesnaya.css</code></td></tr>
+<tr><td>5</td><td>🍇 Лавандовая</td><td><code>lavandovaya.css</code></td></tr>
+<tr><td>6</td><td>🍒 Вишнёвая</td><td><code>vishnyovaya.css</code></td></tr>
+<tr><td>7</td><td>🌰 Какао</td><td><code>kakao.css</code></td></tr>
+<tr><td>8</td><td>🌑 Графит</td><td><code>grafit.css</code></td></tr>
+<tr><td>9</td><td>💜 Фиолетовая</td><td><code>fioletovaya.css</code></td></tr>
+</table>
+
+<div class="box done">
+<b>Селекторы палитр — без <code>body</code> в начале.</b> Работают и на <code>body</code>, и на <code>.dm-scope</code>. Поэтому палитры не требовали правок в 4.1b.
+</div>
+
+<div class="box done">
+<b>Контраст плашек — по оттенкам.</b>
+<ul>
+<li><b>Нежная, Светлая, Яркая</b> → <code>--plate-text: var(--c4)</code>, <code>--plate-bg: var(--c2)</code>.</li>
+<li><b>Насыщенная, Глубокая</b> → <code>--plate-text: #fff</code>, <code>--plate-bg: mix(c3 15%, c2 85%)</code>.</li>
+<li><b>Тёмная тема</b> → <code>--plate-bg: mix(c1 15%, c4 85%)</code>, <code>--plate-text: var(--c1)</code>.</li>
+</ul>
+Все три правила распространены и на <code>.dm-scope</code>.
+</div>
+
+<h3>5.3. Тени <span class="chip done">✅ 8 вариантов × 2 набора</span></h3>
+
+<p>Панель 🖌 → секция «Тень». Два таба: <b>Карточки</b> и <b>Плавающие кнопки</b>.</p>
+
+<table class="table">
+<tr><th>data-sh</th><th>Название</th></tr>
+<tr><td><code>none</code></td><td>Без тени</td></tr>
+<tr><td><code>parit</code></td><td>Парящая (дефолт)</td></tr>
+<tr><td><code>prikrepl</code></td><td>Прикреплённая</td></tr>
+<tr><td><code>bokovaya</code></td><td>Боковая</td></tr>
+<tr><td><code>cvetnaya</code></td><td>Цветная</td></tr>
+<tr><td><code>dvoinaya</code></td><td>Двойная</td></tr>
+<tr><td><code>vnutrennyaya</code></td><td>Внутренняя</td></tr>
+<tr><td><code>vniz</code></td><td>Вниз</td></tr>
+</table>
+
+<div class="box done">
+<b>Для макета — свои значения теней</b> (плотнее и компактнее, потому что карточка в макете маленькая). Сделано в 4.2.
+</div>
+
+<h3>5.4. Светлая / тёмная тема <span class="chip done">✅</span></h3>
+
+<div class="box done">
+<b>Управление:</b> панель 🖌 → шапка панели → тумблер 🌞 ●─── 🌙 между заголовком и крестиком.
+</div>
+
+<h3>5.5. Панель 🖌 <span class="chip done">✅ работает</span></h3>
+
+<pre><code>🖌 Оформление                       🌞 ●── 🌙    ✕
+├── Стиль ▼
+├── Палитра ▼                 оттенки на строке с заголовком
+├── Тень ▼                    табы: Карточки · Плавающие кнопки
+└── Фон ▼
+─────────────────────────────
+[Посмотреть] [Применить]              ← телефон (ширина < 800)
+или
+[           Применить          ]      ← ПК / iPad (ширина ≥ 800)</code></pre>
+
+<div class="box done">
+<b>Структура (классы):</b>
+<ul>
+<li><code>.design-panel-box</code> — коробка панели.</li>
+<li><code>.design-panel-head</code> — шапка: заголовок + тумблер + крестик.</li>
+<li><code>.design-panel-columns</code> — контейнер двух колонок.</li>
+<li><code>.design-panel-body</code> — левая колонка с настройками (4 секции: style, palette, shadow, background).</li>
+<li><code>.design-panel-mockup dm-scope</code> — правая колонка с макетом.</li>
+<li><code>.design-panel-footer</code> — нижняя полоска: две кнопки.</li>
+<li><code>.dp-action</code> — общий класс обеих кнопок. <code>.dp-action-apply</code> — «Применить», <code>.dp-action-preview</code> — «Посмотреть».</li>
+</ul>
+</div>
+
+<div class="box done">
+<b>Все секции сворачиваются.</b> Состояние помнится (ключ <code>designSectionsCollapsed</code>).
+</div>
+
+<div class="box done">
+<b>Размеры панели и макета — сделано в v10:</b>
+<ul>
+<li><b>Панель:</b> <code>max-width: 900px</code>. Высота <b>по содержимому</b>, но не больше <code>96vh</code> (если контента много — внутри левой колонки появляется скролл).</li>
+<li><b>Макет:</b> <code>width: 400px</code>. <b>Пропорции как у окна браузера</b> — <code>aspect-ratio</code> вычисляется из <code>window.innerWidth / window.innerHeight</code>. На ПК макет широкий и низкий, на iPad высокий. <b>Не растянут на всю высоту панели</b> — компактно сверху правой колонки.</li>
+<li>Все элементы макета <b>ужаты</b> под низкое окно ПК (фото, шапка, отступы, шрифты).</li>
+<li>Нижняя полоска макета <b>прижата к низу</b> коробочки (<code>margin-top:auto</code>).</li>
+</ul>
+</div>
+
+<div class="box note">
+<b>Почему макет — не «на всю высоту панели», как было в v9.</b>
+<br>Потому что макет должен показывать, как реально ляжет фон. Фон ляжет по пропорциям окна браузера. Если макет растянуть — фон в нём обрежется «слишком удачно» и не совпадёт с реальностью. Решение пользователя 10 октября 2026.
+</div>
+
+<h3>5.6. Фоны <span class="chip done">✅ финализированы</span></h3>
+
+<p>В папке <code>images/</code> — 19 картинок (01–05, 07–20; файл 06 отсутствует).</p>
+
+<div class="box done">
+<b>Как работает на сайте.</b>
+<ol>
+<li><b>Двухслойный фон:</b> <code>bg-blur</code> + <code>bg-sharp</code>.</li>
+<li><b>Размытие</b> — через <code>&lt;img&gt;</code>, не через background-image (iOS Safari).</li>
+<li><b>Картинка вписана</b> целиком (<code>object-fit:contain</code>).</li>
+<li><b>Мягкие растворы краёв</b> — <code>mask-image</code>.</li>
+<li><b>Позиция и зум</b> — переменные <code>--tx</code> / <code>--ty</code> / <code>--tz</code>.</li>
+<li><b>Редактор позиции</b> — модалка. Открывается <b>поверх панели</b>, панель не закрывается.</li>
+</ol>
+</div>
+
+<h4>Три слота — по устройству</h4>
+<div class="box done">
+<ul>
+<li>Нет тача → <code>pc</code>. Тач + ширина < 600 → <code>iphone</code>. Тач + ≥ 600 → <code>ipad</code>.</li>
+<li>Хранилище: <code>bgSettings[bgId] = { iphone:{x,y,z}, ipad:{x,y,z}, pc:{x,y,z} }</code>.</li>
+</ul>
+</div>
+
+<h3>5.7. Фон сайта темнее карточки <span class="chip done">✅</span></h3>
+
+<div class="box done">
+<b>Карточка:</b> <code>--c1</code>. <b>Фон сайта:</b> <code>color-mix(in srgb, var(--c1) 65%, var(--c2) 35%)</code>.
+</div>
+
+<!-- ============================================ -->
+<h2 id="per-screen">6 · Оформление по экранам <span class="chip done">✅ 4.1a + 4.1b + 4.2 + 4.3 + 5 + 6 + часть 7 сделаны</span></h2>
+
+<div class="box done">
+<b>Идея.</b> У каждого из четырёх экранов (🏠 ❤ 📅 🧺) — <b>своё оформление</b>. Меняешь стиль на Главной — на Избранном он остаётся прежним.
+</div>
+
+<h3>6.1. Что настраивается отдельно на каждом экране</h3>
+
+<table class="table">
+<tr><th>Слой</th><th>Свой?</th></tr>
+<tr><td>Стиль</td><td>✅ да</td></tr>
+<tr><td>Палитра + оттенок</td><td>✅ да</td></tr>
+<tr><td>Тень карточек</td><td>✅ да</td></tr>
+<tr><td>Тень FAB</td><td>✅ да</td></tr>
+<tr><td>Тема</td><td>✅ да</td></tr>
+<tr><td>Фон</td><td>✅ да</td></tr>
+</table>
+
+<h3>6.2. Значения по умолчанию</h3>
+
+<table class="table">
+<tr><th>Слой</th><th>Значение</th></tr>
+<tr><td>Стиль</td><td>🌸 Нежный</td></tr>
+<tr><td>Палитра</td><td>🌸 Пудровая + Нежная</td></tr>
+<tr><td>Тень карточек</td><td>Парящая</td></tr>
+<tr><td>Тень FAB</td><td>Парящая</td></tr>
+<tr><td>Тема</td><td>Светлая</td></tr>
+<tr><td>Фон</td><td>Без фона</td></tr>
+</table>
+
+<div class="box done">
+<b>Фоны НЕ наследуются автоматически.</b> Хочешь одинаковый фон — «Применить к…» с галочками.
+</div>
+
+<h3>6.3. Хранилище <span class="chip done">✅</span></h3>
+
+<div class="box done">
+<b>Ключ <code>design</code> в localStorage:</b>
+<pre><code>design = {
+  home:      { style, palette, shade, shadow, fabShadow, theme, bg },
+  favorites: { ... },
+  plan:      { ... },
+  pantry:    { ... }
+}</code></pre>
+<b>Черновик <code>designDraft</code> — в памяти, не в localStorage.</b> Живёт, пока открыта панель. Обнуляется при закрытии.
+</div>
+
+<div class="box done">
+<b>Что работает в коде:</b>
+<ul>
+<li><code>loadDesignData()</code> — загружает структуру.</li>
+<li><code>getDesignFor(screen)</code> — сохранёнка.</li>
+<li><code>getActiveDesign()</code> — <b>черновик или сохранёнка</b>.</li>
+<li><code>setDesignFor(screen, patch)</code> — сохранить.</li>
+<li><code>applyDesignFor(screen)</code> — применить к body.</li>
+<li><code>syncMockupScope()</code> — применить черновик к макету (включая фон).</li>
+<li><code>syncMockupAspect()</code> — пересчитать пропорции макета из окна браузера.</li>
+<li><code>applyDraftToBody()</code> — применить черновик к body <b>без сохранения</b> (для режима предпросмотра).</li>
+<li><code>enterPreview()</code> — войти в режим предпросмотра (телефон).</li>
+<li><code>exitPreview()</code> — выйти из предпросмотра, вернуться в панель.</li>
+<li><code>openApplyTo()</code>, <code>closeApplyTo()</code> — окошко «Применить к…».</li>
+</ul>
+</div>
+
+<h3>6.4. Подшаг 4.1a — инфраструктура <span class="chip done">✅ сделано (v9)</span></h3>
+
+<div class="box done">
+<b>Что сделано:</b>
+<ul>
+<li>HTML: на макете класс <code>dm-scope</code>. Стало: <code>&lt;div class="design-panel-mockup dm-scope"&gt;</code>.</li>
+<li>JS: функция <code>syncMockupScope()</code>. Ставит <code>data-style</code>, <code>data-palette</code>, <code>data-shadow</code>, <code>data-theme</code>, <code>data-shadow</code> на макет. Вызывается при открытии панели.</li>
+<li>CSS в <code>style.css</code>: дефолтные переменные «Нежного» и правила тёмной темы макета перевешены на <code>.dm-scope</code>.</li>
+<li>CSS в <code>card.css</code>: правила <code>--plate-bg</code> / <code>--plate-text</code> распространены на <code>.dm-scope</code>.</li>
+</ul>
+</div>
+
+<div class="box">
+<b>Все классы внутри макета — с префиксом <code>dm-</code>.</b> Список (сверху вниз, как в HTML):
+<ul>
+<li><code>.design-panel-mockup</code> — обёртка макета. У неё же класс <code>dm-scope</code>. На ней <code>data-style</code>, <code>data-palette</code>, <code>data-shadow</code>, <code>data-theme</code>.</li>
+<li><code>.dm-bg</code> — картинка фона внутри макета. Лежит на дне, за всеми элементами. Класс <code>dm-bg-on</code> — картинка показана, без него — спрятана.</li>
+<li><code>.dm-header</code> — полоска «шапки».</li>
+<li><code>.dm-logo</code> — кружок слева в шапке.</li>
+<li><code>.dm-icons</code> и <code>.dm-icons span</code> — три точки справа в шапке.</li>
+<li><code>.dm-contents</code> — полоска «содержания».</li>
+<li><code>.dm-chip</code> — чипы внутри содержания (3 штуки).</li>
+<li><code>.dm-card</code> — прямоугольник карточки.</li>
+<li><code>.dm-photo</code> — прямоугольник фото сверху в карточке.</li>
+<li><code>.dm-card-body</code> — тело карточки.</li>
+<li><code>.dm-title</code> — «Название» курсивом (текст через <code>::before</code>).</li>
+<li><code>.dm-tags</code> и <code>.dm-tag</code> — плашки тегов.</li>
+<li><code>.dm-kcal</code> и <code>.dm-kcal span</code> — чёрточки КБЖУ.</li>
+<li><code>.dm-buttons</code> и <code>.dm-btn</code>, <code>.dm-btn-primary</code> — две кнопки внизу карточки.</li>
+<li><code>.dm-nav</code> и <code>.dm-nav span</code> — полоска нижней панели с четырьмя точками.</li>
+</ul>
+<b>Где это в CSS.</b> Всё в <code>style.css</code>, в конце файла.
+</div>
+
+<h3>6.5. Подшаг 4.1b — селекторы стилей <span class="chip done">✅ сделано (v9)</span></h3>
+
+<div class="box done">
+<b>7 файлов стилей</b> переписаны:
+<ul>
+<li>Было: <code>[data-style="X"] .design-panel-mockup{...}</code>.</li>
+<li>Стало: <code>.dm-scope[data-style="X"]{...}</code>.</li>
+</ul>
+Файлы: <code>zhurnal.css</code>, <code>minimalizm.css</code>, <code>boho.css</code>, <code>retro.css</code>, <code>yaponsky.css</code>, <code>antichny.css</code>, <code>lileyny.css</code>.
+<br><b>Не трогали:</b> <code>nezhny.css</code> — заглушка.
+<br><b>Не трогали:</b> 9 файлов палитр — селекторы уже без <code>body</code>.
+</div>
+
+<h3>6.6. Подшаг 4.2 — черновик <span class="chip done">✅ сделано (v9)</span></h3>
+
+<div class="box done">
+<b>Как работает:</b>
+<ol>
+<li><b>Открытие панели:</b> <code>designDraft = { ...сохранёнка текущего экрана }</code>.</li>
+<li><b>Клик по стилю / палитре / оттенку / тени / теме / фону</b> — меняет поле в <code>designDraft</code>. Не трогает страницу. Обновляет макет и подсветку чипов.</li>
+<li><b>Тумблер 🌞/🌙</b> — в черновик. Макет темнеет/светлеет.</li>
+<li><b>Крестик / клик по тёмному фону / Escape</b> — <code>designDraft = null</code>. Панель закрывается.</li>
+</ol>
+</div>
+
+<div class="box done">
+<b>Побочные правки, сделанные в v9 и v10:</b>
+<ul>
+<li>Подложка макета — цвета <code>mix(c1, c2)</code>, как у настоящего фона.</li>
+<li>Тени карточки в макете усилены.</li>
+<li>Переменные <code>--plate-bg</code> / <code>--plate-text</code> переопределены на <code>.dm-scope</code>.</li>
+<li><b>v10:</b> все элементы макета ужаты под низкое окно ПК (фото, шапка, отступы, шрифты, кнопки).</li>
+<li><b>v10:</b> нижняя полоска макета прижата к низу коробочки (<code>margin-top:auto</code>).</li>
+</ul>
+</div>
+
+<div class="box note">
+<b>Урок: переменные на <code>body</code> не наследуются в <code>.dm-scope</code> автоматически.</b>
+<br>Если CSS-переменная объявлена как <code>body{--что-то:...}</code>, на <code>.dm-scope</code> она приходит уже посчитанной, «застывшей». Если внутри макета переменная должна пересчитываться — её надо переопределить на <code>.dm-scope</code> отдельно.
+<br><b>Пример:</b> <code>--plate-bg</code> / <code>--plate-text</code> в <code>card.css</code> висели на <code>body</code>, и макет их брал оттуда же — старыми. Пришлось продублировать на <code>.dm-scope</code>.
+</div>
+
+<h3>6.7. Фон в макете — вариант А (упрощённый) <span class="chip done">✅ сделано (v10)</span></h3>
+
+<div class="box done">
+<b>Как реализовано:</b>
+<ul>
+<li>Внутри <code>.dm-scope</code> появился <code>&lt;img class="dm-bg"&gt;</code>. Он лежит <b>на дне</b>, за всеми элементами макета (у остальных детей <code>z-index: 1</code>).</li>
+<li><code>object-fit: cover</code>, растянут на всю коробочку, включая внутренние отступы.</li>
+<li>Обрезается по скруглённым углам макета (<code>overflow: hidden</code>).</li>
+<li>Картинка показывается классом <code>dm-bg-on</code>. Без класса — спрятана.</li>
+<li>Фон в макете <b>меняется мгновенно</b> при клике по квадратику в панели.</li>
+<li>При открытии панели макет сразу показывает фон из черновика (или из сохранёнки).</li>
+<li>Клик по «Без фона» — картинка прячется, остаётся цветная подложка.</li>
+<li><b>Без блюра</b> — на маленьком размере не читается.</li>
+<li><b>Без масок</b> — на макете не нужна.</li>
+<li><b>Без позиции и зума</b> — это тонкая настройка, место на большой странице.</li>
+</ul>
+</div>
+
+<div class="box note">
+<b>Позиция фона в макете НЕ видна — и это нормально.</b> Макет показывает только сам фон, без смещения и зума. Если пользователь подвигает фон в редакторе и не увидит разницы в макете — так задумано. Позиция отработает на реальной странице при «Применить».
+</div>
+
+<div class="box">
+<b>Технические функции:</b>
+<ul>
+<li><code>syncMockupScope()</code> — ставит <code>dm-bg-on</code> и <code>src</code>, если в черновике есть фон.</li>
+<li>Обработчик клика по квадратику фона вызывает <code>syncMockupScope()</code>.</li>
+</ul>
+</div>
+
+<h3>6.8. Подшаг 4.3 — кнопка «Применить» <span class="chip done">✅ сделано (v10)</span></h3>
+
+<div class="box done">
+<b>Как работает:</b>
+<ol>
+<li>Клик по «Применить» в панели → открывается окошко <b>«Применить к…»</b> (см. 6.9).</li>
+<li>В окошке пользователь отмечает галочками, к каким экранам применить.</li>
+<li>Клик по «Применить» в окошке:
+<ul>
+<li>Черновик копируется во все отмеченные экраны (<code>setDesignFor</code>).</li>
+<li>Окошко закрывается.</li>
+<li><b>Панель закрывается</b>, <code>designDraft = null</code>.</li>
+<li><code>applyDesignFor(activeDesignScreen)</code> — применяет к body.</li>
+<li>Фон применяется через <code>applyBg()</code>.</li>
+</ul>
+</li>
+</ol>
+</div>
+
+<div class="conflict">
+<b>Что изменилось против карты v9.</b>
+<br>В v9 было: «Пользователь склоняется: <b>не закрывать</b>». В v10 <b>панель закрывается</b>. Потому что иначе пользователь сам должен закрывать панель крестиком, чтобы увидеть результат. Решение принято 10 октября 2026.
+</div>
+
+<h3>6.9. Окошко «Применить к…» <span class="chip done">✅ сделано (v10)</span></h3>
+
+<div class="box done">
+<b>Как открывается.</b> Кнопка «Применить» в панели 🖌 → окошко поверх панели:
+<pre><code>Применить к:
+[ ] 🏠 Главная
+[ ] ❤ Избранное
+[ ] 📅 План
+[ ] 🧺 Кладовая
+[Отмена]  [Применить]</code></pre>
+</div>
+
+<div class="box done">
+<b>Правила.</b>
+<ul>
+<li><b>Все галочки пустые.</b> Пользователь сам отмечает.</li>
+<li><b>«Применить» неактивна</b>, пока не отмечен хотя бы один экран.</li>
+<li>Отмечено несколько — оформление копируется на все.</li>
+<li><b>«Отмена»</b> — закрывает окошко, черновик остаётся. Если был открыт предпросмотр — возвращает в панель (см. 6.10).</li>
+</ul>
+</div>
+
+<div class="box done">
+<b>Классы:</b> <code>.apply-to-list</code>, <code>.apply-to-row</code>, <code>.apply-to-check</code>, <code>.apply-to-actions</code>, <code>.apply-to-btn</code> (и <code>.apply-to-btn.primary</code>).
+</div>
+
+<h3>6.10. Переключение экранов при открытой панели <span class="chip done">✅</span></h3>
+
+<div class="box done">
+<b>Логика блокировки работает</b> (естественно). Панель перекрывает весь экран тёмным фоном, нижняя навигация недоступна для клика. Уйти на другой экран можно, только закрыв панель.
+</div>
+
+<div class="box note">
+<b>В режиме предпросмотра (телефон) — навигация доступна.</b>
+<br>Панель скрыта, страница показана как обычно. Пользователь может уйти на другой экран прямо в предпросмотре. Черновик при этом <b>не теряется</b> — он в памяти, вернётся, когда пользователь нажмёт «Вернуться» или «Применить». Это осознанное поведение.
+</div>
+
+<div class="box done">
+<b>Смена оформления при переключении экранов — мгновенная, без анимации.</b>
+</div>
+
+<h3>6.11. Кнопка «Отмена» в панели <span class="chip no">❌ не делаем</span></h3>
+
+<div class="box">
+Крестик = отмена = выброс черновика. Отдельной кнопки не нужно.
+</div>
+
+<h3>6.12. Кнопка «Сбросить» <span class="chip no">❌ не делаем</span></h3>
+
+<div class="box">
+Сброс = просто выбрать другой стиль. Если понадобится — добавим.
+</div>
+
+<h3>6.13. Редактор позиции фона <span class="chip done">✅ сделано (v10)</span></h3>
+
+<div class="box done">
+<b>Как работает:</b>
+<ul>
+<li>Кнопка <b>«📐 Позиция»</b> в панели 🖌 → открывается редактор <b>поверх панели</b>. Панель не закрывается.</li>
+<li>Редактор берёт фон из черновика (<code>designDraft.bg</code>), а не с сайта.</li>
+<li>При закрытии редактора — панель на месте, черновик цел.</li>
+<li>Позиция и зум сохраняются в <code>bgSettings[bgId][device]</code>.</li>
+<li>Позиция и зум — <b>общие для картинки</b>. Пока не реализовано «отвязать для конкретного экрана» — см. раздел «Отложено».</li>
+</ul>
+</div>
+
+<div class="box note">
+<b>Почему редактор поверх панели, а не отдельно.</b>
+<br>Раньше кнопка «📐 Позиция» закрывала панель — и черновик терялся. Теперь панель живёт, пока пользователь настраивает позицию. Можно накликать стиль, потом подобрать позицию фона, потом всё вместе применить. Решение принято 10 октября 2026.
+</div>
+
+<div class="box">
+<b>Правки в v10:</b>
+<ul>
+<li><code>.bg-editor</code> — <code>z-index: 100003</code> (был 100000, под панелью).</li>
+<li>Переменная <code>bgEditorBg</code> — фон, для которого открыт редактор.</li>
+<li><code>openBgEditor()</code> берёт фон из <code>designDraft.bg</code>, если есть.</li>
+<li><code>bgEditorSave</code> сохраняет в <code>bgSettings[bgEditorBg]</code>, страницу не трогает.</li>
+<li>Escape: сначала закрывает редактор, потом окошко «Применить к…», потом панель.</li>
+</ul>
+</div>
+
+<h3>6.14. Размеры панели и макета <span class="chip done">✅ сделано (v10)</span></h3>
+
+<div class="box done">
+<b>Панель:</b>
+<ul>
+<li><code>max-width: 900px</code> (было 760).</li>
+<li>Высота <b>по содержимому</b>, но не больше <code>96vh</code>. Если контента много — внутри левой колонки появляется скролл, панель не растёт.</li>
+</ul>
+<b>Макет:</b>
+<ul>
+<li><code>width: 400px</code>.</li>
+<li><b>Пропорции как у окна браузера</b> — <code>aspect-ratio</code> вычисляется из <code>window.innerWidth / window.innerHeight</code> через <code>syncMockupAspect()</code>.</li>
+<li><b>Не растянут на всю высоту панели.</b> Компактно сверху правой колонки, под ним пусто.</li>
+<li>Все элементы макета ужаты (фото 52px, шапка 22px, и т.д.) — чтобы карточка влезала в низкое окно ПК.</li>
+<li>Нижняя полоска макета прижата к низу (<code>margin-top:auto</code>) — под карточкой виден фон.</li>
+</ul>
+</div>
+
+<div class="box note">
+<b>Пересчёт пропорций.</b> <code>syncMockupAspect()</code> вызывается:
+<ul>
+<li>при открытии панели,</li>
+<li>при изменении размера окна (<code>window.addEventListener('resize', ...)</code>).</li>
+</ul>
+</div>
+
+<h3>6.15. Подшаг 6 — режим предпросмотра (телефон) <span class="chip done">✅ сделано (v10)</span></h3>
+
+<div class="box done">
+<b>Проблема, которую решает.</b> На телефоне (ширина меньше 800) макета нет. Клики в панели визуально ничего не показывают — ни в панели, ни на странице (черновик страницу не трогает). Панель «слепая».
+</div>
+
+<div class="box done">
+<b>Решение — кнопка «Посмотреть».</b>
+<ul>
+<li><b>Ширина &lt; 800</b> (телефон, узкое окно iPad): в панели видны <b>обе</b> кнопки — «Посмотреть» и «Применить». «Применить» работает напрямую, для быстрых случаев (поменять палитру).</li>
+<li><b>Ширина ≥ 800</b> (ПК, iPad): в панели видна <b>только</b> «Применить». Макет справа, предпросмотр не нужен.</li>
+</ul>
+</div>
+
+<div class="box done">
+<b>Как работает предпросмотр:</b>
+<ol>
+<li>Пользователь накликал в панели. Жмёт <b>«Посмотреть»</b>.</li>
+<li>Панель <b>скрывается</b> (прячется под страницу).</li>
+<li>Страница показывает <b>черновик</b> — стиль, палитру, тени, тему, фон. Всё как применилось бы.</li>
+<li>Внизу по центру — <b>плашка предпросмотра</b>: [Применить] [Вернуться].</li>
+<li><b>«Вернуться»</b> — плашка прячется, панель возвращается, страница <b>откатывается</b> к сохранёнке. Черновик цел.</li>
+<li><b>«Применить»</b> — открывается окошко «Применить к…» (то же, что и из панели).</li>
+<li><b>«Отмена»</b> в окошке — возвращает в панель (предпросмотр откатывается).</li>
+<li><b>«Применить»</b> в окошке — сохраняет, закрывает всё.</li>
+</ol>
+</div>
+
+<div class="box done">
+<b>Классы и переменные:</b>
+<ul>
+<li><code>#previewBar</code> / <code>.preview-bar</code> — плашка внизу.</li>
+<li><code>.preview-btn</code> (и <code>.preview-btn.primary</code>) — кнопки плашки.</li>
+<li><code>isPreviewing</code> — флаг в JS.</li>
+<li>Функции: <code>enterPreview()</code>, <code>exitPreview()</code>, <code>applyDraftToBody()</code>.</li>
+</ul>
+</div>
+
+<div class="box note">
+<b>Escape в предпросмотре не нужен.</b> На телефоне и iPad клавиши Escape нет. На ПК предпросмотра нет (макет справа). Значит, Escape в этом режиме не бывает.
+<br>Escape на ПК: сначала закрывает редактор фона, потом окошко «Применить к…», потом панель.
+</div>
+
+<h3>6.16. Что ещё осталось по оформлению по экранам</h3>
+
+<div class="box">
+<b>Подшаги — итог:</b>
+<ol>
+<li><span class="chip done">✅</span> 4.1a — инфраструктура <code>.dm-scope</code>.</li>
+<li><span class="chip done">✅</span> 4.1b — 7 файлов стилей.</li>
+<li><span class="chip done">✅</span> 4.2 — черновик.</li>
+<li><span class="chip done">✅</span> Фон в макете (вариант А).</li>
+<li><span class="chip done">✅</span> Фикс размеров панели и макета.</li>
+<li><span class="chip done">✅</span> 4.3 — кнопка «Применить».</li>
+<li><span class="chip done">✅</span> Подшаг 5 — окошко «Применить к…» + блокировка навигации.</li>
+<li><span class="chip done">✅</span> Подшаг 6 — телефон, кнопка «Посмотреть» + плашка предпросмотра.</li>
+<li><span class="chip done">✅</span> Часть подшага 7 — редактор позиции поверх панели.</li>
+<li><span class="chip wait">⏳</span> Хвост подшага 7 — «Общая / Своя» позиция + точка-звёздочка. <b>Отложено</b> (см. раздел «Отложено»).</li>
+</ol>
+</div>
+
+<!-- ============================================ -->
+<h2 id="nav">7 · Навигация и шапка</h2>
+
+<h3>7.1. Шапка <span class="chip done">✅</span></h3>
+
+<div class="box done">
+<ul>
+<li>Название «Копилка рецептов» курсивом Cormorant, 22px.</li>
+<li>Подпись «Зажги свечку…».</li>
+<li><b>3 круглых иконки:</b> 🖌 🔔 ⚙.</li>
+<li>🖌 — панель оформления. 🔔 и ⚙ пока не активны.</li>
+<li>Шапка не закрепляется.</li>
+</ul>
+</div>
+
+<h3>7.2. Иконки действий <span class="chip done">✅</span></h3>
+
+<pre><code>[📖 СОДЕРЖАНИЕ] [▼] [🔍] [🏷] [🎲]</code></pre>
+
+<div class="box ok">
+Круглые 32×32px, фон <code>--plate-bg</code>, текст <code>--plate-text</code>. Клик по иконке не сворачивает содержание.
+</div>
+
+<h3>7.3. Нижняя навигация <span class="chip done">✅</span></h3>
+
+<table class="table">
+<tr><th>Кнопка</th><th>Что открывает</th></tr>
+<tr><td>🏠 Главная</td><td>Главный экран со всеми категориями</td></tr>
+<tr><td>❤ Избранное</td><td>Заглушка «Тут будет Избранное»</td></tr>
+<tr><td>📅 План</td><td>Заглушка «Тут будет План»</td></tr>
+<tr><td>🧺 Кладовая</td><td>Заглушка «Тут будет Кладовая»</td></tr>
+</table>
+
+<div class="box done">
+Панель на всю ширину. 4 кнопки равной ширины. Активная — залита <code>--c3</code>. Клик переключает экран. При смене — прокрутка вверх. Вкладка помнится (ключ <code>activeScreen</code>).
+</div>
+
+<h3>7.4. Четыре экрана <span class="chip done">✅</span></h3>
+
+<div class="box done">
+Один файл <code>index.html</code>, четыре экрана внутри. <code>.screen[data-screen]</code>, показывается через <code>.active</code>. Содержание — внутри Главной.
+</div>
+
+<h3>7.5. Плавающие кнопки <span class="chip done">✅</span></h3>
+
+<div class="box">
+<div style="font-family:monospace;font-size:13px">
+⏲  — Таймер<br>
+🔍  — Поиск<br>
+➕  — Добавить рецепт
+</div>
+</div>
+
+<div class="box done">
+<b>Как выглядит:</b>
+<ul>
+<li>Три круглых кнопки справа снизу, над нижней панелью.</li>
+<li>⏲ Таймер — сверху, спокойная.</li>
+<li>🔍 Поиск — посередине, спокойная.</li>
+<li>➕ Добавить — снизу, акцентная (<code>--c3</code>).</li>
+<li>Размер: 52px на тач / 44px на ПК.</li>
+<li>Тень — своя на каждом экране.</li>
+</ul>
+</div>
+
+<h4>Автоскрытие</h4>
+
+<div class="box done">
+Тач — автоскрытие всегда. ПК — только если окно уже 1730px. Скролл вниз — прячутся. Вверх — появляются. Остановка — 2 секунды → прячутся.
+</div>
+
+<div class="box warn">
+<b>На пустых экранах (Избранное, План, Кладовая) автоскрытие не работает</b> — нечего скроллить. Не баг. Исправится, когда экраны наполнятся. <b>Записать: при наполнении проверить.</b>
+</div>
+
+<h4>FAB — разные на разных экранах <span class="chip q">❓</span></h4>
+
+<table class="table">
+<tr><th>Кнопка</th><th>🏠</th><th>❤</th><th>📅</th><th>🧺</th></tr>
+<tr><td>⏲ Таймер</td><td>да</td><td>вряд ли</td><td><b>да</b></td><td>нет</td></tr>
+<tr><td>🔍 Поиск</td><td>да</td><td>да</td><td>вряд ли</td><td><b>да</b></td></tr>
+<tr><td>➕ Добавить</td><td>рецепт</td><td>вряд ли</td><td>вряд ли</td><td><b>добавить продукт</b></td></tr>
+</table>
+
+<h3>7.6. Модалки плавающих кнопок <span class="chip done">✅ заглушки</span></h3>
+
+<div class="box done">
+Три отдельные: ⏲ Таймер / 🔍 Поиск / ➕ Добавить. Открываются с любого экрана. Реальных функций пока нет. Закрытие — крестик, фон, Escape.
+</div>
+
+<!-- ============================================ -->
+<h2 id="main">8 · Главный экран</h2>
+
+<h3>8.1. Содержание <span class="chip done">✅</span></h3>
+
+<div class="box done">
+<p>Блок «📖 СОДЕРЖАНИЕ» сворачивается. Два ряда плашек:</p>
+<ul>
+<li><b>По приёму:</b> 🌅 Завтраки · 🍽 Обеды · 🌙 Ужины · 🍎 Перекусы</li>
+<li><b>По типу:</b> 🥗 Салаты · 🍲 Супы · 🍰 Десерты · 🍞 Выпечка · 🥟 Закуски · 🍚 Гарниры · 🥤 Напитки · 🥫 Соусы</li>
+</ul>
+<p>Раскрыто по умолчанию. Три иконки 🔍 🏷 🎲. Только на Главной.</p>
+</div>
+
+<h3>8.2. Секции рецептов <span class="chip done">✅</span></h3>
+
+<div class="box done">
+Четыре секции: 🌅 ЗАВТРАКИ · 34 / 🍽 ОБЕДЫ · 28 / 🌙 УЖИНЫ · 26 / 🍎 ПЕРЕКУСЫ · 19.
+</div>
+
+<h4>Сетка карточек</h4>
+<table class="table">
+<tr><th>Устройство</th><th>В ряд</th></tr>
+<tr><td>iPhone</td><td>1</td></tr>
+<tr><td>iPad</td><td>2–3</td></tr>
+<tr><td>ПК</td><td>3–4</td></tr>
+</table>
+
+<div class="box done">
+Контент ограничен 1600px. Отступ снизу у <code>.recipes</code> — 100px.
+</div>
+
+<!-- ============================================ -->
+<h2 id="card-small">9 · Карточка в списке <span class="chip done">✅ одобрена</span></h2>
+
+<h4>Структура</h4>
+<ol>
+<li>Фото (150px). Бейдж + 5 иконок ❤ ⏱ 👨‍🍳 📅 🔖.</li>
+<li>Название курсивом.</li>
+<li>Теги (до 5).</li>
+<li>КБЖУ + время.</li>
+<li>Ингредиенты с чекбоксами.</li>
+<li>Кнопка «▼ показать все».</li>
+<li>Блок устройства готовки.</li>
+<li>Заметка (если есть).</li>
+<li>Кнопки: <code>[🛒 N] [✎ Изменить] [🕐 3 из 5]</code>.</li>
+</ol>
+
+<div class="box done">
+<b>Ограничение ингредиентов.</b> Длинные карточки (есть и устройство, и заметка) → 3 ингредиента. Остальные → 4.
+</div>
+
+<div class="conflict">
+<b>Смена устройства и корзина.</b> Не решено.
+</div>
+
+<div class="conflict">
+<b>Округление штучных продуктов.</b> Не решено.
+</div>
+
+<!-- ============================================ -->
+<h2 id="card-big">10 · Карточка рецепта (большая) <span class="chip wait">⏳ спроектирована</span></h2>
+
+<div class="box warn">
+<b>Статус:</b> спроектирована, не реализована. Следующая после оформления по экранам.
+</div>
+
+<div class="conflict">
+<b>Куда открывается</b> — модалка или отдельный экран? Не решено.
+</div>
+
+<!-- ============================================ -->
+<h2 id="cat">11 · Категории и теги</h2>
+
+<div class="box ok">
+<b>Правило:</b> категории и теги не дублируются.
+</div>
+
+<h4>Приём пищи (4)</h4>
+<p><span class="chip">🌅 Завтраки</span> <span class="chip">🍽 Обеды</span> <span class="chip">🌙 Ужины</span> <span class="chip">🍎 Перекусы</span></p>
+
+<h4>Тип блюда (8)</h4>
+<p><span class="chip">🥗 Салаты</span> <span class="chip">🍲 Супы</span> <span class="chip">🍰 Десерты</span> <span class="chip">🍞 Выпечка</span> <span class="chip">🥟 Закуски</span> <span class="chip">🍚 Гарниры</span> <span class="chip">🥤 Напитки</span> <span class="chip">🥫 Соусы</span></p>
+
+<h4>Теги — 16 групп, ~80 штук</h4>
+
+<table class="table">
+<tr><th>№</th><th>Группа</th><th>Примеры</th></tr>
+<tr><td>1</td><td>Вкус</td><td>сладкое, солёное, острое</td></tr>
+<tr><td>2</td><td>Настроение</td><td>сытное, лёгкое, согревающее</td></tr>
+<tr><td>3</td><td>Диета</td><td>ПП, безглютеновое, вегетарианское</td></tr>
+<tr><td>4</td><td>Способ готовки</td><td>в аэрогриле, без готовки</td></tr>
+<tr><td>5</td><td>Сложность</td><td>простое, среднее, сложное</td></tr>
+<tr><td>6</td><td>Повод</td><td>на праздник, для гостей</td></tr>
+<tr><td>7</td><td>Сезон</td><td>летнее, зимнее, новогоднее</td></tr>
+<tr><td>8</td><td>Кухня</td><td>итальянское, азиатское</td></tr>
+<tr><td>9</td><td>Текстура</td><td>хрустящее, кремовое</td></tr>
+<tr><td>10</td><td>Температура</td><td>горячее, холодное, тёплое</td></tr>
+<tr><td>11</td><td>Порция</td><td>на одного, для семьи</td></tr>
+<tr><td>12</td><td>Кому</td><td>для детей, для взрослых</td></tr>
+<tr><td>13</td><td>Время суток</td><td>утреннее, вечернее</td></tr>
+<tr><td>14</td><td>Стиль питания</td><td>раздельное, интервальное</td></tr>
+<tr><td>15</td><td>Полезность</td><td>много белка, без сахара</td></tr>
+<tr><td>16</td><td>Особенность</td><td>быстро, из простых</td></tr>
+</table>
+
+<!-- ============================================ -->
+<h2 id="search">12 · Поиск и фильтры</h2>
+
+<div class="box note">
+<b>Место кнопок:</b> три иконки 🔍 🏷 🎲 в содержании. Плавающая 🔍 — в FAB. Логика пока не подключена.
+</div>
+
+<h3>12.1. Поиск</h3>
+<table class="table">
+<tr><th>Уровень</th><th>Что делает</th></tr>
+<tr><td>1</td><td>Точное совпадение (название, ингредиенты)</td></tr>
+<tr><td>2</td><td>Синонимы</td></tr>
+<tr><td>3</td><td>По типу блюда (кнопка «🔎 Искать шире»)</td></tr>
+</table>
+
+<h4>Голосовой ввод</h4>
+<ul>
+<li>Кнопка 🎤 в поиске (если поддерживается).</li>
+<li>Микрофон клавиатуры iPhone/iPad.</li>
+</ul>
+
+<h3>12.2. Фильтры (фасетные)</h3>
+<table class="table">
+<tr><th>Кнопка</th><th>Подкатегории</th></tr>
+<tr><td>⏱ Время</td><td>15 / 30 / 40 / 60 / 90 / 120 / 120+</td></tr>
+<tr><td>🥩 Основное</td><td>курица / индейка / говядина / свинина / рыба…</td></tr>
+<tr><td>🥦 Полезное</td><td>с овощами / много белка / без жарки…</td></tr>
+<tr><td>🍰 Тип</td><td>по категориям типа блюда</td></tr>
+<tr><td>🏠 Из дома / 💰 Из простых / 🚫 Без масла / 👩‍🍳 От Джулии / ✍️ Мои</td><td>вкл/выкл</td></tr>
+<tr><td>🏷 Теги</td><td>все 16 групп</td></tr>
+<tr><td>📋 Неполные карточки</td><td>без фото / без КБЖУ / без шагов</td></tr>
+</table>
+
+<h3>12.3. Содержание / Поиск / Фильтр / Случайный — по экранам <span class="chip q">❓</span></h3>
+
+<table class="table">
+<tr><th>Экран</th><th>Содержание</th><th>Поиск</th><th>Фильтр</th><th>Случайный</th></tr>
+<tr><td>🏠 Главная</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td></tr>
+<tr><td>❤ Избранное</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td></tr>
+<tr><td>📅 План</td><td>❌</td><td>✅</td><td>✅</td><td>✅</td></tr>
+<tr><td>🧺 Кладовая</td><td>❌</td><td>✅</td><td>✅</td><td>❌</td></tr>
+</table>
+
+<div class="conflict">
+<b>Когда решать:</b> когда будем делать каждый экран по-настоящему.
+</div>
+
+<!-- ============================================ -->
+<h2 id="plan">13 · План</h2>
+
+<pre><code>[📅 План]
+[👨‍👩‍👧 Семейный]  [🧒 Для ребёнка]  [🎉 События]</code></pre>
+
+<h3>13.1. Семейный план</h3>
+<p><b>6 приёмов пищи:</b> завтрак · перекус · обед · перекус · ужин · перекус. Свои можно добавлять.</p>
+<h4>Недели</h4>
+<ul>
+<li>Пн–Вс с датами.</li>
+<li>← Прошлая / Эта / Следующая →</li>
+<li>Хранить 4 недели.</li>
+</ul>
+<h4>Кнопки в шапке плана</h4>
+<ul>
+<li>← →, 🖨 Печать (A6), 🗑 Очистить, 🛒 Собрать список покупок.</li>
+</ul>
+
+<h3>13.2. План для ребёнка</h3>
+<p>Тот же функционал. Список покупок отдельный.</p>
+
+<h3>13.3. События <span class="chip wait">⏳ отложено</span></h3>
+
+<!-- ============================================ -->
+<h2 id="pantry">14 · Кладовая</h2>
+
+<pre><code>[🧺 Кладовая]
+[🛒 Купить]  [🏠 Есть дома]</code></pre>
+
+<h3>14.1. Вкладка «Купить»</h3>
+<pre><code>[🛒 Купить]
+[📋 Ежедневные]  [📦 Опт]</code></pre>
+<p>Подвкладки: <span class="chip">🥦 Продукты</span> <span class="chip">🧴 Бытовая химия</span> <span class="chip">🧼 Гигиена</span></p>
+<h4>Отделы магазина</h4>
+<p><span class="chip">🥬 Овощи</span> <span class="chip">🥛 Молочные</span> <span class="chip">🥩 Мясо</span> <span class="chip">🌾 Бакалея</span> <span class="chip">🌰 Орехи</span> <span class="chip">📦 Прочее</span> + свои.</p>
+
+<h3>14.2. Вкладка «Есть дома»</h3>
+<p>Подвкладки: 🥦 Продукты / 🧴 Бытовая химия / 🧼 Гигиена / + свои.</p>
+<h4>Карточка продукта</h4>
+<pre><code>Молоко 3.2%  🥛 Молочные
+✅ Есть дома: 500 мл
+КБЖУ на 100 мл: 60 ккал · Б3 · Ж3.2 · У4.7
+Марка: Простоквашино  ·  Цена: 89 ₽  ·  Куплено: 20 сентября
+Аллергии: у Маши — лактоза
+Заметка: «Брать 3.2%, не 2.5%»
+[✎ Изменить]  [🗑 Удалить]</code></pre>
+
+<!-- ============================================ -->
+<h2 id="add">15 · Добавление рецепта</h2>
+
+<p><b>Открытие:</b> плавающая кнопка ➕.</p>
+
+<h4>Три вкладки</h4>
+<table class="table">
+<tr><th>Вкладка</th><th>Что делает</th></tr>
+<tr><td>✍ Вручную</td><td>Заполняешь поля сам</td></tr>
+<tr><td>📋 Текст</td><td>Вставляешь текст → парсинг → проверяешь</td></tr>
+<tr><td>🔗 Ссылка</td><td>Вставляешь ссылку → загрузка через прокси</td></tr>
+</table>
+
+<h4>Черновики</h4>
+<ul>
+<li>Автосохранение при каждом изменении.</li>
+<li>Хранить вечно.</li>
+</ul>
+
+<!-- ============================================ -->
+<h2 id="settings">16 · Настройки</h2>
+
+<pre><code>⚙ Настройки
+├── 📤 Данные (экспорт, импорт, автосохранение)
+├── 💾 Черновики
+├── 📂 Категории
+├── 🏷 Фильтры
+├── 🏷 Теги
+├── 🖼 Фоны (вернуть базовые)
+├── 📱 Приложение (PWA)
+├── ⚠️ Опасное (сбросить всё)
+└── ℹ️ О программе</code></pre>
+
+<div class="box note">
+<b>«Вернуть базовые»</b> — здесь, в настройках, а не в панели 🖌.
+</div>
+
+<!-- ============================================ -->
+<h2 id="data">17 · Данные и хранилище</h2>
+
+<table class="table">
+<tr><th>Что</th><th>Где</th></tr>
+<tr><td>Текст (рецепты, покупки, план, настройки)</td><td>localStorage</td></tr>
+<tr><td>Фото, свои фоны</td><td>IndexedDB</td></tr>
+<tr><td>Автосохранение</td><td>Раз в 3–4 дня, потом раз в неделю</td></tr>
+<tr><td>Экспорт</td><td>JSON / ZIP</td></tr>
+<tr><td><b>Черновик оформления</b></td><td><b>В памяти (designDraft). Не сохраняется.</b></td></tr>
+<tr><td><b>Позиции фонов</b></td><td><b>localStorage, ключ bgSettings.</b></td></tr>
+</table>
+
+<h4>Ключи в localStorage (актуальные на v10)</h4>
+<ul>
+<li><code>design</code> — оформление по экранам. Объект с 4 экранами.</li>
+<li><code>bgSettings</code> — три слота позиций/зума для каждого фона.</li>
+<li><code>activeScreen</code> — активный экран.</li>
+<li><code>designShadowTab</code> — активный таб тени.</li>
+<li><code>designSectionsCollapsed</code> — какие секции панели свёрнуты.</li>
+</ul>
+
+<div class="box warn">
+<b>Устаревшие ключи — стираются при первом запуске v8:</b>
+<ul>
+<li><code>designPalette</code>, <code>designShadow</code>, <code>designFabShadow</code>, <code>designTheme</code>, <code>bgPositions</code>.</li>
+</ul>
+</div>
+
+<div class="box ok">
+<b>IndexedDB</b> — лимит 50+ МБ. На iPhone Safari может удалять данные, если сайт не открывать больше 7 дней. Решение — добавить на экран «Домой». В будущем — PWA.
+</div>
+
+<!-- ============================================ -->
+<h2 id="sync">18 · Синхронизация (отложено)</h2>
+
+<div class="box ok">
+<b>Главное:</b> синхронизация — отдельный этап. Сейчас — без неё.
+</div>
+
+<table class="table">
+<tr><th>Кто</th><th>Что</th></tr>
+<tr><td>Пользователь + парень</td><td>Один общий аккаунт.</td></tr>
+<tr><td>Мама</td><td>Свой сайт. Только база Джулии. Свой список покупок.</td></tr>
+<tr><td>Обмен рецептами</td><td>Пользователь ↔ мама. Кнопки «Сохранить» / «Не сохранять».</td></tr>
+</table>
+
+<div class="box done">
+<h3 style="margin-top:0">⚡ Оформление — локальное, НЕ синхронизируется</h3>
+<p>Синхронизируются только данные. Оформление — локальное у каждого. Своё на каждом экране.</p>
+</div>
+
+<!-- ============================================ -->
+<h2 id="bugs">19 · Известные баги браузеров</h2>
+
+<h3>19.1. iOS Safari: <code>position:fixed</code> + <code>z-index:-1</code></h3>
+<div class="box done">
+<b>Решение.</b> Фон — <code>position:fixed; z-index:0</code>, контент в <code>.app</code> с <code>z-index:1</code>.
+</div>
+
+<h3>19.2. iOS Safari: полоса внизу экрана</h3>
+<div class="box warn">
+Оставили как есть.
+</div>
+
+<h3>19.3. iOS/iPadOS Safari: агрессивный кэш CSS/JS</h3>
+<div class="box">
+Приватное окно. Или Network → Disable cache → Ctrl+F5.
+</div>
+
+<h3>19.4. iOS Safari: <code>background-image</code> не отрисовывается</h3>
+<div class="box done">
+Только <code>&lt;img&gt;</code> с <code>position:fixed</code>.
+</div>
+
+<h3>19.5. iOS Safari: mask-composite + blur + scale крашит рендер</h3>
+<div class="box done">
+Маска на картинке, не на обёртке. Без <code>mask-composite</code> на iOS.
+</div>
+
+<h3>19.6. Незакрытая <code>}</code> в CSS ломает следующие правила</h3>
+<div class="box done">
+После вставки блока — навести на <code>{</code>, убедиться в парной <code>}</code>.
+</div>
+
+<h3>19.7. iOS Safari: анимация <code>position:fixed</code> за границей экрана</h3>
+<div class="box done">
+Сдвиг уменьшен до 50px + opacity + visibility с задержкой.
+</div>
+
+<h3>19.8. iOS Safari: событие <code>scroll</code> во время инерционной прокрутки</h3>
+<div class="box done">
+Использовать <code>touchend</code> вместо scroll.
+</div>
+
+<h3>19.9. Скрипт выполняется раньше HTML</h3>
+<div class="box done">
+Обернуть в <code>DOMContentLoaded</code>.
+</div>
+
+<h3>19.10. JS: рекурсия в <code>getActiveDesign</code></h3>
+<div class="box bug">
+<b>Урок 9 октября 2026.</b> При глобальной замене <code>getDesignFor(activeDesignScreen)</code> → <code>getActiveDesign()</code> через Replace All заменилась строка <b>внутри самой функции</b> <code>getActiveDesign</code>. Получилась рекурсия → <code>Maximum call stack size exceeded</code>.
+<br><b>Правило для профилактики:</b> при Replace All — сначала подумать, что <b>внутри заменяемого места</b> может быть то же самое. После замены — проверить, что функция не зовёт сама себя.
+</div>
+
+<h3>19.11. z-index редактора фона</h3>
+<div class="box done">
+<b>Урок 10 октября 2026.</b> Редактор позиции фона открывается <b>поверх</b> панели оформления. Для этого его <code>z-index</code> поднят с <code>100000</code> до <code>100003</code> (выше панели). Если в будущем добавится ещё один слой поверх — помнить про этот порядок.
+<br><b>Текущая иерархия (снизу вверх):</b> фон (0) → контент (1) → FAB (99) → нижняя навигация (100) → панель (100001) → окошко «Применить к…» и модалки (100002) → редактор фона (100003) → плашка предпросмотра (100004) → заставка (9999).
+</div>
+
+<!-- ============================================ -->
+<h2 id="order">20 · Порядок работы</h2>
+
+<pre><code>─── ШАГ 4.5: ОФОРМЛЕНИЕ ПО ЭКРАНАМ ───
+20. Подшаг 1: Хранилище (design[4])                  ✅ СДЕЛАНО (v8)
+21. Подшаг 4.1a: .dm-scope, syncMockupScope           ✅ СДЕЛАНО (v9)
+22. Подшаг 4.1b: 7 файлов стилей                     ✅ СДЕЛАНО (v9)
+23. Подшаг 4.2: Черновик                              ✅ СДЕЛАНО (v9)
+24. Фон в макете (вариант А)                          ✅ СДЕЛАНО (v10)
+     + фикс размеров панели (900px / до 96vh)
+     + фикс размеров макета (400px / пропорции окна)
+     + ужатие элементов макета
+25. Подшаг 4.3: Кнопка «Применить»                    ✅ СДЕЛАНО (v10)
+26. Подшаг 5: Окошко «Применить к…»                   ✅ СДЕЛАНО (v10)
+     + блокировка навигации
+27. Подшаг 6: Телефон — «Посмотреть»                  ✅ СДЕЛАНО (v10)
+     + плашка предпросмотра
+28. Часть подшага 7: Редактор позиции поверх панели   ✅ СДЕЛАНО (v10)
+29. Хвост подшага 7: «Общая/Своя» + точка-звёздочка   ⏳ ОТЛОЖЕНО
+
+─── ДАЛЬШЕ ───
+30. Большая карточка рецепта                          ⏳ СЛЕДУЮЩЕЕ
+31. Перенос данных (150+ рецептов, синонимы)          ⏳
+32. Хранилище (IndexedDB)                             ⏳
+33. Фичи по одной: Избранное, План, Кладовая,         ⏳
+    Добавление, Настройки, Фото
+34. PWA (манифест + добавление на экран)              ⏳
+35. Синхронизация                                     ⏳
+36. Трекер питания                                    ⏳</code></pre>
+
+<!-- ============================================ -->
+<h2 id="debt">21 · Технический долг</h2>
+
+<h3>🔴 Высокий приоритет</h3>
+
+<h4>1. Убрать «хвосты» старой панели</h4>
+<div class="box">
+Остатки стилей <code>.dp-themes</code> в CSS, id <code>dpThemes</code> в JS. Удалить после того, как убедимся, что всё работает.
+</div>
+
+<h3>🟡 Средний приоритет</h3>
+
+<h4>2. Объединить дублирующий CSS</h4>
+<div class="box">
+Стили <code>.design-panel</code>, <code>.bg-editor</code>, <code>.modal</code> частично дублируются. <code>.preview-bar</code> — новый, стоит проверить, не дублирует ли он что-то из <code>.modal-box</code>.
+</div>
+
+<h4>3. Унифицировать имена data-атрибутов</h4>
+<div class="box">
+Смешаны: <code>data-s</code>, <code>data-p</code>, <code>data-shade</code>, <code>data-sh</code>, <code>data-th</code>, <code>data-bg</code>, <code>data-style</code>, <code>data-palette</code>, <code>data-shadow</code>, <code>data-fab-shadow</code>, <code>data-theme</code>, <code>data-screen</code>, <code>data-modal</code>.
+</div>
+
+<h4>4. Вынести JS в отдельные файлы</h4>
+<div class="box">
+Весь JavaScript — внутри <code>&lt;script&gt;</code> в <code>index.html</code>. Стало больше ~2000 строк. Разбить на файлы в <code>app/js/</code>: <code>bg.js</code>, <code>design-panel.js</code>, <code>per-screen.js</code>, <code>screens.js</code>, <code>modals.js</code>, <code>preview.js</code>, <code>fab.js</code>, <code>main.js</code>.
+</div>
+
+<h3>🟢 Низкий приоритет</h3>
+
+<h4>5. Удалить старые HTML-карты</h4>
+<div class="box">
+<code>Структурная карта 6.html</code>, <code>7.html</code>, <code>8.html</code>, <code>9.html</code>.
+</div>
+
+<h4>6. Проверять закрытие скобок в CSS</h4>
+
+<h3>⚪ Отложено</h3>
+
+<h4>7. Проверить автоскрытие FAB на каждом экране</h4>
+<div class="box">
+Когда наполнишь экраны контентом.
+</div>
+
+<h4>8. Минификация CSS и JS</h4>
+<div class="box">Не делаем.</div>
+
+<h4>9. Единая система данных (рецепты в объектах JS)</h4>
+<div class="box">
+Рецепты захардкожены в <code>index.html</code>. Для 9 карточек ок. Для 150+ — невозможно. Отдельный этап.
+</div>
+
+<!-- ============================================ -->
+<h2 id="postpone">22 · Отложено</h2>
+
+<div class="box warn">
+<b>Это не забыто. Это осознанно отложено.</b> Возможно, никогда не понадобится. Возможно, вернёмся позже.
+</div>
+
+<h3>22.1. Хвост подшага 7 — «Общая / Своя» позиция фона</h3>
+
+<div class="box done">
+<b>Идея.</b> Позиция и зум фона — по умолчанию общие для картинки на всех экранах. Можно «отвязать» для конкретного экрана — тогда у Главной и у Избранного один и тот же фон будет стоять по-разному.
+<br>Переключатель в редакторе позиции: <b>(●) Общая</b> / <b>( ) Своя для этого экрана</b>.
+</div>
+
+<div class="box note">
+<b>Почему отложено.</b> Требует переработки хранилища <code>bgSettings</code> — сейчас оно не привязано к экранам, только к устройствам. Плюс непонятно, насколько это реально нужно. Сейчас фон задаётся отдельно на каждом экране — если хочется разное, можно просто выбрать разные фоны.
+</div>
+
+<h3>22.2. Точка-звёздочка на фоне со «своей» позицией</h3>
+
+<div class="box done">
+В панели 🖌, в секции «Фон», на квадратике с картинкой, у которой стоит «Своя» позиция — рисуется маленькая точка. Идёт в паре с 22.1.
+</div>
+
+<h3>22.3. Возможные будущие «отложенности»</h3>
+
+<div class="box">
+Сюда будем писать всё, что решаем отложить сознательно. Пока пусто.
+</div>
+
+<!-- ============================================ -->
+<h2 id="where">23 · Итог: где мы сейчас</h2>
+
+<div class="box done">
+<h3 style="margin-top:0">✅ Что работает</h3>
+<ul>
+<li>Сайт в интернете: <code>gekataca.github.io/kopilka-receptov</code></li>
+<li>8 стилей, 9 палитр × 5 оттенков, 8 теней × 2 набора</li>
+<li>Светлая / тёмная тема — тумблер в шапке панели</li>
+<li>Фон полностью финализирован</li>
+<li>Панель 🖌: Стиль + Палитра + Тень + Фон. Сворачивается по секциям</li>
+<li>Четыре экрана: Главная, Избранное, План, Кладовая</li>
+<li>Переключение экранов, прокрутка вверх, запоминание вкладки</li>
+<li>Содержание только на Главной</li>
+<li>Три модалки для ⏲ 🔍 ➕ — заглушки</li>
+<li><b>Макет в панели:</b> две колонки на ПК/iPad, живой по палитре/стилю/тени/теме</li>
+<li><b>Макет с фоном</b> — картинка на дне макета, меняется мгновенно</li>
+<li><b>Макет с честными пропорциями</b> — как у окна браузера</li>
+<li><b>Черновик:</b> клики в панели не трогают страницу — только макет</li>
+<li><b>Кнопка «Применить»</b> — открывает окошко «Применить к…»</li>
+<li><b>Окошко «Применить к…»</b> — галочки по экранам, кнопка активируется при выборе</li>
+<li><b>Редактор позиции фона</b> — открывается поверх панели, черновик не теряется</li>
+<li><b>Режим предпросмотра на телефоне</b> — кнопка «Посмотреть», страница с черновиком, плашка [Применить] [Вернуться]</li>
+</ul>
+</div>
+
+<div class="box warn">
+<h3 style="margin-top:0">🔄 Открытые вопросы</h3>
+<ul>
+<li>FAB на разных экранах — будут отличаться.</li>
+<li>Содержание / Поиск / Фильтр / Случайный по экранам — свой набор.</li>
+<li>Смена устройства и корзина (в карточке).</li>
+<li>Округление штучных продуктов.</li>
+<li>Куда открывается большая карточка.</li>
+</ul>
+</div>
+
+<div class="box note">
+<h3 style="margin-top:0">✅ Закрыто в v10</h3>
+<ul>
+<li>Фон в макете (вариант А).</li>
+<li>Фикс размеров панели (900 / до 96vh) и макета (400 / пропорции окна).</li>
+<li>Ужатие всех элементов макета под низкое окно ПК.</li>
+<li>Прижатие нижней полоски макета к низу.</li>
+<li>4.3 — кнопка «Применить».</li>
+<li>5 — окошко «Применить к…».</li>
+<li>Редактор позиции поверх панели (часть подшага 7).</li>
+<li>6 — режим предпросмотра на телефоне, плашка [Применить] [Вернуться].</li>
+</ul>
+</div>
+
+<div class="box">
+<h3 style="margin-top:0">⏳ Что дальше (следующая сессия)</h3>
+<ol>
+<li><b>Большая карточка рецепта</b> — спроектирована, не реализована. Следующий крупный шаг.</li>
+</ol>
+<p>Хвост подшага 7 (переключатель «Общая/Своя» + точка) — отложен (см. раздел 22).</p>
+<p><b>После большой карточки:</b> перенос данных → IndexedDB → фичи по одной (Избранное, План, Кладовая, Добавление, Настройки, Фото) → PWA → синхронизация → трекер питания.</p>
+</div>
+
+<div class="footer">
+<p><b>Копилка рецептов · Карта v10 · 10 октября 2026</b></p>
+<p>Единый документ. Заменяет карту v9.</p>
+</div>
+
+</div>
+</body>
+</html>
