@@ -666,6 +666,7 @@
 
       <!-- ═══ Макет (виден на ПК/iPad, прячется на телефоне) ═══ -->
       <div class="design-panel-mockup dm-scope" aria-hidden="true">
+        <img class="dm-bg" id="dmBg" src="" alt="">
         <div class="dm-header">
           <span class="dm-logo"></span>
           <span class="dm-icons">
@@ -824,6 +825,7 @@
         if (!designDraft) return;
         designDraft.bg = btn.dataset.bg;
         syncBgActive();
+        syncMockupScope();
       });
     });
 
@@ -1049,6 +1051,17 @@
       mock.dataset.shadow = s.shadow;
       if (s.theme === 'dark') mock.dataset.theme = 'dark';
       else delete mock.dataset.theme;
+
+      const bgImg = document.getElementById('dmBg');
+      if (bgImg){
+        if (s.bg){
+          bgImg.src = 'images/' + s.bg + '.jpg';
+          bgImg.classList.add('dm-bg-on');
+        } else {
+          bgImg.removeAttribute('src');
+          bgImg.classList.remove('dm-bg-on');
+        }
+      }
     }
 
     function openDesignPanel(){

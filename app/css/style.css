@@ -1109,20 +1109,34 @@ body[data-theme="dark"] .screen-stub{
 
 /* ── Две колонки при 800px и больше ── */
 @media (min-width:800px){
-  .design-panel-box{ max-width:760px; }
+  .design-panel-box{
+    max-width:900px;
+    height:96vh;
+    max-height:none;
+    overflow:hidden;
+  }
   .design-panel-columns{
+    flex:1 1 auto;
+    min-height:0;
     flex-direction:row;
-    align-items:flex-start;
+    align-items:stretch;
     gap:18px;
+  }
+  .design-panel-body{
+    flex:1 1 auto;
+    min-height:0;
+    overflow-y:auto;
   }
   .design-panel-mockup{
     display:flex;
     flex-direction:column;
     gap:8px;
-    flex:0 0 280px;
-    width:280px;
+    flex:0 0 320px;
+    width:320px;
     padding:14px;
     border-radius:12px;
+    position:relative;
+    overflow:hidden;
     background:color-mix(in srgb, var(--c1) 65%, var(--c2) 35%);
     box-shadow:0 4px 12px rgba(0,0,0,.25);
   }
@@ -1147,6 +1161,27 @@ body[data-theme="dark"] .screen-stub{
   --dm-card-shadow:0 16px 36px rgba(0,0,0,.28), 0 5px 14px rgba(0,0,0,.14);
   --plate-bg:var(--c2);
   --plate-text:var(--c4);
+}
+
+/* ═══ Макет · фон внутри коробочки ═══ */
+.dm-bg{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  display:none;
+  z-index:0;
+  pointer-events:none;
+}
+.dm-bg.dm-bg-on{
+  display:block;
+}
+/* Все элементы макета — поверх картинки фона */
+.design-panel-mockup > *:not(.dm-bg){
+  position:relative;
+  z-index:1;
 }
 
 /* ═══ Макет · шапка ═══ */
