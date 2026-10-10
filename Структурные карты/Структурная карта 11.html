@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Копилка рецептов · Карта v10 · 10 октября 2026</title>
+<title>Копилка рецептов · Карта v11 · 11 октября 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -58,9 +58,9 @@ nav.toc a:hover{color:#e69db5}
 <body>
 <div class="wrap">
 
-<span class="stamp">Карта v10 · 10 октября 2026 · после сессии «фон в макете + фикс размеров + 4.3 + 5 + редактор позиции поверх панели + подшаг 6»</span>
+<span class="stamp">Карта v11 · 11 октября 2026 · после сессии «разрезание index.html + storage.js слой 1 + переезд на IndexedDB»</span>
 <h1>Копилка рецептов</h1>
-<p class="subtitle">Единый документ проекта. Заменяет карту v9. Что сделано, что нет, где конфликты, как связаны функции.</p>
+<p class="subtitle">Единый документ проекта. Заменяет карту v10. Что сделано, что нет, где конфликты, как связаны функции.</p>
 
 <nav class="toc">
 <ol>
@@ -93,7 +93,7 @@ nav.toc a:hover{color:#e69db5}
 <!-- ============================================ -->
 <h2 id="meta">1 · О документе</h2>
 
-<p>Это <b>десятая версия</b> карты. Заменяет <code>Структурная карта 9.html</code>.</p>
+<p>Это <b>одиннадцатая версия</b> карты. Заменяет <code>Структурная карта 10.html</code>.</p>
 
 <h4>Легенда</h4>
 <div class="status-line">
@@ -124,6 +124,7 @@ nav.toc a:hover{color:#e69db5}
 <tr><td>8 октября 2026 (v8)</td><td><b>Сессия шага 4.</b> Четыре экрана. Заглушки. Переключение экранов, прокрутка вверх, запоминание вкладки. Содержание только на Главной. Три модалки для ⏲ 🔍 ➕. <b>Начали оформление по экранам.</b> Подшаг 1 — хранилище — сделан.</td></tr>
 <tr><td>9 октября 2026 (v9)</td><td><b>Сессия подшагов 4.1a + 4.1b + 4.2.</b> Обёртка <code>.dm-scope</code>, свои переменные, свои атрибуты. Стили переписаны на <code>.dm-scope[data-style]</code>. Черновик: клики в панели не трогают страницу. Крестик/фон/Escape выбрасывают черновик. Плашки и подложка макета переопределены. Тени макета усилены.</td></tr>
 <tr><td><b>10 октября 2026 (v10)</b></td><td><b>Сессия: фон в макете + фикс размеров + 4.3 + 5 + редактор позиции + подшаг 6.</b> Фон в макете (вариант А). Панель стала 900px, высота по содержимому до 96vh. Макет — 400px, пропорции окна браузера. Все элементы макета ужаты под низкое окно ПК. Нижняя полоска макета прижата к низу. <b>Кнопка «Применить» работает.</b> Окошко «Применить к…» с галочками. <b>Редактор позиции открывается поверх панели</b>, панель не закрывается. <b>Кнопка «Посмотреть» работает</b> — режим предпросмотра на телефоне с плашкой [Применить] [Вернуться].</td></tr>
+<tr><td><b>11 октября 2026 (v11)</b></td><td><b>Сессия: разрезание index.html + storage.js слой 1 + переезд на IndexedDB.</b> Весь JavaScript вынесен из <code>index.html</code> в отдельные файлы в <code>app/js/</code> (сначала 7, потом добавлен 8-й — <code>storage.js</code>). Создан <code>storage.js</code> — единая точка входа в IndexedDB. При первом запуске создаются 9 таблиц (recipes, products, pantry, shopping, plan, marks, timers, settings, photos). Все настройки — оформление по экранам, позиции фонов, активный экран, таб теней, свёрнутые секции — переехали из localStorage в IndexedDB (таблица <code>settings</code>). Флаг <code>migratedFromLocalStorage = true</code> поставлен. localStorage полностью очищен. Сайт запускается через <code>Storage.init()</code> в <code>main.js</code>.</td></tr>
 </table>
 
 <!-- ============================================ -->
@@ -346,14 +347,23 @@ nav.toc a:hover{color:#e69db5}
 │   │   ├── card.css        ← база карточки + тени + тёмная тема карточки + .dm-scope расширения
 │   │   ├── palettes/       ← 9 файлов палитр
 │   │   └── styles/         ← 8 файлов стилей (nezhny — заглушка, остальные 7 расширены на .dm-scope)
-│   ├── js/                 ← пока пусто
+│   ├── js/                 ← 8 файлов (см. ниже)
+│   │   ├── storage.js      ← единая точка входа в IndexedDB. Слой 1 сделан, остальное — заглушки
+│   │   ├── shared.js       ← общие переменные и утилиты (bgSettings, currentBg, designDraft, getDeviceType, getSettingsFor, saveSettingsToStorage, loadSharedFromStorage)
+│   │   ├── bg.js           ← фон сайта и редактор позиции (applyBg, openBgEditor, зум, перетаскивание)
+│   │   ├── design.js       ← оформление по экранам, панель 🖌, черновик, макет, «Применить к…», предпросмотр
+│   │   ├── screens.js      ← переключение 4 экранов + сворачивание содержания (initScreens)
+│   │   ├── modals.js       ← модалки ⏲ 🔍 ➕
+│   │   ├── fab.js          ← автоскрытие плавающих кнопок
+│   │   └── main.js         ← запуск: Storage.init → загрузка данных → initScreens → заставка
 │   └── img/                ← пока пусто
 └── images/                 ← 19 фоновых картинок (01–05, 07–20, без 06)</code></pre>
 
 <div class="box warn">
 <b>Осталось удалить (техдолг):</b>
 <ul>
-<li><code>Структурная карта 6.html</code>, <code>7.html</code>, <code>8.html</code>, <code>9.html</code> — устарели.</li>
+<li><code>Структурная карта 6.html</code>, <code>7.html</code>, <code>8.html</code>, <code>9.html</code>, <code>10.html</code> — устарели.</li>
+<li>Старый файл <code>Структурная карта 10.html</code> — после появления <code>Структурная карта 11.html</code>.</li>
 </ul>
 </div>
 
@@ -2156,11 +2166,11 @@ nav.toc a:hover{color:#e69db5}
 <b>Всё живёт в IndexedDB.</b> Не в localStorage. Причина: рецептов будет 150+, будут фото, будут версии. localStorage (5–10 МБ) не хватит.
 </div>
 
-<div class="box note">
-<b>Что было раньше.</b> До этого решения оформление и позиции фонов лежали в localStorage. При первом запуске нового кода — переносятся в IndexedDB, localStorage очищается.
+<div class="box done">
+<b>Сделано 11 октября 2026.</b> Оформление и позиции фонов переехали из localStorage в IndexedDB. Тогда же переехали и три «мелочи интерфейса»: <code>activeScreen</code>, <code>designShadowTab</code>, <code>designSectionsCollapsed</code> — они тоже теперь в IndexedDB. localStorage полностью очищен. В коде работают только через <code>Storage.getSetting()</code> / <code>Storage.saveSetting()</code>.
 </div>
 
-<h4>Таблицы в IndexedDB — 9 штук</h4>
+<h4>Таблицы в IndexedDB — 9 штук <span class="chip done">✅ созданы 11 октября 2026</span></h4>
 
 <table class="table">
 <tr><th>Таблица</th><th>Что хранит</th></tr>
@@ -2171,7 +2181,7 @@ nav.toc a:hover{color:#e69db5}
 <tr><td><code>plan</code></td><td>План питания.</td></tr>
 <tr><td><code>marks</code></td><td>Отметки ❤ 👨‍🍳 🔖 📅 — отдельными списками.</td></tr>
 <tr><td><code>timers</code></td><td>Активные таймеры.</td></tr>
-<tr><td><code>settings</code></td><td>Оформление, теги, позиции фонов, настройки.</td></tr>
+<tr><td><code>settings</code></td><td>Оформление по экранам, позиции фонов, активный экран, таб теней, свёрнутые секции, теги (в будущем). Всего 6 ключей сейчас: <code>design</code>, <code>bgSettings</code>, <code>activeScreen</code>, <code>designShadowTab</code>, <code>designSectionsCollapsed</code>, <code>migratedFromLocalStorage</code>.</td></tr>
 <tr><td><code>photos</code></td><td>Фото рецептов и продуктов — отдельно от рецептов.</td></tr>
 </table>
 
@@ -2179,7 +2189,19 @@ nav.toc a:hover{color:#e69db5}
 <b>Почему фото отдельно.</b> Рецепт грузится быстро (без фото). Фото подгружаются отдельно — только когда открываешь карточку. Список рецептов не тормозит.
 </div>
 
-<h3>17.0.d. storage.js — все операции через одну «коробку» <span class="chip done">✅ решено</span></h3>
+<h3>17.0.d. storage.js — все операции через одну «коробку» <span class="chip done">✅ слой 1 сделан (11 октября 2026)</span></h3>
+
+<div class="box done">
+<b>Что уже сделано (слой 1):</b>
+<ul>
+<li><code>init()</code> — открыть базу, создать 9 таблиц, запустить миграцию.</li>
+<li><code>getSetting(key)</code> / <code>saveSetting(key, value)</code> / <code>deleteSetting(key)</code> — универсальные настройки.</li>
+<li><code>migrateFromLocalStorage()</code> — переносит ключи <code>design</code>, <code>bgSettings</code>, <code>activeScreen</code>, <code>designShadowTab</code>, <code>designSectionsCollapsed</code> из localStorage → IndexedDB, ставит флаг <code>migratedFromLocalStorage = true</code>, чистит localStorage.</li>
+<li><code>getStats()</code> — сколько рецептов и продуктов (для «О программе»).</li>
+</ul>
+<b>Всё остальное (~32 функции) — заглушки.</b> Возвращают <code>null</code> / <code>[]</code> / <code>false</code> и пишут предупреждение в консоль. Будут реализованы слоями 2–4.
+<br><b>Фолбэк.</b> Если IndexedDB недоступна (Safari приватное окно) — <code>saveSetting</code>/<code>getSetting</code> молча работают через localStorage. Сайт не падает.
+</div>
 
 <div class="rule">
 <b>Не работать с IndexedDB напрямую.</b>
@@ -2476,13 +2498,13 @@ nav.toc a:hover{color:#e69db5}
 <h4>Процедура первой загрузки нового кода</h4>
 
 <div class="box done">
-<b>Что происходит, когда пользователь впервые открывает сайт с новым storage.js:</b>
+<b>Что происходит при первом запуске (сделано 11 октября 2026):</b>
 <ol>
 <li>Создаются 9 таблиц в IndexedDB (recipes, products, pantry, shopping, plan, marks, timers, settings, photos).</li>
-<li>Читаются 9 демо-рецептов из HTML → сохраняются в IndexedDB (таблица <code>recipes</code>).</li>
-<li>Читается оформление из localStorage (ключи <code>design</code>, <code>bgSettings</code>, <code>activeScreen</code>, <code>designShadowTab</code>, <code>designSectionsCollapsed</code>) → сохраняется в IndexedDB (таблица <code>settings</code>) → localStorage очищается.</li>
+<li>Оформление из localStorage (ключи <code>design</code>, <code>bgSettings</code>, <code>activeScreen</code>, <code>designShadowTab</code>, <code>designSectionsCollapsed</code>) → сохраняется в IndexedDB (таблица <code>settings</code>) → localStorage очищается. Ставится флаг <code>migratedFromLocalStorage = true</code>.</li>
 <li>Дальше сайт работает только с IndexedDB.</li>
 </ol>
+<b>9 демо-рецептов пока НЕ переезжают.</b> Они живут в HTML (<code>index.html</code>) как разметка. Перенос демо в массив объектов — отдельный подшаг, впереди.
 </div>
 
 <div class="box note">
@@ -2501,16 +2523,17 @@ nav.toc a:hover{color:#e69db5}
 
 <h4>Проверка при первом запуске</h4>
 
-<div class="box">
-<b>Что должно произойти (чек-лист для проверки):</b>
+<div class="box done">
+<b>Проверено 11 октября 2026 — всё прошло успешно:</b>
 <ul>
 <li>Сайт открылся, ничего не сломалось.</li>
 <li>9 демо-рецептов видны на Главной (как раньше).</li>
 <li>Оформление (тема, палитра, фон) — как было до переезда.</li>
-<li>Позиции фонов — сохранены (bgSettings).</li>
+<li>Позиции фонов — сохранены (<code>bgSettings</code>).</li>
 <li>В DevTools → Application → IndexedDB → видно 9 таблиц.</li>
-<li>В DevTools → Application → localStorage → все старые ключи исчезли.</li>
+<li>В DevTools → Application → localStorage → пусто.</li>
 </ul>
+<b>Первая попытка не сработала</b> — в <code>design.js</code> была ошибка: <code>loadDesignFromStorage</code> писала в переменную <code>designData</code> до того, как она создана. Исправлено. Урок — в разделе 19.
 </div>
 
 
@@ -2635,6 +2658,25 @@ nav.toc a:hover{color:#e69db5}
 <div class="box done">
 <b>Урок 10 октября 2026.</b> Редактор позиции фона открывается <b>поверх</b> панели оформления. Для этого его <code>z-index</code> поднят с <code>100000</code> до <code>100003</code> (выше панели). Если в будущем добавится ещё один слой поверх — помнить про этот порядок.
 <br><b>Текущая иерархия (снизу вверх):</b> фон (0) → контент (1) → FAB (99) → нижняя навигация (100) → панель (100001) → окошко «Применить к…» и модалки (100002) → редактор фона (100003) → плашка предпросмотра (100004) → заставка (9999).
+<br><b>Замечание 11 октября 2026.</b> Заставка имеет <code>z-index: 9999</code> — она ниже панели. Но пока она видна, ничего другого не открыто. Когда заставка уходит классом <code>.hide</code> — она получает <code>visibility:hidden</code> и никому не мешает.
+
+<h3>19.12. Заставка висит вечно при ошибке в скрипте</h3>
+<div class="box bug">
+<b>Урок 11 октября 2026.</b> В <code>main.js</code> сначала было так: <code>await Storage.init()</code> → ... → в самом конце <code>setTimeout(... скрыть заставку ...)</code>. Если что-то в начале упало — заставка оставалась навсегда, сайт недоступен.
+<br><b>Правило:</b> <code>setTimeout</code>, который прячет заставку, — в **самом начале</b> <code>boot()</code>, до всех <code>await</code>. Тогда при любой ошибке страница всё равно покажется, а ошибка будет видна в консоли.
+</div>
+
+<h3>19.13. Функция записи в объект — сначала создай объект</h3>
+<div class="box bug">
+<b>Урок 11 октября 2026.</b> Функция <code>loadDesignFromStorage()</code> пыталась писать в <code>designData</code>, но она была <code>null</code> — потому что <code>loadDesignData()</code> (которая её создаёт) не успела вызваться. Ошибка: <code>Cannot set properties of null</code>.
+<br><b>Правило:</b> если функция пишет в общий объект (<code>designData</code>, <code>bgSettings</code>, ...) — в её начале должна быть строка, которая создаёт объект, если его нет. Не полагаться на то, что кто-то вызвал инициализацию раньше.
+</div>
+
+<h3>19.14. Миграция — список ключей проговаривать явно</h3>
+<div class="box bug">
+<b>Урок 11 октября 2026.</b> Договаривались: в IndexedDB уезжают только <code>design</code> и <code>bgSettings</code>, а три «мелочи» (<code>activeScreen</code>, <code>designShadowTab</code>, <code>designSectionsCollapsed</code>) остаются в localStorage. В коде миграции по памяти оказались все пять. Потом чистили руками — удаляли мёртвые копии из localStorage.
+<br><b>Правило:</b> перед написанием миграции — **выписать список ключей на бумагу и свериться с картой**. Не полагаться на память. Пять ключей — ок, пятьдесят — будет катастрофа.
+</div>
 </div>
 
 <!-- ============================================ -->
@@ -2657,15 +2699,21 @@ nav.toc a:hover{color:#e69db5}
 28. Часть подшага 7: Редактор позиции поверх панели   ✅ СДЕЛАНО (v10)
 29. Хвост подшага 7: «Общая/Своя» + точка-звёздочка   ⏳ ОТЛОЖЕНО
 
-─── ДАЛЬШЕ ───
-30. Большая карточка рецепта                          ⏳ СЛЕДУЮЩЕЕ
-31. Перенос данных (150+ рецептов, синонимы)          ⏳
-32. Хранилище (IndexedDB)                             ⏳
-33. Фичи по одной: Избранное, План, Кладовая,         ⏳
+─── ШАГ 4.6: ПОДГОТОВКА К БОЛЬШОЙ КАРТОЧКЕ ───
+30. Разрезание index.html на 7 JS-файлов              ✅ СДЕЛАНО (v11)
+31. storage.js — слой 1 (IndexedDB, settings)         ✅ СДЕЛАНО (v11)
+32. Переезд всех настроек на IndexedDB                ✅ СДЕЛАНО (v11)
+33. Демо-рецепты: вынести 9 карточек в массив         ⏳ СЛЕДУЮЩЕЕ
+     (демо-recipes.js + рендер-функция)
+34. storage.js — слой 2 (рецепты, отметки, теги)      ⏳
+35. Большая карточка рецепта                          ⏳
+36. storage.js — слой 3 (продукты, кладовая, план)    ⏳
+37. storage.js — слой 4 (таймеры, фото, экспорт)      ⏳
+38. Фичи по одной: Избранное, План, Кладовая,         ⏳
     Добавление, Настройки, Фото
-34. PWA (манифест + добавление на экран)              ⏳
-35. Синхронизация                                     ⏳
-36. Трекер питания                                    ⏳</code></pre>
+39. PWA (манифест + добавление на экран)              ⏳
+40. Синхронизация                                     ⏳
+41. Трекер питания                                    ⏳</code></pre>
 
 <!-- ============================================ -->
 <h2 id="debt">21 · Технический долг</h2>
@@ -2689,9 +2737,15 @@ nav.toc a:hover{color:#e69db5}
 Смешаны: <code>data-s</code>, <code>data-p</code>, <code>data-shade</code>, <code>data-sh</code>, <code>data-th</code>, <code>data-bg</code>, <code>data-style</code>, <code>data-palette</code>, <code>data-shadow</code>, <code>data-fab-shadow</code>, <code>data-theme</code>, <code>data-screen</code>, <code>data-modal</code>.
 </div>
 
-<h4>4. Вынести JS в отдельные файлы</h4>
-<div class="box">
-Весь JavaScript — внутри <code>&lt;script&gt;</code> в <code>index.html</code>. Стало больше ~2000 строк. Разбить на файлы в <code>app/js/</code>: <code>bg.js</code>, <code>design-panel.js</code>, <code>per-screen.js</code>, <code>screens.js</code>, <code>modals.js</code>, <code>preview.js</code>, <code>fab.js</code>, <code>main.js</code>.
+<h4>4. Вынести JS в отдельные файлы <span class="chip done">✅ сделано (v11)</span></h4>
+<div class="box done">
+Сделано 11 октября 2026. <code>index.html</code> разрезан на 8 файлов в <code>app/js/</code>: <code>storage.js</code>, <code>shared.js</code>, <code>bg.js</code>, <code>design.js</code>, <code>screens.js</code>, <code>modals.js</code>, <code>fab.js</code>, <code>main.js</code>. Подключаются в конце <code>&lt;body&gt;</code> через обычные <code>&lt;script src="..."&gt;</code> в этом самом порядке.
+<h4>4.1. Мёртвый ключ activeScreen в localStorage <span class="chip no">❌ убрано вручную</span></h4>
+<div class="box bug">
+<b>Урок 11 октября 2026.</b> При переезде на IndexedDB код миграции перенёс <code>activeScreen</code> в IndexedDB, но старую копию в localStorage не удалил. Ключ остался мёртвым — нигде не использовался, но и не мешал.
+<br><b>Убрано</b> командой <code>localStorage.clear()</code> из консоли DevTools.
+<br><b>Правило:</b> после миграции — всегда проверять localStorage. Если ключ нигде не читается — удалять сразу.
+</div>
 </div>
 
 <h3>🟢 Низкий приоритет</h3>
@@ -2785,6 +2839,10 @@ nav.toc a:hover{color:#e69db5}
 <h3 style="margin-top:0">✅ Что работает</h3>
 <ul>
 <li>Сайт в интернете: <code>gekataca.github.io/kopilka-receptov</code></li>
+<li><b>JavaScript разрезан на 8 файлов</b> в <code>app/js/</code>. <code>index.html</code> содержит только разметку.</li>
+<li><b>IndexedDB работает.</b> 9 таблиц. Все настройки (оформление, фоны, активный экран, таб теней, свёрнутые секции) — в таблице <code>settings</code>.</li>
+<li><b>storage.js слой 1 сделан.</b> <code>init</code>, <code>getSetting</code>, <code>saveSetting</code>, <code>deleteSetting</code>, <code>migrateFromLocalStorage</code>, <code>getStats</code>. Остальное — заглушки.</li>
+<li><b>localStorage полностью очищен.</b> Старые ключи уехали в IndexedDB.</li>
 <li>8 стилей, 9 палитр × 5 оттенков, 8 теней × 2 набора</li>
 <li>Светлая / тёмная тема — тумблер в шапке панели</li>
 <li>Фон полностью финализирован</li>
@@ -2863,17 +2921,15 @@ nav.toc a:hover{color:#e69db5}
 
 <div class="box">
 <h3 style="margin-top:0">⏳ Что дальше (следующая сессия)</h3>
-<ol>
-<li><b>Раздел 17 — Данные и хранилище.</b> Обсуждаем словами, потом вносим в карту. Без него большая карточка не работает: правки, версии, фото — всё должно где-то жить.</li>
-<li><b>После раздела 17 — код большой карточки.</b></li>
-</ol>
+<p><b>Первый вариант — вынести 9 демо-рецептов в массив.</b> Создать <code>app/js/demo-recipes.js</code>, переписать 9 карточек из HTML в объекты, написать рендер-функцию (объект → HTML карточки). Это откроет путь к сохранению рецептов в IndexedDB.</p>
+<p><b>Второй вариант — сразу слой 2 storage.js.</b> Реализовать функции <code>saveRecipe</code>, <code>getRecipe</code>, <code>getAllRecipes</code>, <code>deleteRecipe</code>, <code>addMark</code> и т.д. Но без вынесенных демо их не на чем проверять.</p>
+<p><b>Рекомендация ИИ:</b> сначала демо-рецепты в массив. Потом слой 2 storage.js. Потом большая карточка.</p>
 <p>Хвост подшага 7 (переключатель «Общая/Своя» + точка) — отложен (см. раздел 22).</p>
-<p><b>Дальше:</b> перенос данных → IndexedDB → фичи по одной (Избранное, План, Кладовая, Добавление, Настройки, Фото) → PWA → синхронизация → трекер питания.</p>
 </div>
 
 <div class="footer">
-<p><b>Копилка рецептов · Карта v10 · 10 октября 2026</b></p>
-<p>Единый документ. Заменяет карту v9.</p>
+<p><b>Копилка рецептов · Карта v11 · 11 октября 2026</b></p>
+<p>Единый документ. Заменяет карту v10.</p>
 </div>
 
 </div>
