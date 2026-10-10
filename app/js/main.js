@@ -1,14 +1,33 @@
 // ═══════════════════════════════════════════════════
-// main.js — запуск. Сейчас тут только заставка.
-// Загружается последним.
+// main.js — запуск сайта.
+// Загружается последним. Порядок:
+//   1. Инициализировать IndexedDB
+//   2. Загрузить оформление и фон из IndexedDB
+//   3. Запустить переключение экранов
+//   4. Скрыть заставку
 // ═══════════════════════════════════════════════════
 
-// ─── Заставка: скрываем через 1.2 секунды после загрузки ───
-window.addEventListener('load', () => {
+async function boot(){
+  // 1. Скрыть заставку через 1.2 секунды — независимо от того, что будет дальше.
+  //    Если что-то упадёт — заставка всё равно уйдёт, и будет видно ошибку.
   setTimeout(() => {
-    document.getElementById('loader').classList.add('hide');
+    const l = document.getElementById('loader');
+    if (l) l.classList.add('hide');
   }, 1200);
-});
 
-// Позже сюда добавится Storage.init() и всё, что должно
-// запускаться один раз при старте сайта.
+  // 2. Открыть базу, создать таблицы, мигрировать из localStorage (один раз)
+  await Storage.init();
+
+  // 3. Загрузить данные из IndexedDB в переменные в памяти
+  await loadDesignFromStorage();
+  await loadSharedFromStorage();
+
+  // 4. Запустить интерфейс
+  initScreens();
+}
+
+if (document.readyState === 'loading'){
+  document.addEventListener('DOMContentLoaded', boot);
+} else {
+  boot();
+}

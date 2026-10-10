@@ -13,7 +13,7 @@ document.querySelectorAll('.head-btn').forEach(btn => {
 });
 
 // ─── Переключение экранов ───
-document.addEventListener('DOMContentLoaded', function(){
+function initScreens(){
   const SCREEN_KEY = 'activeScreen';
   const VALID_SCREENS = ['home','favorites','plan','pantry'];
 
@@ -46,4 +46,4 @@ document.addEventListener('DOMContentLoaded', function(){
   } else {
     if (typeof applyDesignFor === 'function') applyDesignFor('home');
   }
-});
+}

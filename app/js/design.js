@@ -23,28 +23,20 @@ const DESIGN_DEFAULTS = {
 
 function loadDesignData(){
   if (designData) return designData;
-  let raw = null;
-  try { raw = localStorage.getItem(DESIGN_KEY); } catch(e) {}
-  if (raw) {
-    try { designData = JSON.parse(raw); } catch(e) { designData = null; }
-  }
-  if (!designData || typeof designData !== 'object'){
-    designData = {};
-    DESIGN_SCREENS.forEach(s => designData[s] = { ...DESIGN_DEFAULTS });
-    try {
-      localStorage.removeItem('designPalette');
-      localStorage.removeItem('designShadow');
-      localStorage.removeItem('designFabShadow');
-      localStorage.removeItem('designTheme');
-      localStorage.removeItem('bgPositions');
-      localStorage.setItem(DESIGN_KEY, JSON.stringify(designData));
-    } catch(e) {}
-  } else {
+  designData = {};
+  DESIGN_SCREENS.forEach(s => designData[s] = { ...DESIGN_DEFAULTS });
+  return designData;
+}
+
+async function loadDesignFromStorage(){
+  const d = loadDesignData();
+  const v = await Storage.getSetting('design');
+  if (v && typeof v === 'object'){
     DESIGN_SCREENS.forEach(s => {
-      designData[s] = { ...DESIGN_DEFAULTS, ...(designData[s] || {}) };
+      d[s] = { ...DESIGN_DEFAULTS, ...(v[s] || {}) };
     });
   }
-  return designData;
+  return d;
 }
 
 function getDesignFor(screen){
@@ -59,7 +51,7 @@ function getActiveDesign(){
 function setDesignFor(screen, patch){
   const d = loadDesignData();
   d[screen] = { ...(d[screen] || DESIGN_DEFAULTS), ...patch };
-  try { localStorage.setItem(DESIGN_KEY, JSON.stringify(d)); } catch(e) {}
+  Storage.saveSetting('design', d);
 }
 
 function applyDesignFor(screen){

@@ -29,7 +29,13 @@ let activeDesignScreen = 'home';
 
 // ─── Сохранить bgSettings в localStorage ───
 function saveSettingsToStorage() {
-  localStorage.setItem('bgSettings', JSON.stringify(bgSettings));
+  Storage.saveSetting('bgSettings', bgSettings);
+}
+
+// ─── Загрузить общие данные из IndexedDB (вызывается из main.js после Storage.init) ───
+async function loadSharedFromStorage() {
+  const v = await Storage.getSetting('bgSettings');
+  bgSettings = (v && typeof v === 'object') ? v : {};
 }
 
 // ─── Тип устройства: pc / iphone / ipad ───
