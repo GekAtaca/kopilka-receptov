@@ -36,6 +36,17 @@ async function loadDesignFromStorage(){
       d[s] = { ...DESIGN_DEFAULTS, ...(v[s] || {}) };
     });
   }
+
+  // Мелочи интерфейса — тоже из IndexedDB
+  const tab = await Storage.getSetting(SHADOW_TAB_KEY);
+  if (tab === 'cards' || tab === 'fab') currentShadowTab = tab;
+
+  const cs = await Storage.getSetting(SECTIONS_KEY);
+  if (cs && typeof cs === 'object') collapsedSections = cs;
+
+  syncShadowActive();
+  applyCollapsedSections();
+
   return d;
 }
 
@@ -277,10 +288,6 @@ const dpShadowTabs   = document.getElementById('dpShadowTabs');
 const SHADOW_TAB_KEY = 'designShadowTab';
 
 let currentShadowTab = 'cards';
-try {
-  const savedTab = localStorage.getItem(SHADOW_TAB_KEY);
-  if (savedTab === 'cards' || savedTab === 'fab') currentShadowTab = savedTab;
-} catch(e) {}
 
 function syncShadowActive(){
   const s = getActiveDesign();
@@ -314,7 +321,7 @@ dpShadowsFab.querySelectorAll('.dp-chip').forEach(btn => {
 dpShadowTabs.querySelectorAll('.dp-chip').forEach(btn => {
   btn.addEventListener('click', () => {
     currentShadowTab = btn.dataset.shadowTarget;
-    try { localStorage.setItem(SHADOW_TAB_KEY, currentShadowTab); } catch(e) {}
+    Storage.saveSetting(SHADOW_TAB_KEY, currentShadowTab);
     syncShadowActive();
   });
 });
@@ -354,21 +361,25 @@ dpThemeToggle.addEventListener('click', () => {
 
 const SECTIONS_KEY = 'designSectionsCollapsed';
 let collapsedSections = {};
-try {
-  collapsedSections = JSON.parse(localStorage.getItem(SECTIONS_KEY) || '{}') || {};
-} catch(e) { collapsedSections = {}; }
+
+function applyCollapsedSections(){
+  document.querySelectorAll('#designPanel .dp-section').forEach(section => {
+    const id = section.dataset.section;
+    if (!id) return;
+    section.classList.toggle('collapsed', !!collapsedSections[id]);
+  });
+}
 
 document.querySelectorAll('#designPanel .dp-section').forEach(section => {
   const id = section.dataset.section;
   if (!id) return;
-  if (collapsedSections[id]) section.classList.add('collapsed');
   const label = section.querySelector('.dp-section-label');
   if (!label) return;
   label.addEventListener('click', (e) => {
     e.stopPropagation();
     section.classList.toggle('collapsed');
     collapsedSections[id] = section.classList.contains('collapsed');
-    try { localStorage.setItem(SECTIONS_KEY, JSON.stringify(collapsedSections)); } catch(e) {}
+    Storage.saveSetting(SECTIONS_KEY, collapsedSections);
   });
 });
 

@@ -13,7 +13,7 @@ document.querySelectorAll('.head-btn').forEach(btn => {
 });
 
 // ─── Переключение экранов ───
-function initScreens(){
+function initScreens(savedScreen){
   const SCREEN_KEY = 'activeScreen';
   const VALID_SCREENS = ['home','favorites','plan','pantry'];
 
@@ -28,7 +28,7 @@ function initScreens(){
     navBtns.forEach(b => {
       b.classList.toggle('active', b.dataset.screen === name);
     });
-    try { localStorage.setItem(SCREEN_KEY, name); } catch(e) {}
+    Storage.saveSetting(SCREEN_KEY, name);
     if (typeof applyDesignFor === 'function') applyDesignFor(name);
   }
 
@@ -40,10 +40,9 @@ function initScreens(){
   });
 
   // Восстановление при загрузке
-  const saved = localStorage.getItem(SCREEN_KEY);
-  if (saved && VALID_SCREENS.includes(saved)) {
-    showScreen(saved);
+  if (savedScreen && VALID_SCREENS.includes(savedScreen)) {
+    showScreen(savedScreen);
   } else {
-    if (typeof applyDesignFor === 'function') applyDesignFor('home');
+    showScreen('home');
   }
 }

@@ -18,12 +18,13 @@ async function boot(){
   // 2. Открыть базу, создать таблицы, мигрировать из localStorage (один раз)
   await Storage.init();
 
-  // 3. Загрузить данные из IndexedDB в переменные в памяти
+   // 3. Загрузить данные из IndexedDB в переменные в памяти
   await loadDesignFromStorage();
   await loadSharedFromStorage();
+  const savedScreen = await Storage.getSetting('activeScreen');
 
   // 4. Запустить интерфейс
-  initScreens();
+  initScreens(savedScreen);
 }
 
 if (document.readyState === 'loading'){
