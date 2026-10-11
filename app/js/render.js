@@ -143,10 +143,11 @@ function renderRecipeCard(recipe) {
 }
 
 // ═══════════════════════════════════════════════════
-// Разложить все рецепты по секциям Главной
+// Разложить все рецепты по секциям Главной.
+// Асинхронная: читает рецепты из IndexedDB.
 // ═══════════════════════════════════════════════════
-function renderAllRecipes() {
-  if (typeof demoRecipes === 'undefined') return;
+async function renderAllRecipes() {
+  const all = await Storage.getAllRecipes();
 
   const meals = ['breakfast', 'lunch', 'dinner', 'snack'];
 
@@ -158,7 +159,7 @@ function renderAllRecipes() {
     const counter = section.querySelector('.recipes-section-count');
     if (!grid) return;
 
-    const list = demoRecipes.filter(r => r.meal === meal);
+    const list = all.filter(r => r.meal === meal);
     grid.innerHTML = list.map(renderRecipeCard).join('');
     if (counter) counter.textContent = list.length;
   });

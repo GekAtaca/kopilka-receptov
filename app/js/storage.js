@@ -138,6 +138,40 @@
   }
 
   // ═══════════════════════════════════════════════════
+    // ═══════════════════════════════════════════════════
+  // Засев демо-рецептов (один раз при первом запуске)
+  // ═══════════════════════════════════════════════════
+
+  async function seedDemoRecipes(){
+    if (!available) return;
+    const done = await getSetting('demoSeeded');
+    if (done) return;
+    if (typeof demoRecipes === 'undefined' || !Array.isArray(demoRecipes)) return;
+    if (!demoRecipes.length) return;
+
+    await new Promise((resolve, reject) => {
+      const t = db.transaction('recipes', 'readwrite');
+      const store = t.objectStore('recipes');
+      for (const r of demoRecipes){
+        store.put(r);
+      }
+      t.oncomplete = () => resolve();
+      t.onerror    = () => reject(t.error);
+      t.onabort    = () => reject(t.error);
+    });
+
+    await saveSetting('demoSeeded', true);
+  }
+
+  // ═══════════════════════════════════════════════════
+  // Рецепты — сейчас только чтение всех
+  // ═══════════════════════════════════════════════════
+
+  async function getAllRecipes(){
+    if (!available) return [];
+    return await reqPromise(tx('recipes','readonly').getAll());
+  }
+
   // Статистика (для «О программе»)
   // ═══════════════════════════════════════════════════
 
@@ -166,6 +200,7 @@
   window.Storage = {
     // ── ядро ──
     init,
+    seedDemoRecipes,
     getStats,
 
     // ── настройки ──
@@ -176,7 +211,7 @@
     // ── рецепты ──
     saveRecipe:               stub('saveRecipe'),
     getRecipe:                stub('getRecipe'),
-    getAllRecipes:            stub('getAllRecipes', []),
+    getAllRecipes,
     deleteRecipe:             stub('deleteRecipe'),
     duplicateRecipe:          stub('duplicateRecipe'),
     getRecipesByTag:          stub('getRecipesByTag', []),

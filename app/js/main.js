@@ -18,6 +18,9 @@ async function boot(){
   // 2. Открыть базу, создать таблицы, мигрировать из localStorage (один раз)
   await Storage.init();
 
+  // 2б. Если база пустая — залить 9 демо-рецептов (один раз, флаг demoSeeded)
+  await Storage.seedDemoRecipes();
+
    // 3. Загрузить данные из IndexedDB в переменные в памяти
   await loadDesignFromStorage();
   await loadSharedFromStorage();
@@ -26,8 +29,8 @@ async function boot(){
    // 4. Запустить интерфейс
   initScreens(savedScreen);
 
-  // 5. Отрисовать все рецепты на Главной
-  renderAllRecipes();
+  // 5. Отрисовать все рецепты на Главной (читает из IndexedDB)
+  await renderAllRecipes();
 }
 
 if (document.readyState === 'loading'){
