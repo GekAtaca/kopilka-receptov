@@ -424,7 +424,7 @@
     </div>
   </div>
 
-  <div id="modalAdd" class="modal" style="display:none">
+   <div id="modalAdd" class="modal" style="display:none">
     <div class="modal-box">
       <div class="modal-head">
         <span class="modal-title">➕ Добавить</span>
@@ -434,10 +434,38 @@
     </div>
   </div>
 
+  <!-- ═══ Большая карточка рецепта (шаг 35.1) ═══ -->
+  <div id="modalRecipe" class="modal-recipe" style="display:none">
+    <div class="modal-recipe-box" id="modalRecipeBox"></div>
+  </div>
+
+ <!-- ═══ Модалка «Позже» (заглушка) ═══ -->
+  <div id="modalSoon" class="modal modal-soon" style="display:none">
+    <div class="modal-box">
+      <div class="modal-head">
+        <span class="modal-title" id="modalSoonTitle">Скоро</span>
+        <button type="button" class="modal-close" data-modal-close>✕</button>
+      </div>
+      <div class="modal-stub" id="modalSoonText">Это появится позже.</div>
+    </div>
+  </div>
+
+  <!-- ═══ Модалка таймера рецепта (шаг 35.2.3, пока заглушка) ═══ -->
+  <div id="modalRecipeTimer" class="modal modal-soon" style="display:none">
+    <div class="modal-box">
+      <div class="modal-head">
+        <span class="modal-title">⏱ Таймер рецепта</span>
+        <button type="button" class="modal-close" id="recipeTimerClose">✕</button>
+      </div>
+      <div class="modal-stub">Таймер рецепта появится позже.</div>
+    </div>
+  </div>
+
   <script src="app/js/tags-base.js"></script>
   <script src="app/js/storage.js"></script>
   <script src="app/js/shared.js"></script>
   <script src="app/js/render.js"></script>
+  <script src="app/js/card-big.js"></script>
   <script src="app/js/bg.js"></script>
   <script src="app/js/design.js"></script>
   <script src="app/js/screens.js"></script>

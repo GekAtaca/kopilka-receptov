@@ -25,19 +25,12 @@ function escapeHtml(str) {
     .replace(/'/g, '&#39;');
 }
 
-// ─── Красивое число: 0.5 → «1/2», 1.5 → «1 1/2», 60 → «60» ───
+// ─── Красивое число: 60 → «60», 4.5 → «4,5», 0.25 → «0,25» ───
 function formatAmount(n) {
   if (n == null) return '';
-  if (Number.isInteger(n)) return String(n);
-  const whole = Math.floor(n);
-  const frac = n - whole;
-  let fracStr;
-  if (Math.abs(frac - 0.5)  < 0.01) fracStr = '1/2';
-  else if (Math.abs(frac - 0.25) < 0.01) fracStr = '1/4';
-  else if (Math.abs(frac - 0.75) < 0.01) fracStr = '3/4';
-  else fracStr = frac.toFixed(2).replace('0.', '');
-  if (whole === 0) return fracStr;
-  return whole + ' ' + fracStr;
+  const r = Math.round(n * 100) / 100;
+  if (Number.isInteger(r)) return String(r);
+  return String(r).replace('.', ',');
 }
 
 // ─── Карточка рецепта (маленькая) ───
