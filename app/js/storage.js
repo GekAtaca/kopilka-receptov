@@ -163,13 +163,48 @@
     await saveSetting('demoSeeded', true);
   }
 
-  // ═══════════════════════════════════════════════════
-  // Рецепты — сейчас только чтение всех
+   // ═══════════════════════════════════════════════════
+  // Рецепты
   // ═══════════════════════════════════════════════════
 
   async function getAllRecipes(){
     if (!available) return [];
     return await reqPromise(tx('recipes','readonly').getAll());
+  }
+
+  async function getRecipe(id){
+    if (!available || !id) return null;
+    return await reqPromise(tx('recipes','readonly').get(id));
+  }
+
+  async function saveRecipe(recipe){
+    if (!available || !recipe) return null;
+    const now = Date.now();
+    const r = { ...recipe };
+    if (!r.id) r.id = await nextRecipeId();
+    if (!r.createdAt) r.createdAt = now;
+    r.updatedAt = now;
+    await reqPromise(tx('recipes','readwrite').put(r));
+    return r;
+  }
+
+  async function deleteRecipe(id){
+    if (!available || !id) return;
+    await reqPromise(tx('recipes','readwrite').delete(id));
+  }
+
+  // Внутренняя: следующий свободный recipe-NNN
+  async function nextRecipeId(){
+    const all = await getAllRecipes();
+    let max = 0;
+    for (const r of all){
+      const m = /^recipe-(\d+)$/.exec(r.id || '');
+      if (m){
+        const n = parseInt(m[1], 10);
+        if (n > max) max = n;
+      }
+    }
+    return 'recipe-' + String(max + 1).padStart(3, '0');
   }
 
   // Статистика (для «О программе»)
@@ -208,11 +243,11 @@
     saveSetting,
     deleteSetting,
 
-    // ── рецепты ──
-    saveRecipe:               stub('saveRecipe'),
-    getRecipe:                stub('getRecipe'),
+     // ── рецепты ──
+    saveRecipe,
+    getRecipe,
     getAllRecipes,
-    deleteRecipe:             stub('deleteRecipe'),
+    deleteRecipe,
     duplicateRecipe:          stub('duplicateRecipe'),
     getRecipesByTag:          stub('getRecipesByTag', []),
     getRecipesByMeal:         stub('getRecipesByMeal', []),
