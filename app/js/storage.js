@@ -688,6 +688,123 @@
     return 'recipe-' + String(max + 1).padStart(3, '0');
   }
 
+  
+  // ═══════════════════════════════════════════════════
+  // Продукты
+  // ═══════════════════════════════════════════════════
+  //
+  // Готовая база — в products-base.js (в коде, не в IndexedDB).
+  // Своя — в IndexedDB, таблица 'products'.
+  // Свои продукты имеют id вида product-NNN.
+  // Готовые — осмысленный транслит (milk-3-2 и т.п.).
+  //
+  // Функции getBase* работают только с готовой базой.
+  // Функции getAll/save/delete — только со своей (IndexedDB).
+  // searchProducts / getProductsByGroup / getProduct — объединяют обе.
+
+  // ─── 19 групп продуктов ───
+  function getBaseProductGroups(){
+    return (typeof PRODUCT_GROUPS !== 'undefined' && Array.isArray(PRODUCT_GROUPS))
+      ? PRODUCT_GROUPS : [];
+  }
+
+  // ─── Все продукты готовой базы ───
+  // При чтении приписываем source:'base' каждому.
+  // Так и готовые, и свои продукты имеют одно и то же поле source.
+  function getBaseProducts(){
+    const arr = (typeof BASE_PRODUCTS !== 'undefined' && Array.isArray(BASE_PRODUCTS))
+      ? BASE_PRODUCTS : [];
+    return arr.map(p => p.source ? p : { ...p, source: 'base' });
+  }
+
+  // ─── Один продукт из готовой базы ───
+  function getBaseProduct(id){
+    if (!id) return null;
+    return getBaseProducts().find(p => p.id === id) || null;
+  }
+
+  // ─── Поиск только по готовой базе ───
+  function searchBaseProducts(query){
+    const q = (query || '').trim().toLowerCase();
+    const base = getBaseProducts();
+    if (!q) return base;
+    return base.filter(p =>
+      (p.name || '').toLowerCase().includes(q) ||
+      (p.shortName || '').toLowerCase().includes(q)
+    );
+  }
+
+  // ─── Все свои продукты (IndexedDB) ───
+  async function getAllProducts(){
+    if (!available) return [];
+    return await reqPromise(tx('products','readonly').getAll());
+  }
+
+  // ─── Один продукт: сначала свой, потом готовый ───
+  async function getProduct(id){
+    if (!id) return null;
+    if (available){
+      const own = await reqPromise(tx('products','readonly').get(id));
+      if (own) return own;
+    }
+    return getBaseProduct(id);
+  }
+
+  // ─── Сохранить свой продукт ───
+  async function saveProduct(product){
+    if (!available || !product) return null;
+    const now = Date.now();
+    const p = { ...product };
+    if (!p.id) p.id = await nextProductId();
+    if (!p.createdAt) p.createdAt = now;
+    if (!p.source) p.source = 'own';
+    await reqPromise(tx('products','readwrite').put(p));
+    return p;
+  }
+
+  // ─── Удалить свой продукт ───
+  async function deleteProduct(id){
+    if (!available || !id) return;
+    await reqPromise(tx('products','readwrite').delete(id));
+  }
+
+  // ─── Внутренняя: следующий свободный product-NNN ───
+  async function nextProductId(){
+    const all = await getAllProducts();
+    let max = 0;
+    for (const p of all){
+      const m = /^product-(\d+)$/.exec(p.id || '');
+      if (m){
+        const n = parseInt(m[1], 10);
+        if (n > max) max = n;
+      }
+    }
+    return 'product-' + String(max + 1).padStart(3, '0');
+  }
+
+  // ─── Поиск по обеим базам. Свои — первыми ───
+  async function searchProducts(query){
+    const q = (query || '').trim().toLowerCase();
+    const own  = available ? await getAllProducts() : [];
+    const base = getBaseProducts();
+    const match = p => !q ||
+      (p.name || '').toLowerCase().includes(q) ||
+      (p.shortName || '').toLowerCase().includes(q);
+    return [...own.filter(match), ...base.filter(match)];
+  }
+
+  // ─── Все продукты одной группы. Свои — первыми ───
+  async function getProductsByGroup(group){
+    if (!group) return [];
+    const own  = available ? await getAllProducts() : [];
+    const base = getBaseProducts();
+    return [
+      ...own.filter(p => p.group === group),
+      ...base.filter(p => p.group === group)
+    ];
+  }
+
+
   // Статистика (для «О программе»)
   // ═══════════════════════════════════════════════════
 
@@ -870,12 +987,16 @@
     deleteRecipesBySource:    stub('deleteRecipesBySource'),
 
     // ── продукты ──
-    saveProduct:              stub('saveProduct'),
-    getProduct:               stub('getProduct'),
-    getAllProducts:           stub('getAllProducts', []),
-    deleteProduct:            stub('deleteProduct'),
-    searchProducts:           stub('searchProducts', []),
-    getProductsByGroup:       stub('getProductsByGroup', []),
+    getBaseProductGroups,
+    getBaseProducts,
+    getBaseProduct,
+    searchBaseProducts,
+    saveProduct,
+    getProduct,
+    getAllProducts,
+    deleteProduct,
+    searchProducts,
+    getProductsByGroup,
     getProductsByBrand:       stub('getProductsByBrand', []),
     getOverriddenProducts:    stub('getOverriddenProducts', []),
     getUsedProducts:          stub('getUsedProducts', []),

@@ -654,7 +654,7 @@ body[data-theme="dark"] .b-note{
 /* ═══ Модалки-заглушки — выше большой карточки ═══ */
 #modalSoon,
 #modalRecipeTimer{
-  z-index:100006;
+  z-index:100010 !important;
 }
 
 /* ═══ Нижние кнопки большой карточки (шаг 35.2.3) ═══ */

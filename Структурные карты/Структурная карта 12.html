@@ -1,0 +1,3265 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Копилка рецептов · Карта v12 · 12 октября 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#1a1618;color:#e8e3e5;font-family:Nunito,sans-serif;padding:40px 20px;line-height:1.65;font-size:15px}
+.wrap{max-width:980px;margin:0 auto}
+h1{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:700;font-size:46px;color:#e69db5;margin-bottom:8px;line-height:1.1}
+.subtitle{color:#a89aa0;font-size:14px;margin-bottom:48px;font-style:italic}
+h2{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:700;font-size:30px;color:#e69db5;margin:56px 0 20px;padding-bottom:12px;border-bottom:1px solid rgba(230,157,181,.25)}
+h3{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:22px;color:#f0e8eb;margin:32px 0 12px;font-style:italic}
+h4{font-family:Nunito,sans-serif;font-weight:800;font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:#a89aa0;margin:22px 0 10px}
+p{margin:0 0 12px}
+ul,ol{margin:8px 0 16px 24px}
+li{margin-bottom:6px}
+code{font-family:ui-monospace,Consolas,monospace;font-size:13px;background:rgba(230,157,181,.12);color:#f5c6d6;padding:2px 6px;border-radius:4px}
+pre{background:#0f0d0e;border:1px solid rgba(230,157,181,.15);border-radius:8px;padding:16px 18px;overflow-x:auto;font-size:12.5px;line-height:1.55;color:#d8d0d3;margin:12px 0 20px}
+pre code{background:none;padding:0;color:inherit;font-size:inherit}
+.box{background:rgba(230,157,181,.05);border:1px solid rgba(230,157,181,.2);border-radius:10px;padding:18px 22px;margin:16px 0 24px}
+.box.warn{background:rgba(255,180,100,.06);border-color:rgba(255,180,100,.3)}
+.box.done{background:rgba(120,200,140,.06);border-color:rgba(120,200,140,.3)}
+.box.ok{background:rgba(120,180,255,.06);border-color:rgba(120,180,255,.3)}
+.box.note{background:rgba(180,140,255,.06);border-color:rgba(180,140,255,.3)}
+.box.bug{background:rgba(255,80,80,.06);border-color:rgba(255,80,80,.3)}
+.chip{display:inline-block;padding:2px 10px;background:rgba(230,157,181,.15);color:#f5c6d6;border-radius:20px;font-size:12px;font-weight:700;margin:2px 4px 2px 0}
+.chip.done{background:rgba(120,200,140,.18);color:#b0e8c0}
+.chip.no{background:rgba(255,120,120,.15);color:#ffb0b0}
+.chip.wait{background:rgba(255,200,100,.15);color:#ffe0a0}
+.chip.work{background:rgba(120,180,255,.15);color:#b0d8ff}
+.chip.q{background:rgba(180,140,255,.18);color:#d8c0ff}
+.table{width:100%;border-collapse:collapse;margin:14px 0 20px;font-size:13.5px;background:rgba(0,0,0,.2);border-radius:8px;overflow:hidden}
+.table th{background:rgba(230,157,181,.12);color:#f5c6d6;padding:10px 14px;text-align:left;font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid rgba(230,157,181,.2)}
+.table td{padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.05);vertical-align:top}
+.table tr:last-child td{border-bottom:none}
+.quote{border-left:3px solid #e69db5;padding:6px 0 6px 18px;margin:14px 0;color:#c8b8bf;font-style:italic;font-size:14px}
+.stamp{display:inline-block;padding:4px 12px;background:rgba(230,157,181,.15);border-radius:20px;font-size:12px;color:#f5c6d6;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:8px}
+nav.toc{background:rgba(0,0,0,.3);border:1px solid rgba(230,157,181,.15);border-radius:10px;padding:20px 28px;margin:32px 0 40px}
+nav.toc ol{margin:0;padding-left:24px;column-count:2;column-gap:32px}
+@media(max-width:680px){nav.toc ol{column-count:1}}
+nav.toc a{color:#e8e3e5;text-decoration:none;font-weight:600;font-size:14px}
+nav.toc a:hover{color:#e69db5}
+.footer{margin-top:60px;padding-top:24px;border-top:1px solid rgba(230,157,181,.2);color:#a89aa0;font-size:13px;text-align:center}
+.comment{border-left:3px solid #b48cff;background:rgba(180,140,255,.05);padding:10px 16px;border-radius:0 8px 8px 0;margin:12px 0 18px;font-size:14px}
+.comment::before{content:"💡 Комментарий ИИ";display:block;font-weight:800;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#c8b0ff;margin-bottom:6px;font-family:Nunito,sans-serif}
+.conflict{border-left:3px solid #ffb064;background:rgba(255,180,100,.06);padding:10px 16px;border-radius:0 8px 8px 0;margin:12px 0 18px;font-size:14px}
+.conflict::before{content:"⚠️ Нестыковка / риск";display:block;font-weight:800;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#ffc890;margin-bottom:6px;font-family:Nunito,sans-serif}
+.rule{border-left:3px solid #e69db5;background:rgba(230,157,181,.08);padding:10px 16px;border-radius:0 8px 8px 0;margin:12px 0 18px;font-size:14px}
+.rule::before{content:"📌 Правило";display:block;font-weight:800;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#f5c6d6;margin-bottom:6px;font-family:Nunito,sans-serif}
+.status-line{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<span class="stamp">Карта v12 · 12 октября 2026 · после сессии «шаг 36 подготовка: база продуктов + формы»</span>
+<h1>Копилка рецептов</h1>
+<p class="subtitle">Единый документ проекта. Заменяет карту v11. Что сделано, что нет, где конфликты, как связаны функции.</p>
+
+<nav class="toc">
+<ol>
+<li><a href="#meta">О документе</a></li>
+<li><a href="#who">Кто пользователь</a></li>
+<li><a href="#ai">Как работать с ИИ</a></li>
+<li><a href="#tech">Техническая база</a></li>
+<li><a href="#design">Оформление: стили, палитры, тени, темы, фоны</a></li>
+<li><a href="#per-screen">Оформление по экранам</a></li>
+<li><a href="#nav">Навигация и шапка</a></li>
+<li><a href="#main">Главный экран</a></li>
+<li><a href="#card-small">Карточка в списке</a></li>
+<li><a href="#card-big">Карточка рецепта (большая)</a></li>
+<li><a href="#cat">Категории и теги</a></li>
+<li><a href="#search">Поиск и фильтры</a></li>
+<li><a href="#plan">План</a></li>
+<li><a href="#pantry">Кладовая</a></li>
+<li><a href="#add">Добавление рецепта</a></li>
+<li><a href="#settings">Настройки</a></li>
+<li><a href="#data">Данные и хранилище</a></li>
+<li><a href="#sync">Синхронизация</a></li>
+<li><a href="#bugs">Известные баги браузеров</a></li>
+<li><a href="#order">Порядок работы</a></li>
+<li><a href="#debt">Технический долг</a></li>
+<li><a href="#postpone">Отложено</a></li>
+<li><a href="#where">Итог: где мы сейчас</a></li>
+</ol>
+</nav>
+
+<!-- ============================================ -->
+<h2 id="meta">1 · О документе</h2>
+
+<p>Это <b>двенадцатая версия</b> карты. Заменяет <code>Структурная карта 11.html</code>.</p>
+
+<h4>Легенда</h4>
+<div class="status-line">
+<span class="chip done">✅ сделано</span>
+<span class="chip work">🔄 в работе</span>
+<span class="chip wait">⏳ отложено</span>
+<span class="chip q">❓ открытый вопрос</span>
+<span class="chip no">❌ убрано</span>
+</div>
+
+<p>Внутри разделов — статусы. После разделов бывают блоки:</p>
+<ul>
+<li><b>💡 Комментарий ИИ</b> — предложение или улучшение.</li>
+<li><b>⚠️ Нестыковка / риск</b> — то, что может помешать или противоречит.</li>
+<li><b>📌 Правило</b> — то, что точно зафиксировано и не обсуждается.</li>
+</ul>
+
+<h4>Что делали по датам</h4>
+<table class="table">
+<tr><th>Дата</th><th>Что было</th></tr>
+<tr><td>~сентябрь 2026</td><td>Первая карта, showcase, 7 стилей, 2 палитры</td></tr>
+<tr><td>2 октября 2026</td><td>Карта v2 + дополнения. Реальный сайт, index.html, структура папок</td></tr>
+<tr><td>3 октября 2026</td><td>Карта v3. 8-й стиль (Лилейный), 9-я палитра (Фиолетовая), шапка, содержание, карточка</td></tr>
+<tr><td>5 октября 2026</td><td>Карта v4. Перенос карточки, переключатель 8 стилей, фикс iOS Safari, работа с фонами, разная высота карточек</td></tr>
+<tr><td>6 октября 2026 (v5)</td><td>Фоны финализированы. Три слота (iPhone/iPad/ПК). Панель 🎨 в шапке (Стиль + Фон + Позиция).</td></tr>
+<tr><td>6 октября 2026 (v6)</td><td>Сессия оформления. Палитры (9×5), тени (7), тема (светлая/тёмная). Контраст плашек. Фон сайта темнее карточки. Иконки 🔍 🏷 🎲 в строку содержания. Чистка дублей.</td></tr>
+<tr><td>7 октября 2026 (v7)</td><td><b>Сессия навигации.</b> Нижняя панель (4 кнопки). Плавающие кнопки ⏲ 🔍 ➕. Автоскрытие на тач + ПК. Тумблер темы в шапку панели. Оттенки на строку «ПАЛИТРА». Сворачивание секций. Двойная «Тень». Ширина панели 640px. Ограничение ширины контента 1600px. 🖌 вместо 🎨.</td></tr>
+<tr><td>8 октября 2026 (v8)</td><td><b>Сессия шага 4.</b> Четыре экрана. Заглушки. Переключение экранов, прокрутка вверх, запоминание вкладки. Содержание только на Главной. Три модалки для ⏲ 🔍 ➕. <b>Начали оформление по экранам.</b> Подшаг 1 — хранилище — сделан.</td></tr>
+<tr><td>9 октября 2026 (v9)</td><td><b>Сессия подшагов 4.1a + 4.1b + 4.2.</b> Обёртка <code>.dm-scope</code>, свои переменные, свои атрибуты. Стили переписаны на <code>.dm-scope[data-style]</code>. Черновик: клики в панели не трогают страницу. Крестик/фон/Escape выбрасывают черновик. Плашки и подложка макета переопределены. Тени макета усилены.</td></tr>
+<tr><td><b>10 октября 2026 (v10)</b></td><td><b>Сессия: фон в макете + фикс размеров + 4.3 + 5 + редактор позиции + подшаг 6.</b> Фон в макете (вариант А). Панель стала 900px, высота по содержимому до 96vh. Макет — 400px, пропорции окна браузера. Все элементы макета ужаты под низкое окно ПК. Нижняя полоска макета прижата к низу. <b>Кнопка «Применить» работает.</b> Окошко «Применить к…» с галочками. <b>Редактор позиции открывается поверх панели</b>, панель не закрывается. <b>Кнопка «Посмотреть» работает</b> — режим предпросмотра на телефоне с плашкой [Применить] [Вернуться].</td></tr>
+<tr><td><b>11 октября 2026 (v11)</b></td><td><b>Сессия: разрезание index.html + storage.js слой 1 + переезд на IndexedDB.</b> Весь JavaScript вынесен из <code>index.html</code> в отдельные файлы в <code>app/js/</code>. Создан <code>storage.js</code> — единая точка входа в IndexedDB. При первом запуске создаются 9 таблиц (recipes, products, pantry, shopping, plan, marks, timers, settings, photos). Все настройки переехали из localStorage в IndexedDB (таблица <code>settings</code>). Флаг <code>migratedFromLocalStorage = true</code> поставлен. localStorage очищен. Сайт запускается через <code>Storage.init()</code> в <code>main.js</code>.</td></tr>
+<tr><td><b>11 октября 2026, вечер (та же v11, обновлена)</b></td><td><b>Сессия: шаг 33 + шаг 34.</b> Все 9 демо-карточек убраны из HTML и переехали в IndexedDB. Создан <code>app/js/render.js</code> — превращает объект рецепта в HTML карточки и раскладывает по секциям. Создан временный <code>demo-recipes.js</code>, потом удалён — данные переехали в <code>storage.js</code> как <code>seedDemoRecipes</code>. В <code>storage.js</code> реализованы: рецепты (<code>getAllRecipes</code>, <code>getRecipe</code>, <code>saveRecipe</code>, <code>deleteRecipe</code>, <code>nextRecipeId</code>), отметки (<code>addMark</code>, <code>removeMark</code>, <code>getMarks</code>, <code>isMarked</code>, <code>getAllMarks</code>, <code>clearMarks</code>), теги (<code>saveTag</code>, <code>getAllTags</code>, <code>deleteTag</code>, <code>getAllTagsMerged</code>). Создан <code>app/js/tags-base.js</code> — 58 базовых тегов в 16 группах. В <code>index.html</code> секции Главной стали пустыми контейнерами <code>data-meal</code>, карточки собираются кодом.</td></tr>
+<tr><td><b>11 октября 2026, поздно вечером (та же v11)</b></td><td><b>Сессия: шаг 35 — большая карточка рецепта (MVP).</b> Создан <code>app/js/card-big.js</code> — открывает/закрывает карточку, собирает HTML из объекта рецепта. Создан HTML-контейнер <code>&lt;div id="modalRecipe"&gt;</code>. <b>35.1:</b> открытие кликом по названию или фото, закрытие (крестик / фон / Escape), фото-градиент, бейдж приёма пищи, 4 иконки (❤ 👨‍🍳 🔖 📅) + крестик, название, теги (первые 5) + ✎, КБЖУ с пометкой веса, ингредиенты (полный список), шаги, устройство, заметка. Иконки ❤/👨‍🍳/🔖 работают через <code>Storage.addMark</code>/<code>removeMark</code>/<code>isMarked</code>. <b>35.2:</b> формат чисел через запятую (и в маленькой, и в большой карточке), порции −/+ (стартовое 4, сохраняется в IndexedDB, клик по числу = сброс), чекбоксы ингредиентов (хранятся в IndexedDB, по каждому рецепту отдельно), кнопка 🧹 (чистит только галочки), нижние кнопки (🛒 · ⏱ · ✎ · ⋯), 🛒 залита как в маленькой, dropdown «Ещё» (выпадает вверх), фото закреплено сверху, кнопки закреплены снизу, скроллится только тело карточки, высота 85vh на ПК, 100vh на телефоне. <b>Найден и восстановлен пропавший массив <code>demoRecipes</code></b> в <code>storage.js</code> (был потерян при разрезании index.html).</td></tr>
+<tr><td><b>12 октября 2026 (v12)</b></td><td><b>Сессия: шаг 36 — подготовка. База продуктов + формы.</b> Создан файл <code>app/js/products-base.js</code> — 19 групп, 309 продуктов с КБЖУ на 100 г. Подключён в <code>index.html</code> перед <code>storage.js</code>. В <code>storage.js</code> добавлены 11 функций продуктов: чтение готовой базы (<code>getBaseProductGroups</code>, <code>getBaseProducts</code>, <code>getBaseProduct</code>, <code>searchBaseProducts</code>), работа со своей базой в IndexedDB (<code>getAllProducts</code>, <code>getProduct</code>, <code>saveProduct</code>, <code>deleteProduct</code>), объединённые (<code>searchProducts</code>, <code>getProductsByGroup</code>). <code>getBaseProducts()</code> при чтении добавляет каждому продукту <code>source: 'base'</code>. Создан файл <code>app/js/product-picker.js</code> — модалка «База продуктов»: поиск, группировка по 19 группам, сворачивание групп, кнопка «+», крестик-очистка в поиске, стиль подтягивается с активного экрана. Создан файл <code>app/js/product-form.js</code> — форма создания продукта: <b>4.1</b> каркас, <b>4.2</b> основные поля (Название, Короткое, Марка, Группа — пустая по умолчанию) с валидацией (кнопка неактивна + подсказка + подсветка полей), <b>4.3</b> КБЖУ 4 поля в ряд, 3 кнопки единиц, условные поля (вес для шт, плотность + галочка для мл). <b>Урок:</b> выделение текста мышкой не должно закрывать модалку — переделали на <code>mousedown</code>+<code>mouseup</code> в трёх файлах: <code>product-form.js</code>, <code>product-picker.js</code>, <code>card-big.js</code>.</td></tr>
+</table>
+
+<!-- ============================================ -->
+<h2 id="who">2 · Кто пользователь</h2>
+
+<div class="box warn">
+<p><b>Личный проект для себя.</b> Не для клиента, не для портфолио.</p>
+</div>
+
+<h4>Главное</h4>
+<ul>
+<li><b>Не программист.</b> Работает в VS Code и GitHub Desktop, код копирует.</li>
+<li><b>Windows 11.</b> Техника: iPhone 13, iPhone 16 Pro Max, iPad Air 11 (M2), ПК.</li>
+<li><b>Внимательна к деталям.</b> Заметит нечитаемый текст, кривую линию, лишние полосы.</li>
+<li><b>Устаёт от длинных инструкций.</b> Один шаг за раз.</li>
+<li><b>Лучше понимает визуально.</b> Скрины со стрелочками работают лучше всего. <b>Схемы с отступами (деревом) — НЕ понимает.</b></li>
+<li><b>Есть вкус.</b> Отклоняет то, что не подходит.</li>
+<li><b>Честная.</b> Скажет прямо: «не нравится», «убери», «ты торопишься», «ты меня запутал».</li>
+<li><b>Разбирается в DevTools.</b> Console, Network, Elements. Умеет Disable cache.</li>
+<li><b>Не разбирается в коде.</b> Инструкции — максимально пошаговые, без номеров строк.</li>
+<li><b>Хочет вместе решать дизайн.</b> Обсуждать, задавать вопросы, спорить.</li>
+</ul>
+
+<h4>Устройства</h4>
+<table class="table">
+<tr><th>Устройство</th><th>Детали</th></tr>
+<tr><td>ПК</td><td>Монитор 2560×1440 (16:9). Windows 11. VS Code + Live Server. Chrome.</td></tr>
+<tr><td>iPad Air 11 (M2)</td><td>1640×2360 (портрет). Работает в режиме «приложения в окнах» (Stage Manager). Safari.</td></tr>
+<tr><td>iPhone 13</td><td>1170×2532. Safari.</td></tr>
+<tr><td>iPhone 16 Pro Max</td><td>1320×2868. Safari.</td></tr>
+</table>
+
+<!-- ============================================ -->
+<h2 id="ai">3 · Как работать с ИИ</h2>
+
+<h4>Главные правила (не нарушать)</h4>
+
+<div class="rule">
+<b>Перед отправкой кода — свериться с этой картой.</b> Не по памяти.
+</div>
+
+<div class="rule">
+<b>Сначала решение — потом код.</b> Пока пользователь не сказал «ок, давай код» — обсуждаем словами.
+</div>
+
+<div class="rule">
+<b>Обсуждаем одну фичу (или один подшаг) — до конца. Потом сразу код.</b>
+</div>
+
+<div class="rule">
+<b>Один шаг за раз.</b> Сделала → сохранила → обновила → показала → следующий.
+</div>
+
+<div class="rule">
+<b>Код — целым блоком.</b> «Найди этот текст → замени на этот». Или «поставь курсор в конце строки X → Enter → вставь».
+</div>
+
+<div class="rule">
+<b>Никаких номеров строк.</b> Только поиск по тексту.
+</div>
+
+<div class="rule">
+<b>Не повторять код, если он уже был дан.</b>
+</div>
+
+<div class="rule">
+<b>Сомневаешься — спроси. Не гадай.</b>
+</div>
+
+<div class="rule">
+<b>Если пользователь говорит «этого нет» — немедленно остановиться и попросить скрин.</b> Не придумывать ещё один вариант правки.
+</div>
+
+<div class="rule">
+<b>При застревании — просить файлы.</b> «Пришли index.html, style.css».
+</div>
+
+<div class="rule">
+<b>Не забывать про <code>!important</code>, когда старое правило мешает.</b>
+</div>
+
+<div class="rule">
+<b>ИИ не может отправлять скрины.</b> Только пользователь.
+</div>
+
+<div class="rule">
+<b>Схемы с отступами (деревом) пользователь НЕ понимает.</b> Словами, таблицами, плоским списком.
+</div>
+
+<div class="rule">
+<b>Сначала обсуждать дизайн полностью — потом писать код.</b>
+</div>
+
+<div class="rule">
+<b>Если чувствуешь, что теряешь нить — ОБЯЗАТЕЛЬНО сказать пользователю и предложить обновить структурную карту.</b> Не делать вид, что помнишь.
+</div>
+
+<div class="rule">
+<b>Перед заменой через «Replace All» — предупреждать, что может задеть лишнее.</b> Урок 9 октября 2026: замена <code>getDesignFor(activeDesignScreen)</code> затронула саму функцию <code>getActiveDesign</code> и вызвала рекурсию.
+</div>
+
+<div class="rule">
+<b>Если задача большая — разбивать на подшаги и идти по одному.</b> Урок 10 октября 2026: вместо «сделать 4.3 + 5 + 6 + 7 разом» пошли по одному подшагу — и ни разу не запутались.
+</div>
+
+<h4>Commit + Push — обязательно перед проверкой на устройстве</h4>
+
+<div class="rule">
+<b>У пользователя нет прямого доступа к файлам на iPhone/iPad.</b> Проверить — только через GitHub Pages.
+</div>
+
+<div class="rule">
+<b>Если пользователь смотрит на iPhone/iPad — сначала:</b> «сохрани, обнови на ПК; Commit + Push; подожди 1–2 минуты; открой на устройстве».
+</div>
+
+<h3>3.1. Словарь терминов</h3>
+
+<table class="table">
+<tr><th>Слово</th><th>Что это</th></tr>
+<tr><td><b>Экран</b></td><td>🏠 Главная / ❤ Избранное / 📅 План / 🧺 Кладовая</td></tr>
+<tr><td><b>Содержание</b></td><td>Блок «📖 СОДЕРЖАНИЕ» с категориями. Только на Главной</td></tr>
+<tr><td><b>Шапка</b></td><td>Верхняя полоса сайта: название + три иконки 🖌 🔔 ⚙</td></tr>
+<tr><td><b>Панель</b></td><td>Панель оформления 🖌. Секции: Стиль, Палитра, Тень, Фон</td></tr>
+<tr><td><b>Модалка</b></td><td>Всплывающее окошко поверх всего</td></tr>
+<tr><td><b>Редактор фона</b></td><td>Отдельная модалка для позиции фона. Открывается поверх панели</td></tr>
+<tr><td><b>Заглушка</b></td><td>Надпись на пустом экране</td></tr>
+<tr><td><b>Макет</b></td><td>Уменьшенная картинка сайта в панели 🖌. Справа на ПК/iPad. Пропорции как у окна браузера</td></tr>
+<tr><td><b>Черновик</b></td><td>Несохранённые настройки в панели 🖌. Живёт в памяти, пока панель открыта</td></tr>
+<tr><td><b>FAB / плавающие кнопки</b></td><td>Три круглые кнопки справа снизу: ⏲ 🔍 ➕</td></tr>
+<tr><td><b>Плашка</b></td><td>Общий термин для «залитых» элементов</td></tr>
+<tr><td><b>Чип (chip)</b></td><td>Маленькая плашка-таблетка</td></tr>
+<tr><td><b>Карточка (маленькая)</b></td><td>Карточка рецепта в списке</td></tr>
+<tr><td><b>Карточка (большая)</b></td><td>Модалка с одним рецептом. Открывается кликом по названию или фото в маленькой карточке. <b>Сделана в шаге 35</b> — см. раздел 10.</td></tr>
+<tr><td><b>Нижняя панель</b></td><td>Полоска с 4 кнопками внизу: 🏠 ❤ 📅 🧺</td></tr>
+<tr><td><b><code>.dm-scope</code></b></td><td>Обёртка макета. Держит свои атрибуты и переменные, независимо от body</td></tr>
+<tr><td><b><code>designDraft</code></b></td><td>Черновик оформления в памяти. Пока панель открыта</td></tr>
+<tr><td><b><code>.dm-bg</code></b></td><td>Картинка фона внутри макета. Лежит на дне, за всеми элементами</td></tr>
+<tr><td><b><code>bgEditorBg</code></b></td><td>Фон, для которого открыт редактор позиции (из черновика)</td></tr>
+<tr><td><b><code>previewBar</code></b></td><td>Плашка предпросмотра внизу экрана на телефоне: [Применить] [Вернуться]</td></tr>
+<tr><td><b><code>isPreviewing</code></b></td><td>Флаг: открыт ли сейчас режим предпросмотра</td></tr>
+<tr><td><b><code>render.js</code></b></td><td>Файл, который превращает объект рецепта в HTML <b>маленькой</b> карточки. Раскладывает все рецепты по секциям Главной.</td></tr>
+<tr><td><b><code>card-big.js</code></b></td><td>Файл, который собирает HTML <b>большой</b> карточки. Открывает/закрывает её, обрабатывает клики внутри (иконки ❤/👨‍🍳/🔖/📅/✕, порции, чекбоксы, 🧹, нижние кнопки, dropdown).</td></tr>
+<tr><td><b><code>modalRecipe</code></b></td><td>Контейнер большой карточки в <code>index.html</code>. Внутри собирается HTML кодом.</td></tr>
+<tr><td><b>Пометка веса</b></td><td>Строка «на 200 г» над КБЖУ в большой карточке. Показывается только если у рецепта есть <code>weightPerPortion</code>.</td></tr>
+<tr><td><b>Dropdown</b></td><td>Выпадающий список. Открывается **рядом с кнопкой**, а не снизу экрана. Используется в двух местах: 📅 «В план» и ⋯ «Ещё».</td></tr>
+<tr><td><b>Шторка</b></td><td>Всплывающее окно, которое выезжает **снизу**. Используется у FAB ➕ «Добавить». (Раньше была и у 📅 «В план», но её переделали в dropdown.)</td></tr>
+<tr><td><b><code>renderRecipeCard(recipe)</code></b></td><td>Функция: объект рецепта → HTML одной маленькой карточки</td></tr>
+<tr><td><b><code>renderAllRecipes()</code></b></td><td>Асинхронная функция: читает все рецепты из IndexedDB и раскладывает по секциям Главной</td></tr>
+<tr><td><b><code>seedDemoRecipes()</code></b></td><td>Функция: заливает 9 демо-рецептов в IndexedDB при первом запуске</td></tr>
+<tr><td><b><code>BASE_TAGS</code></b></td><td>Массив 58 базовых тегов в <code>tags-base.js</code>. В коде, не в IndexedDB. ID <code>btag-NNN</code></td></tr>
+<tr><td><b><code>demoRecipes</code></b></td><td>Массив 9 демо-рецептов в <code>storage.js</code>. Заливается в IndexedDB один раз через <code>seedDemoRecipes()</code>. <b>Важно:</b> при разрезании index.html 11 октября массив пропал — восстановлен.</td></tr>
+<tr><td><b><code>demoSeeded</code></b></td><td>Флаг в settings: «9 демо-рецептов уже залиты». Если его удалить и обновить — рецепты зальются заново из <code>demoRecipes</code>.</td></tr>
+<tr><td><b><code>b-</code> (префикс)</b></td><td>Все классы большой карточки — с префиксом <code>b-</code> (big). Например <code>.b-photo</code>, <code>.b-title</code>, <code>.b-chk</code>. Чтобы не путать с маленькой <code>.card</code>.</td></tr>
+<tr><td><b>Порции</b></td><td>Стартовое — 4. Сохраняются в IndexedDB (тип отметки <code>portions</code>). Клик по числу — сброс на 4. Эталонное значение в самом рецепте — своё у каждого.</td></tr>
+<tr><td><b>🧹 (метла)</b></td><td>Кнопка в большой карточке рядом с «Ингредиенты:». Чистит только галочки ингредиентов этого рецепта. Порции не трогает.</td></tr>
+<tr><td><b><code>getAllTagsMerged()</code></b></td><td>Функция: объединяет свои теги (<code>tag-NNN</code>) и базовые (<code>btag-NNN</code>) в один список. Сначала свои, потом базовые</td></tr>
+<tr><td><b><code>nextRecipeId()</code></b> / <code>nextTagIdFrom()</code></td><td>Внутренние функции: генерируют следующий свободный ID для нового рецепта / тега</td></tr>
+<tr><td><b><code>loadIngredientMarks(recipeId)</code></b></td><td>Загружает список отмеченных ингредиентов для одного рецепта. Возвращает <code>Set</code>.</td></tr>
+<tr><td><b><code>loadPortions(recipeId)</code></b> / <code>savePortions(recipeId, n)</code></td><td>Загрузить / сохранить выбранное количество порций для рецепта. Хранятся как отметка типа <code>portions</code>.</td></tr>
+<tr><td><b><code>togglePlanDropdown()</code></b> / <code>toggleMoreDropdown()</code></td><td>Открыть/закрыть выпадающие списки: 📅 «В план» и ⋯ «Ещё».</td></tr>
+<tr><td><b><code>openSoon(title, text)</code></b></td><td>Открывает модалку-заглушку «Позже» с произвольным заголовком и текстом.</td></tr>
+<tr><td><b><code>updatePortions()</code></b></td><td>Пересчитывает ингредиенты по текущему количеству порций. Обновляет число, состояние кнопки −, числа ингредиентов.</td></tr>
+</table>
+
+<h3>3.2. Что работает / что не работает в объяснениях</h3>
+
+<div class="box done">
+<b>Работает:</b>
+<ul>
+<li>«Найди этот текст → замени на этот».</li>
+<li>«Поставь курсор в конце строки X → Enter → вставь это».</li>
+<li>«Удали эти строки целиком».</li>
+<li>Скрины от пользователя — со стрелочками.</li>
+<li>«Найди такую-то функцию, поставь курсор после её закрывающей скобки, вставь новое».</li>
+</ul>
+</div>
+
+<div class="box bug">
+<b>Не работает:</b>
+<ul>
+<li>Схемы «деревом» с отступами.</li>
+<li>Номера строк в инструкциях.</li>
+<li>ИИ не может отправлять скрины.</li>
+<li>Ссылаться на «мы же помним».</li>
+</ul>
+</div>
+
+<h3>3.3. Как войти в курс дела (для нового ИИ)</h3>
+
+<div class="rule">
+<b>Порядок:</b> прочитать карту → <b>сказать своими словами, что понял</b> → спросить, что уточнить → и только потом работать.
+</div>
+
+<h3>3.4. Отдельные правила поведения</h3>
+
+<div class="rule">
+<b>Если пользователь устала — остановиться.</b> Короткие неопределённые ответы — это не значит «всё работает». Спросить конкретнее.
+</div>
+
+<div class="rule">
+<b>Если «не то» без объяснений — предложить 2–3 варианта.</b> Не мучить вопросом «что именно не то?».
+</div>
+
+<div class="rule">
+<b>Не переспрашивать то, что уже решено. НО:</b> если пользователь сама вернулась к вопросу — значит, передумала. Обсуждаем заново.
+</div>
+
+<!-- ============================================ -->
+<h2 id="tech">4 · Техническая база</h2>
+
+<h4>Инструменты</h4>
+<table class="table">
+<tr><th>Инструмент</th><th>Статус</th><th>Детали</th></tr>
+<tr><td>VS Code</td><td><span class="chip done">✅</span></td><td>Русский, расширение Live Server</td></tr>
+<tr><td>GitHub</td><td><span class="chip done">✅</span></td><td>Логин: <code>GekAtaca</code>, 2FA</td></tr>
+<tr><td>GitHub Desktop</td><td><span class="chip done">✅</span></td><td>Связан с аккаунтом</td></tr>
+<tr><td>GitHub Pages</td><td><span class="chip done">✅</span></td><td><code>gekataca.github.io/kopilka-receptov</code></td></tr>
+</table>
+
+<h4>Рабочий цикл</h4>
+<ol>
+<li>Правка в VS Code → <b>Ctrl+S</b>.</li>
+<li>Просмотр через <b>Live Server</b>.</li>
+<li>Обновить: <b>Ctrl+F5</b> на ПК. На iPhone/iPad — потянуть вниз.</li>
+<li>Перед проверкой на iPhone/iPad: Commit + Push → подождать 1–2 минуты → обновить.</li>
+</ol>
+
+<div class="box warn">
+<p><b>Важно:</b> рабочая папка — <code>Документы → GitHub → kopilka-receptov</code>. Не на Рабочем столе.</p>
+</div>
+
+<h4>Структура проекта</h4>
+<pre><code>kopilka-receptov/
+├── index.html              ← главная страница (4 экрана внутри)
+├── favicon.svg
+├── robots.txt
+├── README.md
+├── Структурная карта 12.html ← эта карта
+├── app/
+│   ├── css/
+│   │   ├── style.css       ← база + --c1..--c4 по умолчанию + фоны + редактор + панель + тумблер + fab-кнопки + тёмная тема + экраны + модалки + МАКЕТ + .dm-scope + .dm-bg + preview-bar + стили пикера и формы продукта
+│   │   ├── card.css        ← база карточки + тени + тёмная тема карточки + .dm-scope расширения
+│   │   ├── palettes/       ← 9 файлов палитр
+│   │   └── styles/         ← 8 файлов стилей (nezhny — заглушка, остальные 7 расширены на .dm-scope)
+│   ├── js/                 ← 14 файлов (см. ниже)
+│   │   ├── tags-base.js    ← 58 базовых тегов, 16 групп, ID btag-NNN. В коде, не в IndexedDB
+│   │   ├── products-base.js ← 19 групп, 309 продуктов, КБЖУ на 100 г. В коде, не в IndexedDB
+│   │   ├── storage.js      ← единая точка входа в IndexedDB. Рецепты, отметки, теги, продукты — работают. Остальное — заглушки
+│   │   ├── shared.js       ← общие переменные и утилиты (bgSettings, currentBg, designDraft, getDeviceType, getSettingsFor, saveSettingsToStorage, loadSharedFromStorage)
+│   │   ├── render.js       ← превращает объект рецепта в HTML маленькой карточки + раскладка по секциям
+│   │   ├── card-big.js     ← большая карточка: открытие/закрытие, сборка HTML из объекта, порции, чекбоксы, dropdown «В план» и «Ещё», нижние кнопки
+│   │   ├── product-picker.js ← модалка «База продуктов»: поиск, группировка, сворачивание, стиль с активного экрана
+│   │   ├── product-form.js ← форма создания / редактирования продукта: поля, валидация, условные поля (вес/плотность)
+│   │   ├── bg.js           ← фон сайта и редактор позиции (applyBg, openBgEditor, зум, перетаскивание)
+│   │   ├── design.js       ← оформление по экранам, панель 🖌, черновик, макет, «Применить к…», предпросмотр
+│   │   ├── screens.js      ← переключение 4 экранов + сворачивание содержания (initScreens)
+│   │   ├── modals.js       ← модалки ⏲ 🔍 ➕
+│   │   ├── fab.js          ← автоскрытие плавающих кнопок
+│   │   └── main.js         ← запуск: Storage.init → seedDemoRecipes → loadDesign/Shared → initScreens → renderAllRecipes → заставка
+│   └── img/                ← пока пусто
+│
+│   Порядок подключения скриптов в index.html (важно!):
+│   1. tags-base.js     (данные — базовые теги)
+│   2. products-base.js (данные — готовая база продуктов)
+│   3. storage.js       (работа с IndexedDB)
+│   4. shared.js        (общие переменные)
+│   5. render.js        (рендер маленьких карточек)
+│   6. card-big.js      (большая карточка)
+│   7. product-picker.js (пикер продуктов)
+│   8. product-form.js  (форма продукта)
+│   9. bg.js            (фон и редактор позиции)
+│  10. design.js        (панель 🖌, черновик, макет)
+│  11. screens.js       (переключение экранов)
+│  12. modals.js        (модалки FAB)
+│  13. fab.js           (автоскрытие FAB)
+│  14. main.js          (запуск всего)
+└── images/                 ← 19 фоновых картинок (01–05, 07–20, без 06)</code></pre>
+
+<div class="box warn">
+<b>Осталось удалить (техдолг):</b>
+<ul>
+<code>Структурная карта 6.html</code>, <code>7.html</code>, <code>8.html</code>, <code>9.html</code>, <code>10.html</code>.
+</ul>
+</div>
+
+<!-- ============================================ -->
+<h2 id="design">5 · Оформление: стили, палитры, тени, темы, фоны</h2>
+
+<div class="box done">
+<b>Идея.</b> Оформление собирается из 6 независимых слоёв:
+<ol>
+<li><b>Стиль</b> — 8 штук</li>
+<li><b>Палитра + оттенок</b> — 9 палитр × 5 оттенков = <b>45 комбинаций</b></li>
+<li><b>Тень карточек</b> — 8 вариантов</li>
+<li><b>Тень плавающих кнопок</b> — 8 вариантов</li>
+<li><b>Тема</b> — светлая / тёмная</li>
+<li><b>Фон</b> — 19 базовых + свои</li>
+</ol>
+<b>Все 6 слоёв — свои на каждом экране.</b>
+</div>
+
+<h3>5.1. Стили <span class="chip done">✅ 8 работают</span></h3>
+
+<table class="table">
+<tr><th>№</th><th>Стиль</th><th>data-style</th><th>Шрифт</th></tr>
+<tr><td>1</td><td>🌸 Нежный</td><td><code>nezhny</code></td><td>Cormorant italic (эталон, дефолт в card.css)</td></tr>
+<tr><td>2</td><td>📰 Журнал</td><td><code>zhurnal</code></td><td>Cormorant прямой, капс</td></tr>
+<tr><td>3</td><td>🤍 Минимализм</td><td><code>minimalizm</code></td><td>Nunito</td></tr>
+<tr><td>4</td><td>🌿 Бохо</td><td><code>boho</code></td><td>Caveat, листики 🌿</td></tr>
+<tr><td>5</td><td>📻 Ретро</td><td><code>retro</code></td><td>Bitter</td></tr>
+<tr><td>6</td><td>🍃 Японский</td><td><code>yaponsky</code></td><td>Shippori Mincho</td></tr>
+<tr><td>7</td><td>🏛 Античный</td><td><code>antichny</code></td><td>Playfair Display, ромбы ◆</td></tr>
+<tr><td>8</td><td>🌷 Лилейный</td><td><code>lileyny</code></td><td>EB Garamond italic, точки ••</td></tr>
+</table>
+
+<h3>5.2. Палитры <span class="chip done">✅ 9 × 5 = 45 комбинаций</span></h3>
+
+<table class="table">
+<tr><th>№</th><th>Палитра</th><th>Файл</th></tr>
+<tr><td>1</td><td>🌸 Пудровая</td><td><code>pudrovaya.css</code></td></tr>
+<tr><td>2</td><td>🌾 Медовая</td><td><code>medovaya.css</code></td></tr>
+<tr><td>3</td><td>🌿 Шалфейная</td><td><code>shalfeynaya.css</code></td></tr>
+<tr><td>4</td><td>☁️ Небесная</td><td><code>nebesnaya.css</code></td></tr>
+<tr><td>5</td><td>🍇 Лавандовая</td><td><code>lavandovaya.css</code></td></tr>
+<tr><td>6</td><td>🍒 Вишнёвая</td><td><code>vishnyovaya.css</code></td></tr>
+<tr><td>7</td><td>🌰 Какао</td><td><code>kakao.css</code></td></tr>
+<tr><td>8</td><td>🌑 Графит</td><td><code>grafit.css</code></td></tr>
+<tr><td>9</td><td>💜 Фиолетовая</td><td><code>fioletovaya.css</code></td></tr>
+</table>
+
+<div class="box done">
+<b>Селекторы палитр — без <code>body</code> в начале.</b> Работают и на <code>body</code>, и на <code>.dm-scope</code>. Поэтому палитры не требовали правок в 4.1b.
+</div>
+
+<div class="box done">
+<b>Контраст плашек — по оттенкам.</b>
+<ul>
+<li><b>Нежная, Светлая, Яркая</b> → <code>--plate-text: var(--c4)</code>, <code>--plate-bg: var(--c2)</code>.</li>
+<li><b>Насыщенная, Глубокая</b> → <code>--plate-text: #fff</code>, <code>--plate-bg: mix(c3 15%, c2 85%)</code>.</li>
+<li><b>Тёмная тема</b> → <code>--plate-bg: mix(c1 15%, c4 85%)</code>, <code>--plate-text: var(--c1)</code>.</li>
+</ul>
+Все три правила распространены и на <code>.dm-scope</code>.
+</div>
+
+<h3>5.3. Тени <span class="chip done">✅ 8 вариантов × 2 набора</span></h3>
+
+<p>Панель 🖌 → секция «Тень». Два таба: <b>Карточки</b> и <b>Плавающие кнопки</b>.</p>
+
+<table class="table">
+<tr><th>data-sh</th><th>Название</th></tr>
+<tr><td><code>none</code></td><td>Без тени</td></tr>
+<tr><td><code>parit</code></td><td>Парящая (дефолт)</td></tr>
+<tr><td><code>prikrepl</code></td><td>Прикреплённая</td></tr>
+<tr><td><code>bokovaya</code></td><td>Боковая</td></tr>
+<tr><td><code>cvetnaya</code></td><td>Цветная</td></tr>
+<tr><td><code>dvoinaya</code></td><td>Двойная</td></tr>
+<tr><td><code>vnutrennyaya</code></td><td>Внутренняя</td></tr>
+<tr><td><code>vniz</code></td><td>Вниз</td></tr>
+</table>
+
+<div class="box done">
+<b>Для макета — свои значения теней</b> (плотнее и компактнее, потому что карточка в макете маленькая). Сделано в 4.2.
+</div>
+
+<h3>5.4. Светлая / тёмная тема <span class="chip done">✅</span></h3>
+
+<div class="box done">
+<b>Управление:</b> панель 🖌 → шапка панели → тумблер 🌞 ●─── 🌙 между заголовком и крестиком.
+</div>
+
+<h3>5.5. Панель 🖌 <span class="chip done">✅ работает</span></h3>
+
+<pre><code>🖌 Оформление                       🌞 ●── 🌙    ✕
+├── Стиль ▼
+├── Палитра ▼                 оттенки на строке с заголовком
+├── Тень ▼                    табы: Карточки · Плавающие кнопки
+└── Фон ▼
+─────────────────────────────
+[Посмотреть] [Применить]              ← телефон (ширина < 800)
+или
+[           Применить          ]      ← ПК / iPad (ширина ≥ 800)</code></pre>
+
+<div class="box done">
+<b>Структура (классы):</b>
+<ul>
+<li><code>.design-panel-box</code> — коробка панели.</li>
+<li><code>.design-panel-head</code> — шапка: заголовок + тумблер + крестик.</li>
+<li><code>.design-panel-columns</code> — контейнер двух колонок.</li>
+<li><code>.design-panel-body</code> — левая колонка с настройками (4 секции: style, palette, shadow, background).</li>
+<li><code>.design-panel-mockup dm-scope</code> — правая колонка с макетом.</li>
+<li><code>.design-panel-footer</code> — нижняя полоска: две кнопки.</li>
+<li><code>.dp-action</code> — общий класс обеих кнопок. <code>.dp-action-apply</code> — «Применить», <code>.dp-action-preview</code> — «Посмотреть».</li>
+</ul>
+</div>
+
+<div class="box done">
+<b>Все секции сворачиваются.</b> Состояние помнится (ключ <code>designSectionsCollapsed</code>).
+</div>
+
+<div class="box done">
+<b>Размеры панели и макета — сделано в v10:</b>
+<ul>
+<li><b>Панель:</b> <code>max-width: 900px</code>. Высота <b>по содержимому</b>, но не больше <code>96vh</code> (если контента много — внутри левой колонки появляется скролл).</li>
+<li><b>Макет:</b> <code>width: 400px</code>. <b>Пропорции как у окна браузера</b> — <code>aspect-ratio</code> вычисляется из <code>window.innerWidth / window.innerHeight</code>. На ПК макет широкий и низкий, на iPad высокий. <b>Не растянут на всю высоту панели</b> — компактно сверху правой колонки.</li>
+<li>Все элементы макета <b>ужаты</b> под низкое окно ПК (фото, шапка, отступы, шрифты).</li>
+<li>Нижняя полоска макета <b>прижата к низу</b> коробочки (<code>margin-top:auto</code>).</li>
+</ul>
+</div>
+
+<div class="box note">
+<b>Почему макет — не «на всю высоту панели», как было в v9.</b>
+<br>Потому что макет должен показывать, как реально ляжет фон. Фон ляжет по пропорциям окна браузера. Если макет растянуть — фон в нём обрежется «слишком удачно» и не совпадёт с реальностью. Решение пользователя 10 октября 2026.
+</div>
+
+<h3>5.6. Фоны <span class="chip done">✅ финализированы</span></h3>
+
+<p>В папке <code>images/</code> — 19 картинок (01–05, 07–20; файл 06 отсутствует).</p>
+
+<div class="box done">
+<b>Как работает на сайте.</b>
+<ol>
+<li><b>Двухслойный фон:</b> <code>bg-blur</code> + <code>bg-sharp</code>.</li>
+<li><b>Размытие</b> — через <code>&lt;img&gt;</code>, не через background-image (iOS Safari).</li>
+<li><b>Картинка вписана</b> целиком (<code>object-fit:contain</code>).</li>
+<li><b>Мягкие растворы краёв</b> — <code>mask-image</code>.</li>
+<li><b>Позиция и зум</b> — переменные <code>--tx</code> / <code>--ty</code> / <code>--tz</code>.</li>
+<li><b>Редактор позиции</b> — модалка. Открывается <b>поверх панели</b>, панель не закрывается.</li>
+</ol>
+</div>
+
+<h4>Три слота — по устройству</h4>
+<div class="box done">
+<ul>
+<li>Нет тача → <code>pc</code>. Тач + ширина < 600 → <code>iphone</code>. Тач + ≥ 600 → <code>ipad</code>.</li>
+<li>Хранилище: <code>bgSettings[bgId] = { iphone:{x,y,z}, ipad:{x,y,z}, pc:{x,y,z} }</code>.</li>
+</ul>
+</div>
+
+<h3>5.7. Фон сайта темнее карточки <span class="chip done">✅</span></h3>
+
+<div class="box done">
+<b>Карточка:</b> <code>--c1</code>. <b>Фон сайта:</b> <code>color-mix(in srgb, var(--c1) 65%, var(--c2) 35%)</code>.
+</div>
+
+<!-- ============================================ -->
+<h2 id="per-screen">6 · Оформление по экранам <span class="chip done">✅ 4.1a + 4.1b + 4.2 + 4.3 + 5 + 6 + часть 7 сделаны</span></h2>
+
+<div class="box done">
+<b>Идея.</b> У каждого из четырёх экранов (🏠 ❤ 📅 🧺) — <b>своё оформление</b>. Меняешь стиль на Главной — на Избранном он остаётся прежним.
+</div>
+
+<h3>6.1. Что настраивается отдельно на каждом экране</h3>
+
+<table class="table">
+<tr><th>Слой</th><th>Свой?</th></tr>
+<tr><td>Стиль</td><td>✅ да</td></tr>
+<tr><td>Палитра + оттенок</td><td>✅ да</td></tr>
+<tr><td>Тень карточек</td><td>✅ да</td></tr>
+<tr><td>Тень FAB</td><td>✅ да</td></tr>
+<tr><td>Тема</td><td>✅ да</td></tr>
+<tr><td>Фон</td><td>✅ да</td></tr>
+</table>
+
+<h3>6.2. Значения по умолчанию</h3>
+
+<table class="table">
+<tr><th>Слой</th><th>Значение</th></tr>
+<tr><td>Стиль</td><td>🌸 Нежный</td></tr>
+<tr><td>Палитра</td><td>🌸 Пудровая + Нежная</td></tr>
+<tr><td>Тень карточек</td><td>Парящая</td></tr>
+<tr><td>Тень FAB</td><td>Парящая</td></tr>
+<tr><td>Тема</td><td>Светлая</td></tr>
+<tr><td>Фон</td><td>Без фона</td></tr>
+</table>
+
+<div class="box done">
+<b>Фоны НЕ наследуются автоматически.</b> Хочешь одинаковый фон — «Применить к…» с галочками.
+</div>
+
+<h3>6.3. Хранилище <span class="chip done">✅</span></h3>
+
+<div class="box done">
+<b>Ключ <code>design</code> в IndexedDB, таблица <code>settings</code>:</b>
+<pre><code>design = {
+  home:      { style, palette, shade, shadow, fabShadow, theme, bg },
+  favorites: { ... },
+  plan:      { ... },
+  pantry:    { ... }
+}</code></pre>
+<b>Черновик <code>designDraft</code> — в памяти, не в localStorage.</b> Живёт, пока открыта панель. Обнуляется при закрытии.
+</div>
+
+<div class="box done">
+<b>Что работает в коде:</b>
+<ul>
+<li><code>loadDesignData()</code> — загружает структуру.</li>
+<li><code>getDesignFor(screen)</code> — сохранёнка.</li>
+<li><code>getActiveDesign()</code> — <b>черновик или сохранёнка</b>.</li>
+<li><code>setDesignFor(screen, patch)</code> — сохранить.</li>
+<li><code>applyDesignFor(screen)</code> — применить к body.</li>
+<li><code>syncMockupScope()</code> — применить черновик к макету (включая фон).</li>
+<li><code>syncMockupAspect()</code> — пересчитать пропорции макета из окна браузера.</li>
+<li><code>applyDraftToBody()</code> — применить черновик к body <b>без сохранения</b> (для режима предпросмотра).</li>
+<li><code>enterPreview()</code> — войти в режим предпросмотра (телефон).</li>
+<li><code>exitPreview()</code> — выйти из предпросмотра, вернуться в панель.</li>
+<li><code>openApplyTo()</code>, <code>closeApplyTo()</code> — окошко «Применить к…».</li>
+</ul>
+</div>
+
+<h3>6.4. Подшаг 4.1a — инфраструктура <span class="chip done">✅ сделано (v9)</span></h3>
+
+<div class="box done">
+<b>Что сделано:</b>
+<ul>
+<li>HTML: на макете класс <code>dm-scope</code>. Стало: <code>&lt;div class="design-panel-mockup dm-scope"&gt;</code>.</li>
+<li>JS: функция <code>syncMockupScope()</code>. Ставит <code>data-style</code>, <code>data-palette</code>, <code>data-shadow</code>, <code>data-theme</code>, <code>data-shadow</code> на макет. Вызывается при открытии панели.</li>
+<li>CSS в <code>style.css</code>: дефолтные переменные «Нежного» и правила тёмной темы макета перевешены на <code>.dm-scope</code>.</li>
+<li>CSS в <code>card.css</code>: правила <code>--plate-bg</code> / <code>--plate-text</code> распространены на <code>.dm-scope</code>.</li>
+</ul>
+</div>
+
+<div class="box">
+<b>Все классы внутри макета — с префиксом <code>dm-</code>.</b> Список (сверху вниз, как в HTML):
+<ul>
+<li><code>.design-panel-mockup</code> — обёртка макета. У неё же класс <code>dm-scope</code>. На ней <code>data-style</code>, <code>data-palette</code>, <code>data-shadow</code>, <code>data-theme</code>.</li>
+<li><code>.dm-bg</code> — картинка фона внутри макета. Лежит на дне, за всеми элементами. Класс <code>dm-bg-on</code> — картинка показана, без него — спрятана.</li>
+<li><code>.dm-header</code> — полоска «шапки».</li>
+<li><code>.dm-logo</code> — кружок слева в шапке.</li>
+<li><code>.dm-icons</code> и <code>.dm-icons span</code> — три точки справа в шапке.</li>
+<li><code>.dm-contents</code> — полоска «содержания».</li>
+<li><code>.dm-chip</code> — чипы внутри содержания (3 штуки).</li>
+<li><code>.dm-card</code> — прямоугольник карточки.</li>
+<li><code>.dm-photo</code> — прямоугольник фото сверху в карточке.</li>
+<li><code>.dm-card-body</code> — тело карточки.</li>
+<li><code>.dm-title</code> — «Название» курсивом (текст через <code>::before</code>).</li>
+<li><code>.dm-tags</code> и <code>.dm-tag</code> — плашки тегов.</li>
+<li><code>.dm-kcal</code> и <code>.dm-kcal span</code> — чёрточки КБЖУ.</li>
+<li><code>.dm-buttons</code> и <code>.dm-btn</code>, <code>.dm-btn-primary</code> — две кнопки внизу карточки.</li>
+<li><code>.dm-nav</code> и <code>.dm-nav span</code> — полоска нижней панели с четырьмя точками.</li>
+</ul>
+<b>Где это в CSS.</b> Всё в <code>style.css</code>, в конце файла.
+</div>
+
+<h3>6.5. Подшаг 4.1b — селекторы стилей <span class="chip done">✅ сделано (v9)</span></h3>
+
+<div class="box done">
+<b>7 файлов стилей</b> переписаны:
+<ul>
+<li>Было: <code>[data-style="X"] .design-panel-mockup{...}</code>.</li>
+<li>Стало: <code>.dm-scope[data-style="X"]{...}</code>.</li>
+</ul>
+Файлы: <code>zhurnal.css</code>, <code>minimalizm.css</code>, <code>boho.css</code>, <code>retro.css</code>, <code>yaponsky.css</code>, <code>antichny.css</code>, <code>lileyny.css</code>.
+<br><b>Не трогали:</b> <code>nezhny.css</code> — заглушка.
+<br><b>Не трогали:</b> 9 файлов палитр — селекторы уже без <code>body</code>.
+</div>
+
+<h3>6.6. Подшаг 4.2 — черновик <span class="chip done">✅ сделано (v9)</span></h3>
+
+<div class="box done">
+<b>Как работает:</b>
+<ol>
+<li><b>Открытие панели:</b> <code>designDraft = { ...сохранёнка текущего экрана }</code>.</li>
+<li><b>Клик по стилю / палитре / оттенку / тени / теме / фону</b> — меняет поле в <code>designDraft</code>. Не трогает страницу. Обновляет макет и подсветку чипов.</li>
+<li><b>Тумблер 🌞/🌙</b> — в черновик. Макет темнеет/светлеет.</li>
+<li><b>Крестик / клик по тёмному фону / Escape</b> — <code>designDraft = null</code>. Панель закрывается.</li>
+</ol>
+</div>
+
+<div class="box done">
+<b>Побочные правки, сделанные в v9 и v10:</b>
+<ul>
+<li>Подложка макета — цвета <code>mix(c1, c2)</code>, как у настоящего фона.</li>
+<li>Тени карточки в макете усилены.</li>
+<li>Переменные <code>--plate-bg</code> / <code>--plate-text</code> переопределены на <code>.dm-scope</code>.</li>
+<li><b>v10:</b> все элементы макета ужаты под низкое окно ПК (фото, шапка, отступы, шрифты, кнопки).</li>
+<li><b>v10:</b> нижняя полоска макета прижата к низу коробочки (<code>margin-top:auto</code>).</li>
+</ul>
+</div>
+
+<div class="box note">
+<b>Урок: переменные на <code>body</code> не наследуются в <code>.dm-scope</code> автоматически.</b>
+<br>Если CSS-переменная объявлена как <code>body{--что-то:...}</code>, на <code>.dm-scope</code> она приходит уже посчитанной, «застывшей». Если внутри макета переменная должна пересчитываться — её надо переопределить на <code>.dm-scope</code> отдельно.
+<br><b>Пример:</b> <code>--plate-bg</code> / <code>--plate-text</code> в <code>card.css</code> висели на <code>body</code>, и макет их брал оттуда же — старыми. Пришлось продублировать на <code>.dm-scope</code>.
+</div>
+
+<h3>6.7. Фон в макете — вариант А (упрощённый) <span class="chip done">✅ сделано (v10)</span></h3>
+
+<div class="box done">
+<b>Как реализовано:</b>
+<ul>
+<li>Внутри <code>.dm-scope</code> появился <code>&lt;img class="dm-bg"&gt;</code>. Он лежит <b>на дне</b>, за всеми элементами макета (у остальных детей <code>z-index: 1</code>).</li>
+<li><code>object-fit: cover</code>, растянут на всю коробочку, включая внутренние отступы.</li>
+<li>Обрезается по скруглённым углам макета (<code>overflow: hidden</code>).</li>
+<li>Картинка показывается классом <code>dm-bg-on</code>. Без класса — спрятана.</li>
+<li>Фон в макете <b>меняется мгновенно</b> при клике по квадратику в панели.</li>
+<li>При открытии панели макет сразу показывает фон из черновика (или из сохранёнки).</li>
+<li>Клик по «Без фона» — картинка прячется, остаётся цветная подложка.</li>
+<li><b>Без блюра</b> — на маленьком размере не читается.</li>
+<li><b>Без масок</b> — на макете не нужна.</li>
+<li><b>Без позиции и зума</b> — это тонкая настройка, место на большой странице.</li>
+</ul>
+</div>
+
+<div class="box note">
+<b>Позиция фона в макете НЕ видна — и это нормально.</b> Макет показывает только сам фон, без смещения и зума. Если пользователь подвигает фон в редакторе и не увидит разницы в макете — так задумано. Позиция отработает на реальной странице при «Применить».
+</div>
+
+<div class="box">
+<b>Технические функции:</b>
+<ul>
+<li><code>syncMockupScope()</code> — ставит <code>dm-bg-on</code> и <code>src</code>, если в черновике есть фон.</li>
+<li>Обработчик клика по квадратику фона вызывает <code>syncMockupScope()</code>.</li>
+</ul>
+</div>
+
+<h3>6.8. Подшаг 4.3 — кнопка «Применить» <span class="chip done">✅ сделано (v10)</span></h3>
+
+<div class="box done">
+<b>Как работает:</b>
+<ol>
+<li>Клик по «Применить» в панели → открывается окошко <b>«Применить к…»</b> (см. 6.9).</li>
+<li>В окошке пользователь отмечает галочками, к каким экранам применить.</li>
+<li>Клик по «Применить» в окошке:
+<ul>
+<li>Черновик копируется во все отмеченные экраны (<code>setDesignFor</code>).</li>
+<li>Окошко закрывается.</li>
+<li><b>Панель закрывается</b>, <code>designDraft = null</code>.</li>
+<li><code>applyDesignFor(activeDesignScreen)</code> — применяет к body.</li>
+<li>Фон применяется через <code>applyBg()</code>.</li>
+</ul>
+</li>
+</ol>
+</div>
+
+<div class="conflict">
+<b>Что изменилось против карты v9.</b>
+<br>В v9 было: «Пользователь склоняется: <b>не закрывать</b>». В v10 <b>панель закрывается</b>. Потому что иначе пользователь сам должен закрывать панель крестиком, чтобы увидеть результат. Решение принято 10 октября 2026.
+</div>
+
+<h3>6.9. Окошко «Применить к…» <span class="chip done">✅ сделано (v10)</span></h3>
+
+<div class="box done">
+<b>Как открывается.</b> Кнопка «Применить» в панели 🖌 → окошко поверх панели:
+<pre><code>Применить к:
+[ ] 🏠 Главная
+[ ] ❤ Избранное
+[ ] 📅 План
+[ ] 🧺 Кладовая
+[Отмена]  [Применить]</code></pre>
+</div>
+
+<div class="box done">
+<b>Правила.</b>
+<ul>
+<li><b>Все галочки пустые.</b> Пользователь сам отмечает.</li>
+<li><b>«Применить» неактивна</b>, пока не отмечен хотя бы один экран.</li>
+<li>Отмечено несколько — оформление копируется на все.</li>
+<li><b>«Отмена»</b> — закрывает окошко, черновик остаётся. Если был открыт предпросмотр — возвращает в панель (см. 6.10).</li>
+</ul>
+</div>
+
+<div class="box done">
+<b>Классы:</b> <code>.apply-to-list</code>, <code>.apply-to-row</code>, <code>.apply-to-check</code>, <code>.apply-to-actions</code>, <code>.apply-to-btn</code> (и <code>.apply-to-btn.primary</code>).
+</div>
+
+<h3>6.10. Переключение экранов при открытой панели <span class="chip done">✅</span></h3>
+
+<div class="box done">
+<b>Логика блокировки работает</b> (естественно). Панель перекрывает весь экран тёмным фоном, нижняя навигация недоступна для клика. Уйти на другой экран можно, только закрыв панель.
+</div>
+
+<div class="box note">
+<b>В режиме предпросмотра (телефон) — навигация доступна.</b>
+<br>Панель скрыта, страница показана как обычно. Пользователь может уйти на другой экран прямо в предпросмотре. Черновик при этом <b>не теряется</b> — он в памяти, вернётся, когда пользователь нажмёт «Вернуться» или «Применить». Это осознанное поведение.
+</div>
+
+<div class="box done">
+<b>Смена оформления при переключении экранов — мгновенная, без анимации.</b>
+</div>
+
+<h3>6.11. Кнопка «Отмена» в панели <span class="chip no">❌ не делаем</span></h3>
+
+<div class="box">
+Крестик = отмена = выброс черновика. Отдельной кнопки не нужно.
+</div>
+
+<h3>6.12. Кнопка «Сбросить» <span class="chip no">❌ не делаем</span></h3>
+
+<div class="box">
+Сброс = просто выбрать другой стиль. Если понадобится — добавим.
+</div>
+
+<h3>6.13. Редактор позиции фона <span class="chip done">✅ сделано (v10)</span></h3>
+
+<div class="box done">
+<b>Как работает:</b>
+<ul>
+<li>Кнопка <b>«📐 Позиция»</b> в панели 🖌 → открывается редактор <b>поверх панели</b>. Панель не закрывается.</li>
+<li>Редактор берёт фон из черновика (<code>designDraft.bg</code>), а не с сайта.</li>
+<li>При закрытии редактора — панель на месте, черновик цел.</li>
+<li>Позиция и зум сохраняются в <code>bgSettings[bgId][device]</code>.</li>
+<li>Позиция и зум — <b>общие для картинки</b>. Пока не реализовано «отвязать для конкретного экрана» — см. раздел «Отложено».</li>
+</ul>
+</div>
+
+<div class="box note">
+<b>Почему редактор поверх панели, а не отдельно.</b>
+<br>Раньше кнопка «📐 Позиция» закрывала панель — и черновик терялся. Теперь панель живёт, пока пользователь настраивает позицию. Можно накликать стиль, потом подобрать позицию фона, потом всё вместе применить. Решение принято 10 октября 2026.
+</div>
+
+<div class="box">
+<b>Правки в v10:</b>
+<ul>
+<li><code>.bg-editor</code> — <code>z-index: 100003</code> (был 100000, под панелью).</li>
+<li>Переменная <code>bgEditorBg</code> — фон, для которого открыт редактор.</li>
+<li><code>openBgEditor()</code> берёт фон из <code>designDraft.bg</code>, если есть.</li>
+<li><code>bgEditorSave</code> сохраняет в <code>bgSettings[bgEditorBg]</code>, страницу не трогает.</li>
+<li>Escape: сначала закрывает редактор, потом окошко «Применить к…», потом панель.</li>
+</ul>
+</div>
+
+<h3>6.14. Размеры панели и макета <span class="chip done">✅ сделано (v10)</span></h3>
+
+<div class="box done">
+<b>Панель:</b>
+<ul>
+<li><code>max-width: 900px</code> (было 760).</li>
+<li>Высота <b>по содержимому</b>, но не больше <code>96vh</code>. Если контента много — внутри левой колонки появляется скролл, панель не растёт.</li>
+</ul>
+<b>Макет:</b>
+<ul>
+<li><code>width: 400px</code>.</li>
+<li><b>Пропорции как у окна браузера</b> — <code>aspect-ratio</code> вычисляется из <code>window.innerWidth / window.innerHeight</code> через <code>syncMockupAspect()</code>.</li>
+<li><b>Не растянут на всю высоту панели.</b> Компактно сверху правой колонки, под ним пусто.</li>
+<li>Все элементы макета ужаты (фото 52px, шапка 22px, и т.д.) — чтобы карточка влезала в низкое окно ПК.</li>
+<li>Нижняя полоска макета прижата к низу (<code>margin-top:auto</code>) — под карточкой виден фон.</li>
+</ul>
+</div>
+
+<div class="box note">
+<b>Пересчёт пропорций.</b> <code>syncMockupAspect()</code> вызывается:
+<ul>
+<li>при открытии панели,</li>
+<li>при изменении размера окна (<code>window.addEventListener('resize', ...)</code>).</li>
+</ul>
+</div>
+
+<h3>6.15. Подшаг 6 — режим предпросмотра (телефон) <span class="chip done">✅ сделано (v10)</span></h3>
+
+<div class="box done">
+<b>Проблема, которую решает.</b> На телефоне (ширина меньше 800) макета нет. Клики в панели визуально ничего не показывают — ни в панели, ни на странице (черновик страницу не трогает). Панель «слепая».
+</div>
+
+<div class="box done">
+<b>Решение — кнопка «Посмотреть».</b>
+<ul>
+<li><b>Ширина &lt; 800</b> (телефон, узкое окно iPad): в панели видны <b>обе</b> кнопки — «Посмотреть» и «Применить». «Применить» работает напрямую, для быстрых случаев (поменять палитру).</li>
+<li><b>Ширина ≥ 800</b> (ПК, iPad): в панели видна <b>только</b> «Применить». Макет справа, предпросмотр не нужен.</li>
+</ul>
+</div>
+
+<div class="box done">
+<b>Как работает предпросмотр:</b>
+<ol>
+<li>Пользователь накликал в панели. Жмёт <b>«Посмотреть»</b>.</li>
+<li>Панель <b>скрывается</b> (прячется под страницу).</li>
+<li>Страница показывает <b>черновик</b> — стиль, палитру, тени, тему, фон. Всё как применилось бы.</li>
+<li>Внизу по центру — <b>плашка предпросмотра</b>: [Применить] [Вернуться].</li>
+<li><b>«Вернуться»</b> — плашка прячется, панель возвращается, страница <b>откатывается</b> к сохранёнке. Черновик цел.</li>
+<li><b>«Применить»</b> — открывается окошко «Применить к…» (то же, что и из панели).</li>
+<li><b>«Отмена»</b> в окошке — возвращает в панель (предпросмотр откатывается).</li>
+<li><b>«Применить»</b> в окошке — сохраняет, закрывает всё.</li>
+</ol>
+</div>
+
+<div class="box done">
+<b>Классы и переменные:</b>
+<ul>
+<li><code>#previewBar</code> / <code>.preview-bar</code> — плашка внизу.</li>
+<li><code>.preview-btn</code> (и <code>.preview-btn.primary</code>) — кнопки плашки.</li>
+<li><code>isPreviewing</code> — флаг в JS.</li>
+<li>Функции: <code>enterPreview()</code>, <code>exitPreview()</code>, <code>applyDraftToBody()</code>.</li>
+</ul>
+</div>
+
+<div class="box note">
+<b>Escape в предпросмотре не нужен.</b> На телефоне и iPad клавиши Escape нет. На ПК предпросмотра нет (макет справа). Значит, Escape в этом режиме не бывает.
+<br>Escape на ПК: сначала закрывает редактор фона, потом окошко «Применить к…», потом панель.
+</div>
+
+<h3>6.16. Что ещё осталось по оформлению по экранам</h3>
+
+<div class="box">
+<b>Подшаги — итог:</b>
+<ol>
+<li><span class="chip done">✅</span> 4.1a — инфраструктура <code>.dm-scope</code>.</li>
+<li><span class="chip done">✅</span> 4.1b — 7 файлов стилей.</li>
+<li><span class="chip done">✅</span> 4.2 — черновик.</li>
+<li><span class="chip done">✅</span> Фон в макете (вариант А).</li>
+<li><span class="chip done">✅</span> Фикс размеров панели и макета.</li>
+<li><span class="chip done">✅</span> 4.3 — кнопка «Применить».</li>
+<li><span class="chip done">✅</span> Подшаг 5 — окошко «Применить к…» + блокировка навигации.</li>
+<li><span class="chip done">✅</span> Подшаг 6 — телефон, кнопка «Посмотреть» + плашка предпросмотра.</li>
+<li><span class="chip done">✅</span> Часть подшага 7 — редактор позиции поверх панели.</li>
+<li><span class="chip wait">⏳</span> Хвост подшага 7 — «Общая / Своя» позиция + точка-звёздочка. <b>Отложено</b> (см. раздел «Отложено»).</li>
+</ol>
+</div>
+
+<!-- ============================================ -->
+<h2 id="nav">7 · Навигация и шапка</h2>
+
+<h3>7.1. Шапка <span class="chip done">✅</span></h3>
+
+<div class="box done">
+<ul>
+<li>Название «Копилка рецептов» курсивом Cormorant, 22px.</li>
+<li>Подпись «Зажги свечку…».</li>
+<li><b>3 круглых иконки:</b> 🖌 🔔 ⚙.</li>
+<li>🖌 — панель оформления. 🔔 и ⚙ пока не активны.</li>
+<li>Шапка не закрепляется.</li>
+</ul>
+</div>
+
+<h3>7.2. Иконки действий <span class="chip done">✅</span></h3>
+
+<pre><code>[📖 СОДЕРЖАНИЕ] [▼] [🔍] [🏷] [🎲]</code></pre>
+
+<div class="box ok">
+Круглые 32×32px, фон <code>--plate-bg</code>, текст <code>--plate-text</code>. Клик по иконке не сворачивает содержание.
+</div>
+
+<h3>7.3. Нижняя навигация <span class="chip done">✅</span></h3>
+
+<table class="table">
+<tr><th>Кнопка</th><th>Что открывает</th></tr>
+<tr><td>🏠 Главная</td><td>Главный экран со всеми категориями</td></tr>
+<tr><td>❤ Избранное</td><td>Заглушка «Тут будет Избранное»</td></tr>
+<tr><td>📅 План</td><td>Заглушка «Тут будет План»</td></tr>
+<tr><td>🧺 Кладовая</td><td>Заглушка «Тут будет Кладовая»</td></tr>
+</table>
+
+<div class="box done">
+Панель на всю ширину. 4 кнопки равной ширины. Активная — залита <code>--c3</code>. Клик переключает экран. При смене — прокрутка вверх. Вкладка помнится (ключ <code>activeScreen</code>).
+</div>
+
+<h3>7.4. Четыре экрана <span class="chip done">✅</span></h3>
+
+<div class="box done">
+Один файл <code>index.html</code>, четыре экрана внутри. <code>.screen[data-screen]</code>, показывается через <code>.active</code>. Содержание — внутри Главной.
+</div>
+
+<h3>7.5. Плавающие кнопки <span class="chip done">✅</span></h3>
+
+<div class="box">
+<div style="font-family:monospace;font-size:13px">
+⏲  — Таймер<br>
+🔍  — Поиск<br>
+➕  — Добавить рецепт
+</div>
+</div>
+
+<div class="box done">
+<b>Как выглядит:</b>
+<ul>
+<li>Три круглых кнопки справа снизу, над нижней панелью.</li>
+<li>⏲ Таймер — сверху, спокойная.</li>
+<li>🔍 Поиск — посередине, спокойная.</li>
+<li>➕ Добавить — снизу, акцентная (<code>--c3</code>).</li>
+<li>Размер: 52px на тач / 44px на ПК.</li>
+<li>Тень — своя на каждом экране.</li>
+</ul>
+</div>
+
+<h4>Что открывает ➕</h4>
+
+<div class="box done">
+<b>Кнопка ➕ открывает шторку снизу</b> — не сразу «Добавить рецепт», а выбор.
+</div>
+
+<table class="table">
+<tr><th>Экран</th><th>Что в шторке</th></tr>
+<tr><td>🏠 Главная</td><td>➕ Добавить рецепт · 📚 Создать продукт</td></tr>
+<tr><td>❤ Избранное</td><td>➕ Добавить рецепт · 📚 Создать продукт</td></tr>
+<tr><td>📅 План</td><td>➕ Добавить рецепт · 📚 Создать продукт</td></tr>
+<tr><td>🧺 Кладовая</td><td>➕ Добавить рецепт · 📚 Создать продукт · 🧺 Добавить в кладовую</td></tr>
+</table>
+
+<div class="box">
+<b>Что делает каждый пункт:</b>
+<ul>
+<li><b>➕ Добавить рецепт</b> — открывается редактор нового рецепта.</li>
+<li><b>📚 Создать продукт</b> — открывается форма создания продукта. Продукт попадает <b>только в базу</b> (справочник), без рецепта.</li>
+<li><b>🧺 Добавить в кладовую</b> (только на Кладовой) — открывается форма: выбрать продукт из базы + указать количество. Если продукта нет в базе — система предложит сначала создать.</li>
+</ul>
+</div>
+
+<div class="box note">
+<b>Разница путей создания продукта.</b>
+<br>Из <b>редактора рецепта</b> — продукт попадает в базу <b>и сразу в рецепт</b>.
+<br>Из <b>FAB ➕</b> — продукт попадает <b>только в базу</b>, без рецепта.
+</div>
+
+<h4>Автоскрытие</h4>
+
+<div class="box done">
+Тач — автоскрытие всегда. ПК — только если окно уже 1730px. Скролл вниз — прячутся. Вверх — появляются. Остановка — 2 секунды → прячутся.
+</div>
+
+<div class="box warn">
+<b>На пустых экранах (Избранное, План, Кладовая) автоскрытие не работает</b> — нечего скроллить. Не баг. Исправится, когда экраны наполнятся. <b>Записать: при наполнении проверить.</b>
+</div>
+
+<h4>FAB — разные на разных экранах <span class="chip q">❓</span></h4>
+
+<table class="table">
+<tr><th>Кнопка</th><th>🏠</th><th>❤</th><th>📅</th><th>🧺</th></tr>
+<tr><td>⏲ Таймер</td><td>да</td><td>вряд ли</td><td><b>да</b></td><td>нет</td></tr>
+<tr><td>🔍 Поиск</td><td>да</td><td>да</td><td>вряд ли</td><td><b>да</b></td></tr>
+<tr><td>➕ Добавить</td><td>рецепт</td><td>вряд ли</td><td>вряд ли</td><td><b>добавить продукт</b></td></tr>
+</table>
+
+<h3>7.6. Модалки плавающих кнопок <span class="chip done">✅ заглушки</span></h3>
+
+<div class="box done">
+Три отдельные: ⏲ Таймер / 🔍 Поиск / ➕ Добавить. Открываются с любого экрана. Реальных функций пока нет. Закрытие — крестик, фон, Escape.
+</div>
+
+<!-- ============================================ -->
+<h2 id="main">8 · Главный экран</h2>
+
+<h3>8.1. Содержание <span class="chip done">✅</span></h3>
+
+<div class="box done">
+<p>Блок «📖 СОДЕРЖАНИЕ» сворачивается. Два ряда плашек:</p>
+<ul>
+<li><b>По приёму:</b> 🌅 Завтраки · 🍽 Обеды · 🌙 Ужины · 🍎 Перекусы</li>
+<li><b>По типу:</b> 🥗 Салаты · 🍲 Супы · 🍰 Десерты · 🍞 Выпечка · 🥟 Закуски · 🍚 Гарниры · 🥤 Напитки · 🥫 Соусы</li>
+</ul>
+<p>Раскрыто по умолчанию. Три иконки 🔍 🏷 🎲. Только на Главной.</p>
+</div>
+
+<h3>8.2. Секции рецептов <span class="chip done">✅</span></h3>
+
+<div class="box done">
+Четыре секции: 🌅 ЗАВТРАКИ · 3 / 🍽 ОБЕДЫ · 2 / 🌙 УЖИНЫ · 2 / 🍎 ПЕРЕКУСЫ · 2.
+<br><b>Счётчики теперь живые</b> — считают реальное количество рецептов в базе. До шага 33 в HTML стояли выдуманные числа (34 / 28 / 26 / 19). Обновляются автоматически функцией <code>renderAllRecipes()</code> при каждом запуске.
+</div>
+
+<h4>Сетка карточек</h4>
+<table class="table">
+<tr><th>Устройство</th><th>В ряд</th></tr>
+<tr><td>iPhone</td><td>1</td></tr>
+<tr><td>iPad</td><td>2–3</td></tr>
+<tr><td>ПК</td><td>3–4</td></tr>
+</table>
+
+<div class="box done">
+Контент ограничен 1600px. Отступ снизу у <code>.recipes</code> — 100px.
+</div>
+
+<!-- ============================================ -->
+<h2 id="card-small">9 · Карточка в списке <span class="chip wait">⏳ отложена: сейчас показывает старое состояние</span></h2>
+
+<div class="box warn">
+<b>Текущий статус (11 октября 2026).</b> Описанное ниже — это <b>целевое</b> состояние из карты. Но фактически в коде сейчас маленькая карточка рендерится из <code>render.js</code> со <b>старой</b> структурой: 5 иконок на фото, 2 кнопки внизу (🛒 и ✎). Всё, что описано в разделах 9.3 и 9.4 (4 иконки на фото, ⏱ в нижней полосе, 4 кнопки внизу, 🕐 Версии) — <b>не реализовано</b>.
+<br><b>Решение:</b> приводить маленькую карточку к карте — <b>отдельным шагом после большой карточки</b>. Не смешивать с шагом 35.
+</div>
+
+<h3>9.1. Структура (сверху вниз)</h3>
+
+<ol>
+<li><b>Фото (150px).</b> Слева сверху — бейдж. Справа сверху — 4 круглые кнопки 32px: ❤ 👨‍🍳 📅 🔖.</li>
+<li><b>Название</b> — шрифт от стиля.</li>
+<li><b>Теги — до 3.</b> Если тегов больше — показываются 3 главных (самые часто используемые во всей базе).</li>
+<li><b>КБЖУ + время</b> — строка.</li>
+<li><b>Ингредиенты</b> с чекбоксами и порциями.</li>
+<li><b>Кнопка «▼ показать все».</b></li>
+<li><b>Блок устройства готовки</b> (если есть).</li>
+<li><b>Заметка</b> (если есть).</li>
+<li><b>Нижние кнопки: 4 штуки в ряд</b> — <code>[🛒 N] [⏱] [✎ Изменить] [🕐 N из M]</code>.</li>
+</ol>
+
+<h3>9.2. Что изменилось против карты v9</h3>
+
+<div class="conflict">
+<b>Кнопка ⏱ (Таймер) переехала из верхних иконок в нижние кнопки.</b>
+<br>Было: на фото 5 иконок ❤ ⏱ 👨‍🍳 📅 🔖.
+<br>Стало: на фото 4 иконки ❤ 👨‍🍳 📅 🔖. Таймер ушёл вниз, к кнопкам. Там для него больше места, и он логичнее стоит рядом с остальными действиями.
+</div>
+
+<div class="conflict">
+<b>Верхние иконки стали крупнее.</b> Было 28px. Стало 32px. Место освободилось — после того как ⏱ уехала вниз.
+</div>
+
+<div class="conflict">
+<b>Кнопка версий уточнена.</b> Было <code>[🕐 3 из 5]</code> — как пример. Стало: <code>[🕐 N из M]</code>. Скрывается, если версия одна.
+</div>
+
+<h3>9.3. Кнопки на фото (справа сверху)</h3>
+
+<table class="table">
+<tr><th>Кнопка</th><th>Что делает</th></tr>
+<tr><td>❤ <b>Избранное</b></td><td>Переключатель. Активно → залита акцентом. Работает так же, как в большой карточке.</td></tr>
+<tr><td>👨‍🍳 <b>Приготовлено</b></td><td>Переключатель. Активно → иконка меняется на ✅, залита акцентом. Работает так же, как в большой карточке.</td></tr>
+<tr><td>📅 <b>В план</b></td><td>Открывает шторку со вкладками плана (Семейный / Для ребёнка / События — заглушка). Работает так же, как в большой карточке.</td></tr>
+<tr><td>🔖 <b>Хочу приготовить</b></td><td>Переключатель. Активно → залита акцентом. Работает так же, как в большой карточке.</td></tr>
+</table>
+
+<div class="box note">
+Все четыре кнопки — те же самые, что в большой карточке. Синхронизированы. Отметила в маленькой — видно в большой, и наоборот.
+</div>
+
+<h3>9.4. Нижние кнопки</h3>
+
+<div class="box done">
+4 кнопки в ряд: <code>[🛒 N] [⏱] [✎ Изменить] [🕐 N из M]</code>.
+</div>
+
+<table class="table">
+<tr><th>Кнопка</th><th>Что делает</th></tr>
+<tr><td>🛒 <b>Купить</b></td><td>Иконка + число.<br>Отмечено 2 ингредиента → «🛒 +2».<br>Не отмечено ничего → «🛒 N» (число всех ингредиентов).<br>Тап без выбора → шторка: «Добавить все ингредиенты» / «Добавить чего нет в кладовой».<br>Тап с выбранными → добавляет выбранные в корзину.<br>Работает так же, как в большой карточке.</td></tr>
+<tr><td>⏱ <b>Таймер</b></td><td>Иконка + число активных таймеров (если нет активных — просто иконка).<br>Клик → модалка таймера (та же, что в большой карточке).</td></tr>
+<tr><td>✎ <b>Изменить</b></td><td>Открывает сразу <b>редактор</b> (ту же модалку, что в большой карточке). Большую карточку не показывает — ты уже видела её в списке.</td></tr>
+<tr><td>🕐 <b>Версии</b></td><td>«N из M». Клик → модалка списка версий (та же, что в большой карточке).<br><b>Скрывается, если версия одна.</b> Если версий 2 и больше — показывается.</td></tr>
+</table>
+
+<div class="box note">
+<b>Кнопки «⋯ Ещё» в маленькой карточке нет.</b> Она есть только в большой. Причина: в списке кнопка нужна реже, а место дорого — на телефоне 5 кнопок в ряд не влезут.
+</div>
+
+<h3>9.5. Клик по карточке</h3>
+
+<div class="box done">
+<b>Клик по названию или по фото</b> — открывает большую карточку (модалку).<br>
+<b>Клик по кнопкам внутри</b> (иконки на фото, чекбоксы, порции, нижние кнопки) — большую карточку не открывает. Кнопки работают отдельно.
+</div>
+
+<div class="box done">
+<b>Статус на 11 октября 2026 (поздно вечером).</b> Большая карточка уже работает (шаг 35). Клик по названию или фото открывает её. Кнопки внутри (иконки на фото, чекбоксы, порции, нижние кнопки) большую карточку не открывают — работают отдельно.
+</div>
+
+<h3>9.6. Ограничение ингредиентов <span class="chip done">✅</span></h3>
+
+<div class="box done">
+<b>Длинные карточки</b> (есть и устройство, и заметка) → 3 ингредиента.
+<br><b>Остальные</b> → 4 ингредиента.
+<br>Скрытые показывает кнопка «▼ показать все».
+</div>
+
+<h3>9.7. Открытые вопросы</h3>
+
+<div class="conflict">
+<b>Смена устройства и корзина.</b> Не решено. Когда выберешь другое устройство готовки — что происходит с ингредиентами и корзиной? Обсудим, когда будем делать экран «Устройство готовки».
+</div>
+
+<div class="conflict">
+<b>Округление штучных продуктов.</b> Не решено. Яйца, бананы — как показывать «1/2 шт.» при смене порций. Обсудим, когда будем делать пересчёт.
+</div>
+
+<!-- ============================================ -->
+<h2 id="card-big">10 · Карточка рецепта (большая) <span class="chip done">✅ MVP сделан (шаг 35)</span></h2>
+
+<div class="box done">
+<b>Что сделано (шаг 35.1 + 35.2, 11 октября 2026):</b>
+<ul>
+<li><b>Открытие:</b> клик по названию или фото в маленькой карточке.</li>
+<li><b>Закрытие:</b> крестик ✕ / клик по тёмному фону / Escape.</li>
+<li><b>Фото-градиент</b> (у демо фото нет), 220px на телефоне, 300px на ПК. <b>Закреплено сверху</b> при прокрутке.</li>
+<li><b>Бейдж</b> приёма пищи — из <code>recipe.meal</code>.</li>
+<li><b>4 иконки</b> на фото: ❤ 👨‍🍳 🔖 📅 + крестик ✕. Порядок именно такой, крестик визуально отделён.</li>
+<li><b>❤ 👨‍🍳 🔖 — рабочие</b> через <code>addMark</code> / <code>removeMark</code> / <code>isMarked</code>.</li>
+<li><b>📅 — dropdown «В план»</b> (выпадает под кнопкой, справа вверху). Три галочки: Семейный / Для ребёнка / События. Клик — ставит/снимает галочку, не закрывает список. Закрыть: клик вне, Escape.</li>
+<li><b>Название</b> — Cormorant italic, 28px.</li>
+<li><b>Теги</b> — первые 5. Рядом иконка ✎ — открывает модалку-заглушку «Модалка тегов позже».</li>
+<li><b>КБЖУ</b> — на одну порцию. Если есть <code>weightPerPortion</code> — над строкой мелкая пометка «на 200 г».</li>
+<li><b>Ингредиенты</b> — полный список, без обрезки. У каждого кружок-чекбокс + название + количество. <b>Чекбокс кликается, отмечается галочкой ✓.</b> Хранится в IndexedDB (тип <code>ingredient</code>). Помнится по каждому рецепту отдельно. Держится даже после перезагрузки.</li>
+<li><b>Кнопка 🧹</b> рядом с «Ингредиенты:» — чистит только галочки этого рецепта. Порции не трогает.</li>
+<li><b>Порции −/+</b> рядом с «Ингредиенты:». Стартовое = 4. Пересчитывает ингредиенты (× коэффициент). Сохраняется в IndexedDB (тип <code>portions</code>). Клик по числу — сброс на 4. Граница снизу 1 (кнопка − гаснет).</li>
+<li><b>Формат чисел</b> — везде через запятую: <code>4,5</code> · <code>0,25</code> · <code>60</code>. И в большой, и в маленькой карточке.</li>
+<li><b>Шаги, устройство, заметка</b> — как в рецепте. Блоки показываются только если есть данные.</li>
+<li><b>Нижние кнопки</b> — закреплены снизу: <code>[🛒 N] [⏱] [✎ Изменить] [⋯]</code>. У рецепта с версиями &gt; 1 — добавляется <code>[🕐 N из M]</code>. 🛒 залита акцентом (как в маленькой карточке).</li>
+<li><b>🛒 Купить</b> → модалка «Кладовая появится позже».</li>
+<li><b>⏱ Таймер</b> → своя модалка «Таймер рецепта появится позже» (отдельная от FAB ⏲).</li>
+<li><b>✎ Изменить</b> → «Редактор появится позже».</li>
+<li><b>🕐 Версии</b> → «Версии появятся позже».</li>
+<li><b>⋯ Ещё</b> → <b>dropdown</b> (выпадает вверх от кнопок). 4 пункта: 📤 Поделиться · 📋 Копировать текст · 🖨 Печать · 🗑 Удалить. У каждого — своя модалка-заглушка.</li>
+<li><b>Размеры:</b> телефон — на весь экран, 100vh. ПК / iPad — окно 760px, 85vh. Скруглённые углы (все 4). Тонкий скроллбар только в теле. <b>Фото закреплено сверху, кнопки снизу, скроллится только тело.</b></li>
+<li><b>Тёмная тема</b> — работает во всей карточке.</li>
+</ul>
+</div>
+
+<div class="box note">
+<b>Что НЕ входит в MVP — идёт дальше:</b>
+<ul>
+<li><b>✎ Редактор рецепта</b> (раздел 10.8) — шаг 37.</li>
+<li><b>🕐 Версии рецепта</b> (раздел 10.6) — шаг 38.</li>
+<li><b>⏱ Таймер по-настоящему</b> (раздел 10.7) — шаг 38.</li>
+<li><b>📅 Сохранение в план</b> (сейчас галочки только визуально) — отдельно.</li>
+<li><b>Модалка тегов</b> (раздел 10.9) — когда будет база тегов.</li>
+<li><b>Реальный 🛒 Купить</b> — когда будет корзина.</li>
+<li><b>Галерея фото</b> — когда будут фото у рецептов.</li>
+<li><b>Кнопки в ⋯</b> (Поделиться / Копировать / Печать / Удалить) — по-настоящему.</li>
+</ul>
+</div>
+
+<h3>10.1. Как открывается</h3>
+
+<div class="box done">
+<b>Клик по названию или по фото</b> в маленькой карточке — открывается большая карточка.<br>
+<b>Клик по кнопкам внутри маленькой</b> (иконки на фото, порции, чекбоксы, нижние кнопки) — большую карточку не открывает. Кнопки работают отдельно.
+</div>
+
+<div class="box note">
+<b>Из маленькой карточки кнопка «✎ Изменить»</b> — открывает сразу редактор (не большую карточку). Ты уже видела карточку в списке, второй раз показывать не нужно.
+</div>
+
+<h3>10.2. Внешний вид</h3>
+
+<table class="table">
+<tr><th>Устройство</th><th>Как выглядит</th></tr>
+<tr><td>Телефон</td><td>На весь экран. Никаких отступов, никакого затемнённого фона по бокам.</td></tr>
+<tr><td>iPad / ПК</td><td>Окно по центру. Ширина 700–800px. Скруглённые углы. Вокруг — затемнённый список.</td></tr>
+</table>
+
+<div class="box">
+<b>Прокрутка.</b> Пока модалка открыта — список сзади не прокручивается. Крутится только содержимое модалки. Снизу — отступ, чтобы последний блок не прятался за нижней полосой кнопок.
+</div>
+
+<div class="box done">
+<b>Тёмная тема.</b> Модалка следует теме сайта. Тёмная тема — модалка тёмная. Светлая — светлая.
+</div>
+
+<h3>10.3. Верхняя часть</h3>
+
+<h4>Фото</h4>
+<table class="table">
+<tr><th>Устройство</th><th>Высота</th></tr>
+<tr><td>Телефон</td><td>220px</td></tr>
+<tr><td>iPad / ПК</td><td>300px</td></tr>
+</table>
+<div class="box">
+<ul>
+<li>Нет фото → градиент, как в маленькой карточке.</li>
+<li>Фото несколько (галерея) → листается свайпом (телефон) или стрелками по бокам (ПК). Внизу — точки-индикаторы (сколько фото — столько точек). С последней точки «вперёд» — переход на первую (по кругу).</li>
+<li><b>Клик по фото</b> — открывается на весь экран, с крестиком в правом верхнем углу.</li>
+</ul>
+</div>
+
+<h4>Поверх фото</h4>
+
+<div class="box done">
+<b>Слева сверху — бейдж «ЗАВТРАК» / «ОБЕД» / «УЖИН» / «ПЕРЕКУС».</b> Один, главный приём пищи.
+<ul>
+<li>По умолчанию — из раздела, где лежит рецепт.</li>
+<li>Если рецепт в двух разделах — первый по порядку: Завтраки → Обеды → Ужины → Перекусы.</li>
+<li>В редакторе можно переопределить вручную (выпадающий список «Приём пищи»).</li>
+</ul>
+</div>
+
+<div class="box done">
+<b>Справа сверху — 4 круглые кнопки, 32px:</b>
+<ul>
+<li>❤ <b>Избранное</b> — переключатель. Активно → залита акцентом.</li>
+<li>👨‍🍳 <b>Приготовлено</b> — переключатель. Активно → иконка меняется на ✅, залита акцентом.</li>
+<li>🔖 <b>Хочу приготовить</b> — переключатель. Активно → залита акцентом.</li>
+<li>📅 <b>В план</b> — открывает <b>dropdown</b> с тремя галочками: Семейный / Для ребёнка / События. Клик — ставит/снимает галочку, список не закрывается. Закрыть: клик вне или Escape.</li>
+</ul>
+<b>Рядом с ними — крестик ✕</b> (закрывает модалку). Визуально отделён от иконок.
+</div>
+
+<h3>10.4. Тело карточки (сверху вниз)</h3>
+
+<div class="box done">
+<b>Размеры шрифтов — крупнее, чем в маленькой карточке:</b>
+<ul>
+<li>Название — 28–30px.</li>
+<li>Шаги, ингредиенты — 15–16px.</li>
+<li>Остальное — пропорционально.</li>
+</ul>
+</div>
+
+<h4>Название</h4>
+<div class="box">
+Крупно. Шрифт берётся из стиля оформления (не всегда курсив — как задано в стиле).
+</div>
+
+<h4>Теги</h4>
+<div class="box done">
+<ul>
+<li>Максимум <b>5 главных</b> тегов. Главные = самые часто используемые во всей базе рецептов.</li>
+<li>В конце строки — маленькая иконка <b>✎</b>. Клик по ней → модалка «Теги рецепта» (см. 10.9).</li>
+<li>Клик по самим тегам — ничего не делает (чтобы не было случайных тапов при прокрутке).</li>
+</ul>
+</div>
+
+<h4>Строка КБЖУ</h4>
+<div class="box">
+Формат: <code>292 ккал · Б 10,9 · Ж 13,2 · У 31,2</code>. Числа — через запятую.
+<br>Над строкой — мелкая пометка веса, если у рецепта есть <code>weightPerPortion</code>: <code>на 200 г</code>.
+<br>Время (⏱) в строку КБЖУ не входит — было раньше, убрано.
+</div>
+
+<h4>Ингредиенты</h4>
+<div class="box done">
+<b>Что сделано в MVP (шаг 35):</b>
+<ul>
+<li><b>Слева — заголовок «Ингредиенты:»</b> и рядом маленькая кнопка <b>🧹</b> (чистит галочки этого рецепта).</li>
+<li><b>Справа — порции −/+.</b> Стартовое = 4. Клик по числу — сброс на 4 (скрытая функция, курсор меняется).</li>
+<li><b>Полный список</b>, без обрезки.</li>
+<li>У каждого ингредиента: <b>кружок-чекбокс</b>, название, количество. <b>Чекбокс кликается — ставит галочку ✓</b>. Хранится в IndexedDB, тип <code>ingredient</code>. Держится после перезагрузки, по каждому рецепту отдельно.</li>
+<li><b>Клик по −/+ пересчитывает только количества ингредиентов.</b> КБЖУ на порцию <b>НЕ меняется</b> (одна порция — та же калорийность).</li>
+</ul>
+<b>Что откладывается на потом (в MVP не работает):</b>
+<ul>
+<li><b>«Чекбокс = добавить в корзину»</b> — целевое. Сейчас чекбокс просто визуальная отметка «взял ингредиент».</li>
+<li><b>Синхронизация с маленькой карточкой</b> — не реализована. Маленькая и большая показывают своё.</li>
+</ul>
+</div>
+
+<h4>Шаги приготовления</h4>
+<div class="box">
+<ul>
+<li>Заголовок <b>«Приготовление:»</b>.</li>
+<li>Нумерованный список.</li>
+<li>Без фото, без таймера на каждый шаг, без чекбоксов.</li>
+<li>Если шагов нет — блок не показывается.</li>
+</ul>
+</div>
+
+<h4>Устройство готовки</h4>
+<div class="box">
+<ul>
+<li>Раскрывающийся блок.</li>
+<li>Клик — раскрывается. Внутри можно выбрать устройство (Сковорода / Духовка / Мультиварка / Аэрогриль / Без готовки / …).</li>
+<li>Список пока фиксированный. Позже — в настройках можно будет добавлять свои.</li>
+</ul>
+</div>
+
+<h4>Заметка</h4>
+<div class="box">
+<ul>
+<li>Как в маленькой: «МОЯ ЗАМЕТКА» + текст.</li>
+<li>Если заметки нет — блок не показывается.</li>
+</ul>
+</div>
+
+<h3>10.5. Нижняя полоса — 5 кнопок, закреплена внизу экрана</h3>
+
+<div class="box done">
+Пока модалка открыта — полоса всегда внизу, при прокрутке не уезжает.
+</div>
+
+<table class="table">
+<tr><th>Кнопка</th><th>Что делает</th></tr>
+<tr><td>🛒 <b>Купить</b></td><td>Иконка + число.<br>Отмечено 2 ингредиента → «🛒 +2».<br>Не отмечено ничего → «🛒 N» (число всех ингредиентов).<br>Тап без выбора → шторка: «Добавить все ингредиенты» / «Добавить чего нет в кладовой».<br>Тап с выбранными → добавляет выбранные в корзину.</td></tr>
+<tr><td>⏱ <b>Таймер</b></td><td>Иконка + число активных таймеров (если нет активных — просто иконка).<br>Клик → модалка таймера (см. 10.7).</td></tr>
+<tr><td>✎ <b>Изменить</b></td><td>Открывает модалку редактирования поверх большой карточки (см. 10.8).</td></tr>
+<tr><td>🕐 <b>Версии</b></td><td>«2 из 3». Клик → модалка списка версий (см. 10.6).<br><b>Скрывается, если версия одна.</b> Если версий 2 и больше — показывается.</td></tr>
+<tr><td>⋯ <b>Ещё</b></td><td>Открывает <b>dropdown вверх</b> с пунктами (см. 10.11).</td></tr>
+</table>
+
+<h3>10.6. Модалка «Версии» (поверх большой карточки)</h3>
+
+<div class="box done">
+<b>Список версий.</b> Пример:
+<ul>
+<li>Версия 1</li>
+<li>Версия 2. Лёгкий вариант</li>
+<li>Версия 3. Без майонеза</li>
+</ul>
+Текущая — выделена.
+</div>
+
+<div class="box done">
+<b>Как работает:</b>
+<ul>
+<li><b>Клик по строке</b> → мгновенное переключение на эту версию. Карточка сразу показывает её содержимое.</li>
+<li><b>Долгий тап (телефон) / правый клик (ПК)</b> по строке → появляется кнопка «Удалить». Тап по ней → удаление. Тап в другое место → отмена, ничего не удаляется.</li>
+<li><b>Удалили текущую версию</b> → переключение на предыдущую.</li>
+<li><b>Удалили единственную версию</b> → окно «Это последняя версия. Точно хотите удалить?» → «Да» = рецепт удаляется целиком (со всеми версиями и данными). «Нет» = ничего.</li>
+</ul>
+</div>
+
+<div class="box note">
+<b>Удаление версии и удаление рецепта</b> — два разных пути к одному. Удаление через ⋯ Ещё → Удалить тоже удаляет весь рецепт.
+</div>
+
+<h3>10.7. Модалка таймера (поверх большой карточки)</h3>
+
+<div class="box done">
+<b>Что внутри:</b>
+<ul>
+<li><b>Выпадающий список шагов</b> — можно привязать таймер к конкретному шагу. Можно не указывать (тогда таймер без шага).</li>
+<li><b>Поле ввода времени</b> — минуты / секунды.</li>
+<li><b>Тумблер «Со звуком / Без звука»</b>.</li>
+<li><b>Кнопка «Запустить».</b></li>
+<li><b>Список активных таймеров этого рецепта:</b> «Шаг 3 · 05:32 осталось». Если таймер без шага — «Без шага · 05:32».</li>
+</ul>
+</div>
+
+<div class="box done">
+<b>Несколько таймеров одновременно — можно.</b> Один рецепт, разные шаги, разные таймеры. Все видны в списке внутри модалки.
+</div>
+
+<div class="box done">
+<b>Когда время вышло (сайт открыт):</b>
+<ul>
+<li>Всплывает <b>окно-уведомление</b>: «В рецепте "Овсянка с ягодами" к шагу 3 закончился таймер». Плюс ссылка на рецепт.</li>
+<li>Если тумблер был «Со звуком» — играет звук. Длится <b>10 секунд</b>. В уведомлении есть кнопка <b>«Остановить звук»</b> — замолкает сразу.</li>
+<li>Если тумблер был «Без звука» — только окно, тихо.</li>
+<li>Закрывается тремя способами: кнопка «ОК» / ссылка на рецепт / тап по затемнённому фону.</li>
+</ul>
+</div>
+
+<div class="box done">
+<b>Таймер продолжает идти, если модалку закрыть.</b> Работает в фоне, пока сайт открыт.
+</div>
+
+<div class="box done">
+<b>Кнопка ⏱ на нижней полосе</b> показывает количество активных таймеров. Не мигает.
+</div>
+
+<div class="box done">
+<b>Общий таймер (FAB ⏲ на сайте)</b> — показывает все активные таймеры сразу: к какому рецепту, к какому шагу, сколько осталось.
+</div>
+
+<div class="box warn">
+<b>Пуш-уведомления</b> (когда сайт закрыт или экран выключен) — <b>отложены до этапа PWA</b>. Требуют Service Worker и разрешения от тебя. См. раздел «Отложено».
+</div>
+
+<div class="box warn">
+<b>Таймер на удалённом рецепте отменяется автоматически.</b> Если рецепт удалили — таймеры этого рецепта прекращаются.
+</div>
+
+<h3>10.8. Модалка редактирования (поверх большой карточки)</h3>
+
+<div class="box done">
+<b>Что можно редактировать:</b>
+<ul>
+<li>Название</li>
+<li>Фото (добавить, удалить, переставить порядок)</li>
+<li>Теги</li>
+<li>КБЖУ и время</li>
+<li>Ингредиенты</li>
+<li>Шаги</li>
+<li>Устройство готовки</li>
+<li>Заметка</li>
+<li>Приём пищи (бейдж — переопределение)</li>
+</ul>
+<b>Что НЕ редактируется:</b>
+<ul>
+<li>4 иконки на фото (❤ 👨‍🍳 🔖 📅) + крестик ✕</li>
+<li>Порции</li>
+<li>Кнопки нижней полосы (🛒 ⏱ ✎ 🕐 ⋯)</li>
+</ul>
+</div>
+
+<div class="box done">
+<b>Кнопки внизу — split button:</b> <code>[Отмена] [Сохранить | ▾]</code>.
+<ul>
+<li><b>Левая часть «Сохранить»</b> — сохраняет сразу в текущую версию. Без выбора.</li>
+<li><b>Правая «▾»</b> — открывает маленькое меню: «Сохранить как новую версию».</li>
+<li>Отдельной кнопки «Сохранить как новую версию» нет — она спрятана в «▾».</li>
+</ul>
+</div>
+
+<div class="box done">
+<b>«Сохранить»</b> — сохраняет изменения в текущую версию.<br>
+<b>«Сохранить как новую версию»</b> — открывается маленькое окошко «Название версии (необязательно)» + поле. Пишешь «Лёгкий вариант» → создаётся «Версия N. Лёгкий вариант». Оставляешь пустым → «Версия N». Версия 1 не трогается, новая становится текущей.
+</div>
+
+<div class="box done">
+<b>Крестик</b> = отмена, изменения пропадают.<br>
+<b>Если модалка осталась открыта</b> (позвонили, переключилась на другое приложение) — изменения живы. Не теряются. Сохраняются кнопкой или теряются при явном закрытии через крестик.
+</div>
+
+<div class="box warn">
+<b>Если поле обязательное пустое</b> (например, название стёрто) — «Сохранить» не работает, всплывает подсказка «Введите название». Так же хотя бы один ингредиент должен быть.
+</div>
+
+<h3>10.9. Модалка «Теги рецепта» (поверх большой карточки)</h3>
+
+<div class="box done">
+<b>Открывается кликом по иконке ✎</b> рядом с тегами.
+</div>
+
+<div class="box done">
+<b>Часть 1 — теги этого рецепта:</b>
+<ul>
+<li>Список текущих тегов. У каждого — крестик (удалить из рецепта).</li>
+<li>Долгий тап / правый клик по тегу → кнопка «Удалить». Тап по ней → удаление. Тап в другое место → отмена (как у версий).</li>
+<li>Под списком — кнопка <b>«+ Добавить тег»</b>.</li>
+</ul>
+</div>
+
+<div class="box done">
+<b>Часть 2 — выбор тега (по «+ Добавить»):</b>
+<ul>
+<li><b>Строка поиска сверху.</b> Начинаешь печатать — список фильтруется.</li>
+<li>Ниже — список всех тегов из базы, сгруппированных по 16 группам (Вкус, Настроение, Диета, Способ готовки, Сложность, Повод, Сезон, Кухня, Текстура, Температура, Порция, Кому, Время суток, Стиль питания, Полезность, Особенность).</li>
+<li>У каждого тега — галочка. Отметила → тег сразу добавился к рецепту. Закрывать модалку не надо.</li>
+<li>Если введённого текста нет в базе — внизу появляется строка <b>«Создать тег "X"»</b>. Клик → окошко <b>«Тега "X" ещё нет. Создать?»</b> → выбираешь группу для нового тега → «Да» = тег создан и добавлен к рецепту, попал в базу.</li>
+</ul>
+</div>
+
+<div class="box note">
+<b>Удаление тега из рецепта ≠ удаление тега из базы.</b><br>
+Из рецепта: тег пропадает только здесь, в базе остаётся.<br>
+Из базы: в настройках (раздел «🏷 Теги»). Тег пропадает везде.
+</div>
+
+<div class="box note">
+<b>Где хранятся теги:</b>
+<ul>
+<li><b>Базовые теги</b> — в коде, файл <code>tags-base.js</code>. 58 тегов в 16 группах. ID <code>btag-NNN</code>.</li>
+<li><b>Свои теги</b> (которые ты создаёшь) — в IndexedDB, таблица <code>settings</code>, ключ <code>tags</code>. ID <code>tag-NNN</code>.</li>
+<li>При открытии модалки — объединяются через <code>Storage.getAllTagsMerged()</code>. Сначала свои, потом базовые.</li>
+</ul>
+</div>
+
+<h3>10.10. Dropdown «В план» (внутри большой карточки)</h3>
+
+<div class="box done">
+<b>Открывается кликом по 📅</b> на фото. <b>Не шторка снизу, а выпадающий список</b> под кнопкой, справа вверху фото.
+<br><b>Внутри — три галочки:</b> Семейный / Для ребёнка / События.
+<br><b>Клик по строке</b> — ставит/снимает галочку. Список <b>не закрывается</b> — можно отметить несколько.
+<br><b>Закрыть:</b> клик вне dropdown или Escape.
+</div>
+
+<div class="box note">
+<b>Почему dropdown, а не шторка.</b> Расположение рядом с кнопкой — глаз не прыгает вниз экрана. Видно, к какому рецепту применяешь. Меньше движения пальцем.
+</div>
+
+<div class="box note">
+<b>Кнопка 📅 на фото</b> — после открытия dropdown не подсвечивается. Внутри видно, куда уже добавлено.
+</div>
+
+<h3>10.11. Dropdown «Ещё» (вверх от нижних кнопок)</h3>
+
+<div class="box done">
+<b>Открывается кликом по ⋯</b> в нижней полосе. <b>Выпадает вверх</b> — над кнопками, не снизу экрана.
+
+<ul>
+<li>📤 <b>Поделиться</b> — копирует адрес главной страницы (<code>gekataca.github.io/kopilka-receptov</code>) в буфер. Если браузер не поддерживает Web Share API (ПК) — всё равно копирует в буфер.</li>
+<li>📋 <b>Копировать текст</b> — копирует весь текст рецепта в буфер: название, КБЖУ и время, количество порций, ингредиенты, шаги, устройство, заметки.</li>
+<li>🖨 <b>Печать</b> — открывает системное окно печати браузера. Печатается вся карточка целиком: фото, название, КБЖУ, ингредиенты, шаги, заметка. В окне печати можно выбрать принтер или «Сохранить как PDF».</li>
+<li>🗑 <b>Удалить</b> — удаляет всю карточку со всеми версиями. Перед удалением — подтверждение «Удалить рецепт со всеми версиями?» → Да/Нет.</li>
+</ul>
+</div>
+
+<h3>10.12. Фото на весь экран</h3>
+
+<div class="box done">
+<b>Открывается кликом по фото в большой карточке.</b><br>
+Фото разворачивается на весь экран. Крестик в правом верхнем углу — закрыть.
+</div>
+
+<h3>10.13. Краевые случаи и правила</h3>
+
+<div class="rule">
+<b>Синхронизация — ЦЕЛЕВОЕ, но пока НЕ реализовано.</b>
+<ul>
+<li>Отметки ❤ 👨‍🍳 🔖 — <b>синхронизированы</b> (одна и та же запись в marks, обе карточки её видят).</li>
+<li>Чекбоксы ингредиентов и порции — <b>НЕ синхронизированы</b>. Маленькая карточка показывает эталон (из рецепта), большая — стартовое 4 или сохранённое. В маленькой сейчас нет чекбоксов вообще.</li>
+<li>Когда сделаем синхронизацию — отдельным шагом. Решение 11 октября 2026 (поздно вечером): пока оставляем разницу, чтобы не путаться.</li>
+</ul>
+</div>
+
+<div class="rule">
+<b>Обязательные поля.</b> Название и хотя бы один ингредиент. Без них «Сохранить» не работает.
+</div>
+
+<div class="rule">
+<b>Таймер на удалённом рецепте</b> отменяется автоматически.
+</div>
+
+<div class="rule">
+<b>Бейдж «Приём пищи»</b> — по умолчанию из раздела, можно переопределить вручную в редакторе.
+</div>
+
+<div class="rule">
+<b>Теги в большой карточке — первые 5.</b> В маленькой — все, CSS обрезает визуально.
+<br><b>Целевое:</b> 5 «главных» = самые часто используемые во всей базе. Когда рецептов станет много — сделаем сортировку по частоте. Пока в базе 9 демо, «частота» бессмысленна, поэтому берём просто первые 5 из массива.
+</div>
+
+<div class="rule">
+<b>Галерея фото — без ограничений.</b> Порядок можно менять в редакторе. Первое — главное, оно же в маленькой карточке.
+</div>
+
+<div class="rule">
+<b>Ссылка «Поделиться»</b> ведёт на рецепт, не на главную. При открытии — виден только рецепт, без шапки, навигации и FAB.
+</div>
+
+<div class="rule">
+<b>ID рецепта</b> генерируется один раз при создании, не меняется. Даже если переименуешь — ссылка работает.
+</div>
+
+<!-- ============================================ -->
+<h2 id="cat">11 · Категории и теги</h2>
+
+<div class="box ok">
+<b>Правило:</b> категории и теги не дублируются.
+</div>
+
+<h4>Приём пищи (4)</h4>
+<p><span class="chip">🌅 Завтраки</span> <span class="chip">🍽 Обеды</span> <span class="chip">🌙 Ужины</span> <span class="chip">🍎 Перекусы</span></p>
+
+<h4>Тип блюда (8)</h4>
+<p><span class="chip">🥗 Салаты</span> <span class="chip">🍲 Супы</span> <span class="chip">🍰 Десерты</span> <span class="chip">🍞 Выпечка</span> <span class="chip">🥟 Закуски</span> <span class="chip">🍚 Гарниры</span> <span class="chip">🥤 Напитки</span> <span class="chip">🥫 Соусы</span></p>
+
+<h4>Теги — 16 групп. Базовый набор — 58 штук (расширяемо)</h4>
+
+<div class="box done">
+<b>Реализовано 11 октября 2026 (вечер):</b> файл <code>app/js/tags-base.js</code> — 58 базовых тегов в 16 группах, ID <code>btag-001</code> … <code>btag-058</code>. Свои теги (которые создаёт пользователь) — в IndexedDB, таблица <code>settings</code>, ключ <code>tags</code>, ID <code>tag-001</code> … <code>tag-NNN</code>. При поиске тегов оба списка объединяются через <code>Storage.getAllTagsMerged()</code>: сначала свои, потом базовые.
+</div>
+
+<table class="table">
+<tr><th>№</th><th>Группа</th><th>Примеры</th></tr>
+<tr><td>1</td><td>Вкус</td><td>сладкое, солёное, острое</td></tr>
+<tr><td>2</td><td>Настроение</td><td>сытное, лёгкое, согревающее</td></tr>
+<tr><td>3</td><td>Диета</td><td>ПП, безглютеновое, вегетарианское</td></tr>
+<tr><td>4</td><td>Способ готовки</td><td>в аэрогриле, без готовки</td></tr>
+<tr><td>5</td><td>Сложность</td><td>простое, среднее, сложное</td></tr>
+<tr><td>6</td><td>Повод</td><td>на праздник, для гостей</td></tr>
+<tr><td>7</td><td>Сезон</td><td>летнее, зимнее, новогоднее</td></tr>
+<tr><td>8</td><td>Кухня</td><td>итальянское, азиатское</td></tr>
+<tr><td>9</td><td>Текстура</td><td>хрустящее, кремовое</td></tr>
+<tr><td>10</td><td>Температура</td><td>горячее, холодное, тёплое</td></tr>
+<tr><td>11</td><td>Порция</td><td>на одного, для семьи</td></tr>
+<tr><td>12</td><td>Кому</td><td>для детей, для взрослых</td></tr>
+<tr><td>13</td><td>Время суток</td><td>утреннее, вечернее</td></tr>
+<tr><td>14</td><td>Стиль питания</td><td>раздельное, интервальное</td></tr>
+<tr><td>15</td><td>Полезность</td><td>много белка, без сахара</td></tr>
+<tr><td>16</td><td>Особенность</td><td>быстро, из простых</td></tr>
+</table>
+
+<!-- ============================================ -->
+<h2 id="search">12 · Поиск и фильтры</h2>
+
+<div class="box note">
+<b>Место кнопок:</b> три иконки 🔍 🏷 🎲 в содержании. Плавающая 🔍 — в FAB. Логика пока не подключена.
+</div>
+
+<h3>12.1. Поиск</h3>
+<table class="table">
+<tr><th>Уровень</th><th>Что делает</th></tr>
+<tr><td>1</td><td>Точное совпадение (название, ингредиенты)</td></tr>
+<tr><td>2</td><td>Синонимы</td></tr>
+<tr><td>3</td><td>По типу блюда (кнопка «🔎 Искать шире»)</td></tr>
+</table>
+
+<h4>Голосовой ввод</h4>
+<ul>
+<li>Кнопка 🎤 в поиске (если поддерживается).</li>
+<li>Микрофон клавиатуры iPhone/iPad.</li>
+</ul>
+
+<h3>12.2. Фильтры (фасетные)</h3>
+<table class="table">
+<tr><th>Кнопка</th><th>Подкатегории</th></tr>
+<tr><td>⏱ Время</td><td>15 / 30 / 40 / 60 / 90 / 120 / 120+</td></tr>
+<tr><td>🥩 Основное</td><td>курица / индейка / говядина / свинина / рыба…</td></tr>
+<tr><td>🥦 Полезное</td><td>с овощами / много белка / без жарки…</td></tr>
+<tr><td>🍰 Тип</td><td>по категориям типа блюда</td></tr>
+<tr><td>🏠 Из дома / 💰 Из простых / 🚫 Без масла / 👩‍🍳 От Джулии / ✍️ Мои</td><td>вкл/выкл</td></tr>
+<tr><td>🏷 Теги</td><td>все 16 групп</td></tr>
+<tr><td>📋 Неполные карточки</td><td>без фото / без КБЖУ / без шагов</td></tr>
+</table>
+
+<h3>12.3. Содержание / Поиск / Фильтр / Случайный — по экранам <span class="chip q">❓</span></h3>
+
+<table class="table">
+<tr><th>Экран</th><th>Содержание</th><th>Поиск</th><th>Фильтр</th><th>Случайный</th></tr>
+<tr><td>🏠 Главная</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td></tr>
+<tr><td>❤ Избранное</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td></tr>
+<tr><td>📅 План</td><td>❌</td><td>✅</td><td>✅</td><td>✅</td></tr>
+<tr><td>🧺 Кладовая</td><td>❌</td><td>✅</td><td>✅</td><td>❌</td></tr>
+</table>
+
+<div class="conflict">
+<b>Когда решать:</b> когда будем делать каждый экран по-настоящему.
+</div>
+
+<!-- ============================================ -->
+<h2 id="plan">13 · План</h2>
+
+<pre><code>[📅 План]
+[👨‍👩‍👧 Семейный]  [🧒 Для ребёнка]  [🎉 События]</code></pre>
+
+<h3>13.1. Семейный план</h3>
+<p><b>6 приёмов пищи:</b> завтрак · перекус · обед · перекус · ужин · перекус. Свои можно добавлять.</p>
+<h4>Недели</h4>
+<ul>
+<li>Пн–Вс с датами.</li>
+<li>← Прошлая / Эта / Следующая →</li>
+<li>Хранить 4 недели.</li>
+</ul>
+<h4>Кнопки в шапке плана</h4>
+<ul>
+<li>← →, 🖨 Печать (A6), 🗑 Очистить, 🛒 Собрать список покупок.</li>
+</ul>
+
+<h3>13.2. План для ребёнка</h3>
+<p>Тот же функционал. Список покупок отдельный.</p>
+
+<h3>13.3. События <span class="chip wait">⏳ отложено</span></h3>
+
+<!-- ============================================ -->
+<h2 id="pantry">14 · Кладовая</h2>
+
+<pre><code>[🧺 Кладовая]
+[🛒 Купить]  [🏠 Есть дома]</code></pre>
+
+<h3>14.1. Вкладка «Купить»</h3>
+<pre><code>[🛒 Купить]
+[📋 Ежедневные]  [📦 Опт]</code></pre>
+<p>Подвкладки: <span class="chip">🥦 Продукты</span> <span class="chip">🧴 Бытовая химия</span> <span class="chip">🧼 Гигиена</span></p>
+<h4>Отделы магазина</h4>
+<p><span class="chip">🥬 Овощи</span> <span class="chip">🥛 Молочные</span> <span class="chip">🥩 Мясо</span> <span class="chip">🌾 Бакалея</span> <span class="chip">🌰 Орехи</span> <span class="chip">📦 Прочее</span> + свои.</p>
+
+<h3>14.2. Вкладка «Есть дома»</h3>
+<p>Подвкладки: 🥦 Продукты / 🧴 Бытовая химия / 🧼 Гигиена / + свои.</p>
+<h4>Карточка продукта</h4>
+<pre><code>Молоко 3.2%  🥛 Молочные
+✅ Есть дома: 500 мл
+КБЖУ на 100 мл: 60 ккал · Б3 · Ж3.2 · У4.7
+Марка: Простоквашино  ·  Цена: 89 ₽  ·  Куплено: 20 сентября
+Аллергии: у Маши — лактоза
+Заметка: «Брать 3.2%, не 2.5%»
+[✎ Изменить]  [🗑 Удалить]</code></pre>
+
+<!-- ============================================ -->
+<h2 id="add">15 · Добавление рецепта</h2>
+
+<p><b>Открытие:</b> плавающая кнопка ➕.</p>
+
+<h4>Три вкладки</h4>
+<table class="table">
+<tr><th>Вкладка</th><th>Что делает</th></tr>
+<tr><td>✍ Вручную</td><td>Заполняешь поля сам</td></tr>
+<tr><td>📋 Текст</td><td>Вставляешь текст → парсинг → проверяешь</td></tr>
+<tr><td>🔗 Ссылка</td><td>Вставляешь ссылку → загрузка через прокси</td></tr>
+</table>
+
+<h4>Черновики</h4>
+<ul>
+<li>Автосохранение при каждом изменении.</li>
+<li>Хранить вечно.</li>
+</ul>
+
+<!-- ============================================ -->
+<h2 id="settings">16 · Настройки</h2>
+
+<pre><code>⚙ Настройки
+├── 📤 Данные (экспорт, импорт, автосохранение)
+├── 💾 Черновики
+├── 📂 Категории
+├── 🏷 Фильтры
+├── 🏷 Теги
+├── 🖼 Фоны (вернуть базовые)
+├── 📱 Приложение (PWA)
+├── ⚠️ Опасное (сбросить всё)
+└── ℹ️ О программе</code></pre>
+
+<div class="box note">
+<b>«Вернуть базовые»</b> — здесь, в настройках, а не в панели 🖌.
+</div>
+
+<!-- ============================================ -->
+<h2 id="data">17 · Данные и хранилище <span class="chip done">✅ спроектирован полностью</span></h2>
+
+<div class="box done">
+<b>Раздел спроектирован целиком.</b> Здесь описано:
+<ul>
+<li><b>17.0</b> — Структура одного рецепта. Все характеристики, связи, правила.</li>
+<li><b>17.0.b</b> — База продуктов. Формат, две базы, единицы измерения, действия.</li>
+<li><b>17.0.c</b> — Хранилище. Где что живёт. IndexedDB, 9 таблиц.</li>
+<li><b>17.0.d</b> — storage.js. Все операции через один файл. ~51 функция.</li>
+<li><b>17.0.e</b> — Защита данных. Автосохранение, бэкап в ZIP.</li>
+<li><b>17.0.f</b> — Перенос данных. 9 демо → IndexedDB, 150 рецептов вручную.</li>
+</ul>
+<b>Ниже</b> — старые таблицы (что хранилось раньше: localStorage, ключи). Оставлены для истории.
+</div>
+
+<h3>17.0. Структура одного рецепта <span class="chip done">✅ спроектирована</span></h3>
+
+<div class="box note">
+<b>Зачем это здесь.</b> Это фундамент. От структуры рецепта зависит всё: как считается КБЖУ, как работают версии, где хранятся отметки. Следующий ИИ должен начинать с этого раздела — иначе он будет строить рецепт «на глазок».
+</div>
+
+<h4>1. Основное</h4>
+
+<table class="table">
+<tr><th>Характеристика</th><th>Обязательно?</th><th>Пример</th></tr>
+<tr><td>ID</td><td>Да (авто)</td><td><code>recipe-001</code></td></tr>
+<tr><td>Название</td><td>Да</td><td>Овсянка с ягодами</td></tr>
+<tr><td>Приём пищи</td><td>Да</td><td>Завтрак / Обед / Ужин / Перекус</td></tr>
+<tr><td>Источник</td><td>Да</td><td>Джулия / Мои / Мама / Интернет</td></tr>
+<tr><td>Сложность</td><td>Нет</td><td>Простое / Среднее / Сложное</td></tr>
+</table>
+
+<div class="box">
+<ul>
+<li><b>ID</b> — генерируется один раз при создании, никогда не меняется. Даже если переименуешь — ссылка работает.</li>
+<li><b>Источник</b> — выпадающий список в редакторе. Пользователь сам выбирает. 150 рецептов из файла → «Джулия». Свои → «Мои».</li>
+<li><b>Сложность</b> — вводится вручную в редакторе. Используется в фильтрах.</li>
+</ul>
+</div>
+
+<h4>2. Фото</h4>
+
+<table class="table">
+<tr><th>Характеристика</th><th>Обязательно?</th><th>Пример</th></tr>
+<tr><td>Галерея</td><td>Нет</td><td>5 фото</td></tr>
+<tr><td>Главное фото</td><td>Авто</td><td>Первое в галерее</td></tr>
+<tr><td>Порядок</td><td>—</td><td>Перетаскиванием</td></tr>
+</table>
+
+<h4>3. Теги и заметка</h4>
+
+<table class="table">
+<tr><th>Характеристика</th><th>Обязательно?</th><th>Пример</th></tr>
+<tr><td>Теги</td><td>Нет</td><td>до 5 главных + полный список</td></tr>
+<tr><td>Заметка</td><td>Нет</td><td>Брать молоко 3.2%</td></tr>
+</table>
+
+<div class="box">
+<b>5 главных тегов</b> — самые часто используемые во всей базе рецептов. В маленькой карточке — 3. Полный список открывается через ✎.
+</div>
+
+<h4>4. КБЖУ, порции и вес</h4>
+
+<table class="table">
+<tr><th>Характеристика</th><th>Обязательно?</th><th>Пример</th></tr>
+<tr><td>Ингредиенты</td><td>Да, минимум 1</td><td>—</td></tr>
+<tr><td><b>Эталонное количество порций</b></td><td>Да (по умолч. 2)</td><td>2</td></tr>
+<tr><td>КБЖУ</td><td>Считается</td><td>195 ккал · Б 20 · Ж 7 · У 16</td></tr>
+<tr><td>Вес порции</td><td>Считается или вводится вручную</td><td>120 г</td></tr>
+<tr><td>Вес готового блюда</td><td>Нет (авто из ингредиентов)</td><td>240 г</td></tr>
+</table>
+
+<div class="box done">
+<b>КБЖУ считается автоматически из ингредиентов.</b>
+<br>У каждого продукта в базе есть КБЖУ на 100 г. Система пересчитывает на нужный вес, складывает все ингредиенты, делит на количество порций.
+<br><b>Пример.</b> Овсянка 60 г (210 ккал) + Молоко 200 г (120 ккал) + Мёд 20 г (60 ккал) = 390 ккал. Порций 2 → 195 ккал на порцию.
+<br><b>Вручную КБЖУ не вводится.</b> Только через ингредиенты.
+</div>
+
+<div class="box done">
+<b>Эталонное количество порций.</b>
+<br>То, на что рассчитаны ингредиенты. Вводится в редакторе (или через ➕). Например: ингредиенты на 2 порции. Это «база». У демо-рецептов эталон разный: овсянка 1, паста 2, суп 3.
+<br><b>Стартовое при открытии большой карточки = 4.</b> Независимо от эталона. Так решили 11 октября 2026: пользователь обычно готовит на 4 порции.
+<br><b>Как считается коэффициент:</b> 4 / эталон. Овсянка: 4/1 = ×4 → 60 г × 4 = 240 г. Паста: 4/2 = ×2. Суп: 4/3 = ×1.33 → 600 г × 1.33 = 800 г.
+<br><b>Сохранение:</b> выбранное количество сохраняется в IndexedDB (тип <code>portions</code>). Открыла снова — покажет последнее сохранённое.
+<br><b>Сброс на 4:</b> клик по числу порций.
+<br><b>КБЖУ на порцию НЕ пересчитывается.</b> Одна порция всегда той же калорийности, сколько бы порций ты ни готовила.
+</div>
+
+<div class="box done">
+<b>Вес готового блюда.</b>
+<br>По умолчанию — сумма веса всех ингредиентов. Можно переопределить вручную (если взвесила готовое). Тогда вес порции = вес блюда / порции.
+<br><b>Если не взвешивала</b> — вес порции примерный, с пометкой «≈».
+</div>
+
+<h4>5. Ингредиент (внутри рецепта)</h4>
+
+<table class="table">
+<tr><th>Характеристика</th><th>Обязательно?</th><th>Пример</th></tr>
+<tr><td>Ссылка на продукт из базы</td><td>Да</td><td><code>milk-prostokvashino-3-2</code></td></tr>
+<tr><td>Название</td><td>Авто из базы</td><td>Молоко 3.2%</td></tr>
+<tr><td>Количество</td><td>Да</td><td>200</td></tr>
+<tr><td>Единица</td><td>Да</td><td>мл / г / шт</td></tr>
+</table>
+
+<div class="box">
+<ul>
+<li><b>Ссылка на продукт</b> — через неё КБЖУ пересчитывается автоматически, если поправишь продукт в базе.</li>
+<li><b>Комментариев у ингредиента нет.</b> Всё «как делать» — в шагах.</li>
+<li><b>Порядок</b> — перетаскиванием.</li>
+<li><b>Если продукт удалён из базы</b> — у ингредиента маленький значок ⚠. Без общей надписи «КБЖУ неполное» — только значок. Пользователь открывает ингредиент и видит, чего не хватает.</li>
+</ul>
+</div>
+
+<h4>6. Время</h4>
+
+<table class="table">
+<tr><th>Характеристика</th><th>Обязательно?</th><th>Пример</th></tr>
+<tr><td>Этапы</td><td>Нет</td><td>Подготовка 10 мин, Маринад 15 мин, Готовка 15 мин</td></tr>
+<tr><td>Общее время</td><td>Считается</td><td>40 мин</td></tr>
+</table>
+
+<div class="box">
+<b>Этапы</b> — готовые (Подготовка, Маринад, Готовка, Ожидание, Остывание, Замес, Расстойка, Запекание, Варка, Жарка, Тушение) + свои (например, «Отдых теста в холодильнике»).
+<br><b>Общее время</b> = сумма всех этапов. В карточке одно. Клик → раскрывается список этапов.
+<br>Если этапов нет — вводится одно число вручную.
+</div>
+
+<h4>7. Шаги</h4>
+
+<table class="table">
+<tr><th>Характеристика</th><th>Обязательно?</th><th>Пример</th></tr>
+<tr><td>Номер</td><td>Авто</td><td>1, 2, 3</td></tr>
+<tr><td>Текст</td><td>Да</td><td>Разогреть сковороду</td></tr>
+<tr><td>Порядок</td><td>—</td><td>Перетаскиванием</td></tr>
+</table>
+
+<div class="box">
+<ul>
+<li><b>Отдельные поля.</b> Жмёшь «+ Добавить шаг» → новое поле. Не одним текстом с переносами строк.</li>
+<li><b>Номера</b> ставятся автоматически. Удалила шаг — номера пересчитались. Переставила — тоже.</li>
+<li><b>Только текст.</b> Без форматирования (жирный, курсив — не работают), без фото, без таймера, без чекбоксов.</li>
+</ul>
+</div>
+
+<h4>8. Устройство готовки</h4>
+
+<table class="table">
+<tr><th>Характеристика</th><th>Обязательно?</th><th>Пример</th></tr>
+<tr><td>Устройство готовки</td><td>Нет</td><td>Сковорода / Духовка / …</td></tr>
+<tr><td>Список устройств</td><td>—</td><td>Фиксированный, позже — свои в настройках</td></tr>
+</table>
+
+<h4>9. Отметки</h4>
+
+<div class="rule">
+<b>Хранятся отдельными списками, не внутри рецепта.</b>
+</div>
+
+<div class="box done">
+<b>Почему так.</b> Чтобы быстро показать «все избранные» или «все приготовленные» — без перебора всех рецептов. Это нужно, когда рецептов станет 150+.
+<br><b>Примеры списков:</b>
+<ul>
+<li>Список «Избранное» = [ID рецепта, ID рецепта, …].</li>
+<li>Список «Приготовлено» = [{ID, дата}, …].</li>
+<li>Список «Хочу приготовить» = [ID, …].</li>
+<li>Список «В плане» = [{ID, вкладка}, …].</li>
+</ul>
+</div>
+
+<div class="box">
+<b>Что за отметки:</b>
+<ul>
+<li>❤ <b>Избранное</b> — понравилось.</li>
+<li>👨‍🍳 <b>Приготовлено</b> — отмечено как приготовленное (с датой).</li>
+<li>🔖 <b>Хочу приготовить</b> — хочу когда-нибудь приготовить.</li>
+<li>📅 <b>В план</b> — в одну из вкладок: Семейный / Для ребёнка / События (заглушка).</li>
+</ul>
+<b>Дата последнего приготовления</b> — показывается в большой карточке.
+</div>
+
+<div class="box done">
+<b>На экране «Избранное» — три вкладки:</b>
+<ul>
+<li>❤ Избранное</li>
+<li>🔖 Хочу приготовить</li>
+<li>✅ Приготовленные</li>
+</ul>
+</div>
+
+<h4>10. Служебное</h4>
+
+<table class="table">
+<tr><th>Характеристика</th><th>Обязательно?</th><th>Пример</th></tr>
+<tr><td>Версии</td><td>Да (минимум 1)</td><td>Список</td></tr>
+<tr><td>Текущая версия</td><td>Да</td><td>Версия 2</td></tr>
+<tr><td>Дата создания</td><td>Авто</td><td>10 октября</td></tr>
+<tr><td>Дата изменения</td><td>Авто</td><td>10 октября</td></tr>
+</table>
+
+<h4>11. База продуктов</h4>
+
+<div class="box done">
+<b>Состоит из двух частей:</b>
+<ol>
+<li><b>Готовая база</b> — файл в коде. Тысячи базовых продуктов (молоко, мука, яйца, крупы, мясо). КБЖУ из официальных российских справочников (Скурихин, Тутельян). Пользователь не может её править «в целом», но может скопировать продукт в свою базу и там поправить.</li>
+<li><b>Своя база</b> — продукты, которые пользователь добавила сама (свои марки, домашние блюда). В IndexedDB. Можно править, удалять.</li>
+</ol>
+</div>
+
+<div class="box">
+<b>При поиске</b> обе базы объединяются в один список. Сначала — свои (помечены ⭐), потом — готовые. Внутри — группировка по типу (🥛 Молочные, 🥩 Мясные и т.д.).
+</div>
+
+<div class="box done">
+<b>Правила базы продуктов:</b>
+<ul>
+<li>КБЖУ у продукта <b>всегда на 100 г</b>. Если производитель написал на 100 мл или на порцию — сайт пересчитывает на 100 г.</li>
+<li><b>Единицы измерения: гибрид.</b> Граммы по умолчанию + вес для штучных. 1 яйцо ≈ 55 г (категория C1). Есть категории C0/C1/C2/C3 со своим средним весом.</li>
+<li><b>Марки можно.</b> «Молоко Простоквашино 3.2%» и «Молоко Томское 3.2%» — разные записи.</li>
+<li><b>Дубликаты.</b> При создании продукта показываем похожие, спрашиваем «Точно создать новый?» — но не запрещаем.</li>
+<li><b>Удалён из базы, но используется в рецептах</b> — у ингредиента значок ⚠.</li>
+<li><b>Плотность и объёмы:</b> 1 мл воды = 1 г, 1 мл молока ≈ 1.03 г, 1 мл масла ≈ 0.92 г, 1 ч.л. = 5 мл, 1 ст.л. = 15 мл, 1 стакан = 200 мл.</li>
+<li><b>Уварка не учитывается</b> (как везде). Считаем на сырой вес.</li>
+</ul>
+</div>
+
+<div class="box note">
+<b>Пока делаем только модалку выбора продукта из рецепта.</b> Отдельный экран «База продуктов» — потом, отдельной вкладкой в Кладовой. У Кладовой будет три вкладки: 🛒 Купить / 🏠 Есть дома / 📚 База продуктов.
+</div>
+
+<h4>12. Правила рецепта</h4>
+
+<ol>
+<li><b>Обязательные:</b> название, хотя бы 1 ингредиент.</li>
+<li><b>КБЖУ всегда считается из ингредиентов.</b> Вручную не вводится.</li>
+<li><b>Округление:</b> калории — до целого, Б/Ж/У — до одного знака.</li>
+<li><b>Вес порции</b> — считается или вводится вручную.</li>
+<li><b>Вес готового блюда</b> — авто из ингредиентов, можно переопределить вручную.</li>
+<li><b>Уварка не учитывается</b> (как везде). Считаем на сырой вес.</li>
+<li><b>Зелень, специи</b> — считаются. Соль — нет. «По вкусу» — без количества.</li>
+<li><b>Масло для жарки</b> — считаем всё.</li>
+<li><b>Этапы времени</b> — готовые + свои. Общее = сумма.</li>
+<li><b>Шаги</b> — только текст. Отдельные поля. Номера авто.</li>
+<li><b>Ингредиенты</b> — без комментариев.</li>
+<li><b>Перестановка</b> — фото, ингредиенты, шаги. Перетаскиванием.</li>
+<li><b>Удаление рецепта</b> — навсегда, с подтверждением. Без архива.</li>
+<li><b>Синхронизация</b> — целевое поведение: чекбоксы, порции, отметки между большой и маленькой карточкой. <b>Пока НЕ реализовано.</b></li>
+<li><b>Отметки хранятся отдельными списками.</b></li>
+<li><b>Таймеры</b> — отдельный список. Активный таймер = {ID рецепта, шаг, время окончания}.</li>
+<li><b>Теги</b> — базовые в коде, свои в IndexedDB.</li>
+<li><b>Источник рецепта</b> — выпадающий список: Джулия / Мои / Мама / Интернет.</li>
+<li><b>Ингредиент без КБЖУ</b> — маленький значок ⚠ рядом. Без общей надписи.</li>
+<li><b>База продуктов</b> — готовая + свои. Марки можно. Экран «База продуктов» — потом.</li>
+<li><b>Перенос 150 рецептов — вручную</b>, когда база продуктов и большая карточка будут готовы. Старые КБЖУ из файла не используются — пересчитываются через базу. 9 демо-рецептов в HTML остаются как примеры, пока не перенесёт свои.</li>
+</ol>
+
+<h4>13. Новое — «Собрать из того что есть дома»</h4>
+
+<div class="box done">
+<b>Место:</b> экран «План». Кнопка «🥘 Собрать из того что есть дома».
+</div>
+
+<div class="box">
+<b>Что делает:</b>
+<ul>
+<li>Смотрит в Кладовую — что есть дома.</li>
+<li>Пробегает по рецептам, смотрит ингредиенты.</li>
+<li>Выбирает рецепты, для которых всё есть.</li>
+<li>Показывает список.</li>
+<li>Если чего-то не хватает — «Не хватает: молоко, яйца».</li>
+</ul>
+<b>Учёт целей:</b> когда появится трекер питания — сайт будет учитывать цели (похудеть, набрать массу). Пока — без целей.
+</div>
+
+<h3>17.0.b. База продуктов <span class="chip done">✅ спроектирована</span></h3>
+
+<div class="box note">
+<b>Зачем это здесь.</b> КБЖУ рецепта считается из ингредиентов. Ингредиенты берутся из базы продуктов. Без базы рецепт не считается. Следующий ИИ должен понимать, как база устроена.
+</div>
+
+<h4>Формат продукта</h4>
+
+<table class="table">
+<tr><th>Характеристика</th><th>Обязательно?</th><th>Пример</th></tr>
+<tr><td>ID</td><td>Да (авто)</td><td><code>milk-prostokvashino-3-2</code></td></tr>
+<tr><td>Название</td><td>Да</td><td>Молоко Простоквашино 3.2%</td></tr>
+<tr><td>Короткое название</td><td>Да</td><td>Молоко 3.2%</td></tr>
+<tr><td>Марка</td><td>Нет</td><td>Простоквашино</td></tr>
+<tr><td>Группа</td><td>Да</td><td>🥛 Молочные</td></tr>
+<tr><td>Ккал на 100 г</td><td>Да</td><td>60</td></tr>
+<tr><td>Белки на 100 г</td><td>Да</td><td>3</td></tr>
+<tr><td>Жиры на 100 г</td><td>Да</td><td>3.2</td></tr>
+<tr><td>Углеводы на 100 г</td><td>Да</td><td>4.7</td></tr>
+<tr><td>Единица по умолчанию</td><td>Да</td><td>г / мл / шт</td></tr>
+<tr><td>Вес 1 шт</td><td>Нет (только штучные)</td><td>1 шт = 200 г (помидор)</td></tr>
+<tr><td>Плотность</td><td>Нет (только жидкости)</td><td>1 мл = 1.03 г (молоко)</td></tr>
+<tr><td>Фото</td><td>Нет</td><td>Фото упаковки</td></tr>
+<tr><td>Источник данных</td><td>Авто</td><td>Готовая база / Свои</td></tr>
+<tr><td>Дата создания</td><td>Авто</td><td>10 октября</td></tr>
+</table>
+
+<div class="box">
+<b>Пояснения:</b>
+<ul>
+<li><b>ID</b> — транслит из названия. Один раз, не меняется.</li>
+<li><b>Название</b> — полное, для базы и списка покупок.</li>
+<li><b>Короткое название</b> — для рецепта, чтобы не мелькала марка.</li>
+<li><b>Марка</b> — отдельным полем. Можно фильтровать «все продукты Простоквашино».</li>
+<li><b>КБЖУ</b> — всегда на 100 г. Если производитель написал на 100 мл — сайт пересчитывает через плотность.</li>
+<li><b>Единица по умолчанию</b> — при создании ставится «г». Меняется на «мл» или «шт».</li>
+<li><b>Вес 1 шт</b> — только для штучных (яйцо, помидор, банан). Без него единица «шт» недоступна.</li>
+<li><b>Плотность</b> — только для жидкостей. Из готового списка (вода 1.0, молоко 1.03, масло 0.92, мёд 1.42, сок 1.05, уксус 1.01, сливки 1.01).</li>
+<li><b>Фото</b> — необязательно. Нет фото → заглушка (иконка группы).</li>
+</ul>
+</div>
+
+<h4>Группы продуктов — 19 штук</h4>
+
+<p>
+🥛 Молочные · 🥩 Мясо и птица · 🐟 Рыба · 🥬 Овощи · 🍎 Фрукты · 🌾 Крупы и макароны · 🥖 Хлеб и выпечка · 🧂 Специи и соусы · 🍫 Сладкое · 🥤 Напитки · 🥜 Орехи и сухофрукты · 🧈 Масла и жиры · 🥫 Консервы · 🧀 Сыры · 🍄 Грибы · 🥚 Яйца · 🌿 Зелень · 🍯 Мёд и варенье · 🍱 Полуфабрикаты и готовое
+</p>
+
+<h4>Две базы</h4>
+
+<div class="box done">
+<b>1. Готовая база</b> — файл в коде. Тысячи продуктов (молоко, мука, яйца, крупы, мясо, овощи). КБЖУ из официальных российских справочников (Скурихин, Тутельян). Править напрямую нельзя.
+</div>
+
+<div class="box done">
+<b>2. Своя база</b> — то, что пользователь добавила сама (свои марки, домашние блюда). Хранится в IndexedDB, таблица <code>products</code>. Создавать, править, удалять.
+</div>
+
+<div class="box">
+<b>При поиске</b> обе базы объединяются в один список. Сначала — свои (⭐), потом — готовые. Внутри — группировка по типу.
+</div>
+
+<h4>Правила работы с базами</h4>
+
+<div class="rule">
+<b>Готовая база</b> — можно копировать в свою и править. Напрямую править нельзя.
+</div>
+
+<div class="rule">
+<b>Своя база</b> — создавать, править, удалять.
+</div>
+
+<div class="rule">
+<b>Переопределение</b> — открыть продукт из готовой базы → кнопка «Переопределить для себя». Создаётся твоя версия (⭐). При поиске — она первая. В рецептах, где использован готовый продукт, автоматически используется твоя версия.
+</div>
+
+<div class="rule">
+<b>Удаление продукта.</b> Спрашиваем «Используется в N рецептах. Удалить?». Не запрещаем.
+</div>
+
+<div class="rule">
+<b>Если удалённое было переопределением</b> — ингредиенты возвращаются к готовому продукту. Без ⚠.
+</div>
+
+<div class="rule">
+<b>Если удалённое было уникальным</b> — ингредиенты получают ⚠, КБЖУ не считается.
+</div>
+
+<div class="rule">
+<b>В рецепте</b> — короткое имя ингредиента, КБЖУ берётся из твоей версии.
+</div>
+
+<div class="rule">
+<b>При редактировании продукта</b> — если используется в рецептах, КБЖУ пересчитывается автоматически во всех рецептах. Без вопроса.
+</div>
+
+<h4>Единицы измерения</h4>
+
+<div class="box done">
+<b>Основные:</b> г, мл — всегда.
+<br><b>Штучные:</b> шт — если указан вес 1 шт.
+<br><b>Ложки:</b> ч.л. = 5 мл, ст.л. = 15 мл, стакан = 200 мл.
+<br><b>Фиксированные:</b> щепотка = 1 г, горсть = 30 г.
+</div>
+
+<div class="box">
+<b>Пересчёт:</b>
+<ul>
+<li><b>Жидкости</b> — через плотность (молоко 1.03, масло 0.92, мёд 1.42).</li>
+<li><b>Сыпучие</b> (мука, сахар, соль, крупа) — через фиксированные таблицы (1 ст.л. муки = 25 г, 1 ст.л. сахара = 25 г, 1 ч.л. соли = 10 г).</li>
+<li><b>Штучные</b> — через вес 1 шт.</li>
+</ul>
+</div>
+
+<div class="box done">
+<b>Яйца — одна запись «Яйцо» + категория.</b>
+<br>Категория ставится в рецепте. Средний вес: C0 ≈ 70 г, C1 ≈ 60 г, C2 ≈ 50 г, C3 ≈ 40 г.
+</div>
+
+<div class="box">
+<b>Точность ложек</b> — примерная, без предупреждения. Хочешь точнее — пиши в граммах.
+<br><b>Смена единицы</b> — можно писать в любой. Система пересчитывает.
+<br><b>Стакан</b> — 200 мл (российский стандарт).
+</div>
+
+<h4>Уточнение веса для штучных</h4>
+
+<div class="rule">
+<b>В рецепте можно писать штучные двумя способами:</b>
+<ul>
+<li><b>Суммарный вес:</b> «Помидоры — 790 г». Точно.</li>
+<li><b>По штукам:</b> «Помидоры — 3 шт». Система берёт средний вес (200 г × 3 = 600 г). Быстро.</li>
+</ul>
+</div>
+
+<div class="box done">
+<b>Кнопка ⚖ «Уточнить вес».</b> Рядом с полем количества в рецепте — маленькая иконка ⚖. Появляется только у штучных продуктов.
+<br><b>Что открывает:</b> окошко с полями для каждой штуки отдельно:
+<ul>
+<li>Помидор 1: [200] г</li>
+<li>Помидор 2: [250] г</li>
+<li>Помидор 3: [340] г</li>
+<li>[+ добавить]</li>
+</ul>
+<b>Итого: 790 г.</b> Сохранила → в рецепте стало «790 г (3 шт)». КБЖУ пересчиталось точно.
+</div>
+
+
+<h4>Действия с продуктами</h4>
+
+<h5>Поиск</h5>
+<div class="box">
+<ul>
+<li>Модалка «Выбрать продукт» — открывается из редактора рецепта.</li>
+<li>Строка поиска: по названию, марке, короткому названию.</li>
+<li>Сначала свои (⭐), потом готовые. Внутри — группировка по типу.</li>
+<li>Сортировка: свои → часто используемые → по алфавиту.</li>
+</ul>
+</div>
+
+<h5>Создание</h5>
+<div class="box">
+<ul>
+<li>Кнопка «+ Создать продукт» в модалке. Или из FAB ➕ → «Создать продукт».</li>
+<li>Форма: название, короткое название, марка, группа, КБЖУ, единица, вес 1 шт, плотность, фото.</li>
+<li>Ссылка «У меня на 100 мл» — если КБЖУ с упаковки в мл, система пересчитывает на 100 г.</li>
+<li>Система автоматически подставляет плотность, если название — известная жидкость (молоко → 1.03).</li>
+<li>Перед сохранением — проверка на дубликаты: «Похожие есть. Точно создать новый?».</li>
+<li>Если создаёшь из рецепта — продукт сразу добавляется в рецепт.</li>
+<li>Если из FAB — только в базу, без рецепта.</li>
+</ul>
+</div>
+
+<h5>Редактирование</h5>
+<div class="box">
+<ul>
+<li>Правый клик / долгий тап по продукту → «Редактировать».</li>
+<li>Менять можно всё, кроме ID.</li>
+<li>Если используется в рецептах — КБЖУ автоматически пересчитывается везде.</li>
+</ul>
+</div>
+
+<h5>Удаление</h5>
+<div class="box">
+<ul>
+<li>Правый клик / долгий тап по продукту → «Удалить».</li>
+<li>Если используется — «Используется в N рецептах. Удалить?».</li>
+<li>Удалённое переопределение → ингредиенты возвращаются к готовому.</li>
+<li>Удалённый уникальный продукт → ингредиенты получают ⚠.</li>
+</ul>
+</div>
+
+<h5>Копирование из готовой базы</h5>
+<div class="box">
+Клик по готовому продукту → «Скопировать в мои». Создаётся дубликат в твоей базе. При поиске твоя копия идёт первой.
+</div>
+
+<h5>Переопределение</h5>
+<div class="box">
+Клик по готовому продукту → «Переопределить для себя». Создаётся твоя версия (⭐). При поиске — первая. В рецептах, где использован готовый, автоматически используется твоя версия. Если удалить — рецепты возвращаются к готовому.
+</div>
+
+<h4>Что НЕ входит в базу продуктов (пока)</h4>
+
+<div class="box note">
+<ul>
+<li>Отдельный экран «База продуктов» — потом. Вкладка в Кладовой: 🛒 Купить · 🏠 Есть дома · 📚 База продуктов.</li>
+<li>Импорт / экспорт базы — потом.</li>
+<li>Массовое редактирование — потом.</li>
+</ul>
+</div>
+
+
+<h3>17.0.c. Хранилище: где что живёт <span class="chip done">✅ решено</span></h3>
+
+<div class="rule">
+<b>Всё живёт в IndexedDB.</b> Не в localStorage. Причина: рецептов будет 150+, будут фото, будут версии. localStorage (5–10 МБ) не хватит.
+</div>
+
+<div class="box done">
+<b>Сделано 11 октября 2026.</b> Оформление и позиции фонов переехали из localStorage в IndexedDB. Тогда же переехали и три «мелочи интерфейса»: <code>activeScreen</code>, <code>designShadowTab</code>, <code>designSectionsCollapsed</code> — они тоже теперь в IndexedDB. localStorage полностью очищен. В коде работают только через <code>Storage.getSetting()</code> / <code>Storage.saveSetting()</code>.
+</div>
+
+<h4>Таблицы в IndexedDB — 9 штук <span class="chip done">✅ созданы 11 октября 2026</span></h4>
+
+<table class="table">
+<tr><th>Таблица</th><th>Что хранит</th></tr>
+<tr><td><code>recipes</code></td><td>Все рецепты (включая версии внутри).</td></tr>
+<tr><td><code>products</code></td><td>Своя база продуктов (готовая — в коде).</td></tr>
+<tr><td><code>pantry</code></td><td>Кладовая: что есть дома.</td></tr>
+<tr><td><code>shopping</code></td><td>Корзина / список покупок.</td></tr>
+<tr><td><code>plan</code></td><td>План питания.</td></tr>
+<tr><td><code>marks</code></td><td>Все отметки: ❤ Избранное, 👨‍🍳 Приготовлено, 🔖 Хочу приготовить, 📅 В план, а также <b>отметки ингредиентов</b> (галочки) и <b>выбранные порции</b>. Отдельными списками по типам.</td></tr>
+<tr><td><code>timers</code></td><td>Активные таймеры.</td></tr>
+<tr><td><code>settings</code></td><td>Оформление по экранам, позиции фонов, активный экран, таб теней, свёрнутые секции, свои теги, флаг засева демо. Всего 8 ключей сейчас: <code>design</code>, <code>bgSettings</code>, <code>activeScreen</code>, <code>designShadowTab</code>, <code>designSectionsCollapsed</code>, <code>migratedFromLocalStorage</code>, <code>demoSeeded</code>, <code>tags</code>.</td></tr>
+<tr><td><code>photos</code></td><td>Фото рецептов и продуктов — отдельно от рецептов.</td></tr>
+</table>
+
+<div class="box">
+<b>Почему фото отдельно.</b> Рецепт грузится быстро (без фото). Фото подгружаются отдельно — только когда открываешь карточку. Список рецептов не тормозит.
+</div>
+
+<div class="box done">
+<b>Статус таблиц на 11 октября 2026 (поздно вечером):</b>
+<ul>
+<li><code>recipes</code> — 9 демо-рецептов, читаются и пишутся. Работает.</li>
+<li><code>marks</code> — читается и пишется. Работает. <b>Шесть типов отметок:</b> <code>favorite</code>, <code>cooked</code>, <code>want</code>, <code>plan</code>, <code>ingredient</code>, <code>portions</code>.</li>
+<li><code>settings</code> — 8 ключей (см. выше). Работает.</li>
+<li><code>products</code>, <code>pantry</code>, <code>shopping</code>, <code>plan</code>, <code>timers</code>, <code>photos</code> — созданы, но пустые. Функции — заглушки.</li>
+</ul>
+</div>
+
+<div class="box done">
+<b>Как хранятся отметки ингредиентов и порций (шаг 35.2).</b>
+<br>Отметки ингредиентов и выбранные порции — это тоже записи в таблице <code>marks</code>, просто с новыми типами. Формат тот же: <code>{ id, type, recipeId, extra, at }</code>.
+<br><b>Отметка ингредиента:</b> <code>type = 'ingredient'</code>, <code>extra = 'Молоко 3.2%'</code> (название ингредиента). ID: <code>ingredient:recipe-001:Молоко 3.2%</code>.
+<br><b>Порции:</b> <code>type = 'portions'</code>, <code>extra = 6</code> (число порций). ID: <code>portions:recipe-001:6</code>. При смене порций старая запись удаляется, ставится новая.
+<br><b>Почему так.</b> Не заводим отдельные таблицы под ингредиенты и порции — они логически такие же «отметки», как и ❤. Одна таблица, разные типы. Меньше кода, меньше связанности.
+</div>
+
+<h3>17.0.d. storage.js — все операции через одну «коробку» <span class="chip done">✅ ядро + рецепты + отметки + теги + продукты (12 октября 2026)</span></h3>
+
+<div class="box done">
+<b>Что сделано (11 октября 2026 + 12 октября 2026):</b>
+<br><b>Ядро:</b>
+<ul>
+<li><code>init()</code> — открыть базу, создать 9 таблиц, запустить миграцию.</li>
+<li><code>getSetting</code> / <code>saveSetting</code> / <code>deleteSetting</code> — универсальные настройки.</li>
+<li><code>migrateFromLocalStorage()</code> — переносит ключи из localStorage → IndexedDB, ставит флаг, чистит localStorage.</li>
+<li><code>seedDemoRecipes()</code> — заливает 9 демо-рецептов при первом запуске. Флаг <code>demoSeeded = true</code>. Если база уже наполнена — пропускает.</li>
+<li><code>getStats()</code> — сколько рецептов и продуктов.</li>
+</ul>
+<b>Рецепты (слой 2, часть 1):</b>
+<ul>
+<li><code>getAllRecipes</code>, <code>getRecipe(id)</code>, <code>saveRecipe(recipe)</code>, <code>deleteRecipe(id)</code>, <code>nextRecipeId()</code> (внутренняя).</li>
+</ul>
+<b>Отметки (слой 2, часть 2):</b>
+<ul>
+<li><code>addMark(type, recipeId, extra)</code>, <code>removeMark</code>, <code>getMarks(type)</code>, <code>isMarked</code>, <code>getAllMarks()</code>, <code>clearMarks(type)</code>.</li>
+<li>Ключ записи: <code>type:recipeId[:extra]</code>. Формат: <code>{ id, type, recipeId, extra, at }</code>.</li>
+</ul>
+<b>Теги (слой 2, часть 3):</b>
+<ul>
+<li><code>saveTag</code>, <code>getAllTags</code>, <code>deleteTag</code>, <code>getAllTagsMerged</code> (свои + базовые).</li>
+<li>Свои теги — в settings, ключ <code>tags</code>, ID <code>tag-NNN</code>. Базовые — в <code>tags-base.js</code>, ID <code>btag-NNN</code>.</li>
+</ul>
+<b>Продукты (слой 3, часть 1, 12 октября 2026):</b>
+<ul>
+<li><code>getBaseProductGroups</code>, <code>getBaseProducts</code>, <code>getBaseProduct</code>, <code>searchBaseProducts</code> — чтение готовой базы (в коде).</li>
+<li><code>getAllProducts</code>, <code>getProduct</code>, <code>saveProduct</code>, <code>deleteProduct</code> — работа со своей базой (IndexedDB, таблица <code>products</code>).</li>
+<li><code>searchProducts</code>, <code>getProductsByGroup</code> — объединённые (свои + готовые).</li>
+<li>Источник: у готовых — <code>source: 'base'</code> (приписывается при чтении), у своих — <code>source: 'own'</code> (при сохранении).</li>
+</ul>
+<b>Всё остальное — заглушки</b> (кладовая, корзина, план, таймеры, фото, экспорт/импорт). Будут реализованы в слоях 3–4.
+<br><b>Фолбэк.</b> Если IndexedDB недоступна (Safari приватное окно) — <code>saveSetting</code>/<code>getSetting</code> молча работают через localStorage. Сайт не падает.
+</div>
+
+<div class="rule">
+<b>Не работать с IndexedDB напрямую.</b>
+<br>Вся работа — через файл <code>app/js/storage.js</code>. Внутри — сложность IndexedDB. Снаружи — простые функции.
+</div>
+
+<div class="box note">
+<b>Зачем так.</b> IndexedDB работает асинхронно (нужно ждать ответа). Если каждый раз писать это в коде карточки или списка — будет бардак. Один файл storage.js — одна точка входа. Следующий ИИ просто вызывает <code>saveRecipe()</code>, не думая про IndexedDB.
+</div>
+
+<h4>Функции storage.js — рецепты <span class="chip done">✅ частично сделано</span></h4>
+
+<div class="box done">
+<b>Готовы (11 октября 2026, вечер):</b>
+<ul>
+<li><code>saveRecipe(recipe)</code> — сохранить. Если без <code>id</code> — выдаст <code>recipe-NNN</code>. Автоподстановка <code>createdAt</code>/<code>updatedAt</code>.</li>
+<li><code>getRecipe(id)</code> — получить один.</li>
+<li><code>getAllRecipes()</code> — все.</li>
+<li><code>deleteRecipe(id)</code> — удалить.</li>
+</ul>
+<b>Ещё заглушки:</b>
+<ul>
+<li><code>duplicateRecipe(id)</code> — сделать копию.</li>
+<li><code>getRecipesByTag(tag)</code> — все с тегом.</li>
+<li><code>getRecipesByMeal(meal)</code> — по приёму пищи.</li>
+<li><code>getRecipesBySource(source)</code> — по источнику.</li>
+<li><code>searchRecipes(query, filters)</code> — поиск с фильтрами.</li>
+<li><code>getRecipesCanCook()</code> — для кнопки «Собрать из того что есть дома».</li>
+<li><code>deleteRecipesBySource(source)</code> — массовое удаление.</li>
+</ul>
+</div>
+
+<h4>Функции storage.js — продукты <span class="chip done">✅ частично сделано (12 октября 2026)</span></h4>
+
+<div class="box done">
+<b>Готово:</b>
+<ul>
+<li><code>getBaseProductGroups()</code> — 19 групп из готовой базы.</li>
+<li><code>getBaseProducts()</code> — все 309 готовых. При чтении каждому добавляется <code>source: 'base'</code>.</li>
+<li><code>getBaseProduct(id)</code> — один готовый по id.</li>
+<li><code>searchBaseProducts(query)</code> — поиск только по готовой.</li>
+<li><code>getAllProducts()</code> — все свои (IndexedDB, таблица products).</li>
+<li><code>getProduct(id)</code> — сначала ищет в своей, потом в готовой.</li>
+<li><code>saveProduct(product)</code> — сохранить свой. Присваивает <code>product-NNN</code>, ставит <code>createdAt</code>, <code>source: 'own'</code>.</li>
+<li><code>deleteProduct(id)</code> — удалить свой.</li>
+<li><code>searchProducts(query)</code> — поиск по обеим базам. Свои ⭐ первыми, потом готовые.</li>
+<li><code>getProductsByGroup(group)</code> — по группе, свои + готовые.</li>
+</ul>
+<b>Ещё заглушки:</b>
+<ul>
+<li><code>getProductsByBrand(brand)</code> — по марке.</li>
+<li><code>getOverriddenProducts()</code> — только переопределения.</li>
+<li><code>getUsedProducts()</code> — какие продукты используются в рецептах.</li>
+</ul>
+</div>
+
+<h4>Функции storage.js — Кладовая, План, Корзина</h4>
+
+<div class="box">
+<ul>
+<li><code>savePantryItem(data)</code> / <code>getPantry()</code> / <code>deletePantryItem(id)</code></li>
+<li><code>savePlanItem(data)</code> / <code>getPlan()</code> / <code>deletePlanItem(id)</code></li>
+<li><code>getPlanByTab(tab)</code> / <code>clearPlan()</code></li>
+<li><code>saveShoppingItem(data)</code> / <code>getShopping()</code> / <code>deleteShoppingItem(id)</code></li>
+<li><code>clearShopping()</code></li>
+</ul>
+</div>
+
+<h4>Функции storage.js — Отметки <span class="chip done">✅ сделано 11 октября 2026, дополнено в шаге 35</span></h4>
+
+<div class="box done">
+<ul>
+<li><code>addMark(type, recipeId, extra)</code> — добавить. <code>extra</code> — для вкладки плана (family / child / events), для отметки ингредиента (название), для порций (число). Необязательный.</li>
+<li><code>removeMark(type, recipeId, extra)</code> — убрать. Без <code>extra</code> — убирает все записи этого типа и рецепта.</li>
+<li><code>getMarks(type)</code> — все отметки одного типа.</li>
+<li><code>isMarked(type, recipeId)</code> — есть ли отметка у рецепта.</li>
+<li><code>getAllMarks()</code> — всё сразу, объектом <code>{ favorite, cooked, want, plan }</code>.</li>
+<li><code>clearMarks(type)</code> — убрать все отметки одного типа. Без типа — очистить всё.</li>
+</ul>
+<b>Формат записи:</b> <code>{ id: 'type:recipeId[:extra]', type, recipeId, extra, at }</code>. ID склеен из частей.
+<br><b>Шесть типов отметок:</b>
+<ul>
+<li><code>favorite</code> — ❤ Избранное.</li>
+<li><code>cooked</code> — 👨‍🍳 Приготовлено.</li>
+<li><code>want</code> — 🔖 Хочу приготовить.</li>
+<li><code>plan</code> — 📅 В план. <code>extra</code> = <code>family</code> / <code>child</code> / <code>events</code>.</li>
+<li><code>ingredient</code> — галочка у ингредиента. <code>extra</code> = название ингредиента.</li>
+<li><code>portions</code> — выбранное количество порций. <code>extra</code> = число.</li>
+</ul>
+</div>
+
+<h4>Функции storage.js — Таймеры</h4>
+
+<div class="box">
+<ul>
+<li><code>saveTimer(data)</code> — сохранить.</li>
+<li><code>getTimers()</code> — все.</li>
+<li><code>updateTimer(id, data)</code> — обновить.</li>
+<li><code>deleteTimer(id)</code> — удалить.</li>
+<li><code>getActiveTimers()</code> — только активные.</li>
+<li><code>getTimersForRecipe(recipeId)</code> — таймеры рецепта.</li>
+</ul>
+</div>
+
+<div class="box note">
+<b>Как хранится таймер.</b> Не «осталось 5 минут», а <b>«должен сработать в 15:42:30»</b>. При открытии сайта система считает разницу. Если сайт был закрыт — время всё равно идёт. Если таймер истёк, пока сайта не было — покажется уведомление при возврате.
+</div>
+
+<h4>Функции storage.js — Настройки и теги <span class="chip done">✅ сделано 11 октября 2026</span></h4>
+
+<div class="box done">
+<b>Настройки (универсальные):</b>
+<ul>
+<li><code>saveSetting(key, value)</code> — сохранить.</li>
+<li><code>getSetting(key)</code> — получить.</li>
+<li><code>deleteSetting(key)</code> — удалить.</li>
+</ul>
+<b>Теги:</b>
+<ul>
+<li><code>saveTag(tag)</code> — сохранить свой тег. Если без <code>id</code> — выдаст <code>tag-NNN</code>.</li>
+<li><code>getAllTags()</code> — только свои теги.</li>
+<li><code>deleteTag(id)</code> — удалить свой тег.</li>
+<li><code>getAllTagsMerged()</code> — объединить свои (<code>tag-NNN</code>) и базовые (<code>btag-NNN</code>). Сначала свои, потом базовые. То, что зовёт модалка «Теги рецепта».</li>
+</ul>
+</div>
+
+<h4>Функции storage.js — Фото</h4>
+
+<div class="box">
+<ul>
+<li><code>savePhoto(blob)</code> — сохранить фото.</li>
+<li><code>getPhoto(id)</code> — получить.</li>
+<li><code>deletePhoto(id)</code> — удалить.</li>
+</ul>
+</div>
+
+<div class="box note">
+<b>Сжатие фото.</b> Перед сохранением фото сжимается: 1200px по длинной стороне, качество 80%. Размер — 200–300 КБ вместо 3–5 МБ. Разницу глаз не видит, а база не распухает.
+</div>
+
+<h4>Функции storage.js — Экспорт / Импорт</h4>
+
+<div class="box">
+<ul>
+<li><code>exportAll()</code> — выгрузить всё в ZIP.</li>
+<li><code>importAll(file)</code> — загрузить из ZIP (заменить всё).</li>
+<li><code>exportRecipes()</code> — только рецепты.</li>
+<li><code>exportProducts()</code> — только продукты.</li>
+<li><code>importRecipes(file)</code> — только рецепты.</li>
+<li><code>importProducts(file)</code> — только продукты.</li>
+<li><code>getLastBackupDate()</code> / <code>setLastBackupDate(date)</code> — для напоминания.</li>
+</ul>
+</div>
+
+<h4>Функции storage.js — Общее</h4>
+
+<div class="box">
+<ul>
+<li><code>getStats()</code> — сколько рецептов, продуктов, даты создания.</li>
+<li><code>clearAll()</code> — сбросить всё (опасная, с подтверждением).</li>
+</ul>
+</div>
+
+<div class="box done">
+<b>Итого ~51 функция.</b> Каждая снаружи — одна строчка. Внутри — вся работа с IndexedDB. Следующий ИИ вызывает их, не думая про сложность.
+<br><b>Что уже работает (12 октября 2026):</b> ядро (<code>init</code>, <code>seedDemoRecipes</code>, <code>getSetting</code>, <code>saveSetting</code>, <code>deleteSetting</code>, <code>getStats</code>, <code>migrateFromLocalStorage</code>), рецепты (4 из 11), отметки (6 из 6), теги (4 из 4), продукты (11 из 11).
+<br><b>Что ещё заглушки:</b> кладовая, план, корзина, таймеры, фото, экспорт/импорт.
+<br><b>Важно:</b> storage.js расширяемый. Если понадобится ещё функция — добавим одну, не переделывая всё.
+</div>
+
+<h3>17.0.e. Защита от потери данных <span class="chip done">✅ решено</span></h3>
+
+<div class="rule">
+<b>Автосохранение.</b> Каждое изменение (создала рецепт, отредактировала, отметила) сразу сохраняется в IndexedDB. Кнопку «Сохранить всё» жать не надо — это происходит автоматически.
+</div>
+
+<div class="box warn">
+<b>Но это сохранение внутри браузера.</b> Если Safari почистит данные — пропадёт всё. Поэтому нужен бэкап.
+</div>
+
+<h4>Бэкап — файл на компьютере</h4>
+
+<div class="box done">
+<b>Что это.</b> Ты выгружаешь всё из сайта в один ZIP-файл. Файл лежит у тебя на компьютере или в облаке. Если что-то потеряется — загружаешь обратно.
+</div>
+
+<div class="box">
+<b>Что внутри ZIP:</b>
+<ul>
+<li>Все рецепты (с версиями).</li>
+<li>База продуктов (своя).</li>
+<li>Кладовая, план, корзина.</li>
+<li>Отметки (❤ 👨‍🍳 🔖 📅).</li>
+<li>Оформление, настройки.</li>
+<li>Фото рецептов и продуктов.</li>
+</ul>
+<b>Формат:</b> ZIP (потому что с фото файл большой).
+</div>
+
+<div class="box done">
+<b>Как часто.</b> Раз в 3–4 дня сайт показывает: «Давно не делала бэкап. Скачать?» Ты решаешь — сделать или отложить. Никаких автоматических скачиваний без твоего ведома.
+</div>
+
+<div class="box done">
+<b>Восстановление.</b> Настройки → «Импорт» → выбрала файл → всё восстановилось. Режим — <b>заменить всё</b> (старые данные стираются, ставятся из файла).
+</div>
+
+<h4>«Добавить на экран Домой»</h4>
+
+<div class="rule">
+<b>Ты знаешь, как это делать.</b> Отдельного напоминания в коде не делаем.
+</div>
+
+<div class="box note">
+<b>Почему это важно.</b> Если сайт добавлен на экран «Домой» — Safari не чистит данные, даже если не открывать неделю. Это единственная 100% защита от потери.
+</div>
+
+<h4>Опасные операции — с подтверждением</h4>
+
+<div class="box">
+<ul>
+<li><b>Удаление рецепта</b> — «Удалить рецепт со всеми версиями?» → Да / Нет.</li>
+<li><b>Удаление последней версии</b> — «Это последняя версия. Точно удалить?» → Да (рецепт целиком) / Нет.</li>
+<li><b>Удаление продукта, используемого в рецептах</b> — «Используется в N рецептах. Удалить?» → Да / Нет.</li>
+<li><b>Очистить всё</b> (в настройках) — «Удалить все данные? Это необратимо» → Да / Нет.</li>
+</ul>
+</div>
+
+<h3>17.0.f. Перенос данных <span class="chip done">✅ решено</span></h3>
+
+<h4>Девять демо-рецептов <span class="chip done">✅ сделано 11 октября 2026</span></h4>
+
+<div class="box done">
+<b>Что с ними.</b> Переехали в IndexedDB в шаге 34.1 (11 октября 2026, вечер). Данные лежат внутри <code>storage.js</code> как константа <code>demoRecipes</code>. При первом запуске <code>seedDemoRecipes()</code> заливает их в таблицу <code>recipes</code> и ставит флаг <code>demoSeeded = true</code>. HTML их больше не содержит — секции Главной пустые, карточки собирает <code>render.js</code>.
+</div>
+
+<div class="box">
+<b>Что это даёт.</b>
+<ul>
+<li>Все рецепты — в одном месте (IndexedDB).</li>
+<li>Их можно редактировать через большую карточку.</li>
+<li>Они одинаковые с новыми — никаких «особенных» рецептов.</li>
+</ul>
+</div>
+
+<h4>150 рецептов пользователя (PDF)</h4>
+
+<div class="box warn">
+<b>Формат.</b> PDF-файл, 39,7 МБ. Внутри — картинки с рецептами (не текст). Автоматически перенести нельзя — только OCR, а он ошибётся.
+</div>
+
+<div class="rule">
+<b>Перенос — только вручную</b>, через редактор рецепта. Когда база продуктов и большая карточка будут готовы.
+</div>
+
+<div class="box done">
+<b>Порядок переноса:</b>
+<ol>
+<li>Сначала — <b>5 рецептов</b> (те, что в примерах): Ролл с тунцом, Салат Мимоза, Куриные стожки, Пряная индейка, Печенье протеиновое.</li>
+<li>Потом — <b>остальные 145</b>.</li>
+<li>Каждый — через ➕ Добавить рецепт. Сразу правильно: с фото (вырезаешь из PDF), с КБЖУ из базы, с порциями.</li>
+</ol>
+</div>
+
+<div class="box note">
+<p><b>Почему ждём.</b> IndexedDB уже есть, но нет редактора рецепта. База продуктов — частично готова (шаг 36, подшаги 36.0–36.5). Как только появится редактор (шаг 37) — начинаем переносить.</p>
+</div>
+
+<h4>Что было в PDF, но мы не берём в структуру</h4>
+
+<div class="box">
+<ul>
+<li><b>Срок хранения («//» — 1 день, 2 дня)</b> — не добавляем.</li>
+<li><b>Уровень сложности</b> (полоски внизу) — не отдельное поле, а через теги.</li>
+</ul>
+</div>
+
+<h4>Что берём из PDF</h4>
+
+<div class="box done">
+<ul>
+<li>Название (с типом приёма — «Завтрак / Обед / Ужин / Перекус»).</li>
+<li>Фото (вырезаешь из PDF и загружаешь через редактор).</li>
+<li>Ингредиенты с количеством.</li>
+<li>Шаги (нумерованные).</li>
+<li>КБЖУ — но не как в PDF (там на всё блюдо), а считается заново через базу продуктов из ингредиентов.</li>
+<li>Порции — сначала по умолчанию 2, потом правишь вручную.</li>
+</ul>
+</div>
+
+<h3>17.0.g. Технические детали хранилища <span class="chip done">✅ решено</span></h3>
+
+<h4>ID рецепта — числа</h4>
+
+<div class="rule">
+<b>ID — просто числа:</b> <code>recipe-001</code>, <code>recipe-002</code>, <code>recipe-150</code>.
+<br><b>Не транслит из названия.</b> Причина: у двух рецептов может быть одинаковое название («Салат», «Суп»). Транслит даст одинаковый ID — один затрёт другой.
+</div>
+
+<div class="box done">
+<b>Правила:</b>
+<ul>
+<li>Генерируется автоматически при создании.</li>
+<li>Никогда не меняется, даже если переименуешь рецепт.</li>
+<li>Ссылка на рецепт ведёт по ID, а не по названию.</li>
+<li>У продуктов — тоже числа: <code>product-001</code>, <code>product-002</code>.</li>
+</ul>
+</div>
+
+<h4>Дата и время — числа (timestamp)</h4>
+
+<div class="rule">
+<b>Все даты хранятся как числа</b> (timestamp в миллисекундах). Например: <code>1728562950000</code>.
+</div>
+
+<div class="box done">
+<b>Почему так:</b>
+<ul>
+<li>Удобно сравнивать: «что новее» — просто больше/меньше.</li>
+<li>Удобно сортировать: по дате создания, изменения.</li>
+<li>Показ пользователю — в любом виде («10 октября», «2 дня назад»).</li>
+</ul>
+<b>Где используется:</b> дата создания рецепта, дата изменения, дата последнего приготовления, «должен сработать в…» у таймера, дата бэкапа.
+</div>
+
+<h4>Процедура первой загрузки нового кода</h4>
+
+<div class="box done">
+<b>Что происходит при первом запуске (сделано 11 октября 2026, вечер):</b>
+<ol>
+<li>Создаются 9 таблиц в IndexedDB (recipes, products, pantry, shopping, plan, marks, timers, settings, photos).</li>
+<li>Оформление из localStorage (ключи <code>design</code>, <code>bgSettings</code>, <code>activeScreen</code>, <code>designShadowTab</code>, <code>designSectionsCollapsed</code>) → сохраняется в IndexedDB (таблица <code>settings</code>) → localStorage очищается. Ставится флаг <code>migratedFromLocalStorage = true</code>.</li>
+<li>Если таблица <code>recipes</code> пуста и флага <code>demoSeeded</code> нет — <code>seedDemoRecipes()</code> заливает 9 демо-рецептов. Ставится флаг <code>demoSeeded = true</code>.</li>
+<li><code>renderAllRecipes()</code> читает рецепты из IndexedDB и раскладывает по секциям Главной.</li>
+</ol>
+<b>HTML статичных карточек больше не содержит.</b> Секции Главной — пустые контейнеры <code>data-meal</code>. Всё собирается кодом из данных.
+</div>
+
+<div class="box note">
+<b>Флаг «миграция выполнена».</b> В таблице <code>settings</code> хранится ключ <code>migratedFromLocalStorage = true</code>. При следующих загрузках сайт видит флаг и пропускает шаги 2–3. Миграция делается <b>один раз</b>.
+</div>
+
+<h4>Миграции схемы — потом</h4>
+
+<div class="rule">
+<b>Сейчас миграции не пишем.</b> Если завтра понадобится добавить новое поле в рецепт — просто пересоздаём базу (данных мало, не жалко).
+</div>
+
+<div class="box note">
+<b>Когда напишем миграции.</b> Когда у тебя будет много данных (150 рецептов, база продуктов, кладовая). Тогда потерять данные — больно, и нужен код, который переводит старую структуру в новую без потерь. Это отдельная задача на будущее.
+</div>
+
+<h4>Проверка при первом запуске</h4>
+
+<div class="box done">
+<b>Проверено 11 октября 2026 — всё прошло успешно:</b>
+<ul>
+<li>Сайт открылся, ничего не сломалось.</li>
+<li>Оформление (тема, палитра, фон) — как было до переезда.</li>
+<li>Позиции фонов — сохранены (<code>bgSettings</code>).</li>
+<li>В DevTools → Application → IndexedDB → видно 9 таблиц.</li>
+<li>В DevTools → Application → localStorage → пусто.</li>
+</ul>
+<b>Позже, в тот же день (шаг 34.1):</b> в <code>recipes</code> появились 9 демо-рецептов через <code>seedDemoRecipes()</code>, флаг <code>demoSeeded = true</code>. В <code>settings</code> сейчас 8 ключей.
+<br><b>Первая попытка не сработала</b> — в <code>design.js</code> была ошибка: <code>loadDesignFromStorage</code> писала в переменную <code>designData</code> до того, как она создана. Исправлено. Урок — в разделе 19.
+</div>
+
+
+<h4>Что НЕ входит в структуру рецепта</h4>
+
+<div class="box note">
+Это отдельные подшаги, не сейчас:
+<ul>
+<li>База продуктов (детали)</li>
+<li>Фильтры и сортировка</li>
+<li>Трекер питания</li>
+<li>Кладовая</li>
+<li>Синхронизация</li>
+<li>Пуш-уведомления</li>
+</ul>
+</div>
+
+<table class="table">
+<tr><th>Что</th><th>Где</th></tr>
+<tr><td>Всё (рецепты, продукты, план, покупки, отметки, таймеры, фото, настройки)</td><td>IndexedDB, таблицы <code>recipes</code> / <code>products</code> / <code>pantry</code> / <code>shopping</code> / <code>plan</code> / <code>marks</code> / <code>timers</code> / <code>settings</code> / <code>photos</code></td></tr>
+<tr><td>Автосохранение</td><td>Раз в 3–4 дня, потом раз в неделю</td></tr>
+<tr><td>Экспорт</td><td>JSON / ZIP</td></tr>
+<tr><td><b>Черновик оформления</b></td><td><b>В памяти (designDraft). Не сохраняется.</b></td></tr>
+<tr><td>Локальные — только в памяти: активный экран, таб теней, свёрнутые секции (загружаются один раз при запуске)</td><td>IndexedDB, таблица <code>settings</code></td></tr>
+</table>
+
+<h4>Ключи в IndexedDB, таблица <code>settings</code></h4>
+<ul>
+<li><code>design</code> — оформление по экранам. Объект с 4 экранами.</li>
+<li><code>bgSettings</code> — три слота позиций/зума для каждого фона.</li>
+<li><code>activeScreen</code> — активный экран.</li>
+<li><code>designShadowTab</code> — активный таб тени.</li>
+<li><code>designSectionsCollapsed</code> — какие секции панели свёрнуты.</li>
+<li><code>migratedFromLocalStorage</code> — флаг «миграция из localStorage выполнена».</li>
+<li><code>demoSeeded</code> — флаг «9 демо-рецептов залиты в базу».</li>
+<li><code>tags</code> — массив своих тегов.</li>
+</ul>
+
+<div class="box done">
+<b>localStorage пустой.</b> Все настройки и данные — в IndexedDB. Если IndexedDB недоступна (Safari приватное окно) — фолбэк автоматически работает через localStorage, но это нештатный режим.
+</div>
+
+<div class="box ok">
+<b>IndexedDB</b> — лимит 50+ МБ. На iPhone Safari может удалять данные, если сайт не открывать больше 7 дней. Решение — добавить на экран «Домой». В будущем — PWA.
+</div>
+
+<!-- ============================================ -->
+<h2 id="sync">18 · Синхронизация (отложено)</h2>
+
+<div class="box ok">
+<b>Главное:</b> синхронизация — отдельный этап. Сейчас — без неё.
+</div>
+
+<table class="table">
+<tr><th>Кто</th><th>Что</th></tr>
+<tr><td>Пользователь + парень</td><td>Один общий аккаунт.</td></tr>
+<tr><td>Мама</td><td>Свой сайт. Только база Джулии. Свой список покупок.</td></tr>
+<tr><td>Обмен рецептами</td><td>Пользователь ↔ мама. Кнопки «Сохранить» / «Не сохранять».</td></tr>
+</table>
+
+<div class="box done">
+<h3 style="margin-top:0">⚡ Оформление — локальное, НЕ синхронизируется</h3>
+<p>Синхронизируются только данные. Оформление — локальное у каждого. Своё на каждом экране.</p>
+</div>
+
+<!-- ============================================ -->
+<h2 id="bugs">19 · Известные баги браузеров</h2>
+
+<h3>19.1. iOS Safari: <code>position:fixed</code> + <code>z-index:-1</code></h3>
+<div class="box done">
+<b>Решение.</b> Фон — <code>position:fixed; z-index:0</code>, контент в <code>.app</code> с <code>z-index:1</code>.
+</div>
+
+<h3>19.2. iOS Safari: полоса внизу экрана</h3>
+<div class="box warn">
+Оставили как есть.
+</div>
+
+<h3>19.3. iOS/iPadOS Safari: агрессивный кэш CSS/JS</h3>
+<div class="box">
+Приватное окно. Или Network → Disable cache → Ctrl+F5.
+</div>
+
+<h3>19.4. iOS Safari: <code>background-image</code> не отрисовывается</h3>
+<div class="box done">
+Только <code>&lt;img&gt;</code> с <code>position:fixed</code>.
+</div>
+
+<h3>19.5. iOS Safari: mask-composite + blur + scale крашит рендер</h3>
+<div class="box done">
+Маска на картинке, не на обёртке. Без <code>mask-composite</code> на iOS.
+</div>
+
+<h3>19.6. Незакрытая <code>}</code> в CSS ломает следующие правила</h3>
+<div class="box done">
+После вставки блока — навести на <code>{</code>, убедиться в парной <code>}</code>.
+</div>
+
+<h3>19.7. iOS Safari: анимация <code>position:fixed</code> за границей экрана</h3>
+<div class="box done">
+Сдвиг уменьшен до 50px + opacity + visibility с задержкой.
+</div>
+
+<h3>19.8. iOS Safari: событие <code>scroll</code> во время инерционной прокрутки</h3>
+<div class="box done">
+Использовать <code>touchend</code> вместо scroll.
+</div>
+
+<h3>19.9. Скрипт выполняется раньше HTML</h3>
+<div class="box done">
+Обернуть в <code>DOMContentLoaded</code>.
+</div>
+
+<h3>19.10. JS: рекурсия в <code>getActiveDesign</code></h3>
+<div class="box bug">
+<b>Урок 9 октября 2026.</b> При глобальной замене <code>getDesignFor(activeDesignScreen)</code> → <code>getActiveDesign()</code> через Replace All заменилась строка <b>внутри самой функции</b> <code>getActiveDesign</code>. Получилась рекурсия → <code>Maximum call stack size exceeded</code>.
+<br><b>Правило для профилактики:</b> при Replace All — сначала подумать, что <b>внутри заменяемого места</b> может быть то же самое. После замены — проверить, что функция не зовёт сама себя.
+</div>
+
+<h3>19.11. z-index редактора фона</h3>
+<div class="box done">
+<b>Урок 10 октября 2026.</b> Редактор позиции фона открывается <b>поверх</b> панели оформления. Для этого его <code>z-index</code> поднят с <code>100000</code> до <code>100003</code> (выше панели). Если в будущем добавится ещё один слой поверх — помнить про этот порядок.
+<br><b>Текущая иерархия (снизу вверх):</b> фон (0) → контент (1) → FAB (99) → нижняя навигация (100) → панель (100001) → окошко «Применить к…» и модалки (100002) → редактор фона (100003) → плашка предпросмотра (100004) → заставка (9999).
+<br><b>Замечание 11 октября 2026.</b> Заставка имеет <code>z-index: 9999</code> — она ниже панели. Но пока она видна, ничего другого не открыто. Когда заставка уходит классом <code>.hide</code> — она получает <code>visibility:hidden</code> и никому не мешает.
+
+<h3>19.12. Заставка висит вечно при ошибке в скрипте</h3>
+<div class="box bug">
+<b>Урок 11 октября 2026.</b> В <code>main.js</code> сначала было так: <code>await Storage.init()</code> → ... → в самом конце <code>setTimeout(... скрыть заставку ...)</code>. Если что-то в начале упало — заставка оставалась навсегда, сайт недоступен.
+<br><b>Правило:</b> <code>setTimeout</code>, который прячет заставку, — в **самом начале</b> <code>boot()</code>, до всех <code>await</code>. Тогда при любой ошибке страница всё равно покажется, а ошибка будет видна в консоли.
+</div>
+
+<h3>19.13. Функция записи в объект — сначала создай объект</h3>
+<div class="box bug">
+<b>Урок 11 октября 2026.</b> Функция <code>loadDesignFromStorage()</code> пыталась писать в <code>designData</code>, но она была <code>null</code> — потому что <code>loadDesignData()</code> (которая её создаёт) не успела вызваться. Ошибка: <code>Cannot set properties of null</code>.
+<br><b>Правило:</b> если функция пишет в общий объект (<code>designData</code>, <code>bgSettings</code>, ...) — в её начале должна быть строка, которая создаёт объект, если его нет. Не полагаться на то, что кто-то вызвал инициализацию раньше.
+</div>
+
+<h3>19.13.1. Эмодзи со склейкой теряют невидимый символ при копировании</h3>
+<div class="box bug">
+<b>Урок 11 октября 2026 (вечер).</b> Эмодзи 👨‍🍳 — это не один символ, а три: мужчина + невидимый склеивающий символ (ZWJ) + яичница. При копировании через чат ZWJ иногда теряется, и эмодзи распадается на два: 👨 и 🍳. Именно это произошло в <code>render.js</code> — иконка «приготовлено» в маленькой карточке показывала двух человечков вместо одного повара.
+<br><b>Решение:</b> записывать такие эмодзи через числовые HTML-коды: <code>&amp;#128104;&amp;#8205;&amp;#127859;</code>. Склейка (8205) гарантированно не потеряется.
+<br><b>Правило:</b> если эмодзи составной (👨‍🍳, 👩‍🍳, 👨‍👩‍👧, 🏳️‍🌈) — всегда через <code>&amp;#…;</code>. Никакого копирования-вставки.
+</div>
+
+
+<h3>19.13.2. Дублирование <code>const</code> в одном файле ломает всё</h3>
+<div class="box bug">
+<b>Урок 11 октября 2026 (поздно вечером).</b> В <code>storage.js</code> оказалось два массива <code>demoRecipes</code>. Ошибка <code>Identifier 'demoRecipes' has already been declared</code> — она валит весь файл. Из-за этого <code>Storage</code> не создаётся, и падает <code>main.js</code> с ошибкой <code>Storage.init is not a function</code>.
+<br><b>Как понять:</b> если сайт вдруг не грузится и в консоли «X is not defined» или «X is not a function» — первым делом посмотреть, нет ли где-то выше в консоли ошибки <code>SyntaxError</code>. Одна <code>SyntaxError</code> валит весь файл.
+<br><b>Правило:</b> перед вставкой большого блока с константой — проверить поиском, не объявлена ли эта константа уже. Особенно в файлах, которые переписывались несколько раз.
+</div>
+
+<h3>19.14. Миграция — список ключей проговаривать явно</h3>
+<div class="box bug">
+<b>Урок 11 октября 2026.</b> Договаривались: в IndexedDB уезжают только <code>design</code> и <code>bgSettings</code>, а три «мелочи» (<code>activeScreen</code>, <code>designShadowTab</code>, <code>designSectionsCollapsed</code>) остаются в localStorage. В коде миграции по памяти оказались все пять. Потом чистили руками — удаляли мёртвые копии из localStorage.
+<br><b>Правило:</b> перед написанием миграции — <b>выписать список ключей на бумагу и свериться с картой</b>. Не полагаться на память. Пять ключей — ок, пятьдесят — будет катастрофа.
+</div>
+
+<h3>19.15. Выделение текста мышкой закрывало модалку</h3>
+<div class="box bug">
+<b>Урок 12 октября 2026.</b> Клик по тёмному фону закрывает модалку (стандартное поведение). Но если пользователь <b>выделяет текст в поле</b> и, не отпуская кнопку мыши, ведёт курсор за границу поля — браузер фиксирует «отпускание» на тёмном фоне. Модалка закрывалась. Хотя пользователь просто выделял текст, а не кликал по фону.
+<br><b>Решение:</b> вместо <code>click</code> по фону — два события: <code>mousedown</code> (запоминаем, что нажатие было на фоне) и <code>mouseup</code> (закрываем, только если <b>и нажатие, и отпускание</b> были на фоне). Если между ними курсор ушёл с фона — не закрываем.
+<br><b>Правка внесена в три файла:</b> <code>product-form.js</code>, <code>product-picker.js</code>, <code>card-big.js</code>.
+<br><b>Правило:</b> если модалка закрывается по клику на тёмный фон — всегда <code>mousedown</code>+<code>mouseup</code>, не <code>click</code>. Иначе выделение текста в поле будет её закрывать.
+</div>
+
+<!-- ============================================ -->
+<h2 id="order">20 · Порядок работы</h2>
+
+<pre><code>─── ШАГ 4.5: ОФОРМЛЕНИЕ ПО ЭКРАНАМ ───
+20. Подшаг 1: Хранилище (design[4])                  ✅ СДЕЛАНО (v8)
+21. Подшаг 4.1a: .dm-scope, syncMockupScope           ✅ СДЕЛАНО (v9)
+22. Подшаг 4.1b: 7 файлов стилей                     ✅ СДЕЛАНО (v9)
+23. Подшаг 4.2: Черновик                              ✅ СДЕЛАНО (v9)
+24. Фон в макете (вариант А)                          ✅ СДЕЛАНО (v10)
+     + фикс размеров панели (900px / до 96vh)
+     + фикс размеров макета (400px / пропорции окна)
+     + ужатие элементов макета
+25. Подшаг 4.3: Кнопка «Применить»                    ✅ СДЕЛАНО (v10)
+26. Подшаг 5: Окошко «Применить к…»                   ✅ СДЕЛАНО (v10)
+     + блокировка навигации
+27. Подшаг 6: Телефон — «Посмотреть»                  ✅ СДЕЛАНО (v10)
+     + плашка предпросмотра
+28. Часть подшага 7: Редактор позиции поверх панели   ✅ СДЕЛАНО (v10)
+29. Хвост подшага 7: «Общая/Своя» + точка-звёздочка   ⏳ ОТЛОЖЕНО
+
+─── ПОДГОТОВКА И БОЛЬШАЯ КАРТОЧКА ───
+30. Разрезание index.html на отдельные JS-файлы       ✅ СДЕЛАНО (v11)
+31. storage.js — слой 1 (IndexedDB, settings)         ✅ СДЕЛАНО (v11)
+32. Переезд всех настроек на IndexedDB                ✅ СДЕЛАНО (v11)
+33. Демо-рецепты: вынести 9 карточек в массив         ✅ СДЕЛАНО (v11, вечер)
+     (render.js + рендер-функция, статичные карточки удалены)
+34. storage.js — слой 2 (рецепты, отметки, теги)      ✅ СДЕЛАНО (v11, вечер)
+     (четыре подшага: 34.1 засев + getAllRecipes,
+      34.2 saveRecipe/getRecipe/deleteRecipe,
+      34.3 отметки, 34.4 теги + tags-base.js)
+35. Большая карточка рецепта — MVP                    ✅ СДЕЛАНО (v11, поздно вечером)
+     35.1 каркас + верх + тело
+     35.2.1 формат чисел + порции
+     35.2.2 чекбоксы ингредиентов + 🧹
+     35.2.3 нижние кнопки + dropdown «В план» и «Ещё»
+     Плюс: восстановлен массив demoRecipes в storage.js
+36. База продуктов                                    🔄 В ПРОЦЕССЕ (12 октября 2026)
+     36.0 Файл products-base.js — 309 продуктов        ✅ СДЕЛАНО
+     36.1 storage.js — 11 функций продуктов            ✅ СДЕЛАНО
+     36.2 Пикер продуктов (модалка выбора)             ✅ СДЕЛАНО
+     36.3 Форма продукта — каркас (4.1)                ✅ СДЕЛАНО
+     36.4 Форма продукта — основные поля (4.2)         ✅ СДЕЛАНО
+     36.5 Форма продукта — КБЖУ и единицы (4.3)        ✅ СДЕЛАНО
+     36.6 Форма продукта — сохранение в IndexedDB (4.4) ⏳ СЛЕДУЮЩЕЕ
+     36.7 Форма продукта — режим редактирования (4.5)   ⏳
+     36.8 Проверка на дубликаты (4.6)                  ⏳
+     36.9 Открытие формы из пикера с автовыбором (4.7)  ⏳
+     36.10 Фото продукта (4.9)                         ⏳ (отложено с фото рецептов)
+37. Редактор рецепта                                  ⏳
+     (модалка редактирования, split button «Сохранить | ▾»)
+38. Большая карточка — версии и таймеры               ⏳
+39. storage.js — слой 3 (кладовая, план, корзина)     ⏳
+40. storage.js — слой 4 (фото, экспорт/импорт)        ⏳
+41. Фичи по одной: Избранное, План, Кладовая,         ⏳
+    Добавление, Настройки, Фото
+42. Маленькая карточка: привести к карте              ⏳
+     (4 иконки на фото: убрать ⏱, 4 кнопки внизу: 🛒 ⏱ ✎ 🕐)
+43. Модалка тегов в большой карточке (10.9)           ⏳
+44. Шторка FAB ➕ → dropdown                          ⏳
+45. PWA (манифест + добавление на экран)              ⏳
+46. Синхронизация                                     ⏳
+47. Трекер питания                                    ⏳</code></pre>
+
+<!-- ============================================ -->
+<h2 id="debt">21 · Технический долг</h2>
+
+<h3>🔴 Высокий приоритет</h3>
+
+<h4>1. Убрать «хвосты» старой панели</h4>
+<div class="box">
+Остатки стилей <code>.dp-themes</code> в CSS, id <code>dpThemes</code> в JS. Удалить после того, как убедимся, что всё работает.
+</div>
+
+<h3>🟡 Средний приоритет</h3>
+
+<h4>2. Объединить дублирующий CSS</h4>
+<div class="box">
+Стили <code>.design-panel</code>, <code>.bg-editor</code>, <code>.modal</code> частично дублируются. <code>.preview-bar</code> — новый, стоит проверить, не дублирует ли он что-то из <code>.modal-box</code>.
+</div>
+
+<h4>3. Унифицировать имена data-атрибутов</h4>
+<div class="box">
+Смешаны: <code>data-s</code>, <code>data-p</code>, <code>data-shade</code>, <code>data-sh</code>, <code>data-th</code>, <code>data-bg</code>, <code>data-style</code>, <code>data-palette</code>, <code>data-shadow</code>, <code>data-fab-shadow</code>, <code>data-theme</code>, <code>data-screen</code>, <code>data-modal</code>.
+</div>
+
+<h4>4. Вынести JS в отдельные файлы <span class="chip done">✅ сделано (v11)</span></h4>
+<div class="box done">
+Сделано 11 октября 2026. <code>index.html</code> разрезан на 8 файлов в <code>app/js/</code>: <code>storage.js</code>, <code>shared.js</code>, <code>bg.js</code>, <code>design.js</code>, <code>screens.js</code>, <code>modals.js</code>, <code>fab.js</code>, <code>main.js</code>. Подключаются в конце <code>&lt;body&gt;</code> через обычные <code>&lt;script src="..."&gt;</code> в этом самом порядке.
+<h4>4.1. Мёртвый ключ activeScreen в localStorage <span class="chip no">❌ убрано вручную</span></h4>
+<div class="box bug">
+<b>Урок 11 октября 2026.</b> При переезде на IndexedDB код миграции перенёс <code>activeScreen</code> в IndexedDB, но старую копию в localStorage не удалил. Ключ остался мёртвым — нигде не использовался, но и не мешал.
+<br><b>Убрано</b> командой <code>localStorage.clear()</code> из консоли DevTools.
+<br><b>Правило:</b> после миграции — всегда проверять localStorage. Если ключ нигде не читается — удалять сразу.
+</div>
+</div>
+
+<h3>🟢 Низкий приоритет</h3>
+
+<h4>5. Удалить старые HTML-карты</h4>
+<div class="box">
+<code>Структурная карта 6.html</code>, <code>7.html</code>, <code>8.html</code>, <code>9.html</code>, <code>10.html</code>.
+</div>
+
+<h4>5.1. Мёртвый массив <code>demoRecipesOLD</code> в storage.js <span class="chip wait">⏳ мелочь</span></h4>
+<div class="box">
+<b>Урок 11 октября 2026 (поздно вечером).</b> Массив <code>demoRecipes</code> в <code>storage.js</code> оказался объявлен дважды: старый (который был изначально, но его не нашли поиском) и новый (мы вставили). Получилась ошибка <code>demoRecipes has already been declared</code>, весь файл сломался, <code>Storage.init is not a function</code>.
+<br><b>Что сделали:</b> переименовали старый в <code>demoRecipesOLD</code>. Теперь их два, старый не используется.
+<br><b>Что надо сделать:</b> удалить <code>demoRecipesOLD</code> целиком (это ~200 строк кода). Найти в <code>storage.js</code> блок <code>const demoRecipesOLD = [</code> … <code>];</code> и удалить.
+<br><b>Когда:</b> когда убедимся, что всё стабильно работает и данные не потеряются.
+</div>
+
+<h4>6. Проверять закрытие скобок в CSS</h4>
+
+<h4>6.1. Косметика в storage.js <span class="chip wait">⏳ мелочь</span></h4>
+<div class="box">
+В <code>storage.js</code> пропала разделительная строка <code>// ═══</code> над блоком <code>// Статистика</code>. На работу не влияет. Поправить при случае.
+</div>
+
+<h3>⚪ Отложено</h3>
+
+<h4>7. Проверить автоскрытие FAB на каждом экране</h4>
+<div class="box">
+Когда наполнишь экраны контентом.
+</div>
+
+<h4>8. Минификация CSS и JS</h4>
+<div class="box">Не делаем.</div>
+
+<h4>9. Единая система данных (рецепты в объектах JS) <span class="chip done">✅ сделано 11 октября 2026</span></h4>
+<div class="box done">
+Сделано в шаге 33. Все 9 демо-рецептов переехали из HTML в объекты JS и залиты в IndexedDB. Статичных карточек в <code>index.html</code> больше нет. <code>render.js</code> собирает карточки из данных. 150 рецептов из PDF теперь можно переносить через редактор — когда он появится (шаг 37).
+</div>
+
+<!-- ============================================ -->
+<h2 id="postpone">22 · Отложено</h2>
+
+<div class="box warn">
+<b>Это не забыто. Это осознанно отложено.</b> Возможно, никогда не понадобится. Возможно, вернёмся позже.
+</div>
+
+<h3>22.1. Хвост подшага 7 — «Общая / Своя» позиция фона</h3>
+
+<div class="box done">
+<b>Идея.</b> Позиция и зум фона — по умолчанию общие для картинки на всех экранах. Можно «отвязать» для конкретного экрана — тогда у Главной и у Избранного один и тот же фон будет стоять по-разному.
+<br>Переключатель в редакторе позиции: <b>(●) Общая</b> / <b>( ) Своя для этого экрана</b>.
+</div>
+
+<div class="box note">
+<b>Почему отложено.</b> Требует переработки хранилища <code>bgSettings</code> — сейчас оно не привязано к экранам, только к устройствам. Плюс непонятно, насколько это реально нужно. Сейчас фон задаётся отдельно на каждом экране — если хочется разное, можно просто выбрать разные фоны.
+</div>
+
+<h3>22.2. Точка-звёздочка на фоне со «своей» позицией</h3>
+
+<div class="box done">
+В панели 🖌, в секции «Фон», на квадратике с картинкой, у которой стоит «Своя» позиция — рисуется маленькая точка. Идёт в паре с 22.1.
+</div>
+
+<h3>22.3. Пуш-уведомления (таймер)</h3>
+
+<div class="box done">
+<b>Идея.</b> Таймер сработал — приходит пуш-уведомление от системы, даже если сайт закрыт или экран телефона выключен.
+</div>
+
+<div class="box note">
+<b>Почему отложено.</b> Требует PWA (Service Worker + манифест + разрешение от пользователя). Технически невозможно на обычном сайте. Сейчас делаем только «таймер при открытом сайте» — всплывающее окно + звук 10 секунд. Пуш — после этапа PWA (раздел 20, шаг 45).
+</div>
+
+<h3>22.4. Звук при закрытом сайте</h3>
+
+<div class="box done">
+<b>Идея.</b> Таймер сработал — играет звук, даже если сайт закрыт.
+</div>
+
+<div class="box note">
+<b>Почему отложено.</b> Браузеры блокируют звук, если вкладка неактивна или сайт закрыт. Единственный способ — пуш-уведомление, у которого своя системная мелодия. Идёт в паре с 22.3.
+</div>
+
+<h3>22.5. Режим «Поделиться одним рецептом»</h3>
+
+<div class="box done">
+<b>Идея.</b> Кнопка «Поделиться» в большой карточке копирует ссылку вида <code>gekataca.github.io/kopilka-receptov/#share=recipe-id</code>. При открытии — виден только рецепт, без сайта, без шапки, без навигации, без FAB.
+</div>
+
+<div class="box note">
+<b>Почему отложено.</b> Требует режима отображения «только один рецепт» и генерации ID для каждого рецепта. Сейчас кнопка «Поделиться» просто копирует адрес главной страницы. Вернёмся, когда будет 150+ рецептов и понадобится делиться конкретными.
+</div>
+
+<h3>22.6. Возможные будущие «отложенности»</h3>
+
+<div class="box">
+Сюда будем писать всё, что решаем отложить сознательно. Пока пусто.
+</div>
+
+<!-- ============================================ -->
+<h2 id="where">23 · Итог: где мы сейчас</h2>
+
+<div class="box done">
+<h3 style="margin-top:0">✅ Что работает</h3>
+<ul>
+<li>Сайт в интернете: <code>gekataca.github.io/kopilka-receptov</code></li>
+<li><b>JavaScript разрезан на 14 файлов</b> в <code>app/js/</code> (добавились <code>card-big.js</code> в шаге 35, затем <code>products-base.js</code>, <code>product-picker.js</code>, <code>product-form.js</code> 12 октября 2026). <code>index.html</code> содержит только разметку и пустые контейнеры для карточек.</li>
+<li><b>IndexedDB работает.</b> 9 таблиц. Все настройки — в таблице <code>settings</code> (8 ключей).</li>
+<li><b>9 демо-рецептов живут в IndexedDB.</b> Заливаются один раз при первом запуске (<code>seedDemoRecipes</code>, флаг <code>demoSeeded</code>). HTML их больше не содержит.</li>
+<li><b><code>render.js</code> собирает маленькие карточки из данных.</b> Клик по названию или фото → открывается большая карточка.</li>
+<li><b>Большая карточка рецепта работает (шаг 35).</b> Открытие, закрытие (крестик / фон / Escape), фото-градиент, бейдж приёма пищи, 4 иконки ❤ 👨‍🍳 🔖 📅 + ✕. Порции −/+ со стартовым 4 и сохранением. Чекбоксы ингредиентов с галочками. Кнопка 🧹. Нижние кнопки 🛒 · ⏱ · ✎ · ⋯. Dropdown «В план» (галочки) и dropdown «Ещё» (4 пункта). Все действия, где функционала нет — открывают модалку-заглушку «Позже». <b>Создан файл <code>app/js/card-big.js</code>.</b></li>
+<li><b>Сохранение порций и галочек в IndexedDB.</b> Тип <code>marks</code> расширен: <code>ingredient</code> (галочки ингредиентов) и <code>portions</code> (выбранное количество). Держатся между сессиями, пока не сбросить вручную.</li>
+<li><b>Формат чисел — через запятую.</b> <code>4,5</code>, <code>0,25</code>, <code>60</code>. И в маленькой, и в большой карточке.</li>
+<li><b>Пропавший массив <code>demoRecipes</code> восстановлен</b> в <code>storage.js</code>. Теперь данные не потеряются при очистке кэша.</li>
+<li><b>storage.js — рецепты, отметки, теги, продукты работают.</b> Рецепты: <code>getAllRecipes</code>, <code>getRecipe</code>, <code>saveRecipe</code>, <code>deleteRecipe</code>. Отметки: <code>addMark</code>, <code>removeMark</code>, <code>getMarks</code>, <code>isMarked</code>, <code>getAllMarks</code>, <code>clearMarks</code>. Теги: <code>saveTag</code>, <code>getAllTags</code>, <code>deleteTag</code>, <code>getAllTagsMerged</code>. Продукты (11 функций, 12 октября 2026): <code>getBaseProductGroups</code>, <code>getBaseProducts</code>, <code>getBaseProduct</code>, <code>searchBaseProducts</code>, <code>getAllProducts</code>, <code>getProduct</code>, <code>saveProduct</code>, <code>deleteProduct</code>, <code>searchProducts</code>, <code>getProductsByGroup</code>. Кладовая, план, корзина, таймеры, фото, экспорт — заглушки.</li>
+<li><b><code>tags-base.js</code> — 58 базовых тегов</b>, 16 групп, ID <code>btag-NNN</code>. Свои теги — <code>tag-NNN</code> в settings.</li>
+<li><b>localStorage полностью очищен.</b> Всё в IndexedDB.</li>
+<li>8 стилей, 9 палитр × 5 оттенков, 8 теней × 2 набора</li>
+<li>Светлая / тёмная тема — тумблер в шапке панели</li>
+<li>Фон полностью финализирован</li>
+<li>Панель 🖌: Стиль + Палитра + Тень + Фон. Сворачивается по секциям</li>
+<li>Четыре экрана: Главная, Избранное, План, Кладовая</li>
+<li>Переключение экранов, прокрутка вверх, запоминание вкладки</li>
+<li>Содержание только на Главной</li>
+<li>Три модалки для ⏲ 🔍 ➕ — заглушки</li>
+<li><b>Макет в панели:</b> две колонки на ПК/iPad, живой по палитре/стилю/тени/теме</li>
+<li><b>Макет с фоном</b> — картинка на дне макета, меняется мгновенно</li>
+<li><b>Макет с честными пропорциями</b> — как у окна браузера</li>
+<li><b>Черновик:</b> клики в панели не трогают страницу — только макет</li>
+<li><b>Кнопка «Применить»</b> — открывает окошко «Применить к…»</li>
+<li><b>Окошко «Применить к…»</b> — галочки по экранам, кнопка активируется при выборе</li>
+<li><b>Редактор позиции фона</b> — открывается поверх панели, черновик не теряется</li>
+<li><b>Режим предпросмотра на телефоне</b> — кнопка «Посмотреть», страница с черновиком, плашка [Применить] [Вернуться]</li>
+</ul>
+</div>
+
+<div class="box note">
+<h3 style="margin-top:0">📐 Спроектировано, не реализовано</h3>
+<ul>
+<li><b>Редактор рецепта.</b> Раздел 10.8. Шаг 37. Внутри — split button «Сохранить | ▾» (левая часть сохраняет в текущую версию, правая открывает список: «Сохранить как новую версию»).</li>
+<li><b>Версии рецепта.</b> Раздел 10.6. Шаг 38.</li>
+<li><b>Таймеры.</b> Раздел 10.7. Шаг 38.</li>
+<li><b>Структура рецепта</b> — спроектирована, см. раздел 17.0. Все характеристики, связи, правила.</li>
+<li><b>База продуктов</b> — спроектирована, см. раздел 17.0.b. Две базы: готовая (в коде) + своя (IndexedDB, таблица <code>products</code>). 19 групп. Единицы измерения. Действия с продуктами. <b>Частично сделана — шаг 36.</b> Подшаги 36.0–36.5 закрыты (файл данных, storage.js функции, пикер, форма продукта: каркас, основные поля, КБЖУ и единицы). Осталось: 36.6–36.10.</li>
+<li><b>Шторка FAB ➕</b> — спроектирована, см. раздел 7.5. ➕ открывает шторку с выбором: Добавить рецепт / Создать продукт / (на Кладовой — Добавить в кладовую).</li>
+<li><b>Хранилище</b> — всё живёт в IndexedDB, 9 таблиц. См. раздел 17.0.c. <b>Сделано.</b></li>
+<li><b>storage.js</b> — все операции через один файл. ~51 функция. Не работать с IndexedDB напрямую. См. раздел 17.0.d. <b>Готовы: ядро, рецепты, отметки, теги, продукты. Остальное — заглушки.</b></li>
+<li><b>Защита данных</b> — автосохранение + бэкап в ZIP с напоминанием раз в 3–4 дня. См. раздел 17.0.e. Шаг 40.</li>
+<li><b>Перенос 150 рецептов</b> — вручную через редактор, когда код готов. Девять демо — <b>уже переехали</b> (шаг 34.1). См. раздел 17.0.f.</li>
+</ul>
+</div>
+</div>
+
+<div class="box warn">
+<h3 style="margin-top:0">🔄 Открытые вопросы</h3>
+<ul>
+<li>FAB на разных экранах — будут отличаться.</li>
+<li>Содержание / Поиск / Фильтр / Случайный по экранам — свой набор.</li>
+<li><b>Смена устройства готовки и корзина</b> (в маленькой карточке). Что происходит с ингредиентами и корзиной при смене устройства.</li>
+<li><b>Округление штучных продуктов</b> (яйца, бананы, «1/2 шт.» при смене порций).</li>
+</ul>
+</div>
+
+<div class="box note">
+<h3 style="margin-top:0">✅ Закрыто в v10</h3>
+<ul>
+<li>Фон в макете (вариант А).</li>
+<li>Фикс размеров панели (900 / до 96vh) и макета (400 / пропорции окна).</li>
+<li>Ужатие всех элементов макета под низкое окно ПК.</li>
+<li>Прижатие нижней полоски макета к низу.</li>
+<li>4.3 — кнопка «Применить».</li>
+<li>5 — окошко «Применить к…».</li>
+<li>Редактор позиции поверх панели (часть подшага 7).</li>
+<li>6 — режим предпросмотра на телефоне, плашка [Применить] [Вернуться].</li>
+</ul>
+</div>
+
+<div class="box done">
+<h3 style="margin-top:0">✅ Закрыто в v11 (вечер, 11 октября 2026)</h3>
+<ul>
+<li><b>Шаг 33:</b> 9 демо-рецептов из HTML → объекты → <code>render.js</code>. Статичные карточки удалены из <code>index.html</code>, секции стали пустыми контейнерами.</li>
+<li><b>Шаг 34.1:</b> демо-рецепты в IndexedDB через <code>seedDemoRecipes()</code>, флаг <code>demoSeeded</code>. Появился <code>getAllRecipes</code>.</li>
+<li><b>Шаг 34.2:</b> <code>saveRecipe</code>, <code>getRecipe</code>, <code>deleteRecipe</code>, <code>nextRecipeId</code>.</li>
+<li><b>Шаг 34.3:</b> отметки — <code>addMark</code>, <code>removeMark</code>, <code>getMarks</code>, <code>isMarked</code>, <code>getAllMarks</code>, <code>clearMarks</code>.</li>
+<li><b>Шаг 34.4:</b> теги — <code>saveTag</code>, <code>getAllTags</code>, <code>deleteTag</code>, <code>getAllTagsMerged</code>. Создан <code>tags-base.js</code> — 58 базовых тегов.</li>
+<li><b>Файл <code>demo-recipes.js</code></b> создавался на время, потом удалён (данные внутри <code>storage.js</code>).</li>
+</ul>
+</div>
+
+<div class="box note">
+<h3 style="margin-top:0">📐 Что ждёт в шаге 37+ (большая карточка — продолжение)</h3>
+<ul>
+<li><b>✎ Редактор рецепта</b> (раздел 10.8). Модалка поверх большой карточки. Поля: название, фото, теги, КБЖУ, ингредиенты, шаги, устройство, заметка, приём пищи. Внизу — <b>split button</b> <code>[Отмена] [Сохранить | ▾]</code>. «▾» → «Сохранить как новую версию» (с полем «Название версии»).</li>
+<li><b>🕐 Версии</b> (раздел 10.6). Модалка списка версий поверх большой карточки. Долгий тап → «Удалить». Удаление последней версии = удаление рецепта.</li>
+<li><b>⏱ Таймер</b> (раздел 10.7). Модалка с выпадающим списком шагов, полем времени, тумблером звука, списком активных таймеров этого рецепта. Уведомление при истечении + звук 10 сек + «Остановить звук».</li>
+<li><b>🏷 Модалка тегов</b> (раздел 10.9). Строка поиска, 16 групп, создание нового тега.</li>
+<li><b>🛒 Купить</b> — реальная корзина (когда будет кладовая).</li>
+<li><b>📅 Сохранить в план</b> — вкладки (когда будет план).</li>
+<li><b>Кнопки в ⋯</b>: Поделиться (реальная ссылка), Копировать текст, Печать (системный диалог), Удалить (с подтверждением).</li>
+<li><b>Галерея фото</b> — когда у рецептов появятся фото.</li>
+<li><b>Маленькая карточка</b> — привести к карте: 4 иконки на фото (убрать ⏱), 4 кнопки внизу (🛒 ⏱ ✎ 🕐). Отдельный шаг.</li>
+<li><b>Шторка FAB ➕</b> — переделать в dropdown.</li>
+</ul>
+</div>
+
+<div class="box done">
+<h3 style="margin-top:0">✅ Закрыто в шаге 35 (11 октября 2026, поздно вечером)</h3>
+<ul>
+<li><b>35.1 — каркас + верх + тело:</b> создан <code>app/js/card-big.js</code>, HTML-контейнер <code>&lt;div id="modalRecipe"&gt;</code>, открытие кликом по названию/фото, закрытие (крестик/фон/Escape), фото-градиент, бейдж, 4 иконки + ✕, название, теги + ✎, КБЖУ, ингредиенты, шаги, устройство, заметка.</li>
+<li><b>35.2.1 — формат чисел и порции:</b> <code>formatAmount</code> переведён на запятую, порции −/+ со стартовым 4, пересчёт ингредиентов.</li>
+<li><b>35.2.2 — чекбоксы и 🧹:</b> клик по кружку ставит галочку, хранится в IndexedDB (тип <code>ingredient</code>), кнопка 🧹 чистит только галочки.</li>
+<li><b>Сохранение порций:</b> тип <code>portions</code> в marks. Стартовое 4, клик по числу — сброс. Эталонное значение у каждого рецепта своё.</li>
+<li><b>35.2.3 — нижние кнопки:</b> <code>[🛒 N] [⏱] [✎ Изменить] [⋯]</code>. 🛒 залита акцентом. 🕐 показывается только если версий &gt; 1. ⋯ открывает dropdown вверх.</li>
+<li><b>Dropdown «В план»</b> вместо шторки. Галочки, не закрывается при клике, закрывается вне/Escape.</li>
+<li><b>Дизайн карточки:</b> телефон — 100vh на весь экран. ПК — 760px, 85vh. Фото закреплено сверху, кнопки снизу, скроллится только тело. Скруглённые все 4 угла, тонкий скроллбар.</li>
+<li><b>Восстановлен массив <code>demoRecipes</code></b> в <code>storage.js</code> — был потерян при разрезании index.html.</li>
+</ul>
+</div>
+
+<div class="box done">
+<h3 style="margin-top:0">✅ Закрыто 12 октября 2026 (v12)</h3>
+<ul>
+<li><b>Файл <code>products-base.js</code></b> — готовая база продуктов: 19 групп + 309 продуктов с КБЖУ на 100 г. Подключён в <code>index.html</code> перед <code>storage.js</code>.</li>
+<li><b>storage.js — 11 функций продуктов.</b> Готовая база (в коде) читается через <code>getBaseProducts()</code>, своя (IndexedDB, таблица <code>products</code>) — через <code>getAllProducts()</code>. Объединённый поиск — <code>searchProducts()</code>. При чтении готовой базы каждому продукту приписывается <code>source: 'base'</code>. Своим — <code>source: 'own'</code>. Больше не надо проверять «есть поле или нет».</li>
+<li><b><code>product-picker.js</code> — модалка «База продуктов».</b> Поиск, группировка по 19 группам, количество в каждой группе, сворачивание/разворачивание групп (состояние помнится), крестик-очистка внутри поля поиска, кнопка «+» рядом с поиском для создания нового продукта, закрытие (крестик/фон/Escape), возврат из формы. Стиль подтягивается с активного экрана (пикер выглядит как текущая вкладка сайта).</li>
+<li><b><code>product-form.js</code> — форма продукта.</b>
+  <ul>
+    <li><b>4.1 Каркас:</b> заголовок «Новый продукт» / «Редактировать продукт», крестик, кнопки [Отмена][Сохранить], возврат в пикер при закрытии.</li>
+    <li><b>4.2 Основные поля:</b> Название (обязательное), Короткое название, Марка, Группа (обязательное, пустая по умолчанию — не «Молочные»). Валидация: кнопка «Сохранить» полупрозрачная + клик показывает красную подсказку «Заполните: …» над кнопками + невалидные поля подсвечиваются красной рамкой + курсор в первое невалидное.</li>
+    <li><b>4.3 КБЖУ и единицы:</b> 4 поля КБЖУ в ряд (пустые по умолчанию, не 0; placeholder бледнее). Единицы — 3 кнопки г/мл/шт. Условные поля: «Вес 1 шт» (при шт, обязательное), «Плотность» (при мл, по умолчанию 1) + галочка «У меня КБЖУ на 100 мл». Валидация КБЖУ и веса.</li>
+  </ul>
+</li>
+<li><b>Урок — выделение текста мышкой.</b> Клик по тёмному фону закрывал модалку, если отпустить мышь за пределами поля во время выделения. Переделали на <code>mousedown</code>+<code>mouseup</code>: закрываем, только если и нажатие, и отпускание были на фоне. Правка внесена в три файла — <code>product-form.js</code>, <code>product-picker.js</code>, <code>card-big.js</code>.</li>
+</ul>
+<b>Z-index (обновлено):</b> пикер — 100006, форма продукта — 100007, заглушки (#modalSoon, #modalRecipeTimer) — 100010 !important.
+</div>
+
+<div class="box">
+<h3 style="margin-top:0">⏳ Что дальше (продолжаем с 4.4)</h3>
+<p><b>Следующий подшаг — 4.4: сохранение продукта в IndexedDB.</b></p>
+<ul>
+<li>Кнопка «Сохранить» вызывает <code>Storage.saveProduct()</code>.</li>
+<li>Обработка полей: короткое название = длинному, если пусто; при галочке «КБЖУ на 100 мл» — пересчёт на 100 г через плотность; очистка неиспользуемых полей (density если не мл, weightPerPiece если не шт).</li>
+<li>После сохранения — колбэк <code>onSaved</code> в пикер.</li>
+</ul>
+<p><b>Открытый вопрос на 4.4 — поведение после сохранения.</b> Обсудили, но не решили:</p>
+<ul>
+<li><b>Вариант 1</b> — форма закрывается, пикер закрывается, продукт уходит «наружу» через колбэк. Меньше кликов. (Моё предложение.)</li>
+<li><b>Вариант 2</b> — форма закрывается, пикер возвращается, продукт виден в «⭐ Мои продукты». Нагляднее, но лишний клик.</li>
+</ul>
+<p><b>Дальше — подшаги 4.5 … 4.9:</b></p>
+<ul>
+<li><b>4.5</b> — режим редактирования существующего продукта.</li>
+<li><b>4.6</b> — проверка на дубликаты при сохранении.</li>
+<li><b>4.7</b> — открытие формы из пикера с автовыбором после сохранения.</li>
+<li><b>4.8</b> — подключение из FAB ➕ → «Создать продукт».</li>
+<li><b>4.9</b> — фото продукта. Отложено вместе с фото рецептов.</li>
+</ul>
+<p><b>После 4.x — редактор рецепта (шаг 37 карты).</b> Раздел 10.8. Внутри: модалка редактирования поверх большой карточки, split button <code>[Отмена] [Сохранить | ▾]</code>, поля (название, фото, теги, КБЖУ, ингредиенты, шаги, устройство, заметка, приём пищи). Ингредиенты — с кнопкой 🔍 для выбора из базы продуктов.</p>
+</div>
+
+<div class="footer">
+<p><b>Копилка рецептов · Карта v12 · 12 октября 2026</b></p>
+<p>Единый документ. Заменяет карту v11.</p>
+<p>Шаг 35 (большая карточка — MVP) закрыт. База продуктов: подшаги 1–4.3 сделаны. Следующее — 4.4 (сохранение в IndexedDB).</p>
+</div>
+
+</div>
+</body>
+</html>

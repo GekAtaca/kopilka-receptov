@@ -276,9 +276,14 @@ function updatePortions(){
 }
 
 // ─── Клик по фону — закрыть ───
-modalRecipe.addEventListener('click', (e) => {
-  if (e.target === modalRecipe) closeRecipeCard();
-});
+  let backdropDownRecipe = false;
+  modalRecipe.addEventListener('mousedown', (e) => {
+    backdropDownRecipe = (e.target === modalRecipe);
+  });
+  modalRecipe.addEventListener('mouseup', (e) => {
+    if (backdropDownRecipe && e.target === modalRecipe) closeRecipeCard();
+    backdropDownRecipe = false;
+  });
 
 // ─── Делегирование кликов внутри карточки ───
 modalRecipeBox.addEventListener('click', async (e) => {
