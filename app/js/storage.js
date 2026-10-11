@@ -291,6 +291,56 @@
     await reqPromise(tx('marks','readwrite').clear());
   }
 
+    // ═══════════════════════════════════════════════════
+  // Теги. Свои — в settings (ключ 'tags').
+  // Базовые — в tags-base.js, в коде.
+  // ID: свои tag-NNN, базовые btag-NNN.
+  // ═══════════════════════════════════════════════════
+
+  async function getAllTags(){
+    if (!available) return [];
+    const v = await getSetting('tags');
+    return Array.isArray(v) ? v : [];
+  }
+
+  async function saveTag(tag){
+    if (!available || !tag || !tag.name) return null;
+    const all = await getAllTags();
+    const t = { ...tag };
+    if (!t.id) t.id = nextTagIdFrom(all);
+    if (!t.at) t.at = Date.now();
+    const idx = all.findIndex(x => x.id === t.id);
+    if (idx >= 0) all[idx] = t;
+    else all.push(t);
+    await saveSetting('tags', all);
+    return t;
+  }
+
+  async function deleteTag(id){
+    if (!available || !id) return;
+    const all = await getAllTags();
+    await saveSetting('tags', all.filter(t => t.id !== id));
+  }
+
+  function nextTagIdFrom(all){
+    let max = 0;
+    for (const t of all){
+      const m = /^tag-(\d+)$/.exec(t.id || '');
+      if (m){
+        const n = parseInt(m[1], 10);
+        if (n > max) max = n;
+      }
+    }
+    return 'tag-' + String(max + 1).padStart(3, '0');
+  }
+
+  // Свои + базовые одним списком. Базовые — из tags-base.js.
+  async function getAllTagsMerged(){
+    const own = await getAllTags();
+    const base = (typeof BASE_TAGS !== 'undefined' && Array.isArray(BASE_TAGS)) ? BASE_TAGS : [];
+    return [...own, ...base];
+  }
+
   
   async function getStats(){
     if (!available) return { recipes: 0, products: 0 };
@@ -379,10 +429,11 @@
     getActiveTimers:          stub('getActiveTimers', []),
     getTimersForRecipe:       stub('getTimersForRecipe', []),
 
-    // ── теги ──
-    saveTag:                  stub('saveTag'),
-    getAllTags:               stub('getAllTags', []),
-    deleteTag:                stub('deleteTag'),
+     // ── теги ──
+    saveTag,
+    getAllTags,
+    deleteTag,
+    getAllTagsMerged,
 
     // ── фото ──
     savePhoto:                stub('savePhoto'),
