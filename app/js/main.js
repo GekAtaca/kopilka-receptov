@@ -23,8 +23,11 @@ async function boot(){
   await loadSharedFromStorage();
   const savedScreen = await Storage.getSetting('activeScreen');
 
-  // 4. Запустить интерфейс
+   // 4. Запустить интерфейс
   initScreens(savedScreen);
+
+  // 5. Отрисовать все рецепты на Главной
+  renderAllRecipes();
 }
 
 if (document.readyState === 'loading'){
