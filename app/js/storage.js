@@ -210,6 +210,88 @@
   // Статистика (для «О программе»)
   // ═══════════════════════════════════════════════════
 
+    // ═══════════════════════════════════════════════════
+  // Отметки (❤ 👨🍳 🔖 📅)
+  // ═══════════════════════════════════════════════════
+  //
+  // Ключ записи: type:recipeId[:extra]
+  //   favorite:recipe-001
+  //   cooked:recipe-004
+  //   want:recipe-002
+  //   plan:recipe-006:family
+  //   plan:recipe-006:child
+  //
+  // Один рецепт может быть в нескольких вкладках плана —
+  // это разные записи (разный extra).
+
+  async function addMark(type, recipeId, extra){
+    if (!available || !type || !recipeId) return null;
+    const id = type + ':' + recipeId + (extra ? ':' + extra : '');
+    const mark = {
+      id,
+      type,
+      recipeId,
+      extra: extra || null,
+      at: Date.now()
+    };
+    await reqPromise(tx('marks','readwrite').put(mark));
+    return mark;
+  }
+
+  async function removeMark(type, recipeId, extra){
+    if (!available || !type || !recipeId) return;
+    if (extra !== undefined && extra !== null){
+      const id = type + ':' + recipeId + ':' + extra;
+      await reqPromise(tx('marks','readwrite').delete(id));
+      return;
+    }
+    // Без extra — удаляем все записи этого типа и рецепта
+    const all = await reqPromise(tx('marks','readonly').getAll());
+    for (const m of all){
+      if (m.type === type && m.recipeId === recipeId){
+        await reqPromise(tx('marks','readwrite').delete(m.id));
+      }
+    }
+  }
+
+  async function getMarks(type){
+    if (!available || !type) return [];
+    const all = await reqPromise(tx('marks','readonly').getAll());
+    return all.filter(m => m.type === type);
+  }
+
+  async function isMarked(type, recipeId){
+    if (!available || !type || !recipeId) return false;
+    const all = await reqPromise(tx('marks','readonly').getAll());
+    return all.some(m => m.type === type && m.recipeId === recipeId);
+  }
+
+  async function getAllMarks(){
+    if (!available) return { favorite: [], cooked: [], want: [], plan: [] };
+    const all = await reqPromise(tx('marks','readonly').getAll());
+    return {
+      favorite: all.filter(m => m.type === 'favorite'),
+      cooked:   all.filter(m => m.type === 'cooked'),
+      want:     all.filter(m => m.type === 'want'),
+      plan:     all.filter(m => m.type === 'plan')
+    };
+  }
+
+  async function clearMarks(type){
+    if (!available) return;
+    if (type){
+      const all = await reqPromise(tx('marks','readonly').getAll());
+      for (const m of all){
+        if (m.type === type){
+          await reqPromise(tx('marks','readwrite').delete(m.id));
+        }
+      }
+      return;
+    }
+    await reqPromise(tx('marks','readwrite').clear());
+  }
+
+  
   async function getStats(){
     if (!available) return { recipes: 0, products: 0 };
     const recipes  = await reqPromise(tx('recipes','readonly').count());
@@ -282,12 +364,12 @@
     clearShopping:            stub('clearShopping'),
 
     // ── отметки ──
-    addMark:                  stub('addMark'),
-    removeMark:               stub('removeMark'),
-    getMarks:                 stub('getMarks', []),
-    isMarked:                 stub('isMarked', false),
-    getAllMarks:              stub('getAllMarks', {}),
-    clearMarks:               stub('clearMarks'),
+    addMark,
+    removeMark,
+    getMarks,
+    isMarked,
+    getAllMarks,
+    clearMarks,
 
     // ── таймеры ──
     saveTimer:                stub('saveTimer'),
