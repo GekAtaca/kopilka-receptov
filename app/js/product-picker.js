@@ -181,8 +181,10 @@
       closeProductPicker();
       if (typeof openProductForm === 'function'){
         openProductForm({
-          onSaved: (product) => {
-            if (product && cb) cb(product);
+          onSaved: () => {
+            // После создания продукт остаётся в списке «Мои продукты».
+            // Наружу не отдаём — пусть пользователь сам решит, выбирать его или нет.
+            // Разделение поведения (сразу в рецепт / остаться в списке) — на шаге 4.7.
           },
           onClose: () => {
             openProductPicker({ onSelect: cb });

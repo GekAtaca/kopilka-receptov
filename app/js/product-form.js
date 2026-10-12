@@ -286,18 +286,79 @@
     return false;
   }
 
+    // ─── Округлить до 1 знака ───
+  function round1(n){
+    if (typeof n !== 'number' || isNaN(n)) return n;
+    return Math.round(n * 10) / 10;
+  }
+
+  // ─── Сохранить продукт в IndexedDB ───
+  async function saveProductFromForm(){
+    // Если галочка «КБЖУ на 100 мл» — плотность обязательна.
+    if (draft.unit === 'мл' && draft.kbzhuOn100ml){
+      if (!draft.density || draft.density <= 0){
+        const dEl = box.querySelector('[data-field="density"]');
+        if (dEl) dEl.classList.add('pf-invalid');
+        showError('Укажите плотность, чтобы пересчитать КБЖУ');
+        if (dEl) dEl.focus();
+        return;
+      }
+    }
+
+    // Собираем объект.
+    const p = { ...draft };
+
+    // Короткое имя = длинному, если пусто.
+    if (!p.shortName || !p.shortName.trim()){
+      p.shortName = p.name;
+    }
+
+    // Пересчёт из «на 100 мл» в «на 100 г».
+    if (p.unit === 'мл' && p.kbzhuOn100ml){
+      p.kbzhuMl = {
+        kcal:    p.kcal,
+        protein: p.protein,
+        fat:     p.fat,
+        carbs:   p.carbs
+      };
+      p.kcal    = round1(p.kcal    / p.density);
+      p.protein = round1(p.protein / p.density);
+      p.fat     = round1(p.fat     / p.density);
+      p.carbs   = round1(p.carbs   / p.density);
+    } else {
+      p.kbzhuOn100ml = false;
+    }
+
+    // Чистим неиспользуемые поля.
+    if (p.unit !== 'мл'){
+      p.kbzhuOn100ml = false;
+      delete p.kbzhuMl;
+      delete p.density;
+    }
+    if (p.unit !== 'шт'){
+      delete p.weightPerPiece;
+    }
+
+    // Сохраняем.
+    try {
+      const saved = await Storage.saveProduct(p);
+      if (onSavedCb) onSavedCb(saved);
+      closeProductForm();
+    } catch(err){
+      console.error('[product-form] Ошибка сохранения:', err);
+      showError('Не удалось сохранить. Попробуй ещё раз.');
+    }
+  }
+
   // ─── Клики внутри формы ───
   box.addEventListener('click', (e) => {
     if (e.target.closest('[data-pf-close]') || e.target.closest('[data-pf-cancel]')){
       closeProductForm();
       return;
     }
-     if (e.target.closest('[data-pf-save]')){
+      if (e.target.closest('[data-pf-save]')){
       if (!validateAndReport()) return;
-      // Пока — заглушка. В 4.4 здесь будет реальное сохранение.
-      if (typeof openSoon === 'function'){
-        openSoon('💾 Сохранить', 'Сохранение появится в подшаге 4.4.');
-      }
+      saveProductFromForm();
       return;
     }
   });
