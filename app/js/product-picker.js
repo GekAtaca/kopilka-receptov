@@ -24,10 +24,23 @@
     excludeIds = new Set(Array.isArray(options.excludeIds) ? options.excludeIds : []);
      currentQuery = '';
     collapsed.clear();
-    // По умолчанию все базовые группы свёрнуты
-    if (typeof PRODUCT_GROUPS !== 'undefined' && Array.isArray(PRODUCT_GROUPS)){
-      for (const g of PRODUCT_GROUPS){
-        collapsed.add('base:' + g.code);
+
+    // Пробуем загрузить сохранённое состояние свёрнутости
+    let savedCollapsed = null;
+    if (typeof Storage !== 'undefined' && Storage.getSetting){
+      try { savedCollapsed = await Storage.getSetting('productPickerCollapsed'); }
+      catch(e){ savedCollapsed = null; }
+    }
+
+    if (Array.isArray(savedCollapsed)){
+      // Первый запуск после появления этого кода: сохраняем то, что было
+      for (const k of savedCollapsed) collapsed.add(k);
+    } else {
+      // Совсем первый раз — все базовые группы свёрнуты
+      if (typeof PRODUCT_GROUPS !== 'undefined' && Array.isArray(PRODUCT_GROUPS)){
+        for (const g of PRODUCT_GROUPS){
+          collapsed.add('base:' + g.code);
+        }
       }
     }
 
@@ -66,11 +79,12 @@
         <span class="pp-title">База продуктов</span>
         <button type="button" class="pp-close" data-pp-close>✕</button>
       </div>
-       <div class="pp-search-row">
+      <div class="pp-search-row">
         <div class="pp-search-wrap">
           <input type="text" class="pp-search" placeholder="Поиск по названию..." value="${escapeHtml(currentQuery)}">
           <button type="button" class="pp-search-clear" data-pp-clear title="Очистить">✕</button>
         </div>
+        <button type="button" class="pp-toggle-all" data-pp-toggle-all title="Развернуть всё">⇕</button>
         <button type="button" class="pp-add" data-pp-add title="Создать новый продукт">+</button>
       </div>
       <div class="pp-list" id="ppList"></div>
@@ -81,11 +95,13 @@
       currentQuery = e.target.value;
       updateClearVisibility();
       renderList();
+      updateToggleAllButton();
     });
     setTimeout(() => searchInput.focus(), 50);
 
-    updateClearVisibility();
+     updateClearVisibility();
     renderList();
+    updateToggleAllButton();
   }
 
    // ─── Отрисовать список ───
@@ -137,6 +153,66 @@
   function checkCollapsed(key){
     if (currentQuery.trim()) return false;
     return collapsed.has(key);
+  }
+
+    // ─── Все возможные ключи групп (для toggle-all) ───
+  function getAllGroupKeys(){
+    const keys = ['own-root'];
+    if (typeof PRODUCT_GROUPS !== 'undefined' && Array.isArray(PRODUCT_GROUPS)){
+      for (const g of PRODUCT_GROUPS){
+        keys.push('own:' + g.code);
+        keys.push('base:' + g.code);
+      }
+    }
+    return keys;
+  }
+
+  // ─── Есть ли хоть одна развёрнутая группа ───
+  function hasExpanded(){
+    if (!collapsed.has('own-root')) return true;
+    if (typeof PRODUCT_GROUPS === 'undefined') return false;
+    for (const g of PRODUCT_GROUPS){
+      if (!collapsed.has('base:' + g.code)) return true;
+    }
+    return false;
+  }
+
+  // ─── Сохранить состояние свёрнутости в IndexedDB ───
+  async function saveCollapsed(){
+    if (typeof Storage === 'undefined' || !Storage.saveSetting) return;
+    try {
+      await Storage.saveSetting('productPickerCollapsed', [...collapsed]);
+    } catch(e){
+      console.warn('[picker] Не сохранилось состояние свёрнутости', e);
+    }
+  }
+
+  // ─── Обновить иконку и title кнопки «развернуть/свернуть всё» ───
+  function updateToggleAllButton(){
+    const btn = box.querySelector('[data-pp-toggle-all]');
+    if (!btn) return;
+    // При активном поиске кнопка не нужна — поиск всё равно всё раскрывает
+    if (currentQuery.trim()){
+      btn.style.display = 'none';
+      return;
+    }
+    btn.style.display = '';
+    const expanded = hasExpanded();
+    btn.textContent = expanded ? '⇧' : '⇕';
+    btn.title = expanded ? 'Свернуть всё' : 'Развернуть всё';
+  }
+
+  // ─── Toggle: свернуть всё / развернуть всё ───
+  function toggleAll(){
+    const keys = getAllGroupKeys();
+    if (hasExpanded()){
+      for (const k of keys) collapsed.add(k);
+    } else {
+      collapsed.clear();
+    }
+    saveCollapsed();
+    renderList();
+    updateToggleAllButton();
   }
 
   function groupHtml(title, items, key, isSub){
@@ -222,6 +298,7 @@
       currentQuery = '';
       updateClearVisibility();
       renderList();
+      updateToggleAllButton();
       input.focus();
       return;
     }
@@ -244,14 +321,22 @@
       }
       return;
     }
+   // Кнопка «развернуть / свернуть всё»
+    if (e.target.closest('[data-pp-toggle-all]')){
+      toggleAll();
+      return;
+    }
+
    // Клик по заголовку группы — свернуть / развернуть
     const head = e.target.closest('.pp-group-head');
     if (head){
       const groupEl = head.closest('.pp-group');
-      const title = groupEl.dataset.group;
-      if (collapsed.has(title)) collapsed.delete(title);
-      else                      collapsed.add(title);
+      const key = groupEl.dataset.group;
+      if (collapsed.has(key)) collapsed.delete(key);
+      else                    collapsed.add(key);
       groupEl.classList.toggle('collapsed');
+      saveCollapsed();
+      updateToggleAllButton();
       return;
     }
     const item = e.target.closest('.pp-item');

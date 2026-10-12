@@ -1578,6 +1578,23 @@ body[data-theme="dark"] .screen-stub{
 }
 .pp-add:hover{filter:brightness(1.05);}
 
+.pp-toggle-all{
+  width:38px;height:38px;border-radius:10px;
+  border:1px solid var(--c3);
+  background:var(--c2);
+  color:var(--c4);
+  font-size:18px;font-weight:700;line-height:1;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
+  flex-shrink:0;
+  transition:filter .15s;
+}
+.pp-toggle-all:hover{ filter:brightness(1.05); }
+body[data-theme="dark"] .pp-toggle-all{
+  background:color-mix(in srgb, var(--c1) 15%, var(--c4) 85%);
+  border-color:var(--c2);
+  color:#fff;
+}
 
 .pp-search-clear{
   position:absolute;
