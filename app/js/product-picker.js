@@ -15,7 +15,8 @@
   let excludeIds   = new Set();
   let currentQuery = '';
   let allOwn       = [];   // свои продукты, загружаются при открытии
-  let collapsed    = new Set();  // свёрнутые группы (по названию)
+  let collapsed    = new Set();  // свёрнутые группы (по ключу)
+  let currentSort  = 'new-first'; // текущая сортировка «Моих»
 
   // ─── Открыть ───
   async function openProductPicker(options){
@@ -57,6 +58,18 @@
     allOwn = (typeof Storage !== 'undefined' && Storage.getAllProducts)
       ? await Storage.getAllProducts()
       : [];
+
+    // Сортировка «Моих» — из IndexedDB. По умолчанию — «Сначала новые»
+    let savedSort = null;
+    if (typeof Storage !== 'undefined' && Storage.getSetting){
+      try { savedSort = await Storage.getSetting('productSort'); }
+      catch(e){ savedSort = null; }
+    }
+    currentSort = (savedSort === 'new-first'
+                || savedSort === 'old-first'
+                || savedSort === 'az'
+                || savedSort === 'za')
+      ? savedSort : 'new-first';
 
     modal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
@@ -102,6 +115,14 @@
      updateClearVisibility();
     renderList();
     updateToggleAllButton();
+
+    // При скролле списка и ресайзе окна — закрывать открытый dropdown,
+    // потому что он position:fixed и «отвяжется» от кнопки.
+    const listEl = box.querySelector('#ppList');
+    if (listEl){
+      listEl.addEventListener('scroll', closeSortDropdowns, { passive: true });
+    }
+    window.addEventListener('resize', closeSortDropdowns);
   }
 
    // ─── Отрисовать список ───
@@ -115,11 +136,12 @@
       (p.name || '').toLowerCase().includes(q) ||
       (p.shortName || '').toLowerCase().includes(q);
 
-    // Свои: фильтр + сортировка «сначала новые»
-    const own = allOwn
-      .filter(p => !excludeIds.has(p.id))
-      .filter(match)
-      .sort((a,b) => (b.createdAt || 0) - (a.createdAt || 0));
+    // Свои: фильтр + сортировка по текущему выбору
+    const own = sortProducts(
+      allOwn
+        .filter(p => !excludeIds.has(p.id))
+        .filter(match)
+    );
 
     const base = (typeof BASE_PRODUCTS !== 'undefined' ? BASE_PRODUCTS : [])
       .filter(p => !excludeIds.has(p.id))
@@ -153,6 +175,100 @@
   function checkCollapsed(key){
     if (currentQuery.trim()) return false;
     return collapsed.has(key);
+  }
+    // ─── Сортировка «Моих» ───
+  function sortProducts(arr){
+    const a = arr.slice();
+    switch (currentSort){
+      case 'new-first':
+        return a.sort((x,y) => (y.createdAt || 0) - (x.createdAt || 0));
+      case 'old-first':
+        return a.sort((x,y) => (x.createdAt || 0) - (y.createdAt || 0));
+      case 'az':
+        return a.sort((x,y) =>
+          (x.shortName || x.name || '').localeCompare(
+            y.shortName || y.name || '', 'ru')
+        );
+      case 'za':
+        return a.sort((x,y) =>
+          (y.shortName || y.name || '').localeCompare(
+            x.shortName || x.name || '', 'ru')
+        );
+      default:
+        return a;
+    }
+  }
+
+  // ─── Сохранить сортировку ───
+  async function saveSort(){
+    if (typeof Storage === 'undefined' || !Storage.saveSetting) return;
+    try { await Storage.saveSetting('productSort', currentSort); }
+    catch(e){ console.warn('[picker] Не сохранилась сортировка', e); }
+  }
+
+  // ─── Сменить сортировку и перерисовать ───
+  function changeSort(newSort){
+    const same = newSort === currentSort;
+    currentSort = newSort;
+    if (!same) saveSort();
+    renderList();
+    updateToggleAllButton();
+  }
+
+  // ─── Собрать разметку пункта dropdown сортировки ───
+  function sortItemHtml(value, icon, label){
+    const active = currentSort === value;
+    return `
+      <div class="pp-sort-item${active ? ' active' : ''}" data-sort="${value}">
+        <span class="pp-sort-check">${active ? '✓' : ''}</span>
+        <span>${icon} ${label}</span>
+      </div>
+    `;
+  }
+
+  // ─── Собрать dropdown сортировки целиком ───
+  function sortDropdownHtml(){
+    return `
+      <div class="pp-sort-dropdown" data-pp-sort-dropdown>
+        ${sortItemHtml('new-first', '🕐', 'Сначала новые')}
+        ${sortItemHtml('old-first', '🕐', 'Сначала старые')}
+        ${sortItemHtml('az',        '🔤', 'А → Я')}
+        ${sortItemHtml('za',        '🔤', 'Я → А')}
+      </div>
+    `;
+  }
+    // ─── Показать и спозиционировать dropdown у кнопки ≡ ───
+  function positionSortDropdown(btn, drop){
+    // Сначала показать, чтобы измерить размеры
+    drop.style.visibility = 'hidden';
+    drop.classList.add('open');
+    const r  = btn.getBoundingClientRect();
+    const dh = drop.offsetHeight;
+    const dw = drop.offsetWidth;
+
+    // Вверх от кнопки, а если сверху не влезает — вниз
+    let top = r.top - dh - 6;
+    if (top < 6) top = r.bottom + 6;
+
+    // Выровнять по левому краю кнопки, не вылезая за правый край окна
+    let left = r.left;
+    if (left + dw > window.innerWidth - 6){
+      left = window.innerWidth - dw - 6;
+    }
+    if (left < 6) left = 6;
+
+    drop.style.top  = top  + 'px';
+    drop.style.left = left + 'px';
+    drop.style.visibility = '';
+  }
+
+  // ─── Закрыть все открытые dropdown сортировки ───
+  function closeSortDropdowns(){
+    box.querySelectorAll('.pp-sort-dropdown.open').forEach(d => {
+      d.classList.remove('open');
+      d.style.top = '';
+      d.style.left = '';
+    });
   }
 
     // ─── Все возможные ключи групп (для toggle-all) ───
@@ -256,16 +372,19 @@
       ? subs.join('')
       : '<div class="pp-own-empty">Пока пусто</div>';
 
-    const rootKey = 'own-root';
+        const rootKey = 'own-root';
     const isCollapsed = checkCollapsed(rootKey);
+    const showTools = own.length > 0; // кнопки прячем, если «Мои» пусты
     return `
       <div class="pp-group pp-group-root${isCollapsed ? ' collapsed' : ''}" data-group="${escapeHtml(rootKey)}">
         <div class="pp-group-head">
           <span class="pp-group-name">⭐ Мои продукты</span>
           <span class="pp-group-right">
+            ${showTools ? '<button type="button" class="pp-sort-btn" data-pp-sort title="Сортировка">≡</button>' : ''}
             <span class="pp-group-count">${own.length}</span>
             <span class="pp-group-arrow">▼</span>
           </span>
+          ${showTools ? sortDropdownHtml() : ''}
         </div>
         <div class="pp-group-list pp-own-inner">
           ${inner}
@@ -321,6 +440,35 @@
       }
       return;
     }
+     // Клик по кнопке ≡ — открыть/закрыть dropdown сортировки
+    if (e.target.closest('[data-pp-sort]')){
+      const btn = e.target.closest('[data-pp-sort]');
+      const drop = btn.closest('.pp-group-head').querySelector('.pp-sort-dropdown');
+      if (!drop) return;
+      if (drop.classList.contains('open')){
+        closeSortDropdowns();
+      } else {
+        closeSortDropdowns();
+        positionSortDropdown(btn, drop);
+      }
+      return;
+    }
+
+   // Клик по пункту dropdown — сменить сортировку
+    const sortItem = e.target.closest('[data-sort]');
+    if (sortItem){
+      changeSort(sortItem.dataset.sort);
+      return;
+    }
+
+   // Клик внутри открытого dropdown (но не по пункту) — не закрывать и не сворачивать
+    if (e.target.closest('.pp-sort-dropdown')){
+      return;
+    }
+
+   // Клик вне dropdown и вне кнопки — закрыть открытый dropdown
+    closeSortDropdowns();
+
    // Кнопка «развернуть / свернуть всё»
     if (e.target.closest('[data-pp-toggle-all]')){
       toggleAll();
