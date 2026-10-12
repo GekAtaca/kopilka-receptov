@@ -1648,6 +1648,44 @@ pp-group-name{font-family:'Nunito',sans-serif;font-style:normal;}
 }
 .pp-group-list{list-style:none;padding:0;margin:0;}
 
+/* ⭐ Мои продукты — корневая группа */
+.pp-group-root{
+  margin-bottom:10px;
+  border-bottom:1px solid color-mix(in srgb, var(--c3) 40%, transparent);
+  padding-bottom:8px;
+}
+.pp-group-root > .pp-group-head{
+  opacity:1;
+  font-weight:800;
+}
+.pp-own-inner{
+  padding-left:0;
+  margin:0;
+  list-style:none;
+}
+.pp-own-empty{
+  padding:8px 30px;
+  font-family:'Nunito',sans-serif;
+  font-style:normal;
+  font-weight:600;
+  font-size:13px;
+  opacity:.45;
+  font-style:italic;
+}
+
+/* Подгруппы внутри «Моих» */
+.pp-group-sub > .pp-group-head{
+  padding-left:30px;
+  font-size:11px;
+  opacity:.6;
+}
+.pp-group-sub > .pp-group-list .pp-item{
+  padding-left:30px;
+}
+body[data-theme="dark"] .pp-group-root{
+  border-bottom-color:var(--c2);
+}
+
 .pp-item{
   display:flex;
   justify-content:space-between;

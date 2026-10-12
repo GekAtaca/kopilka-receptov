@@ -22,8 +22,14 @@
     options = options || {};
     onSelectCb = typeof options.onSelect === 'function' ? options.onSelect : null;
     excludeIds = new Set(Array.isArray(options.excludeIds) ? options.excludeIds : []);
-    currentQuery = '';
+     currentQuery = '';
     collapsed.clear();
+    // По умолчанию все базовые группы свёрнуты
+    if (typeof PRODUCT_GROUPS !== 'undefined' && Array.isArray(PRODUCT_GROUPS)){
+      for (const g of PRODUCT_GROUPS){
+        collapsed.add('base:' + g.code);
+      }
+    }
 
     // ─── Подтянуть текущий стиль с body ───
     // Чтобы модалка выглядела как карточки сайта.
@@ -82,7 +88,7 @@
     renderList();
   }
 
-  // ─── Отрисовать список ───
+   // ─── Отрисовать список ───
   function renderList(){
     const listEl = box.querySelector('#ppList');
     if (!listEl) return;
@@ -93,9 +99,11 @@
       (p.name || '').toLowerCase().includes(q) ||
       (p.shortName || '').toLowerCase().includes(q);
 
+    // Свои: фильтр + сортировка «сначала новые»
     const own = allOwn
       .filter(p => !excludeIds.has(p.id))
-      .filter(match);
+      .filter(match)
+      .sort((a,b) => (b.createdAt || 0) - (a.createdAt || 0));
 
     const base = (typeof BASE_PRODUCTS !== 'undefined' ? BASE_PRODUCTS : [])
       .filter(p => !excludeIds.has(p.id))
@@ -103,18 +111,19 @@
 
     const parts = [];
 
-    if (own.length){
-      parts.push(groupHtml('⭐ Мои продукты', own));
-    }
+    // ⭐ Мои продукты — корневая группа с подгруппами.
+    // Показываем всегда, даже если пусто — с подписью «Пока пусто».
+    parts.push(ownGroupHtml(own));
 
+    // Базовые группы — все 19, даже пустые
     const groups = (typeof PRODUCT_GROUPS !== 'undefined' ? PRODUCT_GROUPS : [])
       .slice()
       .sort((a,b) => (a.order || 0) - (b.order || 0));
 
-    for (const g of groups){
+     for (const g of groups){
       const items = base.filter(p => p.group === g.code);
-      if (!items.length) continue;
-      parts.push(groupHtml(g.name, items));
+      if (!items.length) continue; // пустые базовые группы не показываем
+      parts.push(groupHtml(g.name, items, 'base:' + g.code, false));
     }
 
     if (!parts.length){
@@ -124,17 +133,23 @@
     }
   }
 
-  function groupHtml(title, items){
+  // ─── Свёрнута ли группа. При активном поиске — все развёрнуты ───
+  function checkCollapsed(key){
+    if (currentQuery.trim()) return false;
+    return collapsed.has(key);
+  }
+
+  function groupHtml(title, items, key, isSub){
     const rows = items.map(p => `
       <li class="pp-item" data-id="${escapeHtml(p.id)}">
         <span class="pp-item-name">${escapeHtml(p.name)}</span>
         <span class="pp-item-kbzhu">${kbzhuLine(p)}</span>
       </li>
     `).join('');
-     // Группа свёрнута, если она в collapsed
-    const isCollapsed = collapsed.has(title);
+    const isCollapsed = checkCollapsed(key);
+    const subClass = isSub ? ' pp-group-sub' : '';
     return `
-      <div class="pp-group${isCollapsed ? ' collapsed' : ''}" data-group="${escapeHtml(title)}">
+      <div class="pp-group${subClass}${isCollapsed ? ' collapsed' : ''}" data-group="${escapeHtml(key)}">
         <div class="pp-group-head">
           <span class="pp-group-name">${escapeHtml(title)}</span>
           <span class="pp-group-right">
@@ -143,6 +158,42 @@
           </span>
         </div>
         <ul class="pp-group-list">${rows}</ul>
+      </div>
+    `;
+  }
+
+  // ─── Корневая группа «⭐ Мои продукты» с подгруппами ───
+  function ownGroupHtml(own){
+    const groups = (typeof PRODUCT_GROUPS !== 'undefined' ? PRODUCT_GROUPS : [])
+      .slice()
+      .sort((a,b) => (a.order || 0) - (b.order || 0));
+
+    const subs = [];
+    for (const g of groups){
+      const items = own.filter(p => p.group === g.code);
+      if (!items.length) continue; // пустые подгруппы не показываем
+      subs.push(groupHtml(g.name, items, 'own:' + g.code, true));
+    }
+
+    // Если своих продуктов нет — «Пока пусто» вместо подгрупп
+    const inner = subs.length
+      ? subs.join('')
+      : '<div class="pp-own-empty">Пока пусто</div>';
+
+    const rootKey = 'own-root';
+    const isCollapsed = checkCollapsed(rootKey);
+    return `
+      <div class="pp-group pp-group-root${isCollapsed ? ' collapsed' : ''}" data-group="${escapeHtml(rootKey)}">
+        <div class="pp-group-head">
+          <span class="pp-group-name">⭐ Мои продукты</span>
+          <span class="pp-group-right">
+            <span class="pp-group-count">${own.length}</span>
+            <span class="pp-group-arrow">▼</span>
+          </span>
+        </div>
+        <div class="pp-group-list pp-own-inner">
+          ${inner}
+        </div>
       </div>
     `;
   }
