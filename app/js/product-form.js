@@ -13,6 +13,68 @@
   let onCloseCb  = null;    // колбэк при ручном закрытии
   let editingId  = null;    // id, если редактируем существующий
   let draft      = null;    // черновик продукта
+  let dupModal   = null;    // DOM модалки дубликатов (создаётся один раз)
+
+  // ─── Экранирование ───
+  function escapeHtml(s){
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+
+  // ─── Значимые слова: длина 3+ или цифра ───
+  function significantWords(str){
+    return String(str || '')
+      .toLowerCase()
+      .replace(/[^\p{L}\p{N}\s]+/gu, ' ')
+      .split(/\s+/)
+      .filter(w => w.length >= 3 || /^\d+$/.test(w));
+  }
+
+  // ─── Оценка похожести двух продуктов ───
+  // +1 за каждое общее значимое слово, +1 если марки совпадают и не пустые.
+  function similarityScore(a, b){
+    const wa = new Set(significantWords(a.name || a.shortName));
+    const wb = new Set(significantWords(b.name || b.shortName));
+    let score = 0;
+    for (const w of wa) if (wb.has(w)) score++;
+    const brandA = (a.brand || '').trim().toLowerCase();
+    const brandB = (b.brand || '').trim().toLowerCase();
+    if (brandA && brandB && brandA === brandB) score++;
+    return score;
+  }
+
+  // ─── Найти похожие продукты среди базовых и своих ───
+  async function findSimilarProducts(product){
+    const results = [];
+
+    // Базовая база
+    if (typeof BASE_PRODUCTS !== 'undefined' && Array.isArray(BASE_PRODUCTS)){
+      for (const b of BASE_PRODUCTS){
+        const s = similarityScore(product, b);
+        if (s >= 2) results.push({ product: b, score: s, source: 'base' });
+      }
+    }
+
+    // Своя база (из IndexedDB). Себя саму (при редактировании) не берём.
+    if (typeof Storage !== 'undefined' && Storage.getAllProducts){
+      const own = await Storage.getAllProducts();
+      for (const o of own){
+        if (editingId && o.id === editingId) continue;
+        if (product.id && o.id === product.id) continue;
+        const s = similarityScore(product, o);
+        if (s >= 2) results.push({ product: o, score: s, source: 'own' });
+      }
+    }
+
+    // Сортировка: по убыванию score, потом по имени
+    results.sort((x, y) => {
+      if (y.score !== x.score) return y.score - x.score;
+      return (x.product.name || '').localeCompare(y.product.name || '', 'ru');
+    });
+
+    return results;
+  }
 
   // ─── Открыть форму ───
    async function openProductForm(options){
@@ -74,6 +136,85 @@
     const back = onCloseCb;
     onCloseCb = null;
     if (typeof back === 'function') back();
+  }
+   // ─── Модалка дубликатов ───
+  function ensureDupModal(){
+    if (dupModal) return dupModal;
+    dupModal = document.createElement('div');
+    dupModal.className = 'modal-dup';
+    dupModal.style.display = 'none';
+    dupModal.innerHTML = `
+      <div class="modal-dup-box">
+        <div class="modal-dup-head">
+          <span class="modal-dup-title">Похожие продукты</span>
+          <button type="button" class="modal-dup-close" data-dup-close>✕</button>
+        </div>
+        <div class="modal-dup-sub">Может быть, такой уже есть?</div>
+        <div class="modal-dup-list" id="dupList"></div>
+        <div class="modal-dup-actions">
+          <button type="button" class="dup-btn" data-dup-cancel>Отмена</button>
+          <button type="button" class="dup-btn dup-btn-primary" data-dup-confirm>Создать всё равно</button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(dupModal);
+
+    // Клик по тёмному фону — отмена
+    let backdropDown = false;
+    dupModal.addEventListener('mousedown', (e) => { backdropDown = (e.target === dupModal); });
+    dupModal.addEventListener('mouseup', (e) => {
+      if (backdropDown && e.target === dupModal) closeDupModal();
+      backdropDown = false;
+    });
+
+    return dupModal;
+  }
+
+  function closeDupModal(){
+    if (dupModal) dupModal.style.display = 'none';
+  }
+
+  // Показать модалку. onConfirm — что делать при «Создать всё равно»
+  function showDupModal(similar, onConfirm){
+    ensureDupModal();
+    const list = dupModal.querySelector('#dupList');
+    list.innerHTML = similar.map(item => {
+      const p = item.product;
+      const isOwn = item.source === 'own';
+      const badge = isOwn ? '⭐ ' : '📚 ';
+      const kbzhu = [
+        (p.kcal ?? '—'),
+        'Б' + (p.protein ?? '—'),
+        'Ж' + (p.fat ?? '—'),
+        'У' + (p.carbs ?? '—')
+      ].join(' · ');
+      return `
+        <div class="dup-item">
+          <span class="dup-item-name">${badge}${escapeHtml(p.name || '')}</span>
+          <span class="dup-item-kbzhu">${escapeHtml(kbzhu)}</span>
+        </div>
+      `;
+    }).join('');
+
+    dupModal.style.display = 'flex';
+
+    // Навесить обработчики на кнопки один раз
+    if (!dupModal.dataset.bound){
+      dupModal.addEventListener('click', (e) => {
+        if (e.target.closest('[data-dup-close]') ||
+            e.target.closest('[data-dup-cancel]')){
+          closeDupModal();
+          return;
+        }
+        if (e.target.closest('[data-dup-confirm]')){
+          closeDupModal();
+          if (typeof dupModal._onConfirm === 'function') dupModal._onConfirm();
+          return;
+        }
+      });
+      dupModal.dataset.bound = '1';
+    }
+    dupModal._onConfirm = onConfirm;
   }
 
   // ─── Собрать разметку формы ───
@@ -349,7 +490,24 @@
       delete p.weightPerPiece;
     }
 
-    // Сохраняем.
+    // Проверка на дубликаты — только при создании нового
+    if (!editingId){
+      let similar = [];
+      try { similar = await findSimilarProducts(p); }
+      catch(e){ console.warn('[product-form] Поиск похожих упал', e); }
+
+      if (similar.length){
+        showDupModal(similar, () => realSave(p));
+        return;
+      }
+    }
+
+    // Если дубликатов нет или это редактирование — сохраняем сразу
+    realSave(p);
+  }
+
+  // ─── Реальное сохранение в IndexedDB ───
+  async function realSave(p){
     try {
       const saved = await Storage.saveProduct(p);
       if (onSavedCb) onSavedCb(saved);
