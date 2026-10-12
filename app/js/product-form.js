@@ -21,11 +21,20 @@
     onCloseCb = typeof options.onClose === 'function' ? options.onClose : null;
     editingId = options.productId || null;
 
-    // Черновик: или загружаем существующий, или пустой
+     // Черновик: или загружаем существующий, или пустой
     if (editingId){
-      draft = (typeof Storage !== 'undefined' && Storage.getProduct)
+      const p = (typeof Storage !== 'undefined' && Storage.getProduct)
         ? await Storage.getProduct(editingId)
         : null;
+      draft = p ? { ...p } : null;
+      // Если у продукта была галочка «КБЖУ на 100 мл» — в полях
+      // показываем исходные числа (те, что как на упаковке).
+      if (draft && draft.kbzhuOn100ml && draft.kbzhuMl){
+        draft.kcal    = draft.kbzhuMl.kcal;
+        draft.protein = draft.kbzhuMl.protein;
+        draft.fat     = draft.kbzhuMl.fat;
+        draft.carbs   = draft.kbzhuMl.carbs;
+      }
     } else {
       draft = {
         id: null,
@@ -154,7 +163,7 @@
                    value="${draft.density ?? 1}" placeholder="Например: 1.03">
           </div>
           <label class="pf-checkbox">
-            <input type="checkbox" data-field="kbzhuOn100ml">
+            <input type="checkbox" data-field="kbzhuOn100ml"${draft.kbzhuOn100ml ? ' checked' : ''}>
             <span>У меня КБЖУ на 100 мл (пересчитать на 100 г)</span>
           </label>
         </div>
@@ -327,6 +336,7 @@
       p.carbs   = round1(p.carbs   / p.density);
     } else {
       p.kbzhuOn100ml = false;
+      delete p.kbzhuMl;
     }
 
     // Чистим неиспользуемые поля.

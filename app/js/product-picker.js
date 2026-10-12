@@ -16,7 +16,9 @@
   let currentQuery = '';
   let allOwn       = [];   // свои продукты, загружаются при открытии
   let collapsed    = new Set();  // свёрнутые группы (по ключу)
-  let currentSort  = 'new-first'; // текущая сортировка «Моих»
+   let currentSort  = 'new-first'; // текущая сортировка «Моих»
+  let ctxTargetId  = null;        // ID продукта, на котором открыто контекстное меню
+  let ctxTouchTimer = null;       // таймер долгого тапа
 
   // ─── Открыть ───
   async function openProductPicker(options){
@@ -101,6 +103,10 @@
         <button type="button" class="pp-add" data-pp-add title="Создать новый продукт">+</button>
       </div>
       <div class="pp-list" id="ppList"></div>
+      <div class="pp-ctx-menu" id="ppCtxMenu" style="display:none">
+        <button type="button" class="pp-ctx-item" data-pp-edit>✎ Редактировать</button>
+        <button type="button" class="pp-ctx-item pp-ctx-danger" data-pp-delete>🗑 Удалить</button>
+      </div>
     `;
 
     const searchInput = box.querySelector('.pp-search');
@@ -120,9 +126,15 @@
     // потому что он position:fixed и «отвяжется» от кнопки.
     const listEl = box.querySelector('#ppList');
     if (listEl){
-      listEl.addEventListener('scroll', closeSortDropdowns, { passive: true });
+      listEl.addEventListener('scroll', () => {
+        closeSortDropdowns();
+        closeCtxMenu();
+      }, { passive: true });
     }
-    window.addEventListener('resize', closeSortDropdowns);
+    window.addEventListener('resize', () => {
+      closeSortDropdowns();
+      closeCtxMenu();
+    });
   }
 
    // ─── Отрисовать список ───
@@ -237,6 +249,45 @@
       </div>
     `;
   }
+
+// ─── Контекстное меню (правый клик / долгий тап) ───
+
+  // Свой ли это продукт
+  function findOwnProduct(id){
+    return allOwn.find(p => p.id === id) || null;
+  }
+
+  // Открыть меню на продукте по координатам
+  function openCtxMenu(productId, x, y){
+    const menu = box.querySelector('#ppCtxMenu');
+    if (!menu) return;
+    ctxTargetId = productId;
+    menu.style.display = 'block';
+    menu.style.visibility = 'hidden';
+    const mw = menu.offsetWidth;
+    const mh = menu.offsetHeight;
+    let left = x;
+    let top  = y;
+    if (left + mw > window.innerWidth  - 6) left = window.innerWidth  - mw - 6;
+    if (top  + mh > window.innerHeight - 6) top  = window.innerHeight - mh - 6;
+    if (left < 6) left = 6;
+    if (top  < 6) top  = 6;
+    menu.style.left = left + 'px';
+    menu.style.top  = top  + 'px';
+    menu.style.visibility = '';
+  }
+
+  // Закрыть меню
+  function closeCtxMenu(){
+    const menu = box.querySelector('#ppCtxMenu');
+    if (menu) menu.style.display = 'none';
+    ctxTargetId = null;
+    if (ctxTouchTimer){
+      clearTimeout(ctxTouchTimer);
+      ctxTouchTimer = null;
+    }
+  }
+
     // ─── Показать и спозиционировать dropdown у кнопки ≡ ───
   function positionSortDropdown(btn, drop){
     // Сначала показать, чтобы измерить размеры
@@ -405,10 +456,79 @@
     else                     btn.classList.remove('visible');
   }
 
+  // ─── Правый клик (ПК) — контекстное меню ───
+  box.addEventListener('contextmenu', (e) => {
+    const item = e.target.closest('.pp-item');
+    if (!item) return;
+    const id = item.dataset.id;
+    if (!findOwnProduct(id)) return; // на базовых — системное меню работает
+    e.preventDefault();
+    if (ctxTargetId) return;
+    openCtxMenu(id, e.clientX, e.clientY);
+  });
+
+  // ─── Долгий тап (телефон, планшет) ───
+  box.addEventListener('touchstart', (e) => {
+    const item = e.target.closest('.pp-item');
+    if (!item) return;
+    const id = item.dataset.id;
+    if (!findOwnProduct(id)) return;
+    const t = e.touches[0];
+    const x = t.clientX;
+    const y = t.clientY;
+    if (ctxTouchTimer) clearTimeout(ctxTouchTimer);
+    ctxTouchTimer = setTimeout(() => {
+      ctxTouchTimer = null;
+      openCtxMenu(id, x, y);
+    }, 500);
+  }, { passive: true });
+
+  box.addEventListener('touchend', () => {
+    if (ctxTouchTimer){
+      clearTimeout(ctxTouchTimer);
+      ctxTouchTimer = null;
+    }
+  });
+
+  box.addEventListener('touchmove', () => {
+    if (ctxTouchTimer){
+      clearTimeout(ctxTouchTimer);
+      ctxTouchTimer = null;
+    }
+  }, { passive: true });
+
   // ─── Клики внутри модалки ───
  box.addEventListener('click', (e) => {
     if (e.target.closest('[data-pp-close]')){
       closeProductPicker();
+      return;
+    }
+
+    // Клик по пункту контекстного меню — Редактировать
+    if (e.target.closest('[data-pp-edit]')){
+      const id = ctxTargetId;
+      closeCtxMenu();
+      if (id && typeof openProductForm === 'function'){
+        openProductForm({
+          productId: id,
+          onSaved: async () => {
+            // Перерисовать список «Моих» после сохранения
+            if (typeof Storage !== 'undefined' && Storage.getAllProducts){
+              allOwn = await Storage.getAllProducts();
+            }
+            renderList();
+          }
+          // onClose не передаём — пикер уже открыт, открывать заново не надо
+        });
+      }
+      return;
+    }
+    if (e.target.closest('[data-pp-delete]')){
+      const id = ctxTargetId;
+      closeCtxMenu();
+      if (id && typeof openSoon === 'function'){
+        openSoon('🗑 Удалить', 'Удаление появится позже.');
+      }
       return;
     }
     if (e.target.closest('[data-pp-clear]')){
@@ -468,6 +588,8 @@
 
    // Клик вне dropdown и вне кнопки — закрыть открытый dropdown
     closeSortDropdowns();
+    // Клик вне контекстного меню — закрыть его
+    if (ctxTargetId) closeCtxMenu();
 
    // Кнопка «развернуть / свернуть всё»
     if (e.target.closest('[data-pp-toggle-all]')){
@@ -509,8 +631,13 @@
   });
 
   // ─── Escape ───
-  document.addEventListener('keydown', (e) => {
+    document.addEventListener('keydown', (e) => {
     if (e.key !== 'Escape') return;
+    // Сначала закрыть контекстное меню, если оно открыто
+    if (ctxTargetId){
+      closeCtxMenu();
+      return;
+    }
     if (modal.style.display === 'flex'){
       closeProductPicker();
     }
