@@ -125,18 +125,26 @@
     renderForm();
   }
 
-  // ─── Закрыть форму ───
-  function closeProductForm(){
+ // ─── Закрыть форму ───
+  // skipOnClose = true — не звать onCloseCb (используется после сохранения:
+  // пикер не закрывался, открывать его заново не надо).
+ function closeProductForm(skipOnClose){
     modal.style.display = 'none';
-    document.body.style.overflow = '';
+    // Если под формой открыт пикер — overflow оставляем заблокированным.
+    // Иначе возвращаем страницу в обычное состояние.
+    const picker = document.getElementById('modalProductPicker');
+    const pickerOpen = picker && picker.style.display !== 'none';
+    if (!pickerOpen){
+      document.body.style.overflow = '';
+    }
     onSavedCb = null;
     editingId = null;
     draft     = null;
-    // Если форма была открыта из пикера — вернуться в пикер
     const back = onCloseCb;
     onCloseCb = null;
-    if (typeof back === 'function') back();
+    if (!skipOnClose && typeof back === 'function') back();
   }
+
    // ─── Модалка дубликатов ───
   function ensureDupModal(){
     if (dupModal) return dupModal;
@@ -511,7 +519,7 @@
     try {
       const saved = await Storage.saveProduct(p);
       if (onSavedCb) onSavedCb(saved);
-      closeProductForm();
+      closeProductForm(true); // true — не звать onCloseCb
     } catch(err){
       console.error('[product-form] Ошибка сохранения:', err);
       showError('Не удалось сохранить. Попробуй ещё раз.');

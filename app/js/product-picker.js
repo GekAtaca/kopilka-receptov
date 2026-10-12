@@ -19,13 +19,15 @@
    let currentSort  = 'new-first'; // текущая сортировка «Моих»
   let ctxTargetId  = null;        // ID продукта, на котором открыто контекстное меню
   let ctxTouchTimer = null;       // таймер долгого тапа
+  let afterCreate  = 'list';      // что делать после создания: 'list' | 'select'
 
   // ─── Открыть ───
   async function openProductPicker(options){
     options = options || {};
     onSelectCb = typeof options.onSelect === 'function' ? options.onSelect : null;
     excludeIds = new Set(Array.isArray(options.excludeIds) ? options.excludeIds : []);
-     currentQuery = '';
+    afterCreate = options.afterCreate === 'select' ? 'select' : 'list';
+    currentQuery = '';
     collapsed.clear();
 
     // Пробуем загрузить сохранённое состояние свёрнутости
@@ -79,12 +81,13 @@
   }
 
   // ─── Закрыть ───
-  function closeProductPicker(){
+   function closeProductPicker(){
     modal.style.display = 'none';
     document.body.style.overflow = '';
     onSelectCb = null;
     excludeIds = new Set();
     currentQuery = '';
+    afterCreate = 'list';
   }
 
   // ─── Собрать разметку модалки ───
@@ -541,20 +544,31 @@
       input.focus();
       return;
     }
-      if (e.target.closest('[data-pp-add]')){
-      // Закрыть пикер, открыть форму создания.
-      // При закрытии формы — вернуться в пикер.
-      const cb = onSelectCb;
-      closeProductPicker();
+       if (e.target.closest('[data-pp-add]')){
+      // Пикер НЕ закрываем — форма открывается поверх него.
+      // Сохраняем свёрнутость, чтобы точно ничего не потерялось.
+      saveCollapsed();
+
       if (typeof openProductForm === 'function'){
         openProductForm({
-          onSaved: () => {
-            // После создания продукт остаётся в списке «Мои продукты».
-            // Наружу не отдаём — пусть пользователь сам решит, выбирать его или нет.
-            // Разделение поведения (сразу в рецепт / остаться в списке) — на шаге 4.7.
+          onSaved: async (product) => {
+            if (typeof Storage !== 'undefined' && Storage.getAllProducts){
+              allOwn = await Storage.getAllProducts();
+            }
+            // Принудительно перерисовать список из актуального collapsed
+            renderList();
+            updateToggleAllButton();
+
+            if (afterCreate === 'select' && product && onSelectCb){
+              const cb = onSelectCb;
+              closeProductPicker();
+              cb(product);
+            }
           },
           onClose: () => {
-            openProductPicker({ onSelect: cb });
+            // Отмена формы — перерисовать список из актуального collapsed
+            renderList();
+            updateToggleAllButton();
           }
         });
       }
@@ -597,9 +611,11 @@
       return;
     }
 
-   // Клик по заголовку группы — свернуть / развернуть
+   // Клик по заголовку группы — свернуть / развернуть.
+    // При активном поиске группы не сворачиваются — поиск показывает всё.
     const head = e.target.closest('.pp-group-head');
     if (head){
+      if (currentQuery.trim()) return;
       const groupEl = head.closest('.pp-group');
       const key = groupEl.dataset.group;
       if (collapsed.has(key)) collapsed.delete(key);
