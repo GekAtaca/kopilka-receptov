@@ -86,19 +86,19 @@ pre code{background:none;padding:0;color:inherit;font-size:inherit}
 ├── design.html             ← оформление
 ├── arch.html               ← этот файл
 ├── history.html            ← баги, уроки, отложенное
-├── (Структурная карта 6–11.html, 11 copy.html — техдолг: удалить)
+├── (Структурная карта 6–11.html — техдолг: удалить)
 ├── favicon.svg
 ├── robots.txt
 ├── README.md
 ├── app/
 │   ├── css/
-│   │   ├── style.css       ← база (--c1..--c4) + фоны + редактор + панель + FAB + экраны + модалки + макет (.dm-scope, .dm-bg) + предпросмотр + пикер + форма продукта
+│   │   ├── style.css       ← база (--c1..--c4) + фоны + редактор + панель + FAB + экраны + модалки + макет (.dm-scope, .dm-bg) + предпросмотр + пикер + форма продукта + модалка дубликатов
 │   │   ├── card.css        ← база карточки + тени + тёмная тема + большая карточка (.b-*) + .dm-scope расширения
 │   │   ├── palettes/       ← 9 файлов палитр
 │   │   └── styles/         ← 8 файлов стилей
 │   ├── js/                 ← 14 файлов (см. ниже)
 │   └── img/                ← пока пусто
-└── images/                 ← 19 фоновых картинок</code></pre>
+└── images/                 ← 19 фоновых картинок (01–05, 07–20, без 06)</code></pre>
 
 <h2>Файлы app/js/ — что делает каждый</h2>
 
@@ -107,7 +107,7 @@ pre code{background:none;padding:0;color:inherit;font-size:inherit}
 <tr><td><code>tags-base.js</code></td><td>58 базовых тегов, 16 групп. ID <code>btag-NNN</code>. Только данные.</td></tr>
 <tr><td><code>products-base.js</code></td><td>19 групп продуктов, 309 продуктов. ID — транслит (<code>milk-3-2</code>). Только данные.</td></tr>
 <tr><td><code>storage.js</code></td><td>Единая точка входа в IndexedDB. Все операции с рецептами, продуктами, отметками, тегами, настройками. Подробно — ниже.</td></tr>
-<tr><td><code>shared.js</code></td><td>Общие переменные и утилиты: <code>bgSettings</code>, <code>currentBg</code>, <code>designDraft</code>, <code>getDeviceType</code>, <code>saveSettingsToStorage</code>.</td></tr>
+<tr><td><code>shared.js</code></td><td>Общие переменные и утилиты: <code>bgSettings</code>, <code>currentBg</code>, <code>designDraft</code>, <code>getDeviceType</code>, <code>saveSettingsToStorage</code>, <code>loadSharedFromStorage</code>.</td></tr>
 <tr><td><code>render.js</code></td><td>Превращает объект рецепта в HTML маленькой карточки. Раскладывает рецепты по секциям Главной.</td></tr>
 <tr><td><code>card-big.js</code></td><td>Большая карточка рецепта: открытие, закрытие, порции, чекбоксы, dropdown «В план» и «Ещё», нижние кнопки.</td></tr>
 <tr><td><code>product-picker.js</code></td><td>Модалка «База продуктов»: поиск, группировка, свёрнутость, сортировка, контекстное меню, <code>afterCreate</code>.</td></tr>
@@ -117,7 +117,7 @@ pre code{background:none;padding:0;color:inherit;font-size:inherit}
 <tr><td><code>screens.js</code></td><td>Переключение 4 экранов. Сворачивание содержания.</td></tr>
 <tr><td><code>modals.js</code></td><td>Модалки-заглушки FAB (⏲ 🔍 ➕).</td></tr>
 <tr><td><code>fab.js</code></td><td>Автоскрытие плавающих кнопок.</td></tr>
-<tr><td><code>main.js</code></td><td>Запуск всего: <code>Storage.init → seedDemoRecipes → loadDesign → initScreens → renderAllRecipes → заставка</code>.</td></tr>
+<tr><td><code>main.js</code></td><td>Запуск всего: <code>Storage.init → seedDemoRecipes → loadDesignFromStorage → loadSharedFromStorage → initScreens → renderAllRecipes → заставка</code>.</td></tr>
 </table>
 
 <h2>Порядок подключения скриптов</h2>
@@ -187,7 +187,7 @@ pre code{background:none;padding:0;color:inherit;font-size:inherit}
 <tr><td><code>portions</code></td><td>Выбранное количество порций</td><td>Число</td></tr>
 </table>
 
-<h3>Таблица settings — ключи</h3>
+<h3>Таблица settings — 10 ключей</h3>
 
 <table class="table">
 <tr><th>Ключ</th><th>Что хранит</th></tr>
@@ -233,6 +233,7 @@ pre code{background:none;padding:0;color:inherit;font-size:inherit}
 <li><code>getRecipe(id)</code> — получить один.</li>
 <li><code>getAllRecipes()</code> — все.</li>
 <li><code>deleteRecipe(id)</code> — удалить.</li>
+<li><code>nextRecipeId()</code> — внутренняя, генерирует следующий свободный <code>recipe-NNN</code>.</li>
 </ul>
 
 <h4>Заглушки по рецептам</h4>
@@ -319,6 +320,22 @@ pre code{background:none;padding:0;color:inherit;font-size:inherit}
 <b>«Добавить на экран Домой».</b> Если сайт добавлен на экран «Домой» — Safari не чистит данные. Единственная 100% защита.
 </div>
 
+<h2>Процедура первой загрузки</h2>
+
+<div class="box done">
+<b>Что происходит при первом запуске</b> (когда база пустая). Выполняет <code>boot()</code> в <code>main.js</code>, строго по шагам:
+<ol>
+<li><b>Заставка.</b> <code>setTimeout</code> на 1.2 секунды — независимо ни от чего. Если что-то упадёт, страница всё равно покажется, а ошибка будет видна в консоли.</li>
+<li><b><code>Storage.init()</code></b> — открыть базу <code>kopilka</code>, создать 9 таблиц. Затем <code>migrateFromLocalStorage()</code>: перенести 5 ключей (<code>activeScreen</code>, <code>designShadowTab</code>, <code>design</code>, <code>bgSettings</code>, <code>designSectionsCollapsed</code>) → поставить флаг <code>migratedFromLocalStorage = true</code> → очистить localStorage.</li>
+<li><b><code>Storage.seedDemoRecipes()</code></b> — залить 9 демо-рецептов в таблицу <code>recipes</code>. Флаг <code>demoSeeded = true</code>. Если таблица уже наполнена — пропускает.</li>
+<li><b><code>loadDesignFromStorage()</code></b> — читает <code>design</code>, <code>designShadowTab</code>, <code>designSectionsCollapsed</code> из IndexedDB в память.</li>
+<li><b><code>loadSharedFromStorage()</code></b> — читает <code>bgSettings</code> из IndexedDB в память.</li>
+<li><b><code>initScreens(savedScreen)</code></b> — показать нужный экран, применить оформление через <code>applyDesignFor()</code>.</li>
+<li><b><code>renderAllRecipes()</code></b> — прочитать все рецепты из IndexedDB, разложить по 4 секциям Главной, посчитать счётчики.</li>
+</ol>
+<b>При следующих запусках</b> шаги 2–3 пропускаются (флаги <code>migratedFromLocalStorage</code> и <code>demoSeeded</code> стоят).
+</div>
+
 <h2>Даты и ID</h2>
 
 <div class="rule">
@@ -346,6 +363,10 @@ pre code{background:none;padding:0;color:inherit;font-size:inherit}
 </div>
 
 <div class="rule">
+<b>Всё чтение и запись настроек — через IndexedDB.</b> Никаких обращений к localStorage в коде. Раньше в <code>shared.js</code> было чтение <code>bgSettings</code> при загрузке — убрано 13 октября 2026. Теперь значение приходит только из IndexedDB через <code>loadSharedFromStorage()</code>.
+</div>
+
+<div class="rule">
 <b>Дублирование <code>const</code> в одном файле ломает всё.</b> Одна <code>SyntaxError</code> валит весь файл. Перед вставкой большого блока с константой — проверить поиском, не объявлена ли уже.
 </div>
 
@@ -356,6 +377,7 @@ pre code{background:none;padding:0;color:inherit;font-size:inherit}
 <div class="rule">
 <b><code>setTimeout</code>, который прячет заставку, — в самом начале <code>boot()</code>.</b> До всех <code>await</code>. Иначе при ошибке заставка висит вечно.
 </div>
+
 <h2>Словарь терминов</h2>
 
 <table class="table">
@@ -390,7 +412,9 @@ pre code{background:none;padding:0;color:inherit;font-size:inherit}
 <tr><td><b><code>renderAllRecipes()</code></b></td><td>Асинхронная функция: читает все рецепты из IndexedDB и раскладывает по секциям</td></tr>
 <tr><td><b><code>seedDemoRecipes()</code></b></td><td>Функция: заливает 9 демо-рецептов в IndexedDB при первом запуске</td></tr>
 <tr><td><b><code>BASE_TAGS</code></b></td><td>Массив 58 базовых тегов в <code>tags-base.js</code>. ID <code>btag-NNN</code></td></tr>
+<tr><td><b><code>BASE_PRODUCTS</code></b></td><td>Массив 309 базовых продуктов в <code>products-base.js</code>. ID — транслит</td></tr>
 <tr><td><b><code>demoRecipes</code></b></td><td>Массив 9 демо-рецептов в <code>storage.js</code>. Заливается один раз через <code>seedDemoRecipes()</code></td></tr>
+<tr><td><b><code>demoRecipesOLD</code></b></td><td>Мёртвый дубликат массива <code>demoRecipes</code> в <code>storage.js</code>. Техдолг — удалить (~200 строк)</td></tr>
 <tr><td><b><code>demoSeeded</code></b></td><td>Флаг в settings: «9 демо-рецептов уже залиты»</td></tr>
 <tr><td><b><code>b-</code> (префикс)</b></td><td>Все классы большой карточки — с префиксом <code>b-</code> (big). Чтобы не путать с маленькой <code>.card</code></td></tr>
 <tr><td><b>Порции</b></td><td>Стартовое — 4. Сохраняются в IndexedDB (тип <code>portions</code>). Клик по числу — сброс на 4</td></tr>
@@ -407,7 +431,6 @@ pre code{background:none;padding:0;color:inherit;font-size:inherit}
 <tr><td><b><code>productSort</code></b></td><td>Ключ в IndexedDB: сортировка «Моих» в пикере. <code>new-first</code> / <code>old-first</code> / <code>az</code> / <code>za</code></td></tr>
 <tr><td><b><code>kbzhuMl</code></b></td><td>Поле продукта: исходные КБЖУ как на упаковке (на 100 мл). Хранится отдельно от пересчитанных</td></tr>
 </table>
-
 
 <h2>Смежное в других файлах</h2>
 

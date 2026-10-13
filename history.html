@@ -87,7 +87,7 @@ pre code{background:none;padding:0;color:inherit;font-size:inherit}
 <div class="lesson">
 <div class="title">z-index редактора фона</div>
 <b>10 октября 2026.</b> Редактор позиции фона должен открываться <b>поверх</b> панели оформления. Изначально <code>z-index</code> был <code>100000</code> — под панелью.
-<div class="fix">Подняли до <code>100003</code>. Текущая иерархия (снизу вверх): фон (0) → контент (1) → FAB (99) → нижняя навигация (100) → панель (100001) → окошко «Применить к…» и общие модалки (100002) → редактор фона (100003) → плашка предпросмотра (100004) → большая карточка рецепта (100005) → пикер продуктов (100006) → форма продукта (100007) → модалка дубликатов (100009) → заглушки #modalSoon / #modalRecipeTimer (100010 !important) → заставка (9999).</div>
+<div class="fix">Подняли до <code>100003</code>. Текущая иерархия (снизу вверх): фон (0) → контент (1) → FAB (99) → нижняя навигация (100) → панель (100001) → окошко «Применить к…» и общие модалки (100002) → редактор фона (100003) → плашка предпросмотра (100004) → большая карточка рецепта (100005) → пикер продуктов (100006) → форма продукта (100007) → модалка дубликатов (100009) → заглушки #modalSoon / #modalRecipeTimer (100010 !important). <b>Заставка</b> — <code>z-index: 9999</code>, но она видна только до <code>.hide</code>, а после — <code>visibility:hidden</code> и никому не мешает.</div>
 </div>
 
 <div class="lesson">
@@ -146,18 +146,25 @@ pre code{background:none;padding:0;color:inherit;font-size:inherit}
 
 <h2>Технический долг</h2>
 
+<div class="box done">
+<b>✅ Закрыто 13 октября 2026:</b>
+<ul>
+<li><b>Опечатка <code>pp-group-name</code> в <code>style.css</code></b> — добавлена точка в начале, правило работает.</li>
+<li><b>Чтение <code>bgSettings</code> из localStorage в <code>shared.js</code></b> — убрано. Теперь значение приходит только из IndexedDB через <code>loadSharedFromStorage()</code>.</li>
+<li><b>Мёртвый массив <code>demoRecipesOLD</code> в <code>storage.js</code></b> — удалён (~200 строк). В файле остался один живой массив <code>demoRecipes</code>.</li>
+</ul>
+</div>
+
 <div class="box warn">
 <b>Высокий приоритет:</b>
 <ul>
-<li>Удалить старые <code>Структурная карта 6.html</code> … <code>11.html</code>, «Структурная карта 11 copy.html» из проекта.</li>
-<li>В <code>storage.js</code> лежит дубликат массива <code>demoRecipesOLD</code> — удалить (~200 строк мёртвого кода).</li>
+<li>Удалить старые файлы <code>Структурная карта 6.html</code> … <code>11.html</code> из проекта. <b>И <code>Структурная карта 12.html</code> — её содержимое разложено по 7 файлам документации.</b></li>
 </ul>
 </div>
 
 <div class="box">
 <b>Средний приоритет:</b>
 <ul>
-<li>Остатки старой панели: <code>.dp-themes</code> в CSS, <code>dpThemes</code> в JS — удалить, когда убедимся, что не используются.</li>
 <li>Объединить дублирующий CSS: <code>.design-panel</code>, <code>.bg-editor</code>, <code>.modal</code> частично дублируются.</li>
 <li>Унифицировать имена data-атрибутов: <code>data-s</code>, <code>data-p</code>, <code>data-shade</code>, <code>data-sh</code>, <code>data-th</code>, <code>data-bg</code> — смешаны.</li>
 </ul>
@@ -166,7 +173,6 @@ pre code{background:none;padding:0;color:inherit;font-size:inherit}
 <div class="box">
 <b>Низкий приоритет (мелочи):</b>
 <ul>
-<li>В <code>style.css</code> опечатка <code>pp-group-name</code> без точки в начале — не работает правило.</li>
 <li>В <code>storage.js</code> пропала разделительная строка <code>// ═══</code> над блоком «Статистика».</li>
 </ul>
 </div>
@@ -196,12 +202,18 @@ pre code{background:none;padding:0;color:inherit;font-size:inherit}
 <ul>
 <li><span class="chip wait">⏳</span> <b>Режим «Поделиться одним рецептом».</b> Ссылка вида <code>#share=recipe-id</code>. При открытии — только рецепт, без шапки и навигации.</li>
 <li><span class="chip wait">⏳</span> <b>Уточнение веса штучных.</b> Кнопка ⚖ «Уточнить вес» — взвесить каждую помидорину отдельно.</li>
+</ul>
+
+<h3>Продукты</h3>
+<ul>
 <li><span class="chip wait">⏳</span> <b>Отдельный экран «База продуктов».</b> Вкладка в Кладовой: 🛒 Купить · 🏠 Есть дома · 📚 База продуктов.</li>
 <li><span class="chip wait">⏳</span> <b>Копирование готового продукта в свои.</b> «Скопировать в мои».</li>
 <li><span class="chip wait">⏳</span> <b>Переопределение продукта.</b> «Переопределить для себя». Создаётся своя версия (⭐), при поиске первая, в рецептах автоматически используется она.</li>
 <li><span class="chip wait">⏳</span> <b>Импорт / экспорт базы продуктов.</b> Отдельно от общего бэкапа.</li>
 <li><span class="chip wait">⏳</span> <b>Массовое редактирование продуктов.</b> Пометить несколько, изменить группу сразу.</li>
 <li><span class="chip wait">⏳</span> <b>Фото продукта и фото рецепта.</b> Ждут storage.js слой 4 (фото: сжатие, blob).</li>
+<li><span class="chip wait">⏳</span> <b>Автоматическая подстановка плотности по названию.</b> При вводе названия — подставлять плотность из справочника (молоко → 1.03, мёд → 1.42). Пока поле заполняется вручную.</li>
+<li><span class="chip wait">⏳</span> <b>Сортировка по частоте использования.</b> Сортировать «Мои» по тому, как часто пользователь берёт продукт в рецепты. Пока не реализовано — в базе 9 демо-рецептов, «частота» бессмысленна.</li>
 </ul>
 
 <h3>Кладовая</h3>
@@ -223,6 +235,7 @@ pre code{background:none;padding:0;color:inherit;font-size:inherit}
 <div class="rule imp">
 <b>Оформление — локальное, НЕ синхронизируется.</b> Синхронизируются только данные. Оформление — у каждого своё. Своё на каждом экране.
 </div>
+
 <h3>Планы на будущее</h3>
 <ul>
 <li><span class="chip wait">⏳</span> <b>PWA.</b> Манифест + Service Worker + добавление на экран «Домой». После этого — пуш-уведомления.</li>
@@ -261,7 +274,8 @@ pre code{background:none;padding:0;color:inherit;font-size:inherit}
 </div>
 
 <div class="rule no">
-<b>Не уменьшать CSS и JS.</b> Не делать минификацию.</div>
+<b>Не уменьшать CSS и JS.</b> Не делать минификацию.
+</div>
 
 <h2>Смежное в других файлах</h2>
 <div class="box ok">
@@ -269,6 +283,8 @@ pre code{background:none;padding:0;color:inherit;font-size:inherit}
 <li><b>Известные баги iOS, связанные с фоном</b> — в <code>design.html</code>.</li>
 <li><b>Известные баги, связанные с хранилищем</b> — в <code>arch.html</code> (правила работы с IndexedDB).</li>
 <li><b>Что уже сделано, что дальше</b> — в <code>plan.html</code>.</li>
+<li><b>Отложенные фичи по продуктам</b> — в <code>products.html</code>.</li>
+<li><b>Отложенные фичи по рецептам</b> — в <code>recipes.html</code>.</li>
 </ul>
 </div>
 

@@ -5,12 +5,8 @@
 
 // ─── Хранилище настроек фона ───
 // Формат: { bgId: { iphone:{x,y,z}, ipad:{x,y,z}, pc:{x,y,z} } }
+// Загружается из IndexedDB в loadSharedFromStorage() при старте.
 let bgSettings = {};
-try {
-  bgSettings = JSON.parse(localStorage.getItem('bgSettings') || '{}');
-} catch (e) {
-  bgSettings = {};
-}
 
 // ─── Текущий выбранный фон на сайте ───
 let currentBg = '';

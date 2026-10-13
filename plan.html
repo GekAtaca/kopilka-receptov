@@ -82,7 +82,7 @@ code{font-family:ui-monospace,Consolas,monospace;font-size:13px;background:rgba(
   <div class="num">5</div>
   <div class="body">
     <div class="title">Разрезание index.html <span class="badge done">Готово</span></div>
-    <div class="desc">JavaScript вынесен в 14 файлов в <code>app/js/</code>. Порядок подключения важен — он описан в <code>архитектура.html</code>.</div>
+    <div class="desc">JavaScript вынесен в 14 файлов в <code>app/js/</code>. Порядок подключения важен — он описан в <code>arch.html</code>.</div>
   </div>
 </div>
 
@@ -113,7 +113,7 @@ code{font-family:ui-monospace,Consolas,monospace;font-size:13px;background:rgba(
 <h2>Что делаем сейчас</h2>
 
 <div class="box">
-<b>Документация.</b> Разбиваем карту на файлы, чтобы в новую сессию можно было скидывать только нужное.
+<b>Документация.</b> Сверяем 7 файлов документации с реальным кодом и структурной картой 12. Устраняем противоречия между файлами, уточняем статусы («сделано» / «планируется»), возвращаем потерянные при разбивке правила.
 <br><b>Следующее по коду:</b> шаг 37 — редактор рецепта.
 </div>
 
@@ -178,8 +178,8 @@ code{font-family:ui-monospace,Consolas,monospace;font-size:13px;background:rgba(
 <div class="step next">
   <div class="num">16</div>
   <div class="body">
-    <div class="title">Шторка FAB ➕ → dropdown <span class="badge next">Дальше</span></div>
-    <div class="desc">Сейчас — заглушка. Должна быть: Добавить рецепт / Создать продукт / (на Кладовой — Добавить в кладовую).</div>
+    <div class="title">Шторка FAB ➕ — наполнить содержимым <span class="badge next">Дальше</span></div>
+    <div class="desc">Сейчас открывается пустая заглушка «Тут будет Добавить». Должна стать шторкой снизу с выбором: Добавить рецепт / Создать продукт / (на Кладовой — Добавить в кладовую).</div>
   </div>
 </div>
 
@@ -208,12 +208,20 @@ code{font-family:ui-monospace,Consolas,monospace;font-size:13px;background:rgba(
 </div>
 
 <h2>Технический долг</h2>
-<div class="box warn">
+
+<div class="box done">
+<b>✅ Закрыто 13 октября 2026:</b>
 <ul>
-<li>Удалить старые <code>Структурная карта 6.html</code> … <code>11.html</code> из проекта. И «Структурная карта 11 copy.html».</li>
-<li>В <code>storage.js</code> лежит дубликат массива <code>demoRecipesOLD</code> — удалить (~200 строк мёртвого кода).</li>
-<li>В <code>style.css</code> опечатка <code>pp-group-name</code> без точки в начале — не работает правило.</li>
-<li>Остатки старой панели: <code>.dp-themes</code> в CSS, <code>dpThemes</code> в JS — удалить, когда убедимся, что не используются.</li>
+<li>Опечатка <code>pp-group-name</code> в <code>style.css</code> — исправлена.</li>
+<li>Чтение <code>bgSettings</code> из localStorage в <code>shared.js</code> — убрано.</li>
+<li>Мёртвый массив <code>demoRecipesOLD</code> в <code>storage.js</code> — удалён.</li>
+</ul>
+</div>
+
+<div class="box warn">
+<b>Осталось:</b>
+<ul>
+<li>Удалить старые файлы <code>Структурная карта 6.html</code> … <code>11.html</code> из проекта. <b>И <code>Структурная карта 12.html</code></b> — её содержимое разложено по 7 файлам документации.</li>
 <li>Косметика: в <code>storage.js</code> пропала разделительная строка над блоком «Статистика».</li>
 </ul>
 </div>
@@ -227,6 +235,11 @@ code{font-family:ui-monospace,Consolas,monospace;font-size:13px;background:rgba(
 <li><b>Режим «Поделиться одним рецептом».</b> Ссылка вида <code>#share=recipe-id</code>. Позже.</li>
 <li><b>Цена и магазин у продукта.</b> Не в базе продуктов, а в кладовой (шаг 11). Там будет история покупок.</li>
 <li><b>Фото продукта</b> (подшаг 4.9). Вместе с фото рецептов — когда будет хранилище фото (слой 4).</li>
+<li><b>Копирование готового продукта в свои.</b> «Скопировать в мои» — кнопка ещё не сделана.</li>
+<li><b>Переопределение продукта.</b> «Переопределить для себя» — кнопка ещё не сделана.</li>
+<li><b>Массовое редактирование продуктов.</b> Пометить несколько, изменить группу сразу.</li>
+<li><b>Отдельный экран «База продуктов».</b> Вкладка в Кладовой: 🛒 Купить · 🏠 Есть дома · 📚 База продуктов.</li>
+<li><b>Уточнение веса штучных.</b> Кнопка ⚖ «Уточнить вес» — взвесить каждую помидорину отдельно.</li>
 </ul>
 </div>
 

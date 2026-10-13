@@ -85,7 +85,7 @@ pre code{background:none;padding:0;color:inherit;font-size:inherit}
 <tr><td>8</td><td>🌷 Лилейный</td><td><code>lileyny</code></td><td>EB Garamond italic, точки ••</td></tr>
 </table>
 
-<p>Файлы в <code>app/css/styles/</code>. Один стиль — один файл. Правила вида <code>.dm-scope[data-style="X"]</code> (для макета) и <code>body[data-style="X"]</code> (для сайта).</p>
+<p>Файлы в <code>app/css/styles/</code>. Один стиль — один файл. Правила вида <code>.dm-scope[data-style="X"]</code> (для макета) и <code>[data-style="X"] .card</code> (для сайта).</p>
 
 <h2>Палитры — 9 × 5 = 45 комбинаций</h2>
 
@@ -161,7 +161,7 @@ pre code{background:none;padding:0;color:inherit;font-size:inherit}
 
 <h4>Три слота — по устройству</h4>
 <ul>
-<li>Нет тача → <code>pc</code>. Тач + ширина < 600 → <code>iphone</code>. Тач + ≥ 600 → <code>ipad</code>.</li>
+<li>Нет тача → <code>pc</code>. Тач + ширина &lt; 600 → <code>iphone</code>. Тач + ≥ 600 → <code>ipad</code>.</li>
 <li>Хранилище: <code>bgSettings[bgId] = { iphone:{x,y,z}, ipad:{x,y,z}, pc:{x,y,z} }</code>.</li>
 </ul>
 
@@ -270,7 +270,7 @@ pre code{background:none;padding:0;color:inherit;font-size:inherit}
 <h3>Режим предпросмотра (телефон)</h3>
 
 <div class="box note">
-<b>Проблема.</b> На телефоне (ширина < 800) макета нет. Клики в панели визуально ничего не показывают. Панель «слепая».
+<b>Проблема.</b> На телефоне (ширина &lt; 800) макета нет. Клики в панели визуально ничего не показывают. Панель «слепая».
 </div>
 
 <p><b>Решение — кнопка «Посмотреть».</b></p>
@@ -290,6 +290,7 @@ pre code{background:none;padding:0;color:inherit;font-size:inherit}
 </ol>
 
 <p>Классы: <code>#previewBar</code> / <code>.preview-bar</code>, <code>.preview-btn</code>. Функции: <code>enterPreview()</code>, <code>exitPreview()</code>, <code>applyDraftToBody()</code>. Флаг <code>isPreviewing</code>.</p>
+
 <h3>Переключение экранов при открытой панели</h3>
 <div class="box done">
 <b>Логика блокировки работает.</b> Панель перекрывает весь экран тёмным фоном, нижняя навигация недоступна. Уйти на другой экран — только закрыв панель.
@@ -308,7 +309,6 @@ pre code{background:none;padding:0;color:inherit;font-size:inherit}
 <div class="rule no">
 <b>Отдельная кнопка «Сбросить».</b> Сброс = выбрать другой стиль. Если понадобится — добавим.
 </div>
-
 
 <h3>Редактор позиции фона</h3>
 <ul>
@@ -353,6 +353,10 @@ pre code{background:none;padding:0;color:inherit;font-size:inherit}
 <b>Фоны НЕ наследуются автоматически.</b> Хочешь одинаковый фон — «Применить к…» с галочками.
 </div>
 
+<div class="rule imp">
+<b>Оформление — локальное, НЕ синхронизируется.</b> Синхронизируются только данные (рецепты, продукты, план). Оформление — у каждого своё, на каждом устройстве. Подробнее — в <code>history.html</code>.
+</div>
+
 <h4>Хранилище</h4>
 <pre><code>design = {
   home:      { style, palette, shade, shadow, fabShadow, theme, bg },
@@ -365,6 +369,7 @@ pre code{background:none;padding:0;color:inherit;font-size:inherit}
 <h4>Функции в design.js</h4>
 <ul>
 <li><code>loadDesignData()</code> — загружает структуру.</li>
+<li><code>loadDesignFromStorage()</code> — читает сохранёнку из IndexedDB.</li>
 <li><code>getDesignFor(screen)</code> — сохранёнка.</li>
 <li><code>getActiveDesign()</code> — черновик или сохранёнка.</li>
 <li><code>setDesignFor(screen, patch)</code> — сохранить.</li>
@@ -374,6 +379,8 @@ pre code{background:none;padding:0;color:inherit;font-size:inherit}
 <li><code>applyDraftToBody()</code> — применить черновик к body без сохранения.</li>
 <li><code>enterPreview()</code> / <code>exitPreview()</code> — режим предпросмотра.</li>
 <li><code>openApplyTo()</code> / <code>closeApplyTo()</code> — окошко «Применить к…».</li>
+<li><code>syncStyleActive()</code> / <code>syncPaletteActive()</code> / <code>syncShadowActive()</code> / <code>syncBgActive()</code> / <code>syncThemeToggle()</code> — подсветка активных чипов.</li>
+<li><code>applyCollapsedSections()</code> — свернуть секции панели по сохранёнке.</li>
 </ul>
 
 <h2>Подшаги 4.1–4.7 — что сделано</h2>
@@ -407,16 +414,13 @@ pre code{background:none;padding:0;color:inherit;font-size:inherit}
 <br>Почему отложено. Требует переработки <code>bgSettings</code> — сейчас он не привязан к экранам, только к устройствам.
 </div>
 
-<div class="rule q">
-<b>Смена устройства и корзина.</b> Что происходит с ингредиентами и корзиной при смене устройства готовки. Обсудим, когда будем делать экран «Устройство готовки».
-</div>
-
 <h2>Смежное в других файлах</h2>
 <div class="box ok">
 <ul>
 <li><b>Что такое стиль, палитра, тень — по коду</b> — в <code>arch.html</code> (структура CSS-файлов).</li>
 <li><b>Как карточка выглядит при разных стилях</b> — в <code>recipes.html</code> (структура карточки).</li>
 <li><b>Хранение <code>design</code> и <code>bgSettings</code></b> — в <code>arch.html</code> (таблица <code>settings</code>).</li>
+<li><b>Открытые вопросы про рецепты (устройство, корзина, округление штучных)</b> — в <code>recipes.html</code>.</li>
 <li><b>Известные баги iOS по фону</b> — в <code>history.html</code>.</li>
 </ul>
 </div>

@@ -1761,7 +1761,7 @@ body[data-theme="dark"] .pp-ctx-item.pp-ctx-danger{
   position:relative;
 }
 .pp-group-head:hover{ opacity:1; }
-pp-group-name{font-family:'Nunito',sans-serif;font-style:normal;}
+.pp-group-name{font-family:'Nunito',sans-serif;font-style:normal;}
 .pp-group-right{
   display:flex;
   align-items:center;
