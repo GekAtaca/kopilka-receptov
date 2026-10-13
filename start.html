@@ -23,10 +23,21 @@ code{font-family:ui-monospace,Consolas,monospace;font-size:13px;background:rgba(
 .box{background:rgba(230,157,181,.05);border:1px solid rgba(230,157,181,.2);border-radius:10px;padding:14px 18px;margin:14px 0}
 .box.warn{background:rgba(255,180,100,.06);border-color:rgba(255,180,100,.3)}
 .box.done{background:rgba(120,200,140,.06);border-color:rgba(120,200,140,.3)}
+
 .files{display:flex;flex-direction:column;gap:8px;margin-top:10px}
-.file{display:flex;gap:12px;align-items:baseline;padding:9px 14px;background:rgba(0,0,0,.25);border-radius:8px;border-left:3px solid #e69db5}
-.file .name{font-family:ui-monospace,Consolas,monospace;font-size:13px;color:#f5c6d6;min-width:150px;font-weight:700}
-.file .desc{flex:1;font-size:14px;color:#c8b8bf}
+.file{display:flex;gap:12px;align-items:baseline;padding:11px 16px;background:rgba(0,0,0,.25);border-radius:8px;border-left:3px solid #e69db5;text-decoration:none;color:inherit;transition:background .15s}
+.file:hover{background:rgba(230,157,181,.1)}
+.file.self{border-left-color:#78c88c;background:rgba(120,200,140,.06)}
+.file.self:hover{background:rgba(120,200,140,.12)}
+.file.soon{border-left-color:#444;background:rgba(255,255,255,.02);opacity:.55;cursor:default;pointer-events:none}
+.file .name{font-family:ui-monospace,Consolas,monospace;font-size:13px;color:#f5c6d6;min-width:160px;font-weight:700}
+.file.self .name{color:#b0e8c0}
+.file.soon .name{color:#a89aa0}
+.file .desc{flex:1;font-size:13.5px;color:#c8b8bf;line-height:1.5}
+.file .tag{font-size:10.5px;padding:2px 8px;border-radius:10px;background:rgba(255,255,255,.06);color:#a89aa0;font-weight:800;letter-spacing:.05em;text-transform:uppercase}
+.file.self .tag{background:rgba(120,200,140,.18);color:#b0e8c0}
+.file.soon .tag{background:rgba(255,255,255,.04);color:#7a6a72}
+
 .footer{margin-top:48px;padding-top:20px;border-top:1px solid rgba(230,157,181,.2);color:#a89aa0;font-size:12.5px;text-align:center;font-style:italic}
 </style>
 </head>
@@ -39,7 +50,8 @@ code{font-family:ui-monospace,Consolas,monospace;font-size:13px;background:rgba(
 <h2>Кто пользователь</h2>
 <ul>
 <li><b>Не программист.</b> VS Code + GitHub Desktop. Код копирует блоками.</li>
-<li><b>Windows 11 ПК, iPad Air M2, iPhone 13 и 16 Pro Max.</b> Смотрит результат через GitHub Pages.</li>
+<li><b>Устройства:</b> ПК Windows 11 (2560×1440), iPad Air 11 M2 (1640×2360), iPhone 13 (1170×2532), iPhone 16 Pro Max (1320×2868). Смотрит результат через GitHub Pages.</li>
+
 <li><b>Устаёт от длинных инструкций.</b> Один шаг за раз.</li>
 <li><b>Понимает визуально.</b> Скрины со стрелочками работают. Схемы «деревом» — нет.</li>
 <li><b>Честная.</b> Скажет прямо, если что-то не нравится.</li>
@@ -50,41 +62,87 @@ code{font-family:ui-monospace,Consolas,monospace;font-size:13px;background:rgba(
 <div class="rule"><b>Сначала решение — потом код.</b> Пока пользователь не сказала «ок, давай код» — обсуждаем словами.</div>
 <div class="rule"><b>Один шаг за раз.</b> Сделала → сохранила → обновила → показала → следующий.</div>
 <div class="rule"><b>Код — целым блоком.</b> «Найди этот текст → замени на этот». Без номеров строк.</div>
+<div class="rule"><b>Не повторять код, если он уже был дан.</b> Один раз написали — второй раз не надо.</div>
+<div class="rule"><b>Не забывать про <code>!important</code>,</b> когда старое правило мешает.</div>
+<div class="rule"><b>При застревании — просить файлы.</b> «Пришли index.html, style.css».</div>
+<div class="rule"><b>ИИ не может отправлять скрины.</b> Только пользователь.</div>
 <div class="rule"><b>Если «этого нет» — остановиться и попросить скрин.</b> Не придумывать ещё вариант.</div>
 <div class="rule"><b>Перед Replace All — предупредить,</b> что замена может задеть лишнее.</div>
 <div class="rule"><b>Большая задача — разбить на подшаги.</b> Идти по одному.</div>
 <div class="rule"><b>Потерял нить — сказать и предложить обновить документацию.</b> Не делать вид, что помню.</div>
 <div class="rule"><b>Проверка на телефоне — только через Commit + Push.</b> Прямого доступа к файлам на iPad/iPhone нет.</div>
 <div class="rule"><b>Если задача касается смежного раздела — попросить нужный файл.</b> Не додумывать. Не спрашивать пользователя то, что может быть в другом файле.</div>
+<div class="rule"><b>Если пользователь устала — остановиться.</b> Короткие неопределённые ответы — это не значит «всё работает». Спросить конкретнее.</div>
+<div class="rule"><b>Если «не то» без объяснений — предложить 2–3 варианта.</b> Не мучить вопросом «что именно не то?».</div>
+<div class="rule"><b>Не переспрашивать то, что уже решено.</b> НО: если пользователь сама вернулась к вопросу — значит, передумала. Обсуждаем заново.</div>
 
 <h2>Где мы сейчас</h2>
 <div class="box done">
 <b>13 октября 2026.</b> Шаг 35 (большая карточка рецепта, MVP) закрыт 11 октября. Шаг 36 (база продуктов) — подшаги 1–4.7 закрыты 12 октября: 309 продуктов в базе, storage.js функции, пикер, форма продукта, дубликаты, редактирование, <code>afterCreate</code>.
-<br><b>Следующее:</b> шаг 37 — редактор рецепта.
+<br><b>Следующее по коду:</b> шаг 37 — редактор рецепта.
+<br><b>Сейчас:</b> разбираемся с документацией.
 </div>
 
-<h2>Что в каких файлах</h2>
-<p>Скидываешь <b>этот файл</b> всегда. Плюс — файл по теме задачи. Если чего-то не хватает — я попрошу.</p>
+<h2>Файлы проекта</h2>
+<p>Скидываешь <b>start.html</b> всегда. Плюс — файл по теме задачи. Если чего-то не хватает — ИИ попросит.</p>
+
 <div class="files">
-<div class="file"><span class="name">start.html</span><span class="desc">Этот файл. Кто пользователь, правила, где мы, оглавление.</span></div>
-<div class="file"><span class="name">продукты.html</span><span class="desc">База продуктов: готовая и своя. Формат продукта. 19 групп. Пикер. Форма. Дубликаты. Редактирование. Единицы измерения. Смежное: КБЖУ рецепта — в рецептах.</span></div>
-<div class="file"><span class="name">рецепты.html</span><span class="desc">Структура рецепта. Маленькая и большая карточка. Порции. Пересчёт КБЖУ. Ингредиенты. Шаги. Экраны: Главная, Избранное, План, Кладовая. Добавление рецепта. Настройки.</span></div>
-<div class="file"><span class="name">дизайн.html</span><span class="desc">6 слоёв оформления: стиль, палитра, оттенок, тень, тема, фон. 8 стилей, 9 палитр × 5 оттенков. Панель 🖌, макет, черновик, предпросмотр. Оформление по экранам.</span></div>
-<div class="file"><span class="name">архитектура.html</span><span class="desc">Структура папок и файлов. Порядок подключения скриптов. IndexedDB, 9 таблиц. storage.js — что работает, что заглушки. База тегов.</span></div>
-<div class="file"><span class="name">история.html</span><span class="desc">Известные баги браузеров. Уроки (что уже наступали). Отложенное (что решили не делать). Заглядывать, когда что-то сломалось.</span></div>
+
+<a class="file self" href="start.html">
+  <span class="name">start.html</span>
+  <span class="desc">Этот файл. Кто пользователь, правила, где мы, оглавление.</span>
+  <span class="tag">Этот</span>
+</a>
+
+<a class="file" href="plan.html">
+  <span class="name">plan.html</span>
+  <span class="desc">Что сделано, что делаем, что впереди. Техдолг. Отложенное.</span>
+  <span class="tag">Есть</span>
+</a>
+
+<a class="file" href="products.html">
+  <span class="name">products.html</span>
+  <span class="desc">База продуктов: готовая и своя. Формат. 19 групп. Пикер. Форма. Дубликаты. Редактирование. Единицы измерения.</span>
+  <span class="tag">Есть</span>
+</a>
+
+<div class="file soon">
+  <span class="name">recipes.html</span>
+  <span class="desc">Структура рецепта. Маленькая и большая карточка. Порции. Пересчёт КБЖУ. Ингредиенты. Шаги. Экраны. Добавление рецепта. Настройки.</span>
+  <span class="tag">Скоро</span>
+</div>
+
+<div class="file soon">
+  <span class="name">design.html</span>
+  <span class="desc">6 слоёв оформления. 8 стилей, 9 палитр × 5 оттенков. Панель 🖌, макет, черновик, предпросмотр. Оформление по экранам.</span>
+  <span class="tag">Скоро</span>
+</div>
+
+<a class="file" href="arch.html">
+  <span class="name">arch.html</span>
+  <span class="desc">Структура папок и файлов. Порядок подключения скриптов. IndexedDB, 9 таблиц. storage.js — что работает, что заглушки.</span>
+  <span class="tag">Есть</span>
+</a>
+
+<div class="file soon">
+  <span class="name">history.html</span>
+  <span class="desc">Известные баги браузеров. Уроки (что уже наступали). Отложенное. Заглядывать, когда что-то сломалось.</span>
+  <span class="tag">Скоро</span>
+</div>
+
 </div>
 
 <h2>Как скидывать в новую сессию</h2>
 <ol style="margin-left:22px">
 <li>Скидываешь <code>start.html</code> — всегда.</li>
-<li>Скидываешь файл по теме задачи — например, работаем с продуктами → <code>продукты.html</code>.</li>
+<li>Скидываешь файл по теме задачи — например, работаем с продуктами → <code>products.html</code>.</li>
 <li>Если задача требует деталей — скидываешь ещё файл или кусок кода.</li>
 <li>ИИ сам попросит, если чего-то не хватает.</li>
 </ol>
 
 <div class="footer">
 <p><b>Копилка рецептов · Старт · 13 октября 2026</b></p>
-<p>Полная карта проекта — в остальных файлах. Этот файл — только штурман.</p>
+<p>Этот файл — штурман. Подробности — в остальных файлах.</p>
 </div>
 
 </div>

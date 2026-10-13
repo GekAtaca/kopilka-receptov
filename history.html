@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Копилка рецептов · История</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#1a1618;color:#e8e3e5;font-family:Nunito,sans-serif;padding:40px 20px;line-height:1.65;font-size:15px}
+.wrap{max-width:880px;margin:0 auto}
+h1{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:700;font-size:44px;color:#e69db5;margin-bottom:6px;line-height:1.1}
+.subtitle{color:#a89aa0;font-size:14px;margin-bottom:36px;font-style:italic}
+h2{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:700;font-size:28px;color:#e69db5;margin:40px 0 16px;padding-bottom:10px;border-bottom:1px solid rgba(230,157,181,.25)}
+h3{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:700;font-size:21px;color:#f0e8eb;margin:26px 0 10px}
+p{margin:0 0 10px}
+ul,ol{margin:6px 0 14px 22px}
+li{margin-bottom:5px}
+code{font-family:ui-monospace,Consolas,monospace;font-size:13px;background:rgba(230,157,181,.12);color:#f5c6d6;padding:2px 6px;border-radius:4px}
+pre{background:#0f0d0e;border:1px solid rgba(230,157,181,.15);border-radius:8px;padding:14px 16px;overflow-x:auto;font-size:12.5px;line-height:1.55;color:#d8d0d3;margin:10px 0 18px}
+pre code{background:none;padding:0;color:inherit;font-size:inherit}
+.box{background:rgba(230,157,181,.05);border:1px solid rgba(230,157,181,.2);border-radius:10px;padding:16px 20px;margin:14px 0}
+.box.warn{background:rgba(255,180,100,.06);border-color:rgba(255,180,100,.3)}
+.box.done{background:rgba(120,200,140,.06);border-color:rgba(120,200,140,.3)}
+.box.ok{background:rgba(120,180,255,.06);border-color:rgba(120,180,255,.3)}
+.box.note{background:rgba(180,140,255,.06);border-color:rgba(180,140,255,.3)}
+.box.bug{background:rgba(255,80,80,.06);border-color:rgba(255,80,80,.3)}
+.lesson{background:rgba(255,80,80,.06);border:1px solid rgba(255,80,80,.3);border-radius:10px;padding:14px 18px;margin:12px 0}
+.lesson::before{content:"💥 Урок";display:block;font-weight:800;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#ffb0b0;margin-bottom:6px}
+.lesson .title{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:700;font-size:18px;color:#f0e8eb;margin-bottom:6px}
+.lesson .fix{color:#b0e8c0;font-size:13.5px;margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.08)}
+.lesson .fix::before{content:"✓ Как решено: ";font-weight:800;color:#b0e8c0}
+.rule{border-left:3px solid #e69db5;background:rgba(230,157,181,.08);padding:10px 16px;border-radius:0 8px 8px 0;margin:10px 0 14px;font-size:14px}
+.rule::before{content:"📌 Правило";display:block;font-weight:800;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#f5c6d6;margin-bottom:5px}
+.rule.no{background:rgba(255,120,120,.06);border-color:#ff8080}
+.rule.no::before{content:"🚫 Не делаем";color:#ffb0b0}
+.rule.imp{background:rgba(120,180,255,.08);border-color:#78b4ff}
+.rule.imp::before{content:"⚠️ Важно";color:#b0d8ff}
+.table{width:100%;border-collapse:collapse;margin:12px 0 18px;font-size:13.5px;background:rgba(0,0,0,.2);border-radius:8px;overflow:hidden}
+.table th{background:rgba(230,157,181,.12);color:#f5c6d6;padding:9px 12px;text-align:left;font-weight:800;font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid rgba(230,157,181,.2)}
+.table td{padding:9px 12px;border-bottom:1px solid rgba(255,255,255,.05);vertical-align:top}
+.table tr:last-child td{border-bottom:none}
+.chip{display:inline-block;padding:2px 10px;background:rgba(230,157,181,.15);color:#f5c6d6;border-radius:20px;font-size:12px;font-weight:700;margin:2px 4px 2px 0}
+.chip.wait{background:rgba(255,200,100,.15);color:#ffe0a0}
+.footer{margin-top:56px;padding-top:22px;border-top:1px solid rgba(230,157,181,.2);color:#a89aa0;font-size:12.5px;text-align:center;font-style:italic}
+.back{display:inline-block;color:#e69db5;text-decoration:none;font-size:13px;font-weight:700;margin-bottom:24px;opacity:.8}
+.back:hover{opacity:1}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<a class="back" href="start.html">← Назад в Старт</a>
+
+<h1>История</h1>
+<p class="subtitle">Известные баги. Уроки (что уже наступали). Отложенное.</p>
+
+<div class="box note">
+<b>Когда заглядывать.</b> Что-то сломалось, странно себя ведёт, «кажется, это уже было». Или когда решаем «а не сделать ли вот эту штуку» — возможно, уже решали не делать.
+</div>
+
+<h2>Известные баги браузеров</h2>
+
+<table class="table">
+<tr><th>Где</th><th>Что</th><th>Решение</th></tr>
+<tr><td>iOS Safari</td><td><code>position:fixed</code> + <code>z-index:-1</code> — не отрисовывается</td><td>Фон — <code>position:fixed; z-index:0</code>, контент в <code>.app</code> с <code>z-index:1</code>.</td></tr>
+<tr><td>iOS Safari</td><td>Полоса внизу экрана от адресной строки</td><td>Оставили как есть.</td></tr>
+<tr><td>iOS/iPadOS Safari</td><td>Агрессивно кэширует CSS/JS</td><td>Приватное окно. Или Network → Disable cache → Ctrl+F5.</td></tr>
+<tr><td>iOS Safari</td><td><code>background-image</code> не отрисовывается</td><td>Только <code>&lt;img&gt;</code> с <code>position:fixed</code>.</td></tr>
+<tr><td>iOS Safari</td><td><code>mask-composite</code> + <code>blur</code> + <code>scale</code> крашит рендер</td><td>Маска на картинке, не на обёртке. Без <code>mask-composite</code> на iOS.</td></tr>
+<tr><td>Общее</td><td>Незакрытая <code>}</code> в CSS ломает следующие правила</td><td>После вставки блока — навести на <code>{</code>, убедиться в парной <code>}</code>.</td></tr>
+<tr><td>iOS Safari</td><td>Анимация <code>position:fixed</code> за границей экрана — глючит</td><td>Сдвиг уменьшен до 50px + opacity + visibility с задержкой.</td></tr>
+<tr><td>iOS Safari</td><td>Событие <code>scroll</code> во время инерционной прокрутки</td><td>Использовать <code>touchend</code> вместо <code>scroll</code>.</td></tr>
+<tr><td>Общее</td><td>Скрипт выполняется раньше HTML</td><td>Обернуть в <code>DOMContentLoaded</code>.</td></tr>
+</table>
+
+<h2>Уроки — что уже наступали</h2>
+
+<div class="lesson">
+<div class="title">JS: рекурсия в <code>getActiveDesign</code></div>
+<b>9 октября 2026.</b> При глобальной замене <code>getDesignFor(activeDesignScreen)</code> → <code>getActiveDesign()</code> через Replace All заменилась строка <b>внутри самой функции</b> <code>getActiveDesign</code>. Получилась рекурсия → <code>Maximum call stack size exceeded</code>.
+<div class="fix">При Replace All — сначала подумать, что <b>внутри заменяемого места</b> может быть то же самое. После замены — проверить, что функция не зовёт сама себя.</div>
+</div>
+
+<div class="lesson">
+<div class="title">z-index редактора фона</div>
+<b>10 октября 2026.</b> Редактор позиции фона должен открываться <b>поверх</b> панели оформления. Изначально <code>z-index</code> был <code>100000</code> — под панелью.
+<div class="fix">Подняли до <code>100003</code>. Текущая иерархия (снизу вверх): фон (0) → контент (1) → FAB (99) → нижняя навигация (100) → панель (100001) → окошко «Применить к…» и общие модалки (100002) → редактор фона (100003) → плашка предпросмотра (100004) → большая карточка рецепта (100005) → пикер продуктов (100006) → форма продукта (100007) → модалка дубликатов (100009) → заглушки #modalSoon / #modalRecipeTimer (100010 !important) → заставка (9999).</div>
+</div>
+
+<div class="lesson">
+<div class="title">Заставка висит вечно при ошибке в скрипте</div>
+<b>11 октября 2026.</b> В <code>main.js</code> сначала было так: <code>await Storage.init()</code> → ... → в самом конце <code>setTimeout(... скрыть заставку ...)</code>. Если что-то в начале упало — заставка оставалась навсегда, сайт недоступен.
+<div class="fix"><code>setTimeout</code>, который прячет заставку, — в <b>самом начале</b> <code>boot()</code>, до всех <code>await</code>. Тогда при любой ошибке страница всё равно покажется.</div>
+</div>
+
+<div class="lesson">
+<div class="title">Функция записи в объект — сначала создай объект</div>
+<b>11 октября 2026.</b> Функция <code>loadDesignFromStorage()</code> пыталась писать в <code>designData</code>, но она была <code>null</code> — потому что <code>loadDesignData()</code> (которая её создаёт) не успела вызваться. Ошибка: <code>Cannot set properties of null</code>.
+<div class="fix">Если функция пишет в общий объект (<code>designData</code>, <code>bgSettings</code>, ...) — в её начале должна быть строка, которая создаёт объект, если его нет. Не полагаться на порядок вызова.</div>
+</div>
+
+<div class="lesson">
+<div class="title">Эмодзи со склейкой теряют невидимый символ при копировании</div>
+<b>11 октября 2026.</b> Эмодзи 👨‍🍳 — это не один символ, а три: мужчина + невидимый склеивающий символ (ZWJ) + яичница. При копировании через чат ZWJ иногда теряется, и эмодзи распадается на два: 👨 и 🍳. Именно это произошло в <code>render.js</code> — иконка «приготовлено» в маленькой карточке показывала двух человечков.
+<div class="fix">Составные эмодзи (👨‍🍳, 👩‍🍳, 👨‍👩‍👧, 🏳️‍🌈) записывать через числовые HTML-коды: <code>&amp;#128104;&amp;#8205;&amp;#127859;</code>. Склейка (8205) гарантированно не потеряется.</div>
+</div>
+
+<div class="lesson">
+<div class="title">Дублирование <code>const</code> в одном файле ломает всё</div>
+<b>11 октября 2026, поздно вечером.</b> В <code>storage.js</code> оказалось два массива <code>demoRecipes</code>. Ошибка <code>Identifier 'demoRecipes' has already been declared</code> — она валит весь файл. Из-за этого <code>Storage</code> не создаётся, и падает <code>main.js</code> с ошибкой <code>Storage.init is not a function</code>.
+<div class="fix">Если сайт вдруг не грузится и в консоли «X is not defined» — первым делом искать выше в консоли <code>SyntaxError</code>. Одна <code>SyntaxError</code> валит весь файл. Перед вставкой большого блока с константой — проверить поиском, не объявлена ли уже.</div>
+</div>
+
+<div class="lesson">
+<div class="title">Миграция — список ключей проговаривать явно</div>
+<b>11 октября 2026.</b> Договаривались: в IndexedDB уезжают только <code>design</code> и <code>bgSettings</code>, а три «мелочи» (<code>activeScreen</code>, <code>designShadowTab</code>, <code>designSectionsCollapsed</code>) остаются в localStorage. В коде миграции по памяти оказались все пять. Потом чистили руками — удаляли мёртвые копии из localStorage.
+<div class="fix">Перед написанием миграции — <b>выписать список ключей на бумагу и свериться с картой</b>. Не полагаться на память.</div>
+</div>
+
+<div class="lesson">
+<div class="title">Выделение текста мышкой закрывало модалку</div>
+<b>12 октября 2026.</b> Клик по тёмному фону закрывает модалку (стандартное поведение). Но если пользователь <b>выделяет текст в поле</b> и, не отпуская кнопку мыши, ведёт курсор за границу поля — браузер фиксирует «отпускание» на тёмном фоне. Модалка закрывалась. Хотя пользователь просто выделял текст.
+<div class="fix">Вместо <code>click</code> по фону — два события: <code>mousedown</code> (запоминаем, что нажатие было на фоне) и <code>mouseup</code> (закрываем, только если <b>и нажатие, и отпускание</b> были на фоне). Правка внесена в <code>product-form.js</code>, <code>product-picker.js</code>, <code>card-big.js</code>.</div>
+</div>
+
+<div class="lesson">
+<div class="title">Порядок проверок в обработчике клика</div>
+<b>13 октября 2026.</b> В пикере продуктов клик по пункту dropdown сортировки не срабатывал. Причина: проверка «клик внутри dropdown — ничего не делать» стояла <b>раньше</b>, чем «клик по пункту — сменить сортировку». Клик по пункту глотался.
+<div class="fix">Частные проверки — <b>раньше</b> общих. Сначала «это пункт?», потом «это вообще внутри?». Иначе частный случай никогда не отработает.</div>
+</div>
+
+<div class="lesson">
+<div class="title"><code>parentElement</code> vs <code>closest</code></div>
+<b>13 октября 2026.</b> Кнопка ≡ в пикере не находила свой dropdown. <code>btn.parentElement</code> — это <code>.pp-group-right</code>, а dropdown лежит рядом, внутри <code>.pp-group-head</code>. <code>querySelector</code> возвращал <code>null</code>.
+<div class="fix">Если элемент может быть не прямым родителем, а «где-то выше» — использовать <code>closest('.общий-контейнер')</code>, а потом уже от него <code>querySelector</code>.</div>
+</div>
+
+<div class="lesson">
+<div class="title">Свёрнутость групп ломалась при поиске</div>
+<b>13 октября 2026.</b> При активном поиске группы автоматически раскрывались (правильно). Но клик по заголовку группы во время поиска <b>всё равно переключал</b> состояние <code>collapsed</code> — и после очистки поиска получалось не то, что было.
+<div class="fix">При активном поиске клик по заголовку группы — <b>ничего не делает</b>. Поиск и так всё раскрывает, а состояние свёрнутости не трогается.</div>
+</div>
+
+<h2>Технический долг</h2>
+
+<div class="box warn">
+<b>Высокий приоритет:</b>
+<ul>
+<li>Удалить старые <code>Структурная карта 6.html</code> … <code>11.html</code>, «Структурная карта 11 copy.html» из проекта.</li>
+<li>В <code>storage.js</code> лежит дубликат массива <code>demoRecipesOLD</code> — удалить (~200 строк мёртвого кода).</li>
+</ul>
+</div>
+
+<div class="box">
+<b>Средний приоритет:</b>
+<ul>
+<li>Остатки старой панели: <code>.dp-themes</code> в CSS, <code>dpThemes</code> в JS — удалить, когда убедимся, что не используются.</li>
+<li>Объединить дублирующий CSS: <code>.design-panel</code>, <code>.bg-editor</code>, <code>.modal</code> частично дублируются.</li>
+<li>Унифицировать имена data-атрибутов: <code>data-s</code>, <code>data-p</code>, <code>data-shade</code>, <code>data-sh</code>, <code>data-th</code>, <code>data-bg</code> — смешаны.</li>
+</ul>
+</div>
+
+<div class="box">
+<b>Низкий приоритет (мелочи):</b>
+<ul>
+<li>В <code>style.css</code> опечатка <code>pp-group-name</code> без точки в начале — не работает правило.</li>
+<li>В <code>storage.js</code> пропала разделительная строка <code>// ═══</code> над блоком «Статистика».</li>
+</ul>
+</div>
+
+<div class="rule">
+<b>Автоскрытие FAB на пустых экранах не работает.</b> Нечего скроллить. Не баг. Проверить, когда экраны наполнятся.
+</div>
+
+<h2>Отложено осознанно</h2>
+
+<div class="box note">
+<b>Это не забыто.</b> Осознанно отложено. Возможно, никогда не понадобится.
+</div>
+
+<h3>Дизайн</h3>
+<ul>
+<li><span class="chip wait">⏳</span> <b>Хвост подшага 7 — «Общая / Своя» позиция фона.</b> Переключатель в редакторе + точка-звёздочка на квадратике. Требует переработки <code>bgSettings</code>.</li>
+</ul>
+
+<h3>Уведомления</h3>
+<ul>
+<li><span class="chip wait">⏳</span> <b>Пуш-уведомления (таймер).</b> Только после PWA. Требует Service Worker + разрешение.</li>
+<li><span class="chip wait">⏳</span> <b>Звук при закрытом сайте.</b> Пара к пуш-уведомлениям. Браузеры блокируют звук при неактивной вкладке.</li>
+</ul>
+
+<h3>Рецепты</h3>
+<ul>
+<li><span class="chip wait">⏳</span> <b>Режим «Поделиться одним рецептом».</b> Ссылка вида <code>#share=recipe-id</code>. При открытии — только рецепт, без шапки и навигации.</li>
+<li><span class="chip wait">⏳</span> <b>Уточнение веса штучных.</b> Кнопка ⚖ «Уточнить вес» — взвесить каждую помидорину отдельно.</li>
+<li><span class="chip wait">⏳</span> <b>Отдельный экран «База продуктов».</b> Вкладка в Кладовой: 🛒 Купить · 🏠 Есть дома · 📚 База продуктов.</li>
+<li><span class="chip wait">⏳</span> <b>Копирование готового продукта в свои.</b> «Скопировать в мои».</li>
+<li><span class="chip wait">⏳</span> <b>Переопределение продукта.</b> «Переопределить для себя». Создаётся своя версия (⭐), при поиске первая, в рецептах автоматически используется она.</li>
+<li><span class="chip wait">⏳</span> <b>Импорт / экспорт базы продуктов.</b> Отдельно от общего бэкапа.</li>
+<li><span class="chip wait">⏳</span> <b>Массовое редактирование продуктов.</b> Пометить несколько, изменить группу сразу.</li>
+<li><span class="chip wait">⏳</span> <b>Фото продукта и фото рецепта.</b> Ждут storage.js слой 4 (фото: сжатие, blob).</li>
+</ul>
+
+<h3>Кладовая</h3>
+<ul>
+<li><span class="chip wait">⏳</span> <b>Цена и магазин у продукта.</b> Не в базе продуктов, а в кладовой. Там будет история покупок: «12 октября, Пятёрочка, 89 ₽».</li>
+<li><span class="chip wait">⏳</span> <b>Трекер питания с целями.</b> Похудеть / набрать массу. Сайт учитывает цели в рецептах и плане.</li>
+</ul>
+
+<h3>Синхронизация</h3>
+<div class="box note">
+<b>Отдельный этап. Сейчас — без неё.</b> Возможно, далеко.
+</div>
+<table class="table">
+<tr><th>Кто</th><th>Что</th></tr>
+<tr><td>Пользователь + парень</td><td>Один общий аккаунт. Общие рецепты, план, кладовая.</td></tr>
+<tr><td>Мама</td><td>Свой сайт. Только база Джулии. Свой список покупок.</td></tr>
+<tr><td>Обмен рецептами</td><td>Пользователь ↔ мама. Кнопки «Сохранить» / «Не сохранять».</td></tr>
+</table>
+<div class="rule imp">
+<b>Оформление — локальное, НЕ синхронизируется.</b> Синхронизируются только данные. Оформление — у каждого своё. Своё на каждом экране.
+</div>
+<h3>Планы на будущее</h3>
+<ul>
+<li><span class="chip wait">⏳</span> <b>PWA.</b> Манифест + Service Worker + добавление на экран «Домой». После этого — пуш-уведомления.</li>
+<li><span class="chip wait">⏳</span> <b>Синхронизация.</b> Общий аккаунт с парнем, отдельный сайт для мамы, обмен рецептами. Отдельный этап, далеко.</li>
+<li><span class="chip wait">⏳</span> <b>Перенос 150 рецептов из PDF.</b> Вручную, через редактор рецепта. Сначала 5, потом остальные 145.</li>
+</ul>
+
+<h2>Правила-профилактика</h2>
+
+<div class="rule imp">
+<b>Перед Replace All — предупредить, что замена может задеть лишнее.</b> Проверить, что функция не зовёт сама себя.
+</div>
+
+<div class="rule imp">
+<b>Перед вставкой большого блока с константой — поискать, не объявлена ли уже.</b> Одна <code>SyntaxError</code> валит весь файл.
+</div>
+
+<div class="rule imp">
+<b>Если модалка закрывается по клику на тёмный фон — всегда <code>mousedown</code>+<code>mouseup</code>.</b> Иначе выделение текста в поле её закроет.
+</div>
+
+<div class="rule imp">
+<b>Если элемент может быть не прямым родителем — использовать <code>closest()</code>.</b> Не <code>parentElement</code>.
+</div>
+
+<div class="rule imp">
+<b>Частные проверки в обработчике — раньше общих.</b> Иначе частный случай никогда не отработает.
+</div>
+
+<div class="rule imp">
+<b>Составные эмодзи — только через <code>&amp;#…;</code>.</b> Никакого копирования-вставки из чата.
+</div>
+
+<div class="rule">
+<b>Если сайт не грузится и «X is not defined» — искать в консоли выше <code>SyntaxError</code>.</b> Он валит весь файл.
+</div>
+
+<div class="rule no">
+<b>Не уменьшать CSS и JS.</b> Не делать минификацию.</div>
+
+<h2>Смежное в других файлах</h2>
+<div class="box ok">
+<ul>
+<li><b>Известные баги iOS, связанные с фоном</b> — в <code>design.html</code>.</li>
+<li><b>Известные баги, связанные с хранилищем</b> — в <code>arch.html</code> (правила работы с IndexedDB).</li>
+<li><b>Что уже сделано, что дальше</b> — в <code>plan.html</code>.</li>
+</ul>
+</div>
+
+<div class="footer">
+<p><b>Копилка рецептов · История · 13 октября 2026</b></p>
+<p>Заглядывать, когда что-то сломалось или когда всплывает вопрос «а мы это обсуждали?».</p>
+</div>
+
+</div>
+</body>
+</html>

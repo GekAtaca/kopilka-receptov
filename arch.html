@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Копилка рецептов · Архитектура</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#1a1618;color:#e8e3e5;font-family:Nunito,sans-serif;padding:40px 20px;line-height:1.65;font-size:15px}
+.wrap{max-width:880px;margin:0 auto}
+h1{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:700;font-size:44px;color:#e69db5;margin-bottom:6px;line-height:1.1}
+.subtitle{color:#a89aa0;font-size:14px;margin-bottom:36px;font-style:italic}
+h2{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:700;font-size:28px;color:#e69db5;margin:40px 0 16px;padding-bottom:10px;border-bottom:1px solid rgba(230,157,181,.25)}
+h3{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:700;font-size:21px;color:#f0e8eb;margin:26px 0 10px}
+h4{font-family:Nunito,sans-serif;font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:#a89aa0;margin:20px 0 8px}
+p{margin:0 0 10px}
+ul,ol{margin:6px 0 14px 22px}
+li{margin-bottom:5px}
+code{font-family:ui-monospace,Consolas,monospace;font-size:13px;background:rgba(230,157,181,.12);color:#f5c6d6;padding:2px 6px;border-radius:4px}
+pre{background:#0f0d0e;border:1px solid rgba(230,157,181,.15);border-radius:8px;padding:14px 16px;overflow-x:auto;font-size:12.5px;line-height:1.55;color:#d8d0d3;margin:10px 0 18px}
+pre code{background:none;padding:0;color:inherit;font-size:inherit}
+.box{background:rgba(230,157,181,.05);border:1px solid rgba(230,157,181,.2);border-radius:10px;padding:16px 20px;margin:14px 0}
+.box.warn{background:rgba(255,180,100,.06);border-color:rgba(255,180,100,.3)}
+.box.done{background:rgba(120,200,140,.06);border-color:rgba(120,200,140,.3)}
+.box.ok{background:rgba(120,180,255,.06);border-color:rgba(120,180,255,.3)}
+.box.bug{background:rgba(255,80,80,.06);border-color:rgba(255,80,80,.3)}
+.rule{border-left:3px solid #e69db5;background:rgba(230,157,181,.08);padding:10px 16px;border-radius:0 8px 8px 0;margin:10px 0 14px;font-size:14px}
+.rule::before{content:"📌 Правило";display:block;font-weight:800;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#f5c6d6;margin-bottom:5px}
+.rule.no{background:rgba(255,120,120,.06);border-color:#ff8080}
+.rule.no::before{content:"🚫 Нельзя";color:#ffb0b0}
+.rule.imp{background:rgba(120,180,255,.08);border-color:#78b4ff}
+.rule.imp::before{content:"⚠️ Важно";color:#b0d8ff}
+.table{width:100%;border-collapse:collapse;margin:12px 0 18px;font-size:13.5px;background:rgba(0,0,0,.2);border-radius:8px;overflow:hidden}
+.table th{background:rgba(230,157,181,.12);color:#f5c6d6;padding:9px 12px;text-align:left;font-weight:800;font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid rgba(230,157,181,.2)}
+.table td{padding:9px 12px;border-bottom:1px solid rgba(255,255,255,.05);vertical-align:top}
+.table tr:last-child td{border-bottom:none}
+.chip{display:inline-block;padding:2px 10px;background:rgba(230,157,181,.15);color:#f5c6d6;border-radius:20px;font-size:12px;font-weight:700;margin:2px 4px 2px 0}
+.chip.done{background:rgba(120,200,140,.18);color:#b0e8c0}
+.chip.wait{background:rgba(255,200,100,.15);color:#ffe0a0}
+.footer{margin-top:56px;padding-top:22px;border-top:1px solid rgba(230,157,181,.2);color:#a89aa0;font-size:12.5px;text-align:center;font-style:italic}
+.back{display:inline-block;color:#e69db5;text-decoration:none;font-size:13px;font-weight:700;margin-bottom:24px;opacity:.8}
+.back:hover{opacity:1}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<a class="back" href="start.html">← Назад в Старт</a>
+
+<h1>Архитектура</h1>
+<p class="subtitle">Как устроен код. Файлы. Порядок подключения. IndexedDB. storage.js.</p>
+
+<h2>Инструменты</h2>
+
+<table class="table">
+<tr><th>Инструмент</th><th>Детали</th></tr>
+<tr><td>VS Code</td><td>Русский, расширение Live Server</td></tr>
+<tr><td>GitHub</td><td>Логин <code>GekAtaca</code>, 2FA</td></tr>
+<tr><td>GitHub Desktop</td><td>Связан с аккаунтом. Commit + Push</td></tr>
+<tr><td>GitHub Pages</td><td><code>gekataca.github.io/kopilka-receptov</code></td></tr>
+</table>
+
+<h4>Рабочий цикл</h4>
+<ol>
+<li>Правка в VS Code → Ctrl+S.</li>
+<li>Просмотр через Live Server (на ПК).</li>
+<li>Обновить: Ctrl+F5 на ПК. На iPhone/iPad — потянуть вниз.</li>
+<li>Перед проверкой на iPhone/iPad: <b>Commit + Push</b> → подождать 1–2 минуты → обновить.</li>
+</ol>
+
+<div class="box warn">
+<b>Рабочая папка</b> — <code>Документы → GitHub → kopilka-receptov</code>. Не на Рабочем столе.
+</div>
+
+<h2>Структура проекта</h2>
+
+<pre><code>kopilka-receptov/
+├── index.html              ← главная страница (4 экрана внутри)
+├── start.html              ← старт документации (хаб)
+├── plan.html               ← план работ
+├── products.html           ← база продуктов
+├── recipes.html            ← рецепты и карточки
+├── design.html             ← оформление
+├── arch.html               ← этот файл
+├── history.html            ← баги, уроки, отложенное
+├── (Структурная карта 6–11.html, 11 copy.html — техдолг: удалить)
+├── favicon.svg
+├── robots.txt
+├── README.md
+├── app/
+│   ├── css/
+│   │   ├── style.css       ← база (--c1..--c4) + фоны + редактор + панель + FAB + экраны + модалки + макет (.dm-scope, .dm-bg) + предпросмотр + пикер + форма продукта
+│   │   ├── card.css        ← база карточки + тени + тёмная тема + большая карточка (.b-*) + .dm-scope расширения
+│   │   ├── palettes/       ← 9 файлов палитр
+│   │   └── styles/         ← 8 файлов стилей
+│   ├── js/                 ← 14 файлов (см. ниже)
+│   └── img/                ← пока пусто
+└── images/                 ← 19 фоновых картинок</code></pre>
+
+<h2>Файлы app/js/ — что делает каждый</h2>
+
+<table class="table">
+<tr><th>Файл</th><th>Что делает</th></tr>
+<tr><td><code>tags-base.js</code></td><td>58 базовых тегов, 16 групп. ID <code>btag-NNN</code>. Только данные.</td></tr>
+<tr><td><code>products-base.js</code></td><td>19 групп продуктов, 309 продуктов. ID — транслит (<code>milk-3-2</code>). Только данные.</td></tr>
+<tr><td><code>storage.js</code></td><td>Единая точка входа в IndexedDB. Все операции с рецептами, продуктами, отметками, тегами, настройками. Подробно — ниже.</td></tr>
+<tr><td><code>shared.js</code></td><td>Общие переменные и утилиты: <code>bgSettings</code>, <code>currentBg</code>, <code>designDraft</code>, <code>getDeviceType</code>, <code>saveSettingsToStorage</code>.</td></tr>
+<tr><td><code>render.js</code></td><td>Превращает объект рецепта в HTML маленькой карточки. Раскладывает рецепты по секциям Главной.</td></tr>
+<tr><td><code>card-big.js</code></td><td>Большая карточка рецепта: открытие, закрытие, порции, чекбоксы, dropdown «В план» и «Ещё», нижние кнопки.</td></tr>
+<tr><td><code>product-picker.js</code></td><td>Модалка «База продуктов»: поиск, группировка, свёрнутость, сортировка, контекстное меню, <code>afterCreate</code>.</td></tr>
+<tr><td><code>product-form.js</code></td><td>Форма создания/редактирования продукта: поля, валидация, дубликаты, сохранение.</td></tr>
+<tr><td><code>bg.js</code></td><td>Фон сайта и редактор позиции: <code>applyBg</code>, <code>openBgEditor</code>, зум, перетаскивание.</td></tr>
+<tr><td><code>design.js</code></td><td>Панель 🖌, черновик, макет, «Применить к…», предпросмотр, оформление по экранам.</td></tr>
+<tr><td><code>screens.js</code></td><td>Переключение 4 экранов. Сворачивание содержания.</td></tr>
+<tr><td><code>modals.js</code></td><td>Модалки-заглушки FAB (⏲ 🔍 ➕).</td></tr>
+<tr><td><code>fab.js</code></td><td>Автоскрытие плавающих кнопок.</td></tr>
+<tr><td><code>main.js</code></td><td>Запуск всего: <code>Storage.init → seedDemoRecipes → loadDesign → initScreens → renderAllRecipes → заставка</code>.</td></tr>
+</table>
+
+<h2>Порядок подключения скриптов</h2>
+
+<div class="rule imp">
+<b>Порядок критичен.</b> Если поменять местами — что-то сломается: не найдётся функция, не загрузится база. Файлы подключаются в конце <code>&lt;body&gt;</code> через обычные <code>&lt;script src="..."&gt;</code>.
+</div>
+
+<pre><code>1. tags-base.js        (данные — базовые теги)
+2. products-base.js    (данные — готовая база продуктов)
+3. storage.js          (работа с IndexedDB)
+4. shared.js           (общие переменные)
+5. render.js           (рендер маленьких карточек)
+6. card-big.js         (большая карточка)
+7. product-picker.js   (пикер продуктов)
+8. product-form.js     (форма продукта)
+9. bg.js               (фон и редактор позиции)
+10. design.js          (панель 🖌, черновик, макет)
+11. screens.js         (переключение экранов)
+12. modals.js          (модалки FAB)
+13. fab.js             (автоскрытие FAB)
+14. main.js            (запуск всего)</code></pre>
+
+<h2>IndexedDB — где что живёт</h2>
+
+<div class="rule">
+<b>Всё живёт в IndexedDB.</b> Не в localStorage. Причина: рецептов будет 150+, будут фото, будут версии. localStorage (5–10 МБ) не хватит.
+</div>
+
+<h4>База данных</h4>
+<ul>
+<li><b>Имя:</b> <code>kopilka</code></li>
+<li><b>Версия:</b> 1</li>
+<li><b>Таблиц:</b> 9</li>
+</ul>
+
+<h4>Таблицы</h4>
+
+<table class="table">
+<tr><th>Таблица</th><th>Ключ</th><th>Что хранит</th><th>Статус</th></tr>
+<tr><td><code>recipes</code></td><td>id</td><td>Все рецепты (включая версии внутри).</td><td><span class="chip done">работает</span></td></tr>
+<tr><td><code>products</code></td><td>id</td><td>Своя база продуктов.</td><td><span class="chip done">работает</span></td></tr>
+<tr><td><code>pantry</code></td><td>id</td><td>Кладовая: что есть дома.</td><td><span class="chip wait">пусто</span></td></tr>
+<tr><td><code>shopping</code></td><td>id</td><td>Корзина / список покупок.</td><td><span class="chip wait">пусто</span></td></tr>
+<tr><td><code>plan</code></td><td>id</td><td>План питания.</td><td><span class="chip wait">пусто</span></td></tr>
+<tr><td><code>marks</code></td><td>id</td><td>Все отметки (см. ниже).</td><td><span class="chip done">работает</span></td></tr>
+<tr><td><code>timers</code></td><td>id</td><td>Активные таймеры.</td><td><span class="chip wait">пусто</span></td></tr>
+<tr><td><code>settings</code></td><td>key</td><td>Настройки (см. ниже).</td><td><span class="chip done">работает</span></td></tr>
+<tr><td><code>photos</code></td><td>id</td><td>Фото рецептов и продуктов.</td><td><span class="chip wait">пусто</span></td></tr>
+</table>
+
+<div class="box">
+<b>Почему фото отдельно.</b> Рецепт грузится быстро (без фото). Фото подгружаются отдельно — только когда открываешь карточку. Список рецептов не тормозит.
+</div>
+
+<h3>Таблица marks — шесть типов отметок</h3>
+
+<p>Ключ записи: <code>type:recipeId[:extra]</code>. Формат: <code>{ id, type, recipeId, extra, at }</code>.</p>
+
+<table class="table">
+<tr><th>Тип</th><th>Что значит</th><th>extra</th></tr>
+<tr><td><code>favorite</code></td><td>❤ Избранное</td><td>—</td></tr>
+<tr><td><code>cooked</code></td><td>👨‍🍳 Приготовлено</td><td>—</td></tr>
+<tr><td><code>want</code></td><td>🔖 Хочу приготовить</td><td>—</td></tr>
+<tr><td><code>plan</code></td><td>📅 В план</td><td><code>family</code> / <code>child</code> / <code>events</code></td></tr>
+<tr><td><code>ingredient</code></td><td>Галочка ингредиента</td><td>Название ингредиента</td></tr>
+<tr><td><code>portions</code></td><td>Выбранное количество порций</td><td>Число</td></tr>
+</table>
+
+<h3>Таблица settings — ключи</h3>
+
+<table class="table">
+<tr><th>Ключ</th><th>Что хранит</th></tr>
+<tr><td><code>design</code></td><td>Оформление по 4 экранам. Объект <code>{ home, favorites, plan, pantry }</code>.</td></tr>
+<tr><td><code>bgSettings</code></td><td>Три слота позиций/зума для каждого фона.</td></tr>
+<tr><td><code>activeScreen</code></td><td>Активный экран.</td></tr>
+<tr><td><code>designShadowTab</code></td><td>Активный таб тени (Карточки / Плавающие).</td></tr>
+<tr><td><code>designSectionsCollapsed</code></td><td>Свёрнутые секции панели 🖌.</td></tr>
+<tr><td><code>migratedFromLocalStorage</code></td><td>Флаг «миграция выполнена».</td></tr>
+<tr><td><code>demoSeeded</code></td><td>Флаг «9 демо-рецептов залиты».</td></tr>
+<tr><td><code>tags</code></td><td>Массив своих тегов.</td></tr>
+<tr><td><code>productPickerCollapsed</code></td><td>Свёрнутые группы в пикере продуктов.</td></tr>
+<tr><td><code>productSort</code></td><td>Сортировка «Моих» в пикере: <code>new-first</code> / <code>old-first</code> / <code>az</code> / <code>za</code>.</td></tr>
+</table>
+
+<div class="rule">
+<b>Не работать с IndexedDB напрямую.</b> Вся работа — через <code>storage.js</code>.
+</div>
+
+<h2>storage.js — все операции</h2>
+
+<p>Файл <code>app/js/storage.js</code>. Снаружи объект <code>Storage</code>. Внутри — вся работа с IndexedDB. Следующий ИИ просто вызывает <code>Storage.saveRecipe()</code>, не думая про IndexedDB.</p>
+
+<div class="box done">
+<b>Фолбэк.</b> Если IndexedDB недоступна (Safari приватное окно) — <code>saveSetting</code>/<code>getSetting</code> молча работают через localStorage. Сайт не падает.
+</div>
+
+<h3>Ядро</h3>
+<ul>
+<li><code>init()</code> — открыть базу, создать 9 таблиц, запустить миграцию.</li>
+<li><code>seedDemoRecipes()</code> — залить 9 демо-рецептов при первом запуске. Флаг <code>demoSeeded = true</code>.</li>
+<li><code>getStats()</code> — сколько рецептов и продуктов.</li>
+</ul>
+
+<h3>Настройки (универсальные)</h3>
+<ul>
+<li><code>getSetting(key)</code> / <code>saveSetting(key, value)</code> / <code>deleteSetting(key)</code>.</li>
+</ul>
+
+<h3>Рецепты <span class="chip done">работает</span></h3>
+<ul>
+<li><code>saveRecipe(recipe)</code> — сохранить. Без <code>id</code> — выдаст <code>recipe-NNN</code>. Автоподстановка <code>createdAt</code>/<code>updatedAt</code>.</li>
+<li><code>getRecipe(id)</code> — получить один.</li>
+<li><code>getAllRecipes()</code> — все.</li>
+<li><code>deleteRecipe(id)</code> — удалить.</li>
+</ul>
+
+<h4>Заглушки по рецептам</h4>
+<ul>
+<li><code>duplicateRecipe</code>, <code>getRecipesByTag</code>, <code>getRecipesByMeal</code>, <code>getRecipesBySource</code>, <code>searchRecipes</code>, <code>getRecipesCanCook</code>, <code>deleteRecipesBySource</code>.</li>
+</ul>
+
+<h3>Продукты <span class="chip done">работает</span></h3>
+<ul>
+<li><b>Готовая база:</b> <code>getBaseProductGroups</code>, <code>getBaseProducts</code>, <code>getBaseProduct</code>, <code>searchBaseProducts</code>. При чтении каждому добавляется <code>source: 'base'</code>.</li>
+<li><b>Своя база:</b> <code>getAllProducts</code>, <code>getProduct</code> (сначала своя, потом готовая), <code>saveProduct</code>, <code>deleteProduct</code>.</li>
+<li><b>Объединённые:</b> <code>searchProducts</code>, <code>getProductsByGroup</code>.</li>
+</ul>
+
+<h4>Заглушки по продуктам</h4>
+<ul>
+<li><code>getProductsByBrand</code>, <code>getOverriddenProducts</code>, <code>getUsedProducts</code>.</li>
+</ul>
+
+<h3>Отметки <span class="chip done">работает</span></h3>
+<ul>
+<li><code>addMark(type, recipeId, extra)</code> — добавить. <code>extra</code> необязательный.</li>
+<li><code>removeMark(type, recipeId, extra)</code> — убрать. Без <code>extra</code> — все записи этого типа и рецепта.</li>
+<li><code>getMarks(type)</code> — все отметки одного типа.</li>
+<li><code>isMarked(type, recipeId)</code> — есть ли отметка у рецепта.</li>
+<li><code>getAllMarks()</code> — всё сразу объектом <code>{ favorite, cooked, want, plan }</code>.</li>
+<li><code>clearMarks(type)</code> — убрать все отметки одного типа. Без типа — очистить всё.</li>
+</ul>
+
+<h3>Теги <span class="chip done">работает</span></h3>
+<ul>
+<li><code>saveTag(tag)</code> — сохранить свой. Без <code>id</code> — выдаст <code>tag-NNN</code>.</li>
+<li><code>getAllTags()</code> — только свои.</li>
+<li><code>deleteTag(id)</code> — удалить свой.</li>
+<li><code>getAllTagsMerged()</code> — свои + базовые (<code>btag-NNN</code>). Сначала свои, потом базовые.</li>
+</ul>
+
+<h3>Кладовая, План, Корзина <span class="chip wait">заглушки</span></h3>
+<ul>
+<li><code>savePantryItem</code> / <code>getPantry</code> / <code>deletePantryItem</code></li>
+<li><code>savePlanItem</code> / <code>getPlan</code> / <code>deletePlanItem</code> / <code>getPlanByTab</code> / <code>clearPlan</code></li>
+<li><code>saveShoppingItem</code> / <code>getShopping</code> / <code>deleteShoppingItem</code> / <code>clearShopping</code></li>
+</ul>
+
+<h3>Таймеры <span class="chip wait">заглушки</span></h3>
+<ul>
+<li><code>saveTimer</code>, <code>getTimers</code>, <code>updateTimer</code>, <code>deleteTimer</code>, <code>getActiveTimers</code>, <code>getTimersForRecipe</code>.</li>
+</ul>
+
+<div class="box note">
+<b>Как хранится таймер.</b> Не «осталось 5 минут», а <b>«должен сработать в 15:42:30»</b>. При открытии сайта система считает разницу. Если сайт был закрыт — время всё равно идёт.
+</div>
+
+<h3>Фото <span class="chip wait">заглушки</span></h3>
+<ul>
+<li><code>savePhoto(blob)</code>, <code>getPhoto(id)</code>, <code>deletePhoto(id)</code>.</li>
+</ul>
+
+<div class="box note">
+<b>Сжатие фото.</b> Перед сохранением — 1200px по длинной стороне, качество 80%. Размер 200–300 КБ вместо 3–5 МБ.
+</div>
+
+<h3>Экспорт / импорт <span class="chip wait">заглушки</span></h3>
+<ul>
+<li><code>exportAll</code>, <code>importAll</code>, <code>exportRecipes</code>, <code>exportProducts</code>, <code>importRecipes</code>, <code>importProducts</code>, <code>getLastBackupDate</code>, <code>setLastBackupDate</code>.</li>
+</ul>
+
+<h3>Опасное</h3>
+<ul>
+<li><code>clearAll()</code> — сбросить всё. С подтверждением. Пока заглушка.</li>
+</ul>
+
+<h2>Защита данных</h2>
+
+<div class="rule">
+<b>Автосохранение.</b> Каждое изменение сразу сохраняется в IndexedDB. Кнопку «Сохранить всё» жать не надо.
+</div>
+
+<div class="box warn">
+<b>Но это сохранение внутри браузера.</b> Если Safari почистит данные — пропадёт всё. Поэтому нужен бэкап: ZIP-файл со всем содержимым, раз в 3–4 дня напоминание. Реализация — шаг 40 плана.
+</div>
+
+<div class="box">
+<b>«Добавить на экран Домой».</b> Если сайт добавлен на экран «Домой» — Safari не чистит данные. Единственная 100% защита.
+</div>
+
+<h2>Даты и ID</h2>
+
+<div class="rule">
+<b>ID рецепта — числа:</b> <code>recipe-001</code>, <code>recipe-150</code>. Не транслит из названия — иначе два «Салата» затрут друг друга. У продуктов: свои — <code>product-NNN</code>, готовые — транслит (<code>milk-3-2</code>).
+</div>
+
+<div class="rule">
+<b>Все даты — числа (timestamp в миллисекундах).</b> <code>1728562950000</code>. Удобно сравнивать, сортировать, показывать в любом виде.
+</div>
+
+<h2>Миграции схемы</h2>
+
+<div class="box">
+<b>Сейчас не пишем.</b> Если завтра понадобится добавить поле в рецепт — пересоздаём базу (данных мало). Напишем, когда данных станет жалко (150 рецептов, база продуктов, кладовая).
+</div>
+
+<h2>Правила работы с хранилищем</h2>
+
+<div class="rule no">
+<b>Не работать с IndexedDB напрямую.</b> Только через <code>storage.js</code>.
+</div>
+
+<div class="rule no">
+<b>Не хранить в localStorage.</b> Всё уже переехало в IndexedDB. localStorage очищен.
+</div>
+
+<div class="rule">
+<b>Дублирование <code>const</code> в одном файле ломает всё.</b> Одна <code>SyntaxError</code> валит весь файл. Перед вставкой большого блока с константой — проверить поиском, не объявлена ли уже.
+</div>
+
+<div class="rule">
+<b>Если функция пишет в общий объект — в начале должна создавать его, если нет.</b> Не полагаться на то, что кто-то вызвал инициализацию раньше.
+</div>
+
+<div class="rule">
+<b><code>setTimeout</code>, который прячет заставку, — в самом начале <code>boot()</code>.</b> До всех <code>await</code>. Иначе при ошибке заставка висит вечно.
+</div>
+<h2>Словарь терминов</h2>
+
+<table class="table">
+<tr><th>Слово</th><th>Что это</th></tr>
+<tr><td><b>Экран</b></td><td>🏠 Главная / ❤ Избранное / 📅 План / 🧺 Кладовая</td></tr>
+<tr><td><b>Содержание</b></td><td>Блок «📖 СОДЕРЖАНИЕ» с категориями. Только на Главной</td></tr>
+<tr><td><b>Шапка</b></td><td>Верхняя полоса сайта: название + три иконки 🖌 🔔 ⚙</td></tr>
+<tr><td><b>Панель</b></td><td>Панель оформления 🖌. Секции: Стиль, Палитра, Тень, Фон</td></tr>
+<tr><td><b>Модалка</b></td><td>Всплывающее окошко поверх всего</td></tr>
+<tr><td><b>Редактор фона</b></td><td>Отдельная модалка для позиции фона. Открывается поверх панели</td></tr>
+<tr><td><b>Заглушка</b></td><td>Надпись на пустом экране</td></tr>
+<tr><td><b>Макет</b></td><td>Уменьшенная картинка сайта в панели 🖌. Справа на ПК/iPad. Пропорции как у окна браузера</td></tr>
+<tr><td><b>Черновик</b></td><td>Несохранённые настройки в панели 🖌. Живёт в памяти, пока панель открыта</td></tr>
+<tr><td><b>FAB / плавающие кнопки</b></td><td>Три круглые кнопки справа снизу: ⏲ 🔍 ➕</td></tr>
+<tr><td><b>Плашка</b></td><td>Общий термин для «залитых» элементов</td></tr>
+<tr><td><b>Чип (chip)</b></td><td>Маленькая плашка-таблетка</td></tr>
+<tr><td><b>Карточка (маленькая)</b></td><td>Карточка рецепта в списке</td></tr>
+<tr><td><b>Карточка (большая)</b></td><td>Модалка с одним рецептом. Открывается кликом по названию или фото</td></tr>
+<tr><td><b>Нижняя панель</b></td><td>Полоска с 4 кнопками внизу: 🏠 ❤ 📅 🧺</td></tr>
+<tr><td><b><code>.dm-scope</code></b></td><td>Обёртка макета. Держит свои атрибуты и переменные, независимо от body</td></tr>
+<tr><td><b><code>designDraft</code></b></td><td>Черновик оформления в памяти. Пока панель открыта</td></tr>
+<tr><td><b><code>.dm-bg</code></b></td><td>Картинка фона внутри макета. Лежит на дне, за всеми элементами</td></tr>
+<tr><td><b><code>bgEditorBg</code></b></td><td>Фон, для которого открыт редактор позиции (из черновика)</td></tr>
+<tr><td><b><code>previewBar</code></b></td><td>Плашка предпросмотра внизу экрана на телефоне: [Применить] [Вернуться]</td></tr>
+<tr><td><b><code>isPreviewing</code></b></td><td>Флаг: открыт ли сейчас режим предпросмотра</td></tr>
+<tr><td><b><code>render.js</code></b></td><td>Файл, который превращает объект рецепта в HTML маленькой карточки. Раскладывает все рецепты по секциям Главной</td></tr>
+<tr><td><b><code>card-big.js</code></b></td><td>Файл, который собирает HTML большой карточки. Открывает/закрывает её, обрабатывает клики внутри</td></tr>
+<tr><td><b><code>modalRecipe</code></b></td><td>Контейнер большой карточки в <code>index.html</code>. Внутри собирается HTML кодом</td></tr>
+<tr><td><b>Dropdown</b></td><td>Выпадающий список. Открывается рядом с кнопкой, а не снизу экрана</td></tr>
+<tr><td><b>Шторка</b></td><td>Всплывающее окно, которое выезжает снизу. Используется у FAB ➕</td></tr>
+<tr><td><b><code>renderRecipeCard(recipe)</code></b></td><td>Функция: объект рецепта → HTML одной маленькой карточки</td></tr>
+<tr><td><b><code>renderAllRecipes()</code></b></td><td>Асинхронная функция: читает все рецепты из IndexedDB и раскладывает по секциям</td></tr>
+<tr><td><b><code>seedDemoRecipes()</code></b></td><td>Функция: заливает 9 демо-рецептов в IndexedDB при первом запуске</td></tr>
+<tr><td><b><code>BASE_TAGS</code></b></td><td>Массив 58 базовых тегов в <code>tags-base.js</code>. ID <code>btag-NNN</code></td></tr>
+<tr><td><b><code>demoRecipes</code></b></td><td>Массив 9 демо-рецептов в <code>storage.js</code>. Заливается один раз через <code>seedDemoRecipes()</code></td></tr>
+<tr><td><b><code>demoSeeded</code></b></td><td>Флаг в settings: «9 демо-рецептов уже залиты»</td></tr>
+<tr><td><b><code>b-</code> (префикс)</b></td><td>Все классы большой карточки — с префиксом <code>b-</code> (big). Чтобы не путать с маленькой <code>.card</code></td></tr>
+<tr><td><b>Порции</b></td><td>Стартовое — 4. Сохраняются в IndexedDB (тип <code>portions</code>). Клик по числу — сброс на 4</td></tr>
+<tr><td><b>🧹 (метла)</b></td><td>Кнопка в большой карточке рядом с «Ингредиенты:». Чистит только галочки ингредиентов этого рецепта</td></tr>
+<tr><td><b><code>getAllTagsMerged()</code></b></td><td>Функция: объединяет свои теги и базовые в один список. Сначала свои, потом базовые</td></tr>
+<tr><td><b><code>nextRecipeId()</code> / <code>nextTagIdFrom()</code></b></td><td>Внутренние функции: генерируют следующий свободный ID для нового рецепта / тега</td></tr>
+<tr><td><b><code>loadIngredientMarks(recipeId)</code></b></td><td>Загружает список отмеченных ингредиентов для одного рецепта. Возвращает <code>Set</code></td></tr>
+<tr><td><b><code>loadPortions(recipeId)</code> / <code>savePortions(recipeId, n)</code></b></td><td>Загрузить / сохранить выбранное количество порций для рецепта</td></tr>
+<tr><td><b><code>togglePlanDropdown()</code> / <code>toggleMoreDropdown()</code></b></td><td>Открыть/закрыть выпадающие списки: 📅 «В план» и ⋯ «Ещё»</td></tr>
+<tr><td><b><code>openSoon(title, text)</code></b></td><td>Открывает модалку-заглушку «Позже» с произвольным заголовком и текстом</td></tr>
+<tr><td><b><code>updatePortions()</code></b></td><td>Пересчитывает ингредиенты по текущему количеству порций</td></tr>
+<tr><td><b><code>afterCreate</code></b></td><td>Параметр пикера продуктов: <code>'list'</code> (продукт остаётся в списке) или <code>'select'</code> (уходит наружу). Дефолт — <code>'list'</code></td></tr>
+<tr><td><b><code>productPickerCollapsed</code></b></td><td>Ключ в IndexedDB: свёрнутые группы в пикере продуктов</td></tr>
+<tr><td><b><code>productSort</code></b></td><td>Ключ в IndexedDB: сортировка «Моих» в пикере. <code>new-first</code> / <code>old-first</code> / <code>az</code> / <code>za</code></td></tr>
+<tr><td><b><code>kbzhuMl</code></b></td><td>Поле продукта: исходные КБЖУ как на упаковке (на 100 мл). Хранится отдельно от пересчитанных</td></tr>
+</table>
+
+
+<h2>Смежное в других файлах</h2>
+
+<div class="box ok">
+<ul>
+<li><b>База продуктов</b> — как устроена, 19 групп, форма, пикер — в <code>products.html</code>.</li>
+<li><b>Рецепты и карточки</b> — структура, поля, экраны — в <code>recipes.html</code>.</li>
+<li><b>Стили и CSS</b> — как устроено оформление — в <code>design.html</code>.</li>
+<li><b>Известные баги и уроки</b> — в <code>history.html</code>.</li>
+</ul>
+</div>
+
+<div class="footer">
+<p><b>Копилка рецептов · Архитектура · 13 октября 2026</b></p>
+<p>Скидывать в новую сессию, когда работаем с кодом, файлами, хранилищем.</p>
+</div>
+
+</div>
+</body>
+</html>
