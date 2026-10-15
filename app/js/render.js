@@ -91,9 +91,9 @@ function renderRecipeCard(recipe) {
     : '';
 
   // Фото (пока photos: [] — покажется градиент-заглушка)
-  const firstPhoto = (recipe.photos && recipe.photos[0]) || '';
+    const firstPhoto = (recipe.photos && recipe.photos[0]) || '';
   const imgHtml = firstPhoto
-    ? `<img src="${firstPhoto}" alt="" onerror="this.style.display='none'">`
+    ? `<img src="${escapeHtml(firstPhoto)}" alt="" onerror="this.style.display='none'">`
     : '';
 
   return `

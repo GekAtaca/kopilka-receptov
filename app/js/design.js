@@ -17,6 +17,14 @@ const DESIGN_DEFAULTS = {
   bg: ''
 };
 
+// ─── Переменные, которые нужны при загрузке из IndexedDB.
+//      Объявлены здесь, до функции loadDesignFromStorage(),
+//      чтобы не было «используется до объявления». ───
+const SHADOW_TAB_KEY = 'designShadowTab';
+const SECTIONS_KEY   = 'designSectionsCollapsed';
+let currentShadowTab   = 'cards';
+let collapsedSections  = {};
+
 // ═══════════════════════════════════════════════════
 // Загрузка и сохранение оформления
 // ═══════════════════════════════════════════════════
@@ -285,9 +293,6 @@ dpShades.querySelectorAll('.dp-chip').forEach(btn => {
 const dpShadowsCards = document.getElementById('dpShadowsCards');
 const dpShadowsFab   = document.getElementById('dpShadowsFab');
 const dpShadowTabs   = document.getElementById('dpShadowTabs');
-const SHADOW_TAB_KEY = 'designShadowTab';
-
-let currentShadowTab = 'cards';
 
 function syncShadowActive(){
   const s = getActiveDesign();
@@ -359,8 +364,6 @@ dpThemeToggle.addEventListener('click', () => {
 // Сворачивание секций панели
 // ═══════════════════════════════════════════════════
 
-const SECTIONS_KEY = 'designSectionsCollapsed';
-let collapsedSections = {};
 
 function applyCollapsedSections(){
   document.querySelectorAll('#designPanel .dp-section').forEach(section => {

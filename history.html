@@ -144,6 +144,12 @@ pre code{background:none;padding:0;color:inherit;font-size:inherit}
 <div class="fix">При активном поиске клик по заголовку группы — <b>ничего не делает</b>. Поиск и так всё раскрывает, а состояние свёрнутости не трогается.</div>
 </div>
 
+<div class="lesson">
+<div class="title">Переменные использовались до объявления</div>
+<b>16 октября 2026.</b> В <code>design.js</code> функция <code>loadDesignFromStorage()</code> использовала переменные <code>SHADOW_TAB_KEY</code>, <code>SECTIONS_KEY</code>, <code>currentShadowTab</code>, <code>collapsedSections</code> — но они были объявлены <b>ниже</b> в том же файле. Работало только потому, что функция вызывается после полной загрузки файла. Если бы кто-то вызвал её раньше — была бы ошибка <code>Cannot access before initialization</code>.
+<div class="fix">Перенесли объявления всех четырёх переменных в <b>начало файла</b>, до функции. Дублирующие объявления ниже — убрали. Если функция использует переменную — переменная объявляется <b>до</b> функции. Не полагаться на порядок вызовов.</div>
+</div>
+
 <h2>Технический долг</h2>
 
 <div class="box done">
@@ -155,10 +161,26 @@ pre code{background:none;padding:0;color:inherit;font-size:inherit}
 </ul>
 </div>
 
+<div class="box done">
+<b>✅ Закрыто 16 октября 2026:</b>
+<ul>
+<li><b>Переменные в <code>design.js</code> объявлены до использования.</b> <code>SHADOW_TAB_KEY</code>, <code>SECTIONS_KEY</code>, <code>currentShadowTab</code>, <code>collapsedSections</code> перенесены в начало файла. Дубликаты ниже — убраны. См. урок выше.</li>
+<li><b><code>firstPhoto</code> в <code>render.js</code> обёрнуто в <code>escapeHtml</code>.</b> Теперь <code>src="${escapeHtml(firstPhoto)}"</code>. Одна строчка, но правильно.</li>
+</ul>
+</div>
+
 <div class="box warn">
 <b>Высокий приоритет:</b>
 <ul>
 <li>Удалить старые файлы <code>Структурная карта 6.html</code> … <code>11.html</code> из проекта. <b>И <code>Структурная карта 12.html</code> — её содержимое разложено по 7 файлам документации.</b></li>
+</ul>
+</div>
+
+<div class="box warn">
+<b>Средний приоритет:</b>
+<ul>
+<li><b>Маленькая карточка отстаёт от целевого состояния.</b> В <code>render.js</code> сейчас: 5 иконок на фото (❤ ⏱ 👨‍🍳 📅 🔖), 3 кнопки внизу (🛒 · ✎ Изменить · 🕐). <b>Целевое:</b> 4 иконки (без ⏱), 4 кнопки (🛒 · ⏱ · ✎ · 🕐). Не смешивать с другими правками — отдельный шаг 42 в плане. Не менять «заодно».</li>
+<li><b><code>firstPhoto</code> в <code>render.js</code> — без <code>escapeHtml</code>.</b> <b>✅ Исправлено 16 октября 2026.</b> Теперь <code>src="${escapeHtml(firstPhoto)}"</code>. Если появятся ещё места, куда подставляются данные без экранирования — проверить.</li>
 </ul>
 </div>
 

@@ -367,6 +367,7 @@ pre code{background:none;padding:0;color:inherit;font-size:inherit}
 <p>Ключ <code>design</code> в IndexedDB, таблица <code>settings</code>.</p>
 
 <h4>Функции в design.js</h4>
+<p><b>Важно:</b> переменные <code>SHADOW_TAB_KEY</code>, <code>SECTIONS_KEY</code>, <code>currentShadowTab</code>, <code>collapsedSections</code> объявлены <b>в начале файла</b>, до всех функций. Это сделано специально — чтобы <code>loadDesignFromStorage()</code> могла их использовать, когда бы её ни вызвали. <b>Не перемещать их в конец файла</b></p>
 <ul>
 <li><code>loadDesignData()</code> — загружает структуру.</li>
 <li><code>loadDesignFromStorage()</code> — читает сохранёнку из IndexedDB.</li>
@@ -401,6 +402,13 @@ pre code{background:none;padding:0;color:inherit;font-size:inherit}
 </div>
 
 <h2>Правила и уроки дизайна</h2>
+
+<div class="box done">
+<b>✅ Исправлено 16 октября 2026: хрупкость в <code>loadDesignFromStorage()</code>.</b>
+<br><b>Что было.</b> Функция <code>loadDesignFromStorage()</code> в <code>design.js</code> использовала переменные <code>SHADOW_TAB_KEY</code>, <code>SECTIONS_KEY</code>, <code>currentShadowTab</code>, <code>collapsedSections</code> — но они были объявлены <b>ниже</b> в том же файле. Работало только потому, что функция вызывается после полной загрузки файла. Если бы кто-то вызвал её раньше — была бы ошибка <code>Cannot access before initialization</code>.
+<br><b>Что сделали.</b> Перенесли объявления всех четырёх переменных в <b>начало файла</b>, до функции. Дублирующие объявления ниже — убрали. Теперь функция работает надёжно, вне зависимости от порядка вызовов.
+<br><b>Урок на будущее:</b> если функция пишет в переменную или читает её — переменная должна быть объявлена <b>до</b> функции. Не полагаться на порядок вызовов.
+</div>
 
 <div class="rule imp">
 <b>Переменные на <code>body</code> не наследуются в <code>.dm-scope</code> автоматически.</b>
