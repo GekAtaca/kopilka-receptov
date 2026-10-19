@@ -430,7 +430,9 @@
         <span class="modal-title">➕ Добавить</span>
         <button type="button" class="modal-close" data-modal-close>✕</button>
       </div>
-      <div class="modal-stub">Тут будет Добавить</div>
+      <div class="add-menu">
+        <button type="button" class="add-menu-btn" data-action="create-recipe">➕ Добавить рецепт</button>
+      </div>
     </div>
   </div>
 
@@ -461,6 +463,32 @@
     </div>
   </div>
 
+  <!-- ═══ Модалка «Редактор рецепта» (шаг 37.1 — каркас) ═══ -->
+  <div id="modalRecipeEditor" class="modal-editor" style="display:none">
+    <div class="modal-editor-box">
+      <div class="me-head">
+        <span class="me-title" id="meTitle">Добавить рецепт</span>
+        <button type="button" class="me-close" id="meClose">✕</button>
+      </div>
+
+      <div class="me-tabs" id="meTabs">
+        <button type="button" class="me-tab active" data-tab="manual">✍ Вручную</button>
+        <button type="button" class="me-tab" data-tab="text">📋 Текст</button>
+        <button type="button" class="me-tab" data-tab="link">🔗 Ссылка</button>
+      </div>
+
+      <div class="me-body" id="meBody"></div>
+
+      <div class="me-footer">
+        <button type="button" class="me-btn me-btn-cancel" id="meCancel">Отмена</button>
+        <div class="me-split">
+          <button type="button" class="me-btn me-btn-primary" id="meSave" disabled>Сохранить</button>
+          <button type="button" class="me-btn me-btn-arrow" id="meSaveArrow" disabled>▾</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- ═══ Модалка «База продуктов» (подшаг 3) ═══ -->
   <div id="modalProductPicker" class="modal-product-picker" style="display:none">
     <div class="modal-product-picker-box" id="modalProductPickerBox"></div>
@@ -477,6 +505,7 @@
   <script src="app/js/shared.js"></script>
   <script src="app/js/render.js"></script>
   <script src="app/js/card-big.js"></script>
+  <script src="app/js/recipe-editor.js"></script>
   <script src="app/js/product-picker.js"></script>
   <script src="app/js/product-form.js"></script>
   <script src="app/js/bg.js"></script>

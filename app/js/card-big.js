@@ -312,7 +312,7 @@ modalRecipeBox.addEventListener('click', async (e) => {
     return;
   }
   if (action === 'edit'){
-    openSoon('✎ Редактор', 'Редактор появится позже.');
+    if (typeof openRecipeEditor === 'function') openRecipeEditor(currentRecipeId);
     return;
   }
   if (action === 'versions'){
