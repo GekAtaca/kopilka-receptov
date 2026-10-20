@@ -1919,3 +1919,111 @@ body[data-theme="dark"] .mt-row:hover { background: rgba(255,255,255,.06); }
 body[data-theme="dark"] .me-tags-wrap { background: color-mix(in srgb, var(--c1) 15%, var(--c4) 85%); border-color: var(--c2); color: #fff; }
 
 .me-steps-list:empty, .me-ing-list:empty { display: none; }
+
+/* ═══ 37.6 — Версии ═══ */
+.me-split-wrap {
+  position: relative;
+}
+.me-split-dropdown {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 6px);
+  right: 0;
+  background: var(--c1) !important;
+  border: 1px solid var(--c3);
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0,0,0,.3);
+  padding: 4px;
+  min-width: 220px;
+  z-index: 100;
+}
+.me-split-dropdown.open {
+  display: block;
+}
+.me-split-dropdown .me-dropdown-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 10px 14px;
+  border: none;
+  background: none;
+  border-radius: 8px;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--c4) !important; /* Принудительно темный текст */
+  cursor: pointer;
+  transition: background .15s;
+}
+.me-split-dropdown .me-dropdown-item:hover {
+  background: color-mix(in srgb, var(--c3) 20%, transparent);
+}
+
+/* Если включена тёмная тема */
+body[data-theme="dark"] .me-split-dropdown {
+  background: #3a2e33 !important; /* Принудительно темный фон */
+  border-color: var(--c2);
+}
+body[data-theme="dark"] .me-split-dropdown .me-dropdown-item {
+  color: #fff !important;
+}
+body[data-theme="dark"] .me-split-dropdown .me-dropdown-item:hover {
+  background: rgba(255,255,255,.1);
+}
+
+/* Тосты */
+.toast-container {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100020;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  pointer-events: none;
+}
+.toast {
+  background: #1a1618;
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 20px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.4);
+  animation: toastIn 0.3s ease, toastOut 0.3s ease 2.7s forwards;
+}
+@keyframes toastIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes toastOut {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(20px); }
+}
+
+/* Тёмная тема для dropdown */
+body[data-theme="dark"] .me-split-dropdown {
+  background: var(--c4);
+  border-color: var(--c2);
+}
+body[data-theme="dark"] .me-split-dropdown .me-dropdown-item {
+  color: #fff;
+}
+body[data-theme="dark"] .me-split-dropdown .me-dropdown-item:hover {
+  background: rgba(255,255,255,.06);
+}
+/* ═══ 37.7 — Ошибки валидации ═══ */
+.me-input.invalid,
+.me-dropdown-btn.invalid {
+  border-color: #ff4d4d !important;
+  box-shadow: 0 0 0 2px rgba(255, 77, 77, 0.2) !important;
+}
+.me-ing-section.invalid {
+  border-color: #ff4d4d !important;
+  background: rgba(255, 77, 77, 0.05);
+  border-radius: 10px;
+  padding: 10px;
+  margin: -10px;
+}

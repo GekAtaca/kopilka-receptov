@@ -1,7 +1,5 @@
 // ═══════════════════════════════════════════════════
 // recipe-editor.js — модалка редактора рецепта (шаг 37).
-// 37.1 — каркас. 37.2 — основные поля. 37.3 — ингредиенты.
-// 37.4 — шаги и время. 37.5 — теги.
 // Загружается после card-big.js, до product-picker.js.
 // ═══════════════════════════════════════════════════
 
@@ -18,6 +16,7 @@ let meCurrentTab    = 'manual';
 let meDraft         = null;   
 let meKbzhuOpen     = false;  
 let meDragSrcEl     = null;
+let mePendingVersionName = '';
 
 const ME_MEALS = [
   { val: 'breakfast', label: '🌅 Завтрак' },
@@ -186,8 +185,8 @@ function meBuildFields(){
   return `
     <div class="me-form">
       <div class="me-field">
-        <label class="me-label" for="meName">Название <span class="me-req">*</span></label>
-        <input type="text" class="me-input" id="meName" placeholder="Например: Овсянка с ягодами" value="${meDraft ? meDraft.name : ''}">
+        <label class="me-label" for="meRecipeName">Название <span class="me-req">*</span></label>
+        <input type="text" class="me-input" id="meRecipeName" placeholder="Например: Овсянка с ягодами" value="${meDraft ? meDraft.name : ''}">
       </div>
 
       <div class="me-row3">
@@ -331,7 +330,6 @@ function meRenderBody(){
     }
   }
 
-  // Принудительный пересчёт высоты текстовых полей шагов.
   setTimeout(() => {
     meBody.querySelectorAll('.me-step-text').forEach(ta => {
       ta.style.height = 'auto';
@@ -342,13 +340,13 @@ function meRenderBody(){
 
 // ─── Собрать значения формы в черновик ───
 function meCollectForm(){
-  if (!document.getElementById('meName')) return;
+  if (!document.getElementById('meRecipeName')) return;
   const mealDD   = meBody.querySelector('[data-field="meal"]');
   const sourceDD = meBody.querySelector('[data-field="source"]');
   const compDD   = meBody.querySelector('[data-field="complexity"]');
   const vnEl     = document.getElementById('meVersionName');
 
-  meDraft.name       = document.getElementById('meName').value;
+  meDraft.name       = document.getElementById('meRecipeName').value;
   meDraft.source     = sourceDD ? sourceDD.dataset.val : 'Мои';
   meDraft.meal       = mealDD ? mealDD.dataset.val : '';
   meDraft.complexity = compDD ? compDD.dataset.val : '';
@@ -386,6 +384,8 @@ async function openRecipeEditor(recipeId){
       complexity: recipe.complexity || '',
       portions: recipe.portions || 2,
       versionName: recipe.versionName || '',
+      currentVersion: recipe.currentVersion || 1,
+      versions: recipe.versions ? [...recipe.versions] : [],
       tags: recipe.tags ? [...recipe.tags] : [],
       ingredients: (recipe.ingredients || []).map(i => ({ ...i })),
       steps: recipe.steps ? [...recipe.steps] : [],
@@ -402,8 +402,8 @@ async function openRecipeEditor(recipeId){
     
     meDraft = {
       name: '', meal: '', source: 'Мои', complexity: '',
-      portions: 2, versionName: '', tags: [], ingredients: [],
-      steps: [], time: '', timeSplit: false, timeStages: []
+      portions: 2, versionName: 'Версия 1', currentVersion: 1, versions: [],
+      tags: [], ingredients: [], steps: [], time: '', timeSplit: false, timeStages: []
     };
   }
 
@@ -434,6 +434,10 @@ meTabs.addEventListener('click', (e) => {
 
 // ─── Клики внутри тела ───
 meBody.addEventListener('click', async (e) => {
+  // Собираем актуальные данные из текстовых полей перед любым действием,
+  // чтобы при перерисовке формы они не сбрасывались.
+  if (meCurrentTab === 'manual') meCollectForm();
+
   // Dropdown
   const btn = e.target.closest('.me-dropdown-btn');
   if (btn) {
@@ -455,10 +459,21 @@ meBody.addEventListener('click', async (e) => {
     const options = field === 'meal' ? ME_MEALS : field === 'source' ? ME_SOURCES : ME_COMPLEXITY;
     meSetDropdownValue(dd, valToSet, options);
     dd.classList.remove('open');
+    
+    // Обновляем черновик сразу, чтобы при перерисовке (например, при добавлении ингредиента)
+    // выбранный приём пищи, источник или сложность не сбрасывались.
+    if (field === 'meal') meDraft.meal = valToSet;
+    if (field === 'source') meDraft.source = valToSet;
+    if (field === 'complexity') meDraft.complexity = valToSet;
+
+    if (field === 'meal' && valToSet) {
+      const b = dd.querySelector('.me-dropdown-btn');
+      if (b) b.classList.remove('invalid');
+    }
     return;
   }
 
-    // Теги
+  // Теги
   if (e.target.closest('[data-action="edit-tags"]')) {
     if (typeof openTagModal === 'function') {
       openTagModal(meDraft.tags, (newTags) => {
@@ -466,7 +481,7 @@ meBody.addEventListener('click', async (e) => {
         meRenderBody();
       });
     } else {
-      alert('Ошибка: модалка тегов не загружена (openTagModal). Проверьте, подключен ли файл tag-modal.js в index.html.');
+      alert('Ошибка: модалка тегов не загружена (openTagModal).');
     }
     return;
   }
@@ -688,3 +703,219 @@ document.addEventListener('keydown', (e) => {
     openRecipeEditor();
   });
 })();
+
+// ═══════════════════════════════════════════════════
+// ЛОГИКА СОЗДАНИЯ ВЕРСИЙ И СОХРАНЕНИЯ (37.6, 37.7)
+// ═══════════════════════════════════════════════════
+
+const meSaveArrow       = document.getElementById('meSaveArrow');
+const meSplitDropdown   = document.getElementById('meSplitDropdown');
+const modalVersionName  = document.getElementById('modalVersionName');
+const mvnInput          = document.getElementById('mvnInput');
+const meSaveBtn         = document.getElementById('meSave');
+
+if (meSaveArrow && meSplitDropdown) {
+  meSaveArrow.addEventListener('click', (e) => {
+    e.stopPropagation();
+    meSplitDropdown.classList.toggle('open');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.me-split-wrap')) {
+      meSplitDropdown.classList.remove('open');
+    }
+  });
+
+  meSplitDropdown.addEventListener('click', (e) => {
+    if (e.target.closest('[data-action="create-version"]')) {
+      meSplitDropdown.classList.remove('open');
+      
+      if (modalVersionName) {
+        const nextVer = (meDraft.currentVersion || 1) + 1;
+        if (mvnInput) {
+          mvnInput.value = '';
+          mvnInput.placeholder = 'Версия ' + nextVer;
+        }
+        modalVersionName.style.display = 'flex';
+        setTimeout(() => { if (mvnInput) mvnInput.focus(); }, 50);
+      }
+    }
+  });
+}
+
+const mvnCloseBtn = document.getElementById('mvnClose');
+if (mvnCloseBtn && modalVersionName) {
+  mvnCloseBtn.addEventListener('click', () => {
+    modalVersionName.style.display = 'none';
+  });
+}
+
+const mvnCancelBtn = document.getElementById('mvnCancel');
+if (mvnCancelBtn && modalVersionName) {
+  mvnCancelBtn.addEventListener('click', () => {
+    modalVersionName.style.display = 'none';
+  });
+}
+
+const mvnSaveBtn = document.getElementById('mvnSave');
+if (mvnSaveBtn && modalVersionName && mvnInput) {
+  mvnSaveBtn.addEventListener('click', () => {
+    const newName = mvnInput.value.trim();
+    const nextVer = (meDraft.currentVersion || 1) + 1;
+    
+    meCollectForm();
+    
+    const oldVersionSnapshot = { ...meDraft };
+    delete oldVersionSnapshot.versions; 
+    
+    if (!meDraft.versions) meDraft.versions = [];
+    
+    meDraft.versions.push(oldVersionSnapshot);
+    
+    meDraft.currentVersion = nextVer;
+    meDraft.versionName = newName || ('Версия ' + nextVer);
+    
+    showToast('Создана версия ' + nextVer);
+    
+    meRenderBody();
+    
+    modalVersionName.style.display = 'none';
+  });
+}
+
+function showToast(text) {
+  const container = document.getElementById('toastContainer');
+  if (!container) return;
+  
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.textContent = text;
+  container.appendChild(toast);
+  
+  setTimeout(() => {
+    toast.remove();
+  }, 3000);
+}
+
+// ─── Валидация ───
+function meValidate() {
+  let isValid = true;
+  let firstErrorEl = null;
+
+  // 1. Проверка названия
+  const nameInput = document.getElementById('meRecipeName');
+  if (nameInput && !nameInput.value.trim()) {
+    nameInput.classList.add('invalid');
+    isValid = false;
+    if (!firstErrorEl) firstErrorEl = nameInput;
+  } else if (nameInput) {
+    nameInput.classList.remove('invalid');
+  }
+
+  // 2. Проверка приёма пищи
+  const mealDD = meBody.querySelector('[data-field="meal"]');
+  const mealBtn = mealDD ? mealDD.querySelector('.me-dropdown-btn') : null;
+  if (!meDraft.meal) {
+    if (mealBtn) {
+      mealBtn.classList.add('invalid');
+      if (!firstErrorEl) firstErrorEl = mealBtn;
+    }
+    isValid = false;
+  } else if (mealBtn) {
+    mealBtn.classList.remove('invalid');
+  }
+
+  // 3. Проверка ингредиентов
+  const ingSection = document.querySelector('.me-ing-section');
+  if (!meDraft.ingredients || meDraft.ingredients.length === 0) {
+    if (ingSection) {
+      ingSection.classList.add('invalid');
+      if (!firstErrorEl) firstErrorEl = ingSection;
+    }
+    isValid = false;
+  } else if (ingSection) {
+    ingSection.classList.remove('invalid');
+  }
+
+  // Скролл к ошибке
+  if (!isValid && firstErrorEl) {
+    firstErrorEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    showToast('Заполните обязательные поля!');
+  }
+
+  return isValid;
+}
+
+// ─── Сохранение рецепта ───
+async function meSaveRecipe() {
+  meCollectForm();
+
+  if (!meValidate()) return;
+
+  // Считаем итоговое время
+  let totalTime = meDraft.time;
+  if (meDraft.timeSplit) {
+    totalTime = 0;
+    (meDraft.timeStages || []).forEach(st => totalTime += (parseFloat(st.mins) || 0));
+  }
+
+  // Считаем КБЖУ на 1 порцию для снимка (kbzhuSnapshot)
+  let totalKcal = 0, totalProt = 0, totalFat = 0, totalCarb = 0;
+  (meDraft.ingredients || []).forEach(ing => {
+    let grams = parseFloat(ing.amount) || 0;
+    if (ing.unit === 'мл') grams = grams * (ing.density || 1);
+    if (ing.unit === 'шт') grams = grams * (ing.weightPerPiece || 100);
+    const ratio = grams / 100;
+    totalKcal += (ing.kcal || 0) * ratio;
+    totalProt += (ing.protein || 0) * ratio;
+    totalFat += (ing.fat || 0) * ratio;
+    totalCarb += (ing.carbs || 0) * ratio;
+  });
+  
+  const portions = meDraft.portions || 1;
+  const snapshot = {
+    kcal: Math.round(totalKcal / portions),
+    protein: Math.round((totalProt / portions) * 10) / 10,
+    fat: Math.round((totalFat / portions) * 10) / 10,
+    carbs: Math.round((totalCarb / portions) * 10) / 10
+  };
+
+  const recipeToSave = {
+    ...meDraft,
+    time: totalTime,
+    kbzhuSnapshot: snapshot
+  };
+
+  if (meEditId) {
+    recipeToSave.id = meEditId;
+
+    // ─── 37.8: Умная очистка галочек удалённых ингредиентов ───
+    const oldIngredients = meCurrentRecipe.ingredients || [];
+    const newIngredients = recipeToSave.ingredients || [];
+    const newNames = newIngredients.map(i => i.name);
+    
+    for (const oldIng of oldIngredients) {
+      // Если старого ингредиента нет в новом списке — удаляем его галочки
+      if (!newNames.includes(oldIng.name)) {
+        await Storage.removeMark('ingredient', meEditId, oldIng.name);
+      }
+    }
+  }
+
+  try {
+    await Storage.saveRecipe(recipeToSave);
+    closeRecipeEditor();
+    showToast('Рецепт сохранен!');
+    
+    if (typeof renderAllRecipes === 'function') {
+      renderAllRecipes();
+    }
+  } catch (err) {
+    console.error('[editor] Ошибка сохранения:', err);
+    showToast('Ошибка сохранения!');
+  }
+}
+
+if (meSaveBtn) {
+  meSaveBtn.addEventListener('click', meSaveRecipe);
+}

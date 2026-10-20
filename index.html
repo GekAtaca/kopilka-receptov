@@ -496,13 +496,39 @@
 
       <div class="me-footer">
         <button type="button" class="me-btn me-btn-cancel" id="meCancel">Отмена</button>
-        <div class="me-split">
-          <button type="button" class="me-btn me-btn-primary" id="meSave" disabled>Сохранить</button>
-          <button type="button" class="me-btn me-btn-arrow" id="meSaveArrow" disabled>▾</button>
+        <div class="me-split-wrap" style="position:relative;">
+          <div class="me-split">
+            <button type="button" class="me-btn me-btn-primary" id="meSave">Сохранить</button>
+            <button type="button" class="me-btn me-btn-arrow" id="meSaveArrow">▾</button>
+          </div>
+          <div class="me-split-dropdown" id="meSplitDropdown">
+            <button type="button" class="me-dropdown-item" data-action="create-version">🕐 Создать новую версию</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
+
+  <!-- ═══ Мини-модалка: Название версии ═══ -->
+  <div id="modalVersionName" class="modal" style="display:none; z-index:100010;">
+    <div class="modal-box dm-scope" style="max-width:400px;">
+      <div class="modal-head">
+        <span class="modal-title">Название версии</span>
+        <button type="button" class="modal-close" id="mvnClose">✕</button>
+      </div>
+      <div style="padding: 0 0 14px 0;">
+        <input type="text" class="me-input" id="mvnInput" placeholder="Например: Лёгкий вариант" style="width:100%;">
+        <div style="font-size:12px; opacity:0.6; margin-top:8px; font-family:var(--font-ui);">Можно оставить пустым — будет «Версия N»</div>
+      </div>
+      <div class="apply-to-actions">
+        <button type="button" class="apply-to-btn" id="mvnCancel">Отмена</button>
+        <button type="button" class="apply-to-btn primary" id="mvnSave">Создать</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ Контейнер для уведомлений (Тостов) ═══ -->
+  <div id="toastContainer" class="toast-container"></div>
 
   <!-- ═══ Модалка «База продуктов» (подшаг 3) ═══ -->
   <div id="modalProductPicker" class="modal-product-picker" style="display:none">
@@ -544,6 +570,29 @@
   <button type="button" class="fab-btn primary" data-modal="add" title="Добавить рецепт"><span>➕</span></button>
 </div>
 </div><!-- /.app -->
+
+  <!-- ═══ Мини-модалка: Название версии ═══ -->
+  <div id="modalVersionName" class="modal" style="display:none; z-index:100010;">
+    <div class="modal-box dm-scope" style="max-width:400px;">
+      <div class="modal-head">
+        <span class="modal-title">Название версии</span>
+        <button type="button" class="modal-close" id="mvnClose">✕</button>
+      </div>
+      <div style="padding: 0 0 14px 0;">
+        <input type="text" class="me-input" id="mvnInput" placeholder="Например: Лёгкий вариант" style="width:100%;">
+        <div style="font-size:12px; opacity:0.6; margin-top:8px; font-family:var(--font-ui);">Можно оставить пустым — будет «Версия N»</div>
+      </div>
+      <div class="apply-to-actions">
+        <button type="button" class="apply-to-btn" id="mvnCancel">Отмена</button>
+        <button type="button" class="apply-to-btn primary" id="mvnSave">Создать</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ Контейнер для уведомлений (Тостов) ═══ -->
+  <div id="toastContainer" class="toast-container"></div>
+
+</body>
 
 </body>
 </html>
