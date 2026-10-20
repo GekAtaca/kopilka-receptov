@@ -463,6 +463,21 @@
     </div>
   </div>
 
+  <!-- ═══ Модалка «Теги рецепта» ═══ -->
+  <div id="modalTag" class="modal-tag" style="display:none">
+    <div class="modal-tag-box dm-scope">
+      <div class="mt-head">
+        <span class="mt-title">🏷 Теги рецепта</span>
+        <button type="button" class="mt-close" data-action="close">✕</button>
+      </div>
+      <div class="mt-body" id="mtBody"></div>
+      <div class="mt-footer">
+        <button type="button" class="mt-btn" data-action="close">Отмена</button>
+        <button type="button" class="mt-btn mt-btn-primary" data-action="save">Сохранить</button>
+      </div>
+    </div>
+  </div>
+
   <!-- ═══ Модалка «Редактор рецепта» (шаг 37.1 — каркас) ═══ -->
   <div id="modalRecipeEditor" class="modal-editor" style="display:none">
     <div class="modal-editor-box">
@@ -505,8 +520,9 @@
   <script src="app/js/shared.js"></script>
   <script src="app/js/render.js"></script>
   <script src="app/js/card-big.js"></script>
-  <script src="app/js/recipe-editor.js"></script>
   <script src="app/js/product-picker.js"></script>
+  <script src="app/js/tag-modal.js"></script>
+  <script src="app/js/recipe-editor.js"></script>
   <script src="app/js/product-form.js"></script>
   <script src="app/js/bg.js"></script>
   <script src="app/js/design.js"></script>
