@@ -16,7 +16,7 @@ let meCurrentTab    = 'manual';
 let meDraft         = null;   
 let meKbzhuOpen     = false;  
 let meDragSrcEl     = null;
-let mePendingVersionName = '';
+const meSaveBtn     = document.getElementById('meSave');
 
 const ME_MEALS = [
   { val: 'breakfast', label: '🌅 Завтрак' },
@@ -43,7 +43,6 @@ const ME_TIME_STAGES = [
   'Варка', 'Жарка', 'Тушение'
 ];
 
-// ─── Сборка Dropdown ───
 function meBuildDropdown(field, placeholder, options, defaultValue) {
   const itemsHtml = options.map(o => 
     `<div class="me-dropdown-item" data-val="${o.val}">${o.label}</div>`
@@ -62,13 +61,12 @@ function meBuildDropdown(field, placeholder, options, defaultValue) {
   `;
 }
 
-// ─── Сборка блока Ингредиентов ───
 function meBuildIngredientsHtml() {
   const listHtml = (meDraft.ingredients || []).map((ing, idx) => `
     <li class="me-ing-item" data-idx="${idx}">
       <button type="button" class="me-ing-name-btn" title="${ing.name}">${ing.name}</button>
-      <input type="number" class="me-input me-ing-amt" value="${ing.amount}" data-action="change-amt" placeholder="0">
-      <select class="me-input me-ing-unit" data-action="change-unit">
+      <input type="number" name="ingAmount" class="me-input me-ing-amt" value="${ing.amount}" data-action="change-amt" placeholder="0">
+      <select name="ingUnit" class="me-input me-ing-unit" data-action="change-unit">
         ${ME_UNITS.map(u => `<option value="${u}" ${ing.unit === u ? 'selected' : ''}>${u}</option>`).join('')}
       </select>
       <button type="button" class="me-ing-del" data-action="del-ing" title="Удалить">🗑</button>
@@ -100,13 +98,12 @@ function meBuildIngredientsHtml() {
   `;
 }
 
-// ─── Сборка Шагов ───
 function meBuildStepsHtml() {
   const listHtml = (meDraft.steps || []).map((s, idx) => `
     <li class="me-step-item" draggable="true" data-idx="${idx}">
       <div class="me-step-drag" title="Перетащить">⋮⋮</div>
       <div class="me-step-num">${idx + 1}.</div>
-      <textarea class="me-step-text" rows="1" data-action="change-step" placeholder="Что нужно сделать...">${s}</textarea>
+      <textarea name="stepText" class="me-step-text" rows="1" data-action="change-step" placeholder="Что нужно сделать...">${s}</textarea>
       <div class="me-step-actions">
         <button type="button" data-action="del-step" title="Удалить">🗑</button>
       </div>
@@ -127,17 +124,16 @@ function meBuildStepsHtml() {
   `;
 }
 
-// ─── Сборка Блока Времени ───
 function meBuildTimeHtml() {
   const split = meDraft.timeSplit;
   const stagesHtml = (meDraft.timeStages || []).map((st, idx) => `
     <li class="me-time-stage" data-idx="${idx}">
-      <select class="me-input me-time-select" data-action="change-stage-name">
+      <select name="stageName" class="me-input me-time-select" data-action="change-stage-name">
         ${ME_TIME_STAGES.map(n => `<option value="${n}" ${st.name === n ? 'selected' : ''}>${n}</option>`).join('')}
         <option value="custom" ${!ME_TIME_STAGES.includes(st.name) ? 'selected' : ''}>Свой вариант...</option>
       </select>
-      <input type="text" class="me-input me-time-custom" value="${!ME_TIME_STAGES.includes(st.name) ? st.name : ''}" placeholder="Название" style="display:${!ME_TIME_STAGES.includes(st.name) ? 'block' : 'none'}">
-      <input type="number" class="me-input me-time-mins" value="${st.mins || ''}" data-action="change-stage-mins" placeholder="мин">
+      <input type="text" name="timeCustom" class="me-input me-time-custom" value="${!ME_TIME_STAGES.includes(st.name) ? st.name : ''}" placeholder="Название" style="display:${!ME_TIME_STAGES.includes(st.name) ? 'block' : 'none'}">
+      <input type="number" name="timeMins" class="me-input me-time-mins" value="${st.mins || ''}" data-action="change-stage-mins" placeholder="мин">
       <button type="button" data-action="del-stage" title="Удалить">🗑</button>
     </li>
   `).join('');
@@ -147,13 +143,13 @@ function meBuildTimeHtml() {
       <div class="me-time-header">
         <span class="me-label">Время готовки</span>
         <label class="me-checkbox">
-          <input type="checkbox" data-action="toggle-time-split" ${split ? 'checked' : ''}>
+          <input type="checkbox" name="timeSplit" data-action="toggle-time-split" ${split ? 'checked' : ''}>
           <span>Разбить на этапы</span>
         </label>
       </div>
 
       <div class="me-time-total-wrap" style="display:${split ? 'none' : 'flex'}">
-        <input type="number" class="me-input me-time-total-input" value="${meDraft.time || ''}" data-action="change-time-total" placeholder="0">
+        <input type="number" name="timeTotal" class="me-input me-time-total-input" value="${meDraft.time || ''}" data-action="change-time-total" placeholder="0">
         <span>мин</span>
       </div>
 
@@ -165,7 +161,6 @@ function meBuildTimeHtml() {
   `;
 }
 
-// ─── Сборка плашки КБЖУ ───
 function meBuildKbzhuHtml() {
   return `
     <div class="me-kbzhu-panel ${meKbzhuOpen ? 'open' : ''}" id="meKbzhuPanel">
@@ -180,13 +175,12 @@ function meBuildKbzhuHtml() {
   `;
 }
 
-// ─── HTML полей ───
 function meBuildFields(){
   return `
     <div class="me-form">
       <div class="me-field">
         <label class="me-label" for="meRecipeName">Название <span class="me-req">*</span></label>
-        <input type="text" class="me-input" id="meRecipeName" placeholder="Например: Овсянка с ягодами" value="${meDraft ? meDraft.name : ''}">
+        <input type="text" name="recipeName" class="me-input" id="meRecipeName" placeholder="Например: Овсянка с ягодами" value="${meDraft ? meDraft.name : ''}">
       </div>
 
       <div class="me-row3">
@@ -225,7 +219,7 @@ function meBuildFields(){
 
       <div class="me-field me-version-field" style="display:none">
         <label class="me-label" for="meVersionName">Название версии</label>
-        <input type="text" class="me-input" id="meVersionName" placeholder="Версия N">
+        <input type="text" name="versionName" class="me-input" id="meVersionName" placeholder="Версия N">
       </div>
     </div>
   `;
@@ -235,7 +229,6 @@ function meBuildSoon(text){
   return `<div class="me-soon">${text}</div>`;
 }
 
-// ─── Установить значение Dropdown ───
 function meSetDropdownValue(dd, val, options) {
   dd.dataset.val = val;
   const labelEl = dd.querySelector('.me-dd-label');
@@ -252,7 +245,6 @@ function meSetDropdownValue(dd, val, options) {
   });
 }
 
-// ─── Пересчёт КБЖУ ───
 function meRecalcKbzhu() {
   let totalKcal = 0, totalProt = 0, totalFat = 0, totalCarb = 0;
   const detailsList = document.getElementById('meKbzhuList');
@@ -299,7 +291,6 @@ function meRecalcKbzhu() {
   }
 }
 
-// ─── Пересчёт общего времени из этапов ───
 function meRecalcTotalTime() {
   if (!meDraft.timeSplit) return;
   let sum = 0;
@@ -309,7 +300,6 @@ function meRecalcTotalTime() {
   if (input) input.value = sum || '';
 }
 
-// ─── Рендер тела ───
 function meRenderBody(){
   if (meCurrentTab === 'text'){
     meBody.innerHTML = meBuildSoon('📋 Загрузка из текста появится позже.');
@@ -338,7 +328,6 @@ function meRenderBody(){
   }, 10);
 }
 
-// ─── Собрать значения формы в черновик ───
 function meCollectForm(){
   if (!document.getElementById('meRecipeName')) return;
   const mealDD   = meBody.querySelector('[data-field="meal"]');
@@ -353,7 +342,6 @@ function meCollectForm(){
   if (vnEl) meDraft.versionName = vnEl.value;
 }
 
-// ─── Открыть ───
 async function openRecipeEditor(recipeId){
   meEditId        = recipeId || null;
   meCurrentTab    = 'manual';
@@ -412,7 +400,6 @@ async function openRecipeEditor(recipeId){
   document.body.style.overflow = 'hidden';
 }
 
-// ─── Закрыть ───
 function closeRecipeEditor(){
   modalRecipeEditor.style.display = 'none';
   document.body.style.overflow = '';
@@ -421,7 +408,6 @@ function closeRecipeEditor(){
   meDraft = null;
 }
 
-// ─── Переключение вкладок ───
 meTabs.addEventListener('click', (e) => {
   const tab = e.target.closest('.me-tab');
   if (!tab) return;
@@ -432,13 +418,9 @@ meTabs.addEventListener('click', (e) => {
   meRenderBody();
 });
 
-// ─── Клики внутри тела ───
 meBody.addEventListener('click', async (e) => {
-  // Собираем актуальные данные из текстовых полей перед любым действием,
-  // чтобы при перерисовке формы они не сбрасывались.
   if (meCurrentTab === 'manual') meCollectForm();
 
-  // Dropdown
   const btn = e.target.closest('.me-dropdown-btn');
   if (btn) {
     e.stopPropagation();
@@ -460,8 +442,6 @@ meBody.addEventListener('click', async (e) => {
     meSetDropdownValue(dd, valToSet, options);
     dd.classList.remove('open');
     
-    // Обновляем черновик сразу, чтобы при перерисовке (например, при добавлении ингредиента)
-    // выбранный приём пищи, источник или сложность не сбрасывались.
     if (field === 'meal') meDraft.meal = valToSet;
     if (field === 'source') meDraft.source = valToSet;
     if (field === 'complexity') meDraft.complexity = valToSet;
@@ -473,20 +453,16 @@ meBody.addEventListener('click', async (e) => {
     return;
   }
 
-  // Теги
   if (e.target.closest('[data-action="edit-tags"]')) {
     if (typeof openTagModal === 'function') {
       openTagModal(meDraft.tags, (newTags) => {
         meDraft.tags = newTags;
         meRenderBody();
       });
-    } else {
-      alert('Ошибка: модалка тегов не загружена (openTagModal).');
     }
     return;
   }
 
-  // Ингредиенты
   if (e.target.closest('[data-action="add-ing"]')) {
     const excludeIds = (meDraft.ingredients || []).map(i => i.productId).filter(id => id);
     if (typeof openProductPicker === 'function') {
@@ -507,12 +483,18 @@ meBody.addEventListener('click', async (e) => {
     }
     return;
   }
+  
   if (e.target.closest('[data-action="del-ing"]')) {
     const idx = parseInt(e.target.closest('.me-ing-item').dataset.idx, 10);
-    meDraft.ingredients.splice(idx, 1);
+    const deleted = meDraft.ingredients.splice(idx, 1)[0]; 
     meRenderBody();
+    showToast('Ингредиент удалён', () => {
+      meDraft.ingredients.splice(idx, 0, deleted);
+      meRenderBody();
+    });
     return;
   }
+
   if (e.target.closest('[data-action="portions-plus"]')) {
     meDraft.portions++;
     document.getElementById('mePortionsNum').textContent = meDraft.portions;
@@ -533,7 +515,6 @@ meBody.addEventListener('click', async (e) => {
     return;
   }
 
-  // Шаги
   if (e.target.closest('[data-action="add-step"]')) {
     meDraft.steps.push('');
     meRenderBody();
@@ -543,23 +524,24 @@ meBody.addEventListener('click', async (e) => {
   }
   if (e.target.closest('[data-action="del-step"]')) {
     const idx = parseInt(e.target.closest('.me-step-item').dataset.idx, 10);
-    meDraft.steps.splice(idx, 1);
+    const deleted = meDraft.steps.splice(idx, 1)[0];
     meRenderBody();
+    showToast('Шаг удалён', () => {
+      meDraft.steps.splice(idx, 0, deleted);
+      meRenderBody();
+    });
     return;
   }
 
-  // Время
   if (e.target.closest('[data-action="toggle-time-split"]')) {
     const cb = e.target.closest('[data-action="toggle-time-split"]');
     meDraft.timeSplit = cb.checked;
-    
     meDraft.time = '';
     if (meDraft.timeSplit) {
       meDraft.timeStages = [{ name: 'Подготовка', mins: '' }];
     } else {
       meDraft.timeStages = [];
     }
-    
     meRenderBody();
     return;
   }
@@ -577,7 +559,6 @@ meBody.addEventListener('click', async (e) => {
   }
 });
 
-// ─── Изменения (input / change) ───
 meBody.addEventListener('input', (e) => {
   if (e.target.dataset.action === 'change-amt') {
     const idx = parseInt(e.target.closest('.me-ing-item').dataset.idx, 10);
@@ -630,7 +611,6 @@ meBody.addEventListener('change', (e) => {
   }
 });
 
-// ─── Drag & Drop для шагов ───
 meBody.addEventListener('dragstart', (e) => {
   const item = e.target.closest('.me-step-item');
   if (item) {
@@ -669,14 +649,12 @@ meBody.addEventListener('drop', (e) => {
   }
 });
 
-// Закрытие дропдаунов
 document.addEventListener('click', (e) => {
   if (!e.target.closest('.me-dropdown')) {
     meBody.querySelectorAll('.me-dropdown').forEach(d => d.classList.remove('open'));
   }
 });
 
-// ─── Закрытие модалки ───
 meClose.addEventListener('click', closeRecipeEditor);
 meCancel.addEventListener('click', closeRecipeEditor);
 
@@ -692,7 +670,6 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && modalRecipeEditor.style.display === 'flex') closeRecipeEditor();
 });
 
-// ─── Меню ➕ → Добавить рецепт ───
 (function bindAddMenu(){
   const addMenu = document.getElementById('modalAdd');
   if (!addMenu) return;
@@ -704,15 +681,10 @@ document.addEventListener('keydown', (e) => {
   });
 })();
 
-// ═══════════════════════════════════════════════════
-// ЛОГИКА СОЗДАНИЯ ВЕРСИЙ И СОХРАНЕНИЯ (37.6, 37.7)
-// ═══════════════════════════════════════════════════
-
 const meSaveArrow       = document.getElementById('meSaveArrow');
 const meSplitDropdown   = document.getElementById('meSplitDropdown');
 const modalVersionName  = document.getElementById('modalVersionName');
 const mvnInput          = document.getElementById('mvnInput');
-const meSaveBtn         = document.getElementById('meSave');
 
 if (meSaveArrow && meSplitDropdown) {
   meSaveArrow.addEventListener('click', (e) => {
@@ -729,9 +701,8 @@ if (meSaveArrow && meSplitDropdown) {
   meSplitDropdown.addEventListener('click', (e) => {
     if (e.target.closest('[data-action="create-version"]')) {
       meSplitDropdown.classList.remove('open');
-      
       if (modalVersionName) {
-        const nextVer = (meDraft.currentVersion || 1) + 1;
+        const nextVer = meGetNextVersionNumber();
         if (mvnInput) {
           mvnInput.value = '';
           mvnInput.placeholder = 'Версия ' + nextVer;
@@ -749,7 +720,6 @@ if (mvnCloseBtn && modalVersionName) {
     modalVersionName.style.display = 'none';
   });
 }
-
 const mvnCancelBtn = document.getElementById('mvnCancel');
 if (mvnCancelBtn && modalVersionName) {
   mvnCancelBtn.addEventListener('click', () => {
@@ -759,50 +729,131 @@ if (mvnCancelBtn && modalVersionName) {
 
 const mvnSaveBtn = document.getElementById('mvnSave');
 if (mvnSaveBtn && modalVersionName && mvnInput) {
-  mvnSaveBtn.addEventListener('click', () => {
+  mvnSaveBtn.addEventListener('click', async () => {
     const newName = mvnInput.value.trim();
-    const nextVer = (meDraft.currentVersion || 1) + 1;
+    const nextVer = meGetNextVersionNumber();
     
+    // 1. Снимок СТАРОЙ версии (до внесения новых правок)
+    let oldVersionSnapshot = null;
+    if (meCurrentRecipe) {
+      oldVersionSnapshot = JSON.parse(JSON.stringify(meCurrentRecipe));
+      delete oldVersionSnapshot.versions;
+    } else {
+      oldVersionSnapshot = JSON.parse(JSON.stringify(meDraft));
+      delete oldVersionSnapshot.versions;
+    }
+
+    // 2. Применяем новые правки
     meCollectForm();
     
-    const oldVersionSnapshot = { ...meDraft };
-    delete oldVersionSnapshot.versions; 
-    
+    // 3. Сохраняем старую версию в архив
     if (!meDraft.versions) meDraft.versions = [];
-    
     meDraft.versions.push(oldVersionSnapshot);
     
     meDraft.currentVersion = nextVer;
     meDraft.versionName = newName || ('Версия ' + nextVer);
     
-    showToast('Создана версия ' + nextVer);
+    // АВТОСОХРАНЕНИЕ В БАЗУ
+    if (!meValidate()) {
+      meDraft.versions.pop();
+      meDraft.currentVersion = nextVer - 1;
+      meDraft.versionName = '';
+      return;
+    }
+
+    let totalTime = meDraft.time;
+    if (meDraft.timeSplit) {
+      totalTime = 0;
+      (meDraft.timeStages || []).forEach(st => totalTime += (parseFloat(st.mins) || 0));
+    }
+
+    let totalKcal = 0, totalProt = 0, totalFat = 0, totalCarb = 0;
+    (meDraft.ingredients || []).forEach(ing => {
+      let grams = parseFloat(ing.amount) || 0;
+      if (ing.unit === 'мл') grams = grams * (ing.density || 1);
+      if (ing.unit === 'шт') grams = grams * (ing.weightPerPiece || 100);
+      const ratio = grams / 100;
+      totalKcal += (ing.kcal || 0) * ratio;
+      totalProt += (ing.protein || 0) * ratio;
+      totalFat += (ing.fat || 0) * ratio;
+      totalCarb += (ing.carbs || 0) * ratio;
+    });
     
-    meRenderBody();
-    
-    modalVersionName.style.display = 'none';
+    const portions = meDraft.portions || 1;
+    const snapshot = {
+      kcal: Math.round(totalKcal / portions),
+      protein: Math.round((totalProt / portions) * 10) / 10,
+      fat: Math.round((totalFat / portions) * 10) / 10,
+      carbs: Math.round((totalCarb / portions) * 10) / 10
+    };
+
+    const recipeToSave = {
+      ...meDraft,
+      time: totalTime,
+      kbzhuSnapshot: snapshot
+    };
+
+    if (meEditId) {
+      recipeToSave.id = meEditId;
+    }
+
+    try {
+      const saved = await Storage.saveRecipe(recipeToSave);
+      if (!meEditId) meEditId = saved.id;
+      meCurrentRecipe = saved;
+
+      showToast('Создана версия ' + nextVer + ' (сохранено)');
+      modalVersionName.style.display = 'none';
+      closeRecipeEditor();
+      if (typeof refreshCurrentRecipeCard === 'function') await refreshCurrentRecipeCard();
+      if (typeof renderAllRecipes === 'function') renderAllRecipes();
+    } catch (err) {
+      console.error('[editor] Ошибка автосохранения:', err);
+      showToast('Ошибка сохранения!');
+    }
   });
 }
 
-function showToast(text) {
+function showToast(text, undoCallback) {
   const container = document.getElementById('toastContainer');
   if (!container) return;
   
   const toast = document.createElement('div');
   toast.className = 'toast';
-  toast.textContent = text;
-  container.appendChild(toast);
+  toast.style.display = 'flex';
+  toast.style.alignItems = 'center';
+  toast.style.gap = '12px';
   
-  setTimeout(() => {
-    toast.remove();
-  }, 3000);
+  const textSpan = document.createElement('span');
+  textSpan.textContent = text;
+  toast.appendChild(textSpan);
+
+  if (undoCallback) {
+    const btn = document.createElement('button');
+    btn.textContent = 'Отменить';
+    btn.style.background = '#e69db5';
+    btn.style.color = '#fff';
+    btn.style.border = 'none';
+    btn.style.padding = '4px 10px';
+    btn.style.borderRadius = '6px';
+    btn.style.cursor = 'pointer';
+    btn.style.fontWeight = 'bold';
+    btn.style.fontFamily = 'inherit';
+    btn.onclick = () => {
+      undoCallback();
+      toast.remove();
+    };
+    toast.appendChild(btn);
+  }
+
+  container.appendChild(toast);
+  setTimeout(() => { toast.remove(); }, 5000);
 }
 
-// ─── Валидация ───
 function meValidate() {
   let isValid = true;
   let firstErrorEl = null;
 
-  // 1. Проверка названия
   const nameInput = document.getElementById('meRecipeName');
   if (nameInput && !nameInput.value.trim()) {
     nameInput.classList.add('invalid');
@@ -812,7 +863,6 @@ function meValidate() {
     nameInput.classList.remove('invalid');
   }
 
-  // 2. Проверка приёма пищи
   const mealDD = meBody.querySelector('[data-field="meal"]');
   const mealBtn = mealDD ? mealDD.querySelector('.me-dropdown-btn') : null;
   if (!meDraft.meal) {
@@ -825,7 +875,6 @@ function meValidate() {
     mealBtn.classList.remove('invalid');
   }
 
-  // 3. Проверка ингредиентов
   const ingSection = document.querySelector('.me-ing-section');
   if (!meDraft.ingredients || meDraft.ingredients.length === 0) {
     if (ingSection) {
@@ -837,7 +886,6 @@ function meValidate() {
     ingSection.classList.remove('invalid');
   }
 
-  // Скролл к ошибке
   if (!isValid && firstErrorEl) {
     firstErrorEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
     showToast('Заполните обязательные поля!');
@@ -846,20 +894,27 @@ function meValidate() {
   return isValid;
 }
 
-// ─── Сохранение рецепта ───
+function meGetNextVersionNumber() {
+  let max = 0;
+  if (meDraft) {
+    if (meDraft.currentVersion) max = Math.max(max, meDraft.currentVersion);
+    (meDraft.versions || []).forEach(v => {
+      if (v.currentVersion) max = Math.max(max, v.currentVersion);
+    });
+  }
+  return max + 1;
+}
+
 async function meSaveRecipe() {
   meCollectForm();
-
   if (!meValidate()) return;
 
-  // Считаем итоговое время
   let totalTime = meDraft.time;
   if (meDraft.timeSplit) {
     totalTime = 0;
     (meDraft.timeStages || []).forEach(st => totalTime += (parseFloat(st.mins) || 0));
   }
 
-  // Считаем КБЖУ на 1 порцию для снимка (kbzhuSnapshot)
   let totalKcal = 0, totalProt = 0, totalFat = 0, totalCarb = 0;
   (meDraft.ingredients || []).forEach(ing => {
     let grams = parseFloat(ing.amount) || 0;
@@ -889,13 +944,11 @@ async function meSaveRecipe() {
   if (meEditId) {
     recipeToSave.id = meEditId;
 
-    // ─── 37.8: Умная очистка галочек удалённых ингредиентов ───
     const oldIngredients = meCurrentRecipe.ingredients || [];
     const newIngredients = recipeToSave.ingredients || [];
     const newNames = newIngredients.map(i => i.name);
     
     for (const oldIng of oldIngredients) {
-      // Если старого ингредиента нет в новом списке — удаляем его галочки
       if (!newNames.includes(oldIng.name)) {
         await Storage.removeMark('ingredient', meEditId, oldIng.name);
       }
@@ -906,7 +959,7 @@ async function meSaveRecipe() {
     await Storage.saveRecipe(recipeToSave);
     closeRecipeEditor();
     showToast('Рецепт сохранен!');
-    
+    if (typeof refreshCurrentRecipeCard === 'function') await refreshCurrentRecipeCard();
     if (typeof renderAllRecipes === 'function') {
       renderAllRecipes();
     }

@@ -736,14 +736,14 @@ body[data-theme="dark"] .b-actions-wrap{
   border-top-color:var(--c2);
 }
 body[data-theme="dark"] .b-act-btn{
-  background:color-mix(in srgb, var(--c1) 15%, var(--c4) 85%);
-  color:#fff;
-  border-color:var(--c2);
+  background:color-mix(in srgb, var(--c1) 15%, var(--c4) 85%) !important;
+  color:#fff !important;
+  border-color:var(--c2) !important;
 }
 body[data-theme="dark"] .b-act-primary{
-  background:var(--c2);
-  color:var(--c4);
-  border-color:var(--c2);
+  background:var(--c2) !important;
+  color:var(--c4) !important;
+  border-color:var(--c2) !important;
 }
 body[data-theme="dark"] .b-more-dropdown{
   background:var(--c4);
@@ -2027,3 +2027,56 @@ body[data-theme="dark"] .me-split-dropdown .me-dropdown-item:hover {
   padding: 10px;
   margin: -10px;
 }
+/* ═══ 38.1 — Версии в большой карточке ═══ */
+.versions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 60vh;
+  overflow-y: auto;
+  padding: 4px;
+}
+.version-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: var(--font-ui);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--c4);
+  transition: background .15s;
+}
+.version-row:hover {
+  background: color-mix(in srgb, var(--c3) 10%, transparent);
+}
+.version-row.active {
+  background: color-mix(in srgb, var(--c3) 20%, transparent);
+  font-weight: 800;
+}
+.version-del-btn {
+  background: none;
+  border: none;
+  color: var(--c4);
+  cursor: pointer;
+  opacity: 0.7;
+  padding: 6px 8px;
+  line-height: 1;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: opacity .15s, background .15s;
+}
+.version-del-btn:hover {
+  opacity: 1;
+  background: color-mix(in srgb, var(--c3) 22%, transparent);
+}
+
+body[data-theme="dark"] .version-row { color: #fff; }
+body[data-theme="dark"] .version-row:hover { background: rgba(255,255,255,.06); }
+body[data-theme="dark"] .version-row.active { background: rgba(255,255,255,.12); }
+body[data-theme="dark"] .version-del-btn { color: #fff; }

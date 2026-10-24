@@ -96,7 +96,7 @@ pre code{background:none;padding:0;color:inherit;font-size:inherit}
 │   │   ├── card.css        ← база карточки + тени + тёмная тема + большая карточка (.b-*) + .dm-scope расширения
 │   │   ├── palettes/       ← 9 файлов палитр
 │   │   └── styles/         ← 8 файлов стилей
-│   ├── js/                 ← 14 файлов (см. ниже)
+│   ├── js/                 ← 16 файлов (см. ниже)
 │   └── img/                ← пока пусто
 └── images/                 ← 19 фоновых картинок (01–05, 07–20, без 06)</code></pre>
 
@@ -111,6 +111,8 @@ pre code{background:none;padding:0;color:inherit;font-size:inherit}
 <tr><td><code>render.js</code></td><td>Превращает объект рецепта в HTML маленькой карточки. Раскладывает рецепты по секциям Главной.</td></tr>
 <tr><td><code>card-big.js</code></td><td>Большая карточка рецепта: открытие, закрытие, порции, чекбоксы, dropdown «В план» и «Ещё», нижние кнопки.</td></tr>
 <tr><td><code>product-picker.js</code></td><td>Модалка «База продуктов»: поиск, группировка, свёрнутость, сортировка, контекстное меню, <code>afterCreate</code>.</td></tr>
+<tr><td><code>tag-modal.js</code></td><td>Модалка тегов: поиск по 58 базовым и своим, группировка по 16 группам, создание своего тега.</td></tr>
+<tr><td><code>recipe-editor.js</code></td><td>Редактор рецепта (шаг 37): поля, ингредиенты с пикером, шаги с перетаскиванием, время, теги, создание версий, пересчёт КБЖУ, валидация.</td></tr>
 <tr><td><code>product-form.js</code></td><td>Форма создания/редактирования продукта: поля, валидация, дубликаты, сохранение.</td></tr>
 <tr><td><code>bg.js</code></td><td>Фон сайта и редактор позиции: <code>applyBg</code>, <code>openBgEditor</code>, зум, перетаскивание.</td></tr>
 <tr><td><code>design.js</code></td><td>Панель 🖌, черновик, макет, «Применить к…», предпросмотр, оформление по экранам.</td></tr>
@@ -133,13 +135,15 @@ pre code{background:none;padding:0;color:inherit;font-size:inherit}
 5. render.js           (рендер маленьких карточек)
 6. card-big.js         (большая карточка)
 7. product-picker.js   (пикер продуктов)
-8. product-form.js     (форма продукта)
-9. bg.js               (фон и редактор позиции)
-10. design.js          (панель 🖌, черновик, макет)
-11. screens.js         (переключение экранов)
-12. modals.js          (модалки FAB)
-13. fab.js             (автоскрытие FAB)
-14. main.js            (запуск всего)</code></pre>
+8. tag-modal.js        (модалка тегов)
+9. recipe-editor.js    (редактор рецепта)
+10. product-form.js    (форма продукта)
+11. bg.js              (фон и редактор позиции)
+12. design.js          (панель 🖌, черновик, макет)
+13. screens.js         (переключение экранов)
+14. modals.js          (модалки FAB)
+15. fab.js             (автоскрытие FAB)
+16. main.js            (запуск всего)</code></pre>
 
 <h2>IndexedDB — где что живёт</h2>
 

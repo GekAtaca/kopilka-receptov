@@ -1,8 +1,5 @@
 // ═══════════════════════════════════════════════════
-// card-big.js — большая карточка рецепта (шаг 35.1, MVP).
-// Загружается после render.js, до bg.js.
-// Умеет: открыть, закрыть, показать рецепт,
-//        переключить ❤ 👨‍🍳 🔖, открыть 📅-шторку.
+// card-big.js — большая карточка рецепта.
 // ═══════════════════════════════════════════════════
 
 const modalRecipe      = document.getElementById('modalRecipe');
@@ -15,8 +12,8 @@ const modalRecipeTimer = document.getElementById('modalRecipeTimer');
 let currentRecipeId   = null;
 let currentPortions   = 2;
 let basePortions      = 2;
+let currentRecipeObj  = null;
 
-// ─── Модалка-заглушка «Позже» ───
 function openSoon(title, text){
   modalSoonTitle.textContent = title;
   modalSoonText.textContent  = text || 'Это появится позже.';
@@ -26,7 +23,6 @@ function closeSoon(){
   modalSoon.style.display = 'none';
 }
 
-// ─── Dropdown «В план» ───
 function togglePlanDropdown(){
   const dd = document.getElementById('bPlanDropdown');
   if (!dd) return;
@@ -34,7 +30,6 @@ function togglePlanDropdown(){
   dd.classList.toggle('open');
 }
 
-// ─── Dropdown «Ещё» (внизу, выпадает вверх) ───
 function toggleMoreDropdown(){
   const dd = document.getElementById('bMoreDropdown');
   if (!dd) return;
@@ -50,11 +45,9 @@ function closePlanDropdown(){
   if (dd) dd.classList.remove('open');
 }
 
-// ─── Модалка таймера рецепта ───
 function openRecipeTimer(){ modalRecipeTimer.style.display = 'flex'; }
 function closeRecipeTimer(){ modalRecipeTimer.style.display = 'none'; }
 
-// ─── Загрузить отметки ингредиентов для рецепта ───
 async function loadIngredientMarks(recipeId){
   const marks = await Storage.getMarks('ingredient');
   const set = new Set();
@@ -64,47 +57,47 @@ async function loadIngredientMarks(recipeId){
   return set;
 }
 
-// ─── Загрузить сохранённые порции для рецепта ───
 async function loadPortions(recipeId){
   const marks = await Storage.getMarks('portions');
   const found = marks.find(m => m.recipeId === recipeId);
   return found ? found.extra : null;
 }
 
-// ─── Сохранить выбранные порции для рецепта ───
 async function savePortions(recipeId, portions){
   if (!recipeId) return;
   await Storage.removeMark('portions', recipeId);
   await Storage.addMark('portions', recipeId, portions);
 }
 
-// ─── Собрать HTML большой карточки ───
 function buildRecipeCard(recipe, marks, ingMarks){
   const label = MEAL_LABEL[recipe.meal] || '';
 
-  // Теги — первые 5
   const allTags   = recipe.tags || [];
   const shownTags = allTags.slice(0, 5);
   const tagsHtml  = shownTags
     .map(t => `<span class="btag">${escapeHtml(t)}</span>`)
     .join('');
 
-  // КБЖУ + вес порции (если есть)
   const k = recipe.kbzhuSnapshot || {};
   const weightHtml = recipe.weightPerPortion
     ? `<div class="b-kcal-weight">на ${recipe.weightPerPortion} г</div>`
     : '';
+  
+  const kcalVal = (k.kcal !== undefined && k.kcal !== null) ? k.kcal : '—';
+  const protVal = (k.protein !== undefined && k.protein !== null) ? k.protein : '—';
+  const fatVal = (k.fat !== undefined && k.fat !== null) ? k.fat : '—';
+  const carbVal = (k.carbs !== undefined && k.carbs !== null) ? k.carbs : '—';
+
   const kcalHtml = `
     ${weightHtml}
     <div class="b-kcal-row">
-      <span>${k.kcal} ккал</span><span class="b-dot">·</span>
-      <span>Б ${k.protein}</span><span class="b-dot">·</span>
-      <span>Ж ${k.fat}</span><span class="b-dot">·</span>
-      <span>У ${k.carbs}</span>
+      <span>${kcalVal} ккал</span><span class="b-dot">·</span>
+      <span>Б ${protVal}</span><span class="b-dot">·</span>
+      <span>Ж ${fatVal}</span><span class="b-dot">·</span>
+      <span>У ${carbVal}</span>
     </div>
   `;
 
-   // Ингредиенты — полный список
   const ingHtml = (recipe.ingredients || []).map(ing => {
     const amountStr = formatAmount(ing.amount) + ' ' + escapeHtml(ing.unit);
     const marked = ingMarks.has(ing.name) ? ' marked' : '';
@@ -115,14 +108,12 @@ function buildRecipeCard(recipe, marks, ingMarks){
     </li>`;
   }).join('');
 
-  // Шаги (если есть)
   const steps = recipe.steps || [];
   const stepsHtml = steps.length
     ? `<h3 class="b-h">Приготовление:</h3>
        <ol class="b-steps">${steps.map(s => `<li>${escapeHtml(s)}</li>`).join('')}</ol>`
     : '';
 
-  // Устройство готовки (если есть)
   const deviceHtml = recipe.device
     ? `<div class="b-device">
          <span class="b-device-label">Устройство:</span>
@@ -130,7 +121,6 @@ function buildRecipeCard(recipe, marks, ingMarks){
        </div>`
     : '';
 
-  // Заметка (если есть)
   const noteHtml = recipe.note
     ? `<div class="b-note">
          <div class="b-note-label">МОЯ ЗАМЕТКА</div>
@@ -138,21 +128,19 @@ function buildRecipeCard(recipe, marks, ingMarks){
        </div>`
     : '';
 
-  // Иконки сверху
   const heartCls  = marks.favorite ? 'active' : '';
   const cookedCls = marks.cooked   ? 'active' : '';
   const wantCls   = marks.want     ? 'active' : '';
-    const cookedIcon = marks.cooked
+  const cookedIcon = marks.cooked
     ? '✅'
-    : '&#128104;&#8205;&#127859;';   // 👨‍🍳 через HTML-коды (защита от развала)
+    : '&#128104;&#8205;&#127859;';
 
-  // Кнопка версий — только если их больше одной
+  // Кнопка версий
   const totalVersions = 1 + ((recipe.versions && recipe.versions.length) || 0);
   const versionsBtn = totalVersions > 1
-    ? `<button type="button" class="b-act-btn" data-action="versions">🕐 ${recipe.currentVersion} из ${totalVersions}</button>`
+    ? `<button type="button" class="b-act-btn" data-action="versions">🕐 ${recipe.currentVersion || 1} из ${totalVersions}</button>`
     : '';
 
-  // Количество ингредиентов для кнопки 🛒
   const ingCount = (recipe.ingredients || []).length;
 
   return `
@@ -190,7 +178,7 @@ function buildRecipeCard(recipe, marks, ingMarks){
         </div>
         <div class="b-portions">
           <button type="button" class="b-pbtn" data-action="portions-minus">−</button>
-          <span class="b-portions-num" data-action="reset-portions">${recipe.portions}</span>
+          <span class="b-portions-num" data-action="reset-portions">${recipe.portions || 2}</span>
           <button type="button" class="b-pbtn" data-action="portions-plus">+</button>
         </div>
       </div>
@@ -220,7 +208,6 @@ function buildRecipeCard(recipe, marks, ingMarks){
   `;
 }
 
-// ─── Открыть большую карточку по ID ───
 async function openRecipeCard(id){
   if (!id) return;
   const recipe = await Storage.getRecipe(id);
@@ -228,13 +215,14 @@ async function openRecipeCard(id){
     console.warn('[card-big] рецепт не найден:', id);
     return;
   }
- currentRecipeId = id;
+  
+  currentRecipeId = id;
+  currentRecipeObj = recipe;
   basePortions    = recipe.portions || 2;
 
   const savedPortions = await loadPortions(id);
   currentPortions = savedPortions || 4;
 
-  // Собрать отметки рецепта и ингредиентов
   const [favorite, cooked, want, ingMarks] = await Promise.all([
     Storage.isMarked('favorite', id),
     Storage.isMarked('cooked',   id),
@@ -248,14 +236,18 @@ async function openRecipeCard(id){
   updatePortions();
 }
 
-// ─── Закрыть большую карточку ───
 function closeRecipeCard(){
   modalRecipe.style.display = 'none';
   document.body.style.overflow = '';
   currentRecipeId = null;
+  currentRecipeObj = null;
 }
 
-// ─── Пересчёт порций и ингредиентов ───
+async function refreshCurrentRecipeCard(){
+  if (!currentRecipeId) return;
+  await openRecipeCard(currentRecipeId);
+}
+
 function updatePortions(){
   const num = modalRecipeBox.querySelector('.b-portions-num');
   if (num) num.textContent = currentPortions;
@@ -275,71 +267,42 @@ function updatePortions(){
   });
 }
 
-// ─── Клик по фону — закрыть ───
-  let backdropDownRecipe = false;
-  modalRecipe.addEventListener('mousedown', (e) => {
-    backdropDownRecipe = (e.target === modalRecipe);
-  });
-  modalRecipe.addEventListener('mouseup', (e) => {
-    if (backdropDownRecipe && e.target === modalRecipe) closeRecipeCard();
-    backdropDownRecipe = false;
-  });
+let backdropDownRecipe = false;
+modalRecipe.addEventListener('mousedown', (e) => {
+  backdropDownRecipe = (e.target === modalRecipe);
+});
+modalRecipe.addEventListener('mouseup', (e) => {
+  if (backdropDownRecipe && e.target === modalRecipe) closeRecipeCard();
+  backdropDownRecipe = false;
+});
 
-// ─── Делегирование кликов внутри карточки ───
 modalRecipeBox.addEventListener('click', async (e) => {
   const btn = e.target.closest('[data-action]');
   if (!btn) return;
   const action = btn.dataset.action;
 
-  if (action === 'close'){
-    closeRecipeCard();
-    return;
-  }
- if (action === 'open-plan'){
-    togglePlanDropdown();
-    return;
-  }
-  if (action === 'more'){
-    toggleMoreDropdown();
-    return;
-  }
-  if (action === 'buy'){
-    openSoon('🛒 Купить', 'Кладовая появится позже.');
-    return;
-  }
-  if (action === 'timer'){
-    openRecipeTimer();
-    return;
-  }
-  if (action === 'edit'){
+  if (action === 'close'){ closeRecipeCard(); return; }
+  if (action === 'open-plan'){ togglePlanDropdown(); return; }
+  if (action === 'more'){ toggleMoreDropdown(); return; }
+  if (action === 'buy'){ openSoon('🛒 Купить', 'Кладовая появится позже.'); return; }
+  if (action === 'timer'){ openRecipeTimer(); return; }
+  
+  if (action === 'edit'){ 
     if (typeof openRecipeEditor === 'function') openRecipeEditor(currentRecipeId);
-    return;
+    return; 
   }
+  
   if (action === 'versions'){
-    openSoon('🕐 Версии', 'Версии появятся позже.');
+    openVersionsModal();
     return;
   }
-  if (action === 'share'){
-    closeMoreDropdown();
-    openSoon('📤 Поделиться', 'Поделиться появится позже.');
-    return;
-  }
-  if (action === 'copy'){
-    closeMoreDropdown();
-    openSoon('📋 Копировать текст', 'Копирование появится позже.');
-    return;
-  }
-  if (action === 'print'){
-    closeMoreDropdown();
-    openSoon('🖨 Печать', 'Печать появится позже.');
-    return;
-  }
-  if (action === 'delete'){
-    closeMoreDropdown();
-    openSoon('🗑 Удалить', 'Удаление появится позже.');
-    return;
-  }
- if (action === 'portions-plus'){
+  
+  if (action === 'share'){ closeMoreDropdown(); openSoon('📤 Поделиться', 'Поделиться появится позже.'); return; }
+  if (action === 'copy'){ closeMoreDropdown(); openSoon('📋 Копировать текст', 'Копирование появится позже.'); return; }
+  if (action === 'print'){ closeMoreDropdown(); openSoon('🖨 Печать', 'Печать появится позже.'); return; }
+  if (action === 'delete'){ closeMoreDropdown(); openSoon('🗑 Удалить', 'Удаление появится позже.'); return; }
+
+  if (action === 'portions-plus'){
     currentPortions++;
     updatePortions();
     if (currentRecipeId) await savePortions(currentRecipeId, currentPortions);
@@ -379,10 +342,7 @@ modalRecipeBox.addEventListener('click', async (e) => {
     });
     return;
   }
-  if (action === 'edit-tags'){
-    openSoon('🏷 Теги', 'Модалка тегов появится позже.');
-    return;
-  }
+  if (action === 'edit-tags'){ openSoon('🏷 Теги', 'Модалка тегов появится позже.'); return; }
 
   if (!currentRecipeId) return;
 
@@ -411,7 +371,6 @@ modalRecipeBox.addEventListener('click', async (e) => {
   }
 });
 
-// ─── Закрытие модалки-заглушки «Позже» ───
 modalSoon.addEventListener('click', (e) => {
   if (e.target === modalSoon) closeSoon();
 });
@@ -419,13 +378,11 @@ modalSoon.querySelectorAll('[data-modal-close]').forEach(b => {
   b.addEventListener('click', closeSoon);
 });
 
-// ─── Закрытие модалки таймера рецепта ───
 modalRecipeTimer.addEventListener('click', (e) => {
   if (e.target === modalRecipeTimer) closeRecipeTimer();
 });
 document.getElementById('recipeTimerClose').addEventListener('click', closeRecipeTimer);
 
-// ─── Dropdown «В план» — закрывается кликом вне его ───
 document.addEventListener('click', (e) => {
   const dd = document.getElementById('bPlanDropdown');
   if (dd && dd.classList.contains('open')){
@@ -441,38 +398,193 @@ document.addEventListener('click', (e) => {
   }
 });
 
-// ─── Escape: сначала заглушки, потом карточка ───
 document.addEventListener('keydown', (e) => {
   if (e.key !== 'Escape') return;
-
   const dp = document.getElementById('bPlanDropdown');
   if (dp && dp.classList.contains('open')){ dp.classList.remove('open'); return; }
-
   const dm = document.getElementById('bMoreDropdown');
   if (dm && dm.classList.contains('open')){ dm.classList.remove('open'); return; }
-
-  if (modalSoon.style.display === 'flex'){ closeSoon();         return; }
+  if (modalSoon.style.display === 'flex'){ closeSoon(); return; }
   if (modalRecipeTimer.style.display === 'flex'){ closeRecipeTimer(); return; }
-  if (modalRecipe.style.display === 'flex'){ closeRecipeCard();  return; }
+  if (modalRecipe.style.display === 'flex'){ closeRecipeCard(); return; }
 });
 
-// ─── Клик по маленькой карточке — открыть большую ───
-// Делегирование: клик по названию или по фото.
-// Клик по кнопкам / чекбоксам / порциям — не открывает.
 document.addEventListener('click', (e) => {
   const card = e.target.closest('.card');
   if (!card) return;
-
-  // Внутренние элементы, которые НЕ открывают карточку
   if (e.target.closest('button')) return;
   if (e.target.closest('.portions')) return;
   if (e.target.closest('.ing-list')) return;
   if (e.target.closest('.chk')) return;
-
   const isTitle = e.target.closest('.title');
   const isPhoto = e.target.closest('.card-img');
   if (!isTitle && !isPhoto) return;
-
   const id = card.dataset.recipeId;
   if (id && typeof openRecipeCard === 'function') openRecipeCard(id);
 });
+
+// ═══════════════════════════════════════════════════
+// ЛОГИКА ВЕРСИЙ (Шаг 38.1)
+// ═══════════════════════════════════════════════════
+
+const modalVersions = document.getElementById('modalVersions');
+const versionsList  = document.getElementById('versionsList');
+
+function openVersionsModal() {
+  if (!currentRecipeObj) return;
+  
+  const versions = currentRecipeObj.versions || [];
+  const currentNum = currentRecipeObj.currentVersion || 1;
+  const currentName = currentRecipeObj.versionName || `Версия ${currentNum}`;
+  
+  const allVersions = [];
+  
+  allVersions.push({
+    num: currentNum,
+    name: currentName,
+    isCurrent: true,
+    idx: -1
+  });
+  
+  versions.forEach((v, i) => {
+    const vNum = v.currentVersion || (i + 1);
+    const vName = v.versionName || `Версия ${vNum}`;
+    allVersions.push({
+      num: vNum,
+      name: vName,
+      isCurrent: false,
+      idx: i
+    });
+  });
+  
+  allVersions.sort((a, b) => a.num - b.num);
+  
+  let html = '';
+  allVersions.forEach(v => {
+    if (v.isCurrent) {
+      html += `
+        <div class="version-row active" data-ver="${v.num}">
+          <span>${v.num}. ${v.name} (текущая)</span>
+        </div>
+      `;
+    } else {
+      html += `
+        <div class="version-row" data-ver="${v.num}" data-idx="${v.idx}">
+          <span>${v.num}. ${v.name}</span>
+          <button type="button" class="version-del-btn" data-action="del-version" data-idx="${v.idx}" title="Удалить версию">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="3 6 5 6 21 6"></polyline>
+              <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"></path>
+              <path d="M10 11v6"></path>
+              <path d="M14 11v6"></path>
+              <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path>
+            </svg>
+          </button>
+        </div>
+      `;
+    }
+  });
+
+  versionsList.innerHTML = html;
+  modalVersions.style.display = 'flex';
+}
+
+modalVersions.addEventListener('click', (e) => {
+  if (e.target === modalVersions || e.target.closest('[data-action="close-versions"]')) {
+    modalVersions.style.display = 'none';
+    return;
+  }
+});
+
+versionsList.addEventListener('click', async (e) => {
+  if (e.target.closest('[data-action="del-version"]')) {
+    const idx = parseInt(e.target.closest('[data-action="del-version"]').dataset.idx, 10);
+    await deleteVersion(idx);
+    return;
+  }
+
+  const row = e.target.closest('.version-row');
+  if (row && !row.classList.contains('active')) {
+    const idx = parseInt(row.dataset.idx, 10);
+    await switchVersion(idx);
+  }
+});
+
+let longPressTimer;
+versionsList.addEventListener('touchstart', (e) => {
+  const row = e.target.closest('.version-row');
+  if (!row || row.classList.contains('active')) return;
+  longPressTimer = setTimeout(() => {
+    const idx = parseInt(row.dataset.idx, 10);
+    if (confirm('Удалить эту версию?')) {
+      deleteVersion(idx);
+    }
+  }, 600);
+}, { passive: true });
+
+versionsList.addEventListener('touchend', () => clearTimeout(longPressTimer));
+versionsList.addEventListener('touchmove', () => clearTimeout(longPressTimer), { passive: true });
+
+async function deleteVersion(idx) {
+  if (!currentRecipeObj) return;
+  if (!confirm('Удалить эту версию?')) return;
+  if (!currentRecipeObj.versions) currentRecipeObj.versions = [];
+  
+  currentRecipeObj.versions.splice(idx, 1);
+  renumberVersions(currentRecipeObj);
+  await Storage.saveRecipe(currentRecipeObj);
+  
+  openRecipeCard(currentRecipeId);
+  openVersionsModal(); 
+  if (typeof renderAllRecipes === 'function') renderAllRecipes();
+}
+
+function renumberVersions(recipe) {
+  const items = [];
+  items.push({ isCurrent: true, oldNum: recipe.currentVersion || 1, ref: recipe });
+  (recipe.versions || []).forEach((v, i) => {
+    items.push({ isCurrent: false, oldNum: v.currentVersion || (i + 1), ref: v });
+  });
+  items.sort((a, b) => a.oldNum - b.oldNum);
+  let newNum = 1;
+  items.forEach(item => {
+    item.ref.currentVersion = newNum;
+    if (item.ref.versionName && /^Версия \d+$/.test(item.ref.versionName)) {
+      item.ref.versionName = 'Версия ' + newNum;
+    }
+    newNum++;
+  });
+}
+
+async function switchVersion(idx) {
+  if (!currentRecipeObj) return;
+  
+  const versions = currentRecipeObj.versions || [];
+  const selectedVersion = versions[idx];
+  if (!selectedVersion) return;
+
+  const currentSnapshot = { ...currentRecipeObj };
+  delete currentSnapshot.versions; 
+  
+  versions[idx] = currentSnapshot; 
+  
+  currentRecipeObj.name = selectedVersion.name;
+  currentRecipeObj.meal = selectedVersion.meal;
+  currentRecipeObj.source = selectedVersion.source;
+  currentRecipeObj.complexity = selectedVersion.complexity;
+  currentRecipeObj.versionName = selectedVersion.versionName;
+  currentRecipeObj.currentVersion = selectedVersion.currentVersion;
+  currentRecipeObj.ingredients = selectedVersion.ingredients;
+  currentRecipeObj.steps = selectedVersion.steps;
+  currentRecipeObj.time = selectedVersion.time;
+  currentRecipeObj.timeSplit = selectedVersion.timeSplit;
+  currentRecipeObj.timeStages = selectedVersion.timeStages;
+  currentRecipeObj.tags = selectedVersion.tags;
+  currentRecipeObj.kbzhuSnapshot = selectedVersion.kbzhuSnapshot;
+
+  await Storage.saveRecipe(currentRecipeObj);
+  
+  modalVersions.style.display = 'none';
+  openRecipeCard(currentRecipeId);
+  if (typeof renderAllRecipes === 'function') renderAllRecipes();
+}

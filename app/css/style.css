@@ -1018,8 +1018,8 @@ body[data-theme="dark"] .screen-stub{
   padding:16px;
 }
 .modal-box{
-  background:#1a1618;
-  color:#fff;
+  background:var(--c1);
+  color:var(--c4);
   border-radius:14px;
   padding:18px;
   width:100%;
@@ -1040,7 +1040,7 @@ body[data-theme="dark"] .screen-stub{
 .modal-close{
   background:none;
   border:none;
-  color:#fff;
+  color:var(--c4);
   font-size:20px;
   cursor:pointer;
   padding:0 4px;
@@ -1054,6 +1054,15 @@ body[data-theme="dark"] .screen-stub{
   font-size:22px;
   opacity:.7;
   padding:24px 0;
+}
+
+/* Тёмная тема для .modal-box */
+body[data-theme="dark"] .modal-box{
+  background:var(--c4);
+  color:#fff;
+}
+body[data-theme="dark"] .modal-close{
+  color:#fff;
 }
 
 /* ═══ Окошко «Применить к…» ═══ */
