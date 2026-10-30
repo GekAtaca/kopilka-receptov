@@ -38,9 +38,15 @@
   --actions-btn-pad:11px 6px;
 }
 [data-style="retro"] .card .ing-title,
-[data-style="retro"] .card .unit-name{text-transform:uppercase;letter-spacing:.06em}
-[data-style="retro"] .card .badge{text-transform:uppercase;letter-spacing:.1em}
-[data-style="retro"] .card .note-text{
+[data-style="retro"] .b-h,
+[data-style="retro"] .card .unit-name,
+[data-style="retro"] .b-device {text-transform:uppercase;letter-spacing:.06em}
+
+[data-style="retro"] .card .badge,
+[data-style="retro"] .b-badge {text-transform:uppercase;letter-spacing:.1em}
+
+[data-style="retro"] .card .note-text,
+[data-style="retro"] .b-note-text {
   display:-webkit-box;-webkit-line-clamp:2;
   -webkit-box-orient:vertical;overflow:hidden;
 }

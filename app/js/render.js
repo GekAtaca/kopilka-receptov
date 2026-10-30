@@ -38,7 +38,7 @@ function renderRecipeCard(recipe, ingMarks, isFav, isCooked, isWant, savedPortio
   const label = MEAL_LABEL[recipe.meal] || '';
   
   const baseP = recipe.portions || 2;
-  const curP = savedPortions || 4; // Если нет сохранённых, ставим 4, как в большой карточке
+  const currP = savedPortions || 4; // Если нет сохранённых, ставим 4, как в большой карточке
 
   const tagsHtml = (recipe.tags || [])
     .map(t => `<span>${escapeHtml(t)}</span>`)

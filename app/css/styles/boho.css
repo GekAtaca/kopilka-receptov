@@ -37,10 +37,17 @@
   --actions-btn-font:15px;
   --actions-btn-pad:11px 6px;
 }
-[data-style="boho"] .card .title::before{content:"🌿 "}
-[data-style="boho"] .card .title::after{content:" 🌿"}
-[data-style="boho"] .card .badge{font-family:'Caveat',cursive;font-weight:700}
-[data-style="boho"] .card .note-text{
+[data-style="boho"] .card .title::before,
+[data-style="boho"] .b-title::before {content:"🌿 "}
+
+[data-style="boho"] .card .title::after,
+[data-style="boho"] .b-title::after {content:" 🌿"}
+
+[data-style="boho"] .card .badge,
+[data-style="boho"] .b-badge {font-family:'Caveat',cursive;font-weight:700}
+
+[data-style="boho"] .card .note-text,
+[data-style="boho"] .b-note-text {
   display:-webkit-box;-webkit-line-clamp:2;
   -webkit-box-orient:vertical;overflow:hidden;
 }

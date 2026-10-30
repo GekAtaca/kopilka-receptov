@@ -1,5 +1,6 @@
 /* 🏛 Античный · Playfair Display · двойная рамка, ромбы */
 [data-style="antichny"] .card,
+.modal-recipe-box,
 .dm-scope[data-style="antichny"]{
   --font-head:'Playfair Display',serif;
   --font-body:'Playfair Display',serif;
@@ -38,15 +39,22 @@
   --actions-btn-font:14px;
   --actions-btn-pad:11px 6px;
 }
-[data-style="antichny"] .card .title::before{content:"◆ "}
-[data-style="antichny"] .card .title::after{content:" ◆"}
-[data-style="antichny"] .card .badge{
+[data-style="antichny"] .card .title::before,
+[data-style="antichny"] .b-title::before {content:"◆ "}
+
+[data-style="antichny"] .card .title::after,
+[data-style="antichny"] .b-title::after {content:" ◆"}
+
+[data-style="antichny"] .card .badge,
+[data-style="antichny"] .b-badge {
   border:1px solid var(--c3);
   background:transparent;
   color:var(--c3);
   letter-spacing:.1em;
 }
-[data-style="antichny"] .card .note-text{
+
+[data-style="antichny"] .card .note-text,
+[data-style="antichny"] .b-note-text {
   display:-webkit-box;-webkit-line-clamp:2;
   -webkit-box-orient:vertical;overflow:hidden;
 }

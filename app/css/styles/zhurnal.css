@@ -36,13 +36,22 @@
   --actions-btn-font:14px;
   --actions-btn-pad:11px 6px;
 }
-[data-style="zhurnal"] .card .title{text-transform:uppercase;letter-spacing:.06em}
+[data-style="zhurnal"] .card .title,
+[data-style="zhurnal"] .b-title {text-transform:uppercase;letter-spacing:.06em}
+
 [data-style="zhurnal"] .card .ing-title,
-[data-style="zhurnal"] .card .unit-name{text-transform:uppercase;letter-spacing:.08em}
-[data-style="zhurnal"] .card .tags span{text-transform:uppercase;letter-spacing:.08em}
-[data-style="zhurnal"] .card .badge{text-transform:uppercase;letter-spacing:.1em}
-[data-style="zhurnal"] .card .ing-toggle{text-transform:uppercase;letter-spacing:.08em}
-[data-style="zhurnal"] .card .note-text{
+[data-style="zhurnal"] .b-h,
+[data-style="zhurnal"] .card .unit-name,
+[data-style="zhurnal"] .b-device {text-transform:uppercase;letter-spacing:.08em}
+
+[data-style="zhurnal"] .card .tags span,
+[data-style="zhurnal"] .btag {text-transform:uppercase;letter-spacing:.08em}
+
+[data-style="zhurnal"] .card .badge,
+[data-style="zhurnal"] .b-badge {text-transform:uppercase;letter-spacing:.1em}
+
+[data-style="zhurnal"] .card .note-text,
+[data-style="zhurnal"] .b-note-text {
   display:-webkit-box;-webkit-line-clamp:2;
   -webkit-box-orient:vertical;overflow:hidden;
 }

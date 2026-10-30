@@ -39,9 +39,14 @@
   --actions-btn-font:14px;
   --actions-btn-pad:11px 6px;
 }
-[data-style="lileyny"] .card .title::before{content:"• "}
-[data-style="lileyny"] .card .title::after{content:" •"}
-[data-style="lileyny"] .card .note-text{
+[data-style="lileyny"] .card .title::before,
+[data-style="lileyny"] .b-title::before{content:"• "}
+
+[data-style="lileyny"] .card .title::after,
+[data-style="lileyny"] .b-title::after{content:" •"}
+
+[data-style="lileyny"] .card .note-text,
+[data-style="lileyny"] .b-note-text{
   display:-webkit-box;-webkit-line-clamp:2;
   -webkit-box-orient:vertical;overflow:hidden;
 }

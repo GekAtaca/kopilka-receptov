@@ -448,11 +448,11 @@ body[data-theme="dark"] .actions button.primary{
   padding:5px 14px;
   background:var(--c3);
   color:#fff;
-  border-radius:14px;
-  font-family:'Cormorant Garamond',serif;
-  font-style:italic;
-  font-weight:700;
-  font-size:13px;
+  border-radius:var(--radius-chip, 14px);
+  font-family:var(--font-head);
+  font-style:var(--font-style-head);
+  font-weight:var(--font-weight-head);
+  font-size:calc(var(--badge-font-size, 14px) + 1px);
   letter-spacing:.08em;
 }
 
@@ -508,7 +508,8 @@ body[data-theme="dark"] .actions button.primary{
   font-family:var(--font-head);
   font-style:var(--font-style-head);
   font-weight:var(--font-weight-head);
-  font-size:28px;
+  font-size:calc(var(--title-size, 24px) + 4px);
+  letter-spacing:var(--letter-spacing-head, 0em);
   line-height:1.15;
   margin:0;
 }
@@ -525,10 +526,11 @@ body[data-theme="dark"] .actions button.primary{
   background:var(--plate-bg);
   color:var(--plate-text);
   border:1px solid var(--c3);
-  border-radius:14px;
-  font-family:'Cormorant Garamond',serif;
-  font-style:italic;
-  font-size:14px;
+  border-radius:var(--radius-chip, 14px);
+  font-family:var(--font-body);
+  font-style:var(--font-style-body);
+  font-weight:var(--font-weight-body);
+  font-size:calc(var(--chip-font-size, 15px) - 1px);
 }
 .b-tag-edit{
   background:none;
@@ -552,8 +554,10 @@ body[data-theme="dark"] .actions button.primary{
   flex-wrap:wrap;
   gap:6px;
   align-items:center;
-  font-size:15px;
+  font-size:calc(var(--kcal-size, 15px) + 1px);
   font-weight:700;
+  font-family:var(--font-body);
+  font-style:var(--font-style-body);
 }
 .b-dot{ opacity:.5; }
 
@@ -562,7 +566,7 @@ body[data-theme="dark"] .actions button.primary{
   font-family:var(--font-head);
   font-style:var(--font-style-head);
   font-weight:var(--font-weight-head);
-  font-size:19px;
+  font-size:calc(var(--ing-title-size, 18px) + 2px);
   margin:6px 0 4px;
 }
 
@@ -579,7 +583,10 @@ body[data-theme="dark"] .actions button.primary{
   display:flex;
   align-items:center;
   gap:10px;
-  font-size:16px;
+  font-size:calc(var(--ing-size, 16px) + 2px);
+  font-family:var(--font-body);
+  font-style:var(--font-style-body);
+  font-weight:var(--font-weight-body);
 }
 .b-chk{
   width:20px; height:20px;
@@ -615,7 +622,10 @@ body[data-theme="dark"] .actions button.primary{
   display:flex;
   flex-direction:column;
   gap:6px;
-  font-size:15px;
+  font-size:calc(var(--ing-size, 16px) + 1px);
+  font-family:var(--font-body);
+  font-style:var(--font-style-body);
+  font-weight:var(--font-weight-body);
 }
 .b-steps li{ line-height:1.5; }
 
@@ -625,7 +635,10 @@ body[data-theme="dark"] .actions button.primary{
   background:var(--plate-bg);
   border:1px solid var(--c3);
   border-radius:11px;
-  font-size:15px;
+  font-size:calc(var(--ing-size, 16px) + 1px);
+  font-family:var(--font-body);
+  font-style:var(--font-style-body);
+  font-weight:var(--font-weight-body);
 }
 .b-device-label{ opacity:.7; margin-right:6px; }
 
@@ -635,8 +648,11 @@ body[data-theme="dark"] .actions button.primary{
   background:var(--plate-bg);
   border-left:3px solid var(--c3);
   border-radius:0 11px 11px 0;
-  font-size:15px;
+  font-size:calc(var(--note-font-size, 15px) + 1px);
   line-height:1.5;
+  font-family:var(--font-body);
+  font-style:var(--font-style-body);
+  font-weight:var(--font-weight-body);
 }
 .b-note-label{
   font-family:'Nunito',sans-serif;
@@ -715,9 +731,9 @@ body[data-theme="dark"] .b-note{
   border:1px solid var(--c3);
   background:var(--plate-bg);
   color:var(--plate-text);
-  font-family:'Cormorant Garamond',serif;
-  font-style:italic;
-  font-weight:700;
+  font-family:var(--font-head);
+  font-style:var(--font-style-head);
+  font-weight:var(--font-weight-head);
   font-size:14px;
   cursor:pointer;
   white-space:nowrap;
@@ -758,9 +774,9 @@ body[data-theme="dark"] .b-note{
   border:none;
   background:none;
   color:var(--c4);
-  font-family:'Cormorant Garamond',serif;
-  font-style:italic;
-  font-weight:600;
+  font-family:var(--font-head);
+  font-style:var(--font-style-head);
+  font-weight:var(--font-weight-head);
   font-size:15px;
   text-align:left;
   cursor:pointer;
@@ -824,9 +840,9 @@ body[data-theme="dark"] .b-more-item:hover{ background:rgba(255,255,255,.08); }
   display:flex;
   align-items:center;
   gap:8px;
-  font-family:'Cormorant Garamond',serif;
-  font-style:italic;
-  font-weight:700;
+  font-family:var(--font-head);
+  font-style:var(--font-style-head);
+  font-weight:var(--font-weight-head);
   font-size:18px;
 }
 .b-portions-num{
@@ -2400,3 +2416,99 @@ body[data-theme="dark"] .tn-wheel-wrap::after { background: linear-gradient(to t
 body[data-theme="dark"] .tn-toggle-track { background: rgba(255,255,255,0.2); }
 body[data-theme="dark"] .timer-alert { background: var(--c4); color: #fff; border-color: var(--c2); }
 body[data-theme="dark"] .timer-alert-stop { background: color-mix(in srgb, var(--c1) 15%, var(--c4) 85%); border-color: var(--c2); color: #fff; }
+
+/* ═══════════════════════════════════════════════════
+   ПРИНУДИТЕЛЬНАЯ СИНХРОНИЗАЦИЯ БОЛЬШОЙ И МАЛЕНЬКОЙ КАРТОЧЕК
+   ═══════════════════════════════════════════════════ */
+
+/* Заголовок: размер, шрифт, жирность, межбуквенное расстояние */
+.modal-recipe-box .b-title {
+  font-family: var(--font-head) !important;
+  font-style: var(--font-style-head) !important;
+  font-weight: var(--font-weight-head) !important;
+  font-size: var(--title-size) !important; 
+  letter-spacing: var(--letter-spacing-head) !important;
+}
+
+/* Бейдж (Завтрак): скругление, отступы, размер шрифта */
+.modal-recipe-box .b-badge {
+  border-radius: var(--radius-chip) !important;
+  padding: var(--badge-pad-y) var(--badge-pad-x) !important;
+  font-size: var(--badge-font-size) !important;
+  font-family: var(--font-head) !important;
+  font-style: var(--font-style-head) !important;
+  font-weight: var(--font-weight-head) !important;
+}
+
+/* Теги: скругление, отступы, размер шрифта */
+.modal-recipe-box .btag {
+  border-radius: var(--radius-chip) !important;
+  padding: var(--chip-pad-y) var(--chip-pad-x) !important;
+  font-size: var(--chip-font-size) !important;
+  font-family: var(--font-body) !important;
+  font-style: var(--font-style-body) !important;
+  font-weight: var(--font-weight-body) !important;
+}
+
+/* КБЖУ */
+.modal-recipe-box .b-kcal-row {
+  font-size: var(--kcal-size) !important;
+  gap: var(--kcal-gap) !important;
+  font-family: var(--font-body) !important;
+  font-style: var(--font-style-body) !important;
+}
+
+/* Заголовки блоков (Ингредиенты, Приготовление) */
+.modal-recipe-box .b-h {
+  font-size: var(--ing-title-size) !important;
+  font-family: var(--font-head) !important;
+  font-style: var(--font-style-head) !important;
+  font-weight: var(--font-weight-head) !important;
+}
+
+/* Ингредиенты */
+.modal-recipe-box .b-ing li {
+  font-size: var(--ing-size) !important;
+  gap: var(--ing-gap) !important;
+  font-family: var(--font-body) !important;
+  font-style: var(--font-style-body) !important;
+  font-weight: var(--font-weight-body) !important;
+}
+
+/* Шаги */
+.modal-recipe-box .b-steps {
+  font-size: var(--ing-size) !important;
+  font-family: var(--font-body) !important;
+  font-style: var(--font-style-body) !important;
+  font-weight: var(--font-weight-body) !important;
+}
+
+/* Заметка */
+.modal-recipe-box .b-note {
+  font-size: var(--note-font-size) !important;
+  padding: var(--note-pad-y) var(--note-pad-x) !important;
+  border-radius: var(--note-radius) !important;
+  font-family: var(--font-body) !important;
+  font-style: var(--font-style-body) !important;
+  font-weight: var(--font-weight-body) !important;
+}
+
+/* Устройство готовки */
+.modal-recipe-box .b-device {
+  font-size: var(--unit-name-size) !important;
+  padding: var(--unit-pad-y) var(--unit-pad-x) !important;
+  border-radius: var(--unit-radius) !important;
+  font-family: var(--font-body) !important;
+  font-style: var(--font-style-body) !important;
+  font-weight: var(--font-weight-body) !important;
+}
+
+/* Кнопки внизу (Купить, Таймер, Изменить) */
+.modal-recipe-box .b-act-btn {
+  font-size: var(--actions-btn-font) !important;
+  padding: var(--actions-btn-pad) !important;
+  border-radius: var(--radius-btn) !important;
+  font-family: var(--font-head) !important;
+  font-style: var(--font-style-head) !important;
+  font-weight: var(--font-weight-head) !important;
+}
