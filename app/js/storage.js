@@ -727,14 +727,94 @@
     return 'tag-' + String(max + 1).padStart(3, '0');
   }
 
-  // Свои + базовые одним списком. Базовые — из tags-base.js.
+    // Свои + базовые одним списком. Базовые — из tags-base.js.
   async function getAllTagsMerged(){
     const own = await getAllTags();
     const base = (typeof BASE_TAGS !== 'undefined' && Array.isArray(BASE_TAGS)) ? BASE_TAGS : [];
     return [...own, ...base];
   }
 
-  
+  // ═══════════════════════════════════════════════════
+  // Таймеры
+  // ═══════════════════════════════════════════════════
+  //
+  // Формат записи:
+  // { id, recipeId, step, endsAt, sound, createdAt }
+  //   id        — 'timer-NNN'
+  //   recipeId  — id рецепта (recipe-NNN)
+  //   step      — номер шага (1, 2, ...) или null, если «Без привязки»
+  //   endsAt    — timestamp, когда таймер должен сработать
+  //   sound     — true / false
+  //   createdAt — timestamp создания
+  //
+  // Храним НЕ «сколько осталось», а «когда сработать».
+  // Так таймер продолжает идти, даже если сайт был закрыт.
+
+  async function saveTimer(timer){
+    if (!available || !timer) return null;
+    const t = { ...timer };
+    if (!t.id) t.id = await nextTimerId();
+    if (!t.createdAt) t.createdAt = Date.now();
+    await reqPromise(tx('timers','readwrite').put(t));
+    return t;
+  }
+
+  async function getTimer(id){
+    if (!available || !id) return null;
+    return await reqPromise(tx('timers','readonly').get(id));
+  }
+
+  async function getTimers(){
+    if (!available) return [];
+    return await reqPromise(tx('timers','readonly').getAll());
+  }
+
+  async function getTimersForRecipe(recipeId){
+    if (!available || !recipeId) return [];
+    const all = await getTimers();
+    return all.filter(t => t.recipeId === recipeId);
+  }
+
+  async function getActiveTimers(){
+    if (!available) return [];
+    const now = Date.now();
+    const all = await getTimers();
+    return all.filter(t => t.endsAt > now);
+  }
+
+  async function getExpiredTimers(){
+    if (!available) return [];
+    const now = Date.now();
+    const all = await getTimers();
+    return all.filter(t => t.endsAt <= now);
+  }
+
+  async function deleteTimer(id){
+    if (!available || !id) return;
+    await reqPromise(tx('timers','readwrite').delete(id));
+  }
+
+  async function clearTimersForRecipe(recipeId){
+    if (!available || !recipeId) return;
+    const all = await getTimersForRecipe(recipeId);
+    for (const t of all){
+      await deleteTimer(t.id);
+    }
+  }
+
+  async function nextTimerId(){
+    const all = await getTimers();
+    let max = 0;
+    for (const t of all){
+      const m = /^timer-(\d+)$/.exec(t.id || '');
+      if (m){
+        const n = parseInt(m[1], 10);
+        if (n > max) max = n;
+      }
+    }
+    return 'timer-' + String(max + 1).padStart(3, '0');
+  }
+
   async function getStats(){
     if (!available) return { recipes: 0, products: 0 };
     const recipes  = await reqPromise(tx('recipes','readonly').count());
@@ -819,12 +899,14 @@
     clearMarks,
 
     // ── таймеры ──
-    saveTimer:                stub('saveTimer'),
-    getTimers:                stub('getTimers', []),
-    updateTimer:              stub('updateTimer'),
-    deleteTimer:              stub('deleteTimer'),
-    getActiveTimers:          stub('getActiveTimers', []),
-    getTimersForRecipe:       stub('getTimersForRecipe', []),
+    saveTimer,
+    getTimer,
+    getTimers,
+    getTimersForRecipe,
+    getActiveTimers,
+    getExpiredTimers,
+    deleteTimer,
+    clearTimersForRecipe,
 
      // ── теги ──
     saveTag,

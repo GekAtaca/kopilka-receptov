@@ -1024,7 +1024,7 @@ body[data-theme="dark"] .screen-stub{
   padding:18px;
   width:100%;
   max-width:420px;
-  font-family:system-ui,sans-serif;
+  font-family:var(--font-ui);
   box-shadow:0 20px 60px rgba(0,0,0,.55);
 }
 .modal-head{
@@ -1034,8 +1034,10 @@ body[data-theme="dark"] .screen-stub{
   margin-bottom:14px;
 }
 .modal-title{
-  font-size:16px;
-  font-weight:700;
+  font-family:var(--font-head);
+  font-style:var(--font-style-head);
+  font-weight:var(--font-weight-head);
+  font-size:20px;
 }
 .modal-close{
   background:none;
@@ -2342,4 +2344,35 @@ body[data-theme="dark"] .dup-btn-primary{
     max-height:100vh;
     height:100vh;
   }
+}
+/* 1. По умолчанию (если открываем с Главной) — черный фон */
+#modalTimerList,
+#modalTimerNew {
+  background: rgba(0, 0, 0, 0.78) !important;
+}
+
+/* 2. НО если под ними открыта большая карточка — фон таймера делаем прозрачным */
+body:has(#modalRecipe[style*="display: flex"]) #modalTimerList,
+body:has(#modalRecipe[style*="display: flex"]) #modalTimerNew {
+  background: transparent !important;
+}
+
+/* 3. И затемняем саму Большую карточку */
+body:has(#modalTimerList[style*="display: flex"]) #modalRecipeBox,
+body:has(#modalTimerNew[style*="display: flex"]) #modalRecipeBox {
+  filter: brightness(0.22);
+  pointer-events: none;
+}
+
+/* 4. Окна таймеров поверх */
+#modalTimerList .modal-box,
+#modalTimerNew .modal-box {
+  position: relative;
+  z-index: 11;
+}
+
+/* 5. Если открыт "Новый таймер", затемняем и окно "Таймеры рецепта" */
+body:has(#modalTimerNew[style*="display: flex"]) #modalTimerList .modal-box {
+  filter: brightness(0.22);
+  pointer-events: none;
 }

@@ -96,7 +96,7 @@ pre code{background:none;padding:0;color:inherit;font-size:inherit}
 │   │   ├── card.css        ← база карточки + тени + тёмная тема + большая карточка (.b-*) + .dm-scope расширения
 │   │   ├── palettes/       ← 9 файлов палитр
 │   │   └── styles/         ← 8 файлов стилей
-│   ├── js/                 ← 16 файлов (см. ниже)
+│   ├── js/                 ← 17 файлов (см. ниже)
 │   └── img/                ← пока пусто
 └── images/                 ← 19 фоновых картинок (01–05, 07–20, без 06)</code></pre>
 
@@ -113,6 +113,7 @@ pre code{background:none;padding:0;color:inherit;font-size:inherit}
 <tr><td><code>product-picker.js</code></td><td>Модалка «База продуктов»: поиск, группировка, свёрнутость, сортировка, контекстное меню, <code>afterCreate</code>.</td></tr>
 <tr><td><code>tag-modal.js</code></td><td>Модалка тегов: поиск по 58 базовым и своим, группировка по 16 группам, создание своего тега.</td></tr>
 <tr><td><code>recipe-editor.js</code></td><td>Редактор рецепта (шаг 37): поля, ингредиенты с пикером, шаги с перетаскиванием, время, теги, создание версий, пересчёт КБЖУ, валидация.</td></tr>
+<tr><td><code>timer.js</code></td><td>Таймеры рецептов (шаг 38.3): модалка списка, кольцевые колесики выбора времени, звук (Web Audio API), фоновый тик, уведомления, проверка просроченных при загрузке.</td></tr>
 <tr><td><code>product-form.js</code></td><td>Форма создания/редактирования продукта: поля, валидация, дубликаты, сохранение.</td></tr>
 <tr><td><code>bg.js</code></td><td>Фон сайта и редактор позиции: <code>applyBg</code>, <code>openBgEditor</code>, зум, перетаскивание.</td></tr>
 <tr><td><code>design.js</code></td><td>Панель 🖌, черновик, макет, «Применить к…», предпросмотр, оформление по экранам.</td></tr>
@@ -134,16 +135,17 @@ pre code{background:none;padding:0;color:inherit;font-size:inherit}
 4. shared.js           (общие переменные)
 5. render.js           (рендер маленьких карточек)
 6. card-big.js         (большая карточка)
-7. product-picker.js   (пикер продуктов)
-8. tag-modal.js        (модалка тегов)
-9. recipe-editor.js    (редактор рецепта)
-10. product-form.js    (форма продукта)
-11. bg.js              (фон и редактор позиции)
-12. design.js          (панель 🖌, черновик, макет)
-13. screens.js         (переключение экранов)
-14. modals.js          (модалки FAB)
-15. fab.js             (автоскрытие FAB)
-16. main.js            (запуск всего)</code></pre>
+7. timer.js            (логика таймеров)
+8. product-picker.js   (пикер продуктов)
+9. tag-modal.js        (модалка тегов)
+10. recipe-editor.js   (редактор рецепта)
+11. product-form.js    (форма продукта)
+12. bg.js              (фон и редактор позиции)
+13. design.js          (панель 🖌, черновик, макет)
+14. screens.js         (переключение экранов)
+15. modals.js          (модалки FAB)
+16. fab.js             (автоскрытие FAB)
+17. main.js            (запуск всего)</code></pre>
 
 <h2>IndexedDB — где что живёт</h2>
 
@@ -168,7 +170,7 @@ pre code{background:none;padding:0;color:inherit;font-size:inherit}
 <tr><td><code>shopping</code></td><td>id</td><td>Корзина / список покупок.</td><td><span class="chip wait">пусто</span></td></tr>
 <tr><td><code>plan</code></td><td>id</td><td>План питания.</td><td><span class="chip wait">пусто</span></td></tr>
 <tr><td><code>marks</code></td><td>id</td><td>Все отметки (см. ниже).</td><td><span class="chip done">работает</span></td></tr>
-<tr><td><code>timers</code></td><td>id</td><td>Активные таймеры.</td><td><span class="chip wait">пусто</span></td></tr>
+<tr><td><code>timers</code></td><td>id</td><td>Активные таймеры: ID рецепта, шаг, время окончания, звук.</td><td><span class="chip done">работает</span></td></tr>
 <tr><td><code>settings</code></td><td>key</td><td>Настройки (см. ниже).</td><td><span class="chip done">работает</span></td></tr>
 <tr><td><code>photos</code></td><td>id</td><td>Фото рецептов и продуктов.</td><td><span class="chip wait">пусто</span></td></tr>
 </table>
@@ -282,13 +284,20 @@ pre code{background:none;padding:0;color:inherit;font-size:inherit}
 <li><code>saveShoppingItem</code> / <code>getShopping</code> / <code>deleteShoppingItem</code> / <code>clearShopping</code></li>
 </ul>
 
-<h3>Таймеры <span class="chip wait">заглушки</span></h3>
+<h3>Таймеры <span class="chip done">работает</span></h3>
 <ul>
-<li><code>saveTimer</code>, <code>getTimers</code>, <code>updateTimer</code>, <code>deleteTimer</code>, <code>getActiveTimers</code>, <code>getTimersForRecipe</code>.</li>
+<li><code>saveTimer(timer)</code> — сохранить. Без <code>id</code> — выдаст <code>timer-NNN</code>.</li>
+<li><code>getTimer(id)</code> — получить один.</li>
+<li><code>getTimers()</code> — все.</li>
+<li><code>getTimersForRecipe(recipeId)</code> — все таймеры конкретного рецепта (для списка в модалке).</li>
+<li><code>getActiveTimers()</code> — у которых <code>endsAt &gt; Date.now()</code>.</li>
+<li><code>getExpiredTimers()</code> — у которых время уже вышло (для показа уведомлений).</li>
+<li><code>deleteTimer(id)</code> — удалить один.</li>
+<li><code>clearTimersForRecipe(recipeId)</code> — удалить все таймеры рецепта.</li>
 </ul>
 
 <div class="box note">
-<b>Как хранится таймер.</b> Не «осталось 5 минут», а <b>«должен сработать в 15:42:30»</b>. При открытии сайта система считает разницу. Если сайт был закрыт — время всё равно идёт.
+<b>Как хранится таймер.</b> Не «осталось 5 минут», а <b><code>endsAt</code></b> — timestamp, когда таймер должен сработать (например, <code>1730123456789</code>). При открытии сайта система считает разницу <code>endsAt - Date.now()</code>. Если сайт был закрыт — время всё равно идёт.
 </div>
 
 <h3>Фото <span class="chip wait">заглушки</span></h3>

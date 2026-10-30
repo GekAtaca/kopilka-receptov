@@ -438,7 +438,7 @@
 
   <!-- ═══ Большая карточка рецепта (шаг 35.1) ═══ -->
   <div id="modalRecipe" class="modal-recipe" style="display:none">
-    <div class="modal-recipe-box" id="modalRecipeBox"></div>
+    <div class="modal-recipe-box dm-scope" id="modalRecipeBox"></div>
   </div>
 
  <!-- ═══ Модалка «Позже» (заглушка) ═══ -->
@@ -452,15 +452,77 @@
     </div>
   </div>
 
-  <!-- ═══ Модалка таймера рецепта (шаг 35.2.3, пока заглушка) ═══ -->
-  <div id="modalRecipeTimer" class="modal modal-soon" style="display:none">
-    <div class="modal-box">
+  <!-- ═══ Модалка 1: Список таймеров рецепта ═══ -->
+  <div id="modalTimerList" class="modal" style="display:none; z-index:100011;">
+    <div class="modal-box dm-scope" style="max-width:440px;">
       <div class="modal-head">
-        <span class="modal-title">⏱ Таймер рецепта</span>
-        <button type="button" class="modal-close" id="recipeTimerClose">✕</button>
+        <span class="modal-title">⏱ Таймеры рецепта</span>
+        <div style="display:flex; gap:4px; align-items:center;">
+          <button type="button" class="timer-add-btn" id="timerAddBtn" title="Новый таймер">+</button>
+          <button type="button" class="modal-close" id="timerListClose">✕</button>
+        </div>
       </div>
-      <div class="modal-stub">Таймер рецепта появится позже.</div>
+      <div class="timer-list" id="timerList"></div>
     </div>
+  </div>
+
+  <!-- ═══ Модалка 2: Новый таймер ═══ -->
+  <div id="modalTimerNew" class="modal" style="display:none; z-index:100012;">
+    <div class="modal-box dm-scope" style="max-width:440px;">
+      <div class="modal-head">
+        <span class="modal-title">⏱ Новый таймер</span>
+        <button type="button" class="modal-close" id="timerNewClose">✕</button>
+      </div>
+
+      <div class="tn-field">
+        <label class="tn-label">Привязать к шагу</label>
+        <div class="me-dropdown has-value" data-field="timer-step" data-val="" data-placeholder="Без привязки">
+          <button type="button" class="me-dropdown-btn">
+            <span class="me-dd-label">Без привязки</span>
+            <span class="me-dd-arrow">▼</span>
+          </button>
+          <div class="me-dropdown-menu" id="timerStepMenu">
+            <div class="me-dropdown-item active" data-val="">Без привязки</div>
+            <!-- шаги добавятся через JS -->
+          </div>
+        </div>
+      </div>
+
+      <div class="tn-wheels" id="tnWheels">
+        <div class="tn-wheel-wrap">
+          <div class="tn-wheel" data-type="hours" id="tnHours"></div>
+          <div class="tn-wheel-label">часы</div>
+        </div>
+        <div class="tn-wheel-wrap">
+          <div class="tn-wheel" data-type="mins" id="tnMins"></div>
+          <div class="tn-wheel-label">минуты</div>
+        </div>
+        <div class="tn-wheel-wrap">
+          <div class="tn-wheel" data-type="secs" id="tnSecs"></div>
+          <div class="tn-wheel-label">секунды</div>
+        </div>
+      </div>
+
+      <label class="tn-toggle">
+        <input type="checkbox" id="timerSoundToggle" checked>
+        <span class="tn-toggle-track"><span class="tn-toggle-knob"></span></span>
+        <span>Со звуком</span>
+      </label>
+
+      <button type="button" class="tn-start-btn" id="timerStartBtn">Запустить</button>
+    </div>
+  </div>
+
+  <!-- ═══ Уведомление о конце таймера ═══ -->
+  <div id="timerAlert" class="timer-alert" style="display:none;">
+    <div class="timer-alert-body" id="timerAlertBody">
+      <div class="timer-alert-title" id="timerAlertTitle">Таймер</div>
+      <div class="timer-alert-text" id="timerAlertText"></div>
+    </div>
+    <div class="timer-alert-actions">
+      <button type="button" class="timer-alert-stop" id="timerAlertStop">Остановить звук</button>
+    </div>
+    <button type="button" class="timer-alert-close" id="timerAlertClose">✕</button>
   </div>
 
   <!-- ═══ Модалка «Теги рецепта» ═══ -->
@@ -557,6 +619,7 @@
   <script src="app/js/shared.js"></script>
   <script src="app/js/render.js"></script>
   <script src="app/js/card-big.js"></script>
+  <script src="app/js/timer.js"></script>
   <script src="app/js/product-picker.js"></script>
   <script src="app/js/tag-modal.js"></script>
   <script src="app/js/recipe-editor.js"></script>
@@ -581,29 +644,6 @@
   <button type="button" class="fab-btn primary" data-modal="add" title="Добавить рецепт"><span>➕</span></button>
 </div>
 </div><!-- /.app -->
-
-  <!-- ═══ Мини-модалка: Название версии ═══ -->
-  <div id="modalVersionName" class="modal" style="display:none; z-index:100010;">
-    <div class="modal-box dm-scope" style="max-width:400px;">
-      <div class="modal-head">
-        <span class="modal-title">Название версии</span>
-        <button type="button" class="modal-close" id="mvnClose">✕</button>
-      </div>
-      <div style="padding: 0 0 14px 0;">
-        <input type="text" class="me-input" id="mvnInput" placeholder="Например: Лёгкий вариант" style="width:100%;">
-        <div style="font-size:12px; opacity:0.6; margin-top:8px; font-family:var(--font-ui);">Можно оставить пустым — будет «Версия N»</div>
-      </div>
-      <div class="apply-to-actions">
-        <button type="button" class="apply-to-btn" id="mvnCancel">Отмена</button>
-        <button type="button" class="apply-to-btn primary" id="mvnSave">Создать</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ═══ Контейнер для уведомлений (Тостов) ═══ -->
-  <div id="toastContainer" class="toast-container"></div>
-
-</body>
 
 </body>
 </html>

@@ -7,8 +7,6 @@ const modalRecipeBox   = document.getElementById('modalRecipeBox');
 const modalSoon        = document.getElementById('modalSoon');
 const modalSoonTitle   = document.getElementById('modalSoonTitle');
 const modalSoonText    = document.getElementById('modalSoonText');
-const modalRecipeTimer = document.getElementById('modalRecipeTimer');
-
 let currentRecipeId   = null;
 let currentPortions   = 2;
 let basePortions      = 2;
@@ -45,8 +43,9 @@ function closePlanDropdown(){
   if (dd) dd.classList.remove('open');
 }
 
-function openRecipeTimer(){ modalRecipeTimer.style.display = 'flex'; }
-function closeRecipeTimer(){ modalRecipeTimer.style.display = 'none'; }
+function openRecipeTimer(){
+  if (typeof openTimerList === 'function') openTimerList(currentRecipeId);
+}
 
 async function loadIngredientMarks(recipeId){
   const marks = await Storage.getMarks('ingredient');
@@ -141,7 +140,14 @@ function buildRecipeCard(recipe, marks, ingMarks){
     ? `<button type="button" class="b-act-btn" data-action="versions">🕐 ${recipe.currentVersion || 1} из ${totalVersions}</button>`
     : '';
 
-  const ingCount = (recipe.ingredients || []).length;
+  const totalIng = (recipe.ingredients || []).length;
+  let markedIng = 0;
+  if (ingMarks) {
+    (recipe.ingredients || []).forEach(ing => {
+      if (ingMarks.has(ing.name)) markedIng++;
+    });
+  }
+  const ingCount = markedIng > 0 ? markedIng : totalIng;
 
   return `
     <div class="b-photo">
@@ -230,10 +236,29 @@ async function openRecipeCard(id){
     loadIngredientMarks(id)
   ]);
 
+  // Применяем текущую тему и палитру к модалке, как в редакторе
+  ['style','palette','theme','shadow'].forEach(key => {
+    const attr = 'data-' + key;
+    const val = document.body.getAttribute(attr);
+    if (val) modalRecipeBox.setAttribute(attr, val);
+    else modalRecipeBox.removeAttribute(attr);
+  });
+
   modalRecipeBox.innerHTML = buildRecipeCard(recipe, { favorite, cooked, want }, ingMarks);
   modalRecipe.style.display = 'flex';
   document.body.style.overflow = 'hidden';
   updatePortions();
+  updateBuyButton();
+}
+
+function updateBuyButton() {
+  const buyBtn = modalRecipeBox.querySelector('[data-action="buy"]');
+  if (!buyBtn || !currentRecipeObj) return;
+  
+  const marked = modalRecipeBox.querySelectorAll('.b-chk.marked').length;
+  const total = (currentRecipeObj.ingredients || []).length;
+  
+  buyBtn.textContent = `🛒 ${marked > 0 ? marked : total}`;
 }
 
 function closeRecipeCard(){
@@ -241,6 +266,7 @@ function closeRecipeCard(){
   document.body.style.overflow = '';
   currentRecipeId = null;
   currentRecipeObj = null;
+  if (typeof renderAllRecipes === 'function') renderAllRecipes();
 }
 
 async function refreshCurrentRecipeCard(){
@@ -332,6 +358,8 @@ modalRecipeBox.addEventListener('click', async (e) => {
       await Storage.addMark('ingredient', currentRecipeId, ingName);
       btn.classList.add('marked');
     }
+    updateBuyButton();
+    if (typeof renderAllRecipes === 'function') renderAllRecipes();
     return;
   }
   if (action === 'clear-ingredients'){
@@ -340,6 +368,8 @@ modalRecipeBox.addEventListener('click', async (e) => {
     modalRecipeBox.querySelectorAll('.b-chk.marked').forEach(el => {
       el.classList.remove('marked');
     });
+    updateBuyButton();
+    if (typeof renderAllRecipes === 'function') renderAllRecipes();
     return;
   }
   if (action === 'edit-tags'){ openSoon('🏷 Теги', 'Модалка тегов появится позже.'); return; }
@@ -351,6 +381,7 @@ modalRecipeBox.addEventListener('click', async (e) => {
     if (was) await Storage.removeMark('favorite', currentRecipeId);
     else     await Storage.addMark('favorite', currentRecipeId);
     btn.classList.toggle('active', !was);
+    if (typeof renderAllRecipes === 'function') renderAllRecipes();
     return;
   }
   if (action === 'toggle-cooked'){
@@ -360,6 +391,7 @@ modalRecipeBox.addEventListener('click', async (e) => {
     const now = !was;
     btn.classList.toggle('active', now);
     btn.innerHTML = now ? '✅' : '&#128104;&#8205;&#127859;';
+    if (typeof renderAllRecipes === 'function') renderAllRecipes();
     return;
   }
   if (action === 'toggle-want'){
@@ -367,6 +399,7 @@ modalRecipeBox.addEventListener('click', async (e) => {
     if (was) await Storage.removeMark('want', currentRecipeId);
     else     await Storage.addMark('want', currentRecipeId);
     btn.classList.toggle('active', !was);
+    if (typeof renderAllRecipes === 'function') renderAllRecipes();
     return;
   }
 });
@@ -378,10 +411,7 @@ modalSoon.querySelectorAll('[data-modal-close]').forEach(b => {
   b.addEventListener('click', closeSoon);
 });
 
-modalRecipeTimer.addEventListener('click', (e) => {
-  if (e.target === modalRecipeTimer) closeRecipeTimer();
-});
-document.getElementById('recipeTimerClose').addEventListener('click', closeRecipeTimer);
+// Старый обработчик таймера удален, логика перенесена в timer.js
 
 document.addEventListener('click', (e) => {
   const dd = document.getElementById('bPlanDropdown');
@@ -405,7 +435,6 @@ document.addEventListener('keydown', (e) => {
   const dm = document.getElementById('bMoreDropdown');
   if (dm && dm.classList.contains('open')){ dm.classList.remove('open'); return; }
   if (modalSoon.style.display === 'flex'){ closeSoon(); return; }
-  if (modalRecipeTimer.style.display === 'flex'){ closeRecipeTimer(); return; }
   if (modalRecipe.style.display === 'flex'){ closeRecipeCard(); return; }
 });
 
@@ -588,3 +617,127 @@ async function switchVersion(idx) {
   openRecipeCard(currentRecipeId);
   if (typeof renderAllRecipes === 'function') renderAllRecipes();
 }
+
+// ─── Обработка кнопок маленькой карточки на Главной ───
+document.addEventListener('click', async (e) => {
+  const btn = e.target.closest('.card [data-action]');
+  if (!btn) return;
+  
+  const card = btn.closest('.card');
+  if (!card) return;
+  const id = card.dataset.recipeId;
+  const action = btn.dataset.action;
+
+  if (action === 'toggle-show-all') {
+    card.classList.toggle('show-all');
+    const isShown = card.classList.contains('show-all');
+    btn.textContent = isShown ? '▲ скрыть' : '▼ показать все';
+    return;
+  }
+
+  if (action === 'clear-ingredients-small') {
+    await Storage.removeMark('ingredient', id);
+    card.querySelectorAll('.chk.marked').forEach(el => el.classList.remove('marked'));
+    const buyBtn = card.querySelector('.actions .primary');
+    if (buyBtn) {
+      const total = card.querySelectorAll('.chk').length;
+      buyBtn.textContent = `🛒 ${total}`;
+    }
+    if (typeof renderAllRecipes === 'function') renderAllRecipes();
+    return;
+  }
+
+  if (action === 'portions-plus-small' || action === 'portions-minus-small' || action === 'reset-portions-small') {
+    const portionsWrap = card.querySelector('.portions');
+    const numEl = portionsWrap.querySelector('.num');
+    const base = parseFloat(portionsWrap.dataset.base) || 2;
+    let current = parseFloat(numEl.textContent) || 4;
+
+    if (action === 'portions-plus-small') current++;
+    if (action === 'portions-minus-small') current = Math.max(1, current - 1);
+    if (action === 'reset-portions-small') current = 4;
+
+    numEl.textContent = current;
+    
+    // Пересчитываем ингредиенты
+    const coef = current / base;
+    card.querySelectorAll('.ing-amount').forEach(el => {
+      const b = parseFloat(el.dataset.base);
+      const unit = el.dataset.unit || '';
+      if (!isNaN(b)) el.textContent = formatAmount(b * coef) + ' ' + unit;
+    });
+
+    // Сохраняем в базу
+    await Storage.removeMark('portions', id);
+    await Storage.addMark('portions', id, current);
+    return;
+  }
+
+  if (action === 'toggle-ing-small') {
+    const ingName = btn.dataset.ing;
+    if (!ingName) return;
+    const was = btn.classList.contains('marked');
+    if (was) {
+      await Storage.removeMark('ingredient', id, ingName);
+      btn.classList.remove('marked');
+    } else {
+      await Storage.addMark('ingredient', id, ingName);
+      btn.classList.add('marked');
+    }
+    
+    const buyBtn = card.querySelector('.actions .primary');
+    if (buyBtn) {
+      const marked = card.querySelectorAll('.chk.marked').length;
+      const total = card.querySelectorAll('.chk').length;
+      buyBtn.textContent = `🛒 ${marked > 0 ? marked : total}`;
+    }
+    // Синхронизируем состояние с большой карточкой (на случай, если она откроется)
+    if (typeof renderAllRecipes === 'function') renderAllRecipes();
+    return;
+  }
+
+  if (action === 'toggle-favorite-small') {
+    const was = btn.classList.contains('active');
+    if (was) await Storage.removeMark('favorite', id);
+    else await Storage.addMark('favorite', id);
+    btn.classList.toggle('active', !was);
+    return;
+  }
+
+  if (action === 'toggle-cooked-small') {
+    const was = btn.classList.contains('active');
+    if (was) await Storage.removeMark('cooked', id);
+    else await Storage.addMark('cooked', id);
+    const now = !was;
+    btn.classList.toggle('active', now);
+    btn.innerHTML = now ? '✅' : '&#128104;&#8205;&#127859;';
+    return;
+  }
+
+  if (action === 'toggle-want-small') {
+    const was = btn.classList.contains('active');
+    if (was) await Storage.removeMark('want', id);
+    else await Storage.addMark('want', id);
+    btn.classList.toggle('active', !was);
+    return;
+  }
+
+  if (action === 'open-plan-small') {
+    if (typeof openSoon === 'function') openSoon('📅 В план', 'Выбор плана из карточки на Главной появится чуть позже.');
+    return;
+  }
+
+  if (action === 'edit-recipe') {
+    if (typeof openRecipeEditor === 'function') openRecipeEditor(id);
+  }
+  
+  if (action === 'open-versions') {
+    // Загружаем рецепт, чтобы модалка версий знала, что показывать
+    const recipe = await Storage.getRecipe(id);
+    if (recipe) {
+      currentRecipeId = id;
+      currentRecipeObj = recipe;
+      openVersionsModal();
+    }
+  }
+});

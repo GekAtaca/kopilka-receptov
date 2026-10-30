@@ -34,15 +34,16 @@ function formatAmount(n) {
 }
 
 // ─── Карточка рецепта (маленькая) ───
-function renderRecipeCard(recipe) {
+function renderRecipeCard(recipe, ingMarks, isFav, isCooked, isWant, savedPortions) {
   const label = MEAL_LABEL[recipe.meal] || '';
+  
+  const baseP = recipe.portions || 2;
+  const curP = savedPortions || 4; // Если нет сохранённых, ставим 4, как в большой карточке
 
-  // Теги (CSS сам обрежет до 3 в обычной карточке)
   const tagsHtml = (recipe.tags || [])
     .map(t => `<span>${escapeHtml(t)}</span>`)
     .join('');
 
-  // КБЖУ-строка (снимок старых цифр)
   const k = recipe.kbzhuSnapshot || {};
   const kcalRow = `
     <div class="kcal-row">
@@ -54,17 +55,19 @@ function renderRecipeCard(recipe) {
     </div>
   `;
 
-  // Ингредиенты
+  const coef = currP / baseP;
+
   const ingRows = (recipe.ingredients || []).map(ing => {
-    const amountStr = formatAmount(ing.amount) + ' ' + escapeHtml(ing.unit);
+    const amountVal = ing.amount * coef;
+    const amountStr = formatAmount(amountVal) + ' ' + escapeHtml(ing.unit);
+    const isMarked = ingMarks && ingMarks.has(ing.name) ? ' marked' : '';
     return `<li>
-      <span class="chk"></span>
+      <span class="chk${isMarked}" data-action="toggle-ing-small" data-ing="${escapeHtml(ing.name)}"></span>
       <span class="ing-name">${escapeHtml(ing.name)}</span>
-      <span class="ing-amount">${amountStr}</span>
+      <span class="ing-amount" data-base="${ing.amount}" data-unit="${escapeHtml(ing.unit)}">${amountStr}</span>
     </li>`;
   }).join('');
 
-  // Устройство готовки (если есть)
   const deviceHtml = recipe.device ? `
     <div class="cook-unit">
       <div class="unit-head">
@@ -76,7 +79,6 @@ function renderRecipeCard(recipe) {
     </div>
   ` : '';
 
-  // Заметка (если есть)
   const noteHtml = recipe.note ? `
     <div class="note">
       <span class="note-label">МОЯ ЗАМЕТКА</span>
@@ -84,14 +86,12 @@ function renderRecipeCard(recipe) {
     </div>
   ` : '';
 
-  // Кнопка версий — показывается только если версий больше одной
   const totalVersions = 1 + ((recipe.versions && recipe.versions.length) || 0);
   const versionsBtn = totalVersions > 1
-    ? `<button>🕐 ${recipe.currentVersion} из ${totalVersions}</button>`
+    ? `<button data-action="open-versions">🕐 ${recipe.currentVersion} из ${totalVersions}</button>`
     : '';
 
-  // Фото (пока photos: [] — покажется градиент-заглушка)
-    const firstPhoto = (recipe.photos && recipe.photos[0]) || '';
+  const firstPhoto = (recipe.photos && recipe.photos[0]) || '';
   const imgHtml = firstPhoto
     ? `<img src="${escapeHtml(firstPhoto)}" alt="" onerror="this.style.display='none'">`
     : '';
@@ -102,11 +102,10 @@ function renderRecipeCard(recipe) {
         ${imgHtml}
         <span class="badge">${label}</span>
         <div class="img-icons">
-          <button class="ic">❤</button>
-          <button class="ic">⏱</button>
-          <button class="ic">&#128104;&#8205;&#127859;</button>
-          <button class="ic">📅</button>
-          <button class="ic">🔖</button>
+          <button class="ic ${isFav ? 'active' : ''}" data-action="toggle-favorite-small">❤</button>
+          <button class="ic ${isCooked ? 'active' : ''}" data-action="toggle-cooked-small">${isCooked ? '✅' : '&#128104;&#8205;&#127859;'}</button>
+          <button class="ic ${isWant ? 'active' : ''}" data-action="toggle-want-small">🔖</button>
+          <button class="ic" data-action="open-plan-small">📅</button>
         </div>
       </div>
       <div class="card-body">
@@ -114,21 +113,35 @@ function renderRecipeCard(recipe) {
         <div class="tags">${tagsHtml}</div>
         ${kcalRow}
         <div class="ing-header">
-          <span class="ing-title">Ингредиенты:</span>
-          <span class="portions">
-            <button>−</button>
-            <span class="num">${recipe.portions}</span>
-            <button>+</button>
+          <div class="ing-header-left">
+            <span class="ing-title">Ингредиенты:</span>
+            <button type="button" class="ing-clear" data-action="clear-ingredients-small" title="Очистить отметки">🧹</button>
+          </div>
+          <span class="portions" data-base="${baseP}">
+            <button data-action="portions-minus-small">−</button>
+            <span class="num" data-action="reset-portions-small" style="cursor:pointer;">${currP}</span>
+            <button data-action="portions-plus-small">+</button>
           </span>
         </div>
         <ul class="ing-list">${ingRows}</ul>
-        <button class="ing-toggle">▼ показать все</button>
+        <button class="ing-toggle" data-action="toggle-show-all">▼ показать все</button>
         ${deviceHtml}
         ${noteHtml}
       </div>
       <div class="actions">
-        <button class="primary">🛒 ${recipe.ingredients.length}</button>
-        <button>✎ Изменить</button>
+        <button class="primary">🛒 ${
+          (() => {
+            let marked = 0;
+            if (ingMarks) {
+              (recipe.ingredients || []).forEach(ing => {
+                if (ingMarks.has(ing.name)) marked++;
+              });
+            }
+            return marked > 0 ? marked : (recipe.ingredients || []).length;
+          })()
+        }</button>
+        <button data-action="open-timer">⏱</button>
+        <button data-action="edit-recipe">✎ Изменить</button>
         ${versionsBtn}
       </div>
     </div>
@@ -141,6 +154,26 @@ function renderRecipeCard(recipe) {
 // ═══════════════════════════════════════════════════
 async function renderAllRecipes() {
   const all = await Storage.getAllRecipes();
+  
+  // Загружаем все отметки
+  const ingMarks = await Storage.getMarks('ingredient');
+  const favMarks = await Storage.getMarks('favorite');
+  const cookedMarks = await Storage.getMarks('cooked');
+  const wantMarks = await Storage.getMarks('want');
+
+  const ingMarksByRecipe = {};
+  ingMarks.forEach(m => {
+    if (!ingMarksByRecipe[m.recipeId]) ingMarksByRecipe[m.recipeId] = new Set();
+    ingMarksByRecipe[m.recipeId].add(m.extra);
+  });
+
+  const portMarks = await Storage.getMarks('portions');
+  const portionsByRecipe = {};
+  portMarks.forEach(m => portionsByRecipe[m.recipeId] = m.extra);
+
+  const favIds = new Set(favMarks.map(m => m.recipeId));
+  const cookedIds = new Set(cookedMarks.map(m => m.recipeId));
+  const wantIds = new Set(wantMarks.map(m => m.recipeId));
 
   const meals = ['breakfast', 'lunch', 'dinner', 'snack'];
 
@@ -153,7 +186,28 @@ async function renderAllRecipes() {
     if (!grid) return;
 
     const list = all.filter(r => r.meal === meal);
-    grid.innerHTML = list.map(renderRecipeCard).join('');
+    grid.innerHTML = list.map(r => {
+      return renderRecipeCard(
+        r, 
+        ingMarksByRecipe[r.id], 
+        favIds.has(r.id), 
+        cookedIds.has(r.id), 
+        wantIds.has(r.id),
+        portionsByRecipe[r.id]
+      );
+    }).join('');
     if (counter) counter.textContent = list.length;
   });
 }
+
+// ─── Открытие таймера из маленькой карточки на Главной ───
+document.addEventListener('click', (e) => {
+  const timerBtn = e.target.closest('.card [data-action="open-timer"]');
+  if (!timerBtn) return;
+  
+  // Находим ID рецепта у карточки
+  const card = timerBtn.closest('.card');
+  if (card && card.dataset.recipeId) {
+    openTimerList(card.dataset.recipeId);
+  }
+});
