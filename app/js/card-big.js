@@ -109,7 +109,7 @@ function buildRecipeCard(recipe, marks, ingMarks){
 
   const steps = recipe.steps || [];
   const stepsHtml = steps.length
-    ? `<h3 class="b-h">Приготовление:</h3>
+    ? `<div class="b-h">Приготовление:</div>
        <ol class="b-steps">${steps.map(s => `<li>${escapeHtml(s)}</li>`).join('')}</ol>`
     : '';
 
@@ -168,7 +168,7 @@ function buildRecipeCard(recipe, marks, ingMarks){
 
      <div class="modal-recipe-inner">
     <div class="b-body">
-      <h2 class="b-title">${escapeHtml(recipe.name)}</h2>
+      <div class="b-title">${escapeHtml(recipe.name)}</div>
 
       <div class="b-tags">
         ${tagsHtml}
@@ -179,7 +179,7 @@ function buildRecipeCard(recipe, marks, ingMarks){
 
      <div class="b-ing-header">
         <div class="b-ing-header-left">
-          <h3 class="b-h">Ингредиенты:</h3>
+          <div class="b-h">Ингредиенты:</div>
           <button type="button" class="b-ing-clear" data-action="clear-ingredients" title="Очистить отметки">🧹</button>
         </div>
         <div class="b-portions">
@@ -236,7 +236,8 @@ async function openRecipeCard(id){
     loadIngredientMarks(id)
   ]);
 
-  // Применяем текущую тему и палитру к модалке, как в редакторе
+  // Принудительно ставим класс dm-scope и копируем текущий стиль с body
+  modalRecipeBox.className = 'modal-recipe-box dm-scope';
   ['style','palette','theme','shadow'].forEach(key => {
     const attr = 'data-' + key;
     const val = document.body.getAttribute(attr);
@@ -266,7 +267,7 @@ function closeRecipeCard(){
   document.body.style.overflow = '';
   currentRecipeId = null;
   currentRecipeObj = null;
-  if (typeof renderAllRecipes === 'function') renderAllRecipes();
+  // renderAllRecipes() убрали, чтобы не сбивать скрытие карточки при удалении
 }
 
 async function refreshCurrentRecipeCard(){
@@ -326,7 +327,40 @@ modalRecipeBox.addEventListener('click', async (e) => {
   if (action === 'share'){ closeMoreDropdown(); openSoon('📤 Поделиться', 'Поделиться появится позже.'); return; }
   if (action === 'copy'){ closeMoreDropdown(); openSoon('📋 Копировать текст', 'Копирование появится позже.'); return; }
   if (action === 'print'){ closeMoreDropdown(); openSoon('🖨 Печать', 'Печать появится позже.'); return; }
-  if (action === 'delete'){ closeMoreDropdown(); openSoon('🗑 Удалить', 'Удаление появится позже.'); return; }
+  
+  if (action === 'delete'){
+    closeMoreDropdown();
+    const idToDelete = currentRecipeId;
+    const recipeName = currentRecipeObj ? currentRecipeObj.name : 'Рецепт';
+    
+    // 1. Закрываем большую карточку сразу
+    closeRecipeCard(); 
+    
+    // 2. Находим маленькую карточку на Главной и прячем её
+    const cardEl = document.querySelector(`.card[data-recipe-id="${idToDelete}"]`);
+    if (cardEl) cardEl.style.display = 'none';
+    
+    // 3. Запускаем таймер отмены
+    UndoManager.add({
+      message: `«${recipeName}» удалён`,
+      onUndo: () => {
+        // Возвращаем карточку на место
+        if (cardEl) cardEl.style.display = '';
+      },
+      onConfirm: async () => {
+        // Если 10 секунд прошло — удаляем из базы и чистим отметки
+        await Storage.deleteRecipe(idToDelete);
+        await Storage.removeMark('favorite', idToDelete);
+        await Storage.removeMark('cooked', idToDelete);
+        await Storage.removeMark('want', idToDelete);
+        await Storage.removeMark('ingredient', idToDelete);
+        await Storage.removeMark('portions', idToDelete);
+        // И тихо обновляем счетчики в секциях (без перерисовки карточек)
+        updateSectionCounters();
+      }
+    });
+    return;
+  }
 
   if (action === 'portions-plus'){
     currentPortions++;
@@ -741,3 +775,12 @@ document.addEventListener('click', async (e) => {
     }
   }
 });
+
+// ─── Точечное обновление счетчиков (без перерисовки) ───
+function updateSectionCounters() {
+  document.querySelectorAll('.recipes-section').forEach(section => {
+    const visibleCards = section.querySelectorAll('.recipes-grid .card:not([style*="display: none"])');
+    const counter = section.querySelector('.recipes-section-count');
+    if (counter) counter.textContent = visibleCards.length;
+  });
+}

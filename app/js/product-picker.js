@@ -529,9 +529,35 @@
     if (e.target.closest('[data-pp-delete]')){
       const id = ctxTargetId;
       closeCtxMenu();
-      if (id && typeof openSoon === 'function'){
-        openSoon('🗑 Удалить', 'Удаление появится позже.');
-      }
+      if (!id) return;
+      
+      // Находим продукт и его строчку в списке
+      const product = findOwnProduct(id);
+      const name = product ? product.name : 'Продукт';
+      const itemEl = box.querySelector(`.pp-item[data-id="${id}"]`);
+      
+      // Прячем строчку сразу
+      if (itemEl) itemEl.style.display = 'none';
+      
+      // Запускаем таймер
+      UndoManager.add({
+        message: `Продукт «${name}» удалён`,
+        onUndo: () => {
+          // Возвращаем строчку
+          if (itemEl) itemEl.style.display = '';
+        },
+        onConfirm: async () => {
+          // Удаляем из базы
+          if (typeof Storage !== 'undefined' && Storage.deleteProduct) {
+            await Storage.deleteProduct(id);
+            // Убираем из локального массива
+            allOwn = allOwn.filter(p => p.id !== id);
+            // Тихо обновляем счетчик в группе «Мои продукты»
+            const ownCountEl = box.querySelector('.pp-group-root .pp-group-count');
+            if (ownCountEl) ownCountEl.textContent = allOwn.length;
+          }
+        }
+      });
       return;
     }
     if (e.target.closest('[data-pp-clear]')){

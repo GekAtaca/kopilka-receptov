@@ -1,6 +1,5 @@
 /* 🏛 Античный · Playfair Display · двойная рамка, ромбы */
 [data-style="antichny"] .card,
-.modal-recipe-box,
 .dm-scope[data-style="antichny"]{
   --font-head:'Playfair Display',serif;
   --font-body:'Playfair Display',serif;

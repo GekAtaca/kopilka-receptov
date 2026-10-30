@@ -433,26 +433,26 @@ body[data-theme="dark"] .actions button.primary{
 
 /* ─── Фото (градиент, у демо картинок нет) ─── */
 .b-photo{
-  height:220px;
+  height:160px;
   position:relative;
   background:linear-gradient(135deg,var(--c2),var(--c3));
   flex-shrink:0;
 }
 @media (min-width:800px){
-  .b-photo{ height:300px; }
+  .b-photo{ height:200px; }
 }
 
 .b-badge{
   position:absolute;
   top:14px; left:14px;
-  padding:5px 14px;
+  padding:var(--badge-pad-y) var(--badge-pad-x);
   background:var(--c3);
   color:#fff;
   border-radius:var(--radius-chip, 14px);
   font-family:var(--font-head);
   font-style:var(--font-style-head);
   font-weight:var(--font-weight-head);
-  font-size:calc(var(--badge-font-size, 14px) + 1px);
+  font-size:var(--badge-font-size, 14px);
   letter-spacing:.08em;
 }
 
@@ -505,13 +505,12 @@ body[data-theme="dark"] .actions button.primary{
 }
 
 .b-title{
-  font-family:var(--font-head);
-  font-style:var(--font-style-head);
-  font-weight:var(--font-weight-head);
-  font-size:calc(var(--title-size, 24px) + 4px);
-  letter-spacing:var(--letter-spacing-head, 0em);
-  line-height:1.15;
-  margin:0;
+  font-family:var(--font-head) !important;
+  font-style:var(--font-style-head) !important;
+  font-weight:var(--font-weight-head) !important;
+  font-size:var(--title-size) !important;
+  letter-spacing:var(--letter-spacing-head) !important;
+  line-height:1.2 !important;
 }
 
 /* ─── Теги ─── */
@@ -522,7 +521,7 @@ body[data-theme="dark"] .actions button.primary{
   align-items:center;
 }
 .btag{
-  padding:4px 12px;
+  padding:var(--chip-pad-y) var(--chip-pad-x);
   background:var(--plate-bg);
   color:var(--plate-text);
   border:1px solid var(--c3);
@@ -530,7 +529,7 @@ body[data-theme="dark"] .actions button.primary{
   font-family:var(--font-body);
   font-style:var(--font-style-body);
   font-weight:var(--font-weight-body);
-  font-size:calc(var(--chip-font-size, 15px) - 1px);
+  font-size:var(--chip-font-size, 15px);
 }
 .b-tag-edit{
   background:none;
@@ -552,9 +551,9 @@ body[data-theme="dark"] .actions button.primary{
 .b-kcal-row{
   display:flex;
   flex-wrap:wrap;
-  gap:6px;
+  gap:var(--kcal-gap);
   align-items:center;
-  font-size:calc(var(--kcal-size, 15px) + 1px);
+  font-size:var(--kcal-size, 15px);
   font-weight:700;
   font-family:var(--font-body);
   font-style:var(--font-style-body);
@@ -566,7 +565,7 @@ body[data-theme="dark"] .actions button.primary{
   font-family:var(--font-head);
   font-style:var(--font-style-head);
   font-weight:var(--font-weight-head);
-  font-size:calc(var(--ing-title-size, 18px) + 2px);
+  font-size:var(--ing-title-size, 18px);
   margin:6px 0 4px;
 }
 
@@ -582,8 +581,8 @@ body[data-theme="dark"] .actions button.primary{
 .b-ing li{
   display:flex;
   align-items:center;
-  gap:10px;
-  font-size:calc(var(--ing-size, 16px) + 2px);
+  gap:var(--ing-gap);
+  font-size:var(--ing-size, 16px);
   font-family:var(--font-body);
   font-style:var(--font-style-body);
   font-weight:var(--font-weight-body);
@@ -622,7 +621,7 @@ body[data-theme="dark"] .actions button.primary{
   display:flex;
   flex-direction:column;
   gap:6px;
-  font-size:calc(var(--ing-size, 16px) + 1px);
+  font-size:var(--ing-size, 16px);
   font-family:var(--font-body);
   font-style:var(--font-style-body);
   font-weight:var(--font-weight-body);
@@ -631,11 +630,11 @@ body[data-theme="dark"] .actions button.primary{
 
 /* ─── Устройство готовки ─── */
 .b-device{
-  padding:10px 14px;
+  padding:var(--unit-pad-y) var(--unit-pad-x);
   background:var(--plate-bg);
   border:1px solid var(--c3);
-  border-radius:11px;
-  font-size:calc(var(--ing-size, 16px) + 1px);
+  border-radius:var(--unit-radius);
+  font-size:var(--unit-name-size, 18px);
   font-family:var(--font-body);
   font-style:var(--font-style-body);
   font-weight:var(--font-weight-body);
@@ -644,11 +643,11 @@ body[data-theme="dark"] .actions button.primary{
 
 /* ─── Заметка ─── */
 .b-note{
-  padding:12px 14px;
+  padding:var(--note-pad-y) var(--note-pad-x);
   background:var(--plate-bg);
   border-left:3px solid var(--c3);
-  border-radius:0 11px 11px 0;
-  font-size:calc(var(--note-font-size, 15px) + 1px);
+  border-radius:0 var(--note-radius) var(--note-radius) 0;
+  font-size:var(--note-font-size, 15px);
   line-height:1.5;
   font-family:var(--font-body);
   font-style:var(--font-style-body);
@@ -714,6 +713,7 @@ body[data-theme="dark"] .b-note{
 
 /* ═══ Нижние кнопки большой карточки (шаг 35.2.3) ═══ */
 .b-actions-wrap{
+  position:relative;
   flex-shrink:0;
   background:var(--c1);
   border-top:1px solid var(--c3);
@@ -726,15 +726,15 @@ body[data-theme="dark"] .b-note{
 }
 .b-act-btn{
   flex:1;
-  padding:10px 6px;
-  border-radius:10px;
+  padding:var(--actions-btn-pad);
+  border-radius:var(--radius-btn);
   border:1px solid var(--c3);
   background:var(--plate-bg);
   color:var(--plate-text);
   font-family:var(--font-head);
   font-style:var(--font-style-head);
   font-weight:var(--font-weight-head);
-  font-size:14px;
+  font-size:var(--actions-btn-font);
   cursor:pointer;
   white-space:nowrap;
   transition:filter .15s;
@@ -758,6 +758,7 @@ body[data-theme="dark"] .b-note{
   position:absolute;
   right:12px;
   bottom:calc(100% + 6px);
+  z-index:100;
   min-width:220px;
   padding:6px;
   background:var(--c1);
@@ -2418,108 +2419,12 @@ body[data-theme="dark"] .timer-alert { background: var(--c4); color: #fff; borde
 body[data-theme="dark"] .timer-alert-stop { background: color-mix(in srgb, var(--c1) 15%, var(--c4) 85%); border-color: var(--c2); color: #fff; }
 
 /* ═══════════════════════════════════════════════════
-   ПРИНУДИТЕЛЬНАЯ СИНХРОНИЗАЦИЯ БОЛЬШОЙ И МАЛЕНЬКОЙ КАРТОЧЕК
-   ═══════════════════════════════════════════════════ */
-
-/* Заголовок: размер, шрифт, жирность, межбуквенное расстояние */
-.modal-recipe-box .b-title {
-  font-family: var(--font-head) !important;
-  font-style: var(--font-style-head) !important;
-  font-weight: var(--font-weight-head) !important;
-  font-size: var(--title-size) !important; 
-  letter-spacing: var(--letter-spacing-head) !important;
-}
-
-/* Бейдж (Завтрак): скругление, отступы, размер шрифта */
-.modal-recipe-box .b-badge {
-  border-radius: var(--radius-chip) !important;
-  padding: var(--badge-pad-y) var(--badge-pad-x) !important;
-  font-size: var(--badge-font-size) !important;
-  font-family: var(--font-head) !important;
-  font-style: var(--font-style-head) !important;
-  font-weight: var(--font-weight-head) !important;
-}
-
-/* Теги: скругление, отступы, размер шрифта */
-.modal-recipe-box .btag {
-  border-radius: var(--radius-chip) !important;
-  padding: var(--chip-pad-y) var(--chip-pad-x) !important;
-  font-size: var(--chip-font-size) !important;
-  font-family: var(--font-body) !important;
-  font-style: var(--font-style-body) !important;
-  font-weight: var(--font-weight-body) !important;
-}
-
-/* КБЖУ */
-.modal-recipe-box .b-kcal-row {
-  font-size: var(--kcal-size) !important;
-  gap: var(--kcal-gap) !important;
-  font-family: var(--font-body) !important;
-  font-style: var(--font-style-body) !important;
-}
-
-/* Заголовки блоков (Ингредиенты, Приготовление) */
-.modal-recipe-box .b-h {
-  font-size: var(--ing-title-size) !important;
-  font-family: var(--font-head) !important;
-  font-style: var(--font-style-head) !important;
-  font-weight: var(--font-weight-head) !important;
-}
-
-/* Ингредиенты */
-.modal-recipe-box .b-ing li {
-  font-size: var(--ing-size) !important;
-  gap: var(--ing-gap) !important;
-  font-family: var(--font-body) !important;
-  font-style: var(--font-style-body) !important;
-  font-weight: var(--font-weight-body) !important;
-}
-
-/* Шаги */
-.modal-recipe-box .b-steps {
-  font-size: var(--ing-size) !important;
-  font-family: var(--font-body) !important;
-  font-style: var(--font-style-body) !important;
-  font-weight: var(--font-weight-body) !important;
-}
-
-/* Заметка */
-.modal-recipe-box .b-note {
-  font-size: var(--note-font-size) !important;
-  padding: var(--note-pad-y) var(--note-pad-x) !important;
-  border-radius: var(--note-radius) !important;
-  font-family: var(--font-body) !important;
-  font-style: var(--font-style-body) !important;
-  font-weight: var(--font-weight-body) !important;
-}
-
-/* Устройство готовки */
-.modal-recipe-box .b-device {
-  font-size: var(--unit-name-size) !important;
-  padding: var(--unit-pad-y) var(--unit-pad-x) !important;
-  border-radius: var(--unit-radius) !important;
-  font-family: var(--font-body) !important;
-  font-style: var(--font-style-body) !important;
-  font-weight: var(--font-weight-body) !important;
-}
-
-/* Кнопки внизу (Купить, Таймер, Изменить) */
-.modal-recipe-box .b-act-btn {
-  font-size: var(--actions-btn-font) !important;
-  padding: var(--actions-btn-pad) !important;
-  border-radius: var(--radius-btn) !important;
-  font-family: var(--font-head) !important;
-  font-style: var(--font-style-head) !important;
-  font-weight: var(--font-weight-head) !important;
-}
-
-/* ═══════════════════════════════════════════════════
-   ФИНАЛЬНЫЕ ПЕРЕМЕННЫЕ ДЛЯ БОЛЬШОЙ КАРТОЧКИ И МОДАЛОК
-   (Возвращаем размеры, чтобы «Нежный» и «Журнал» не ломались)
+   ПЕРЕМЕННЫЕ ДЛЯ БОЛЬШОЙ КАРТОЧКИ
    ═══════════════════════════════════════════════════ */
 .dm-scope {
   --font-head: 'Cormorant Garamond', serif;
   --font-body: 'Cormorant Garamond', serif;
+  --font-ui: 'Nunito', sans-serif;
   --font-style-head: italic;
   --font-style-body: italic;
   --font-weight-head: 700;
@@ -2532,7 +2437,6 @@ body[data-theme="dark"] .timer-alert-stop { background: color-mix(in srgb, var(-
   --title-size: 24px;
   --kcal-size: 15px;
   --kcal-gap: 6px;
-  --tags-gap: 6px;
   --chip-font-size: 15px;
   --chip-pad-y: 4px;
   --chip-pad-x: 11px;
@@ -2541,11 +2445,8 @@ body[data-theme="dark"] .timer-alert-stop { background: color-mix(in srgb, var(-
   --badge-pad-x: 12px;
   --ing-title-size: 18px;
   --portions-size: 18px;
-  --portions-btn-size: 26px;
   --ing-size: 17px;
   --ing-gap: 7px;
-  --ing-chk-size: 20px;
-  --toggle-size: 15px;
   --unit-name-size: 18px;
   --unit-pad-y: 8px;
   --unit-pad-x: 14px;
@@ -2556,8 +2457,87 @@ body[data-theme="dark"] .timer-alert-stop { background: color-mix(in srgb, var(-
   --note-radius: var(--radius-btn);
   --actions-btn-font: 16px;
   --actions-btn-pad: 12px 6px;
+}
 
-  --dm-card-shadow: 0 16px 36px rgba(0,0,0,.28), 0 5px 14px rgba(0,0,0,.14);
-  --plate-bg: var(--c2);
-  --plate-text: var(--c4);
+/* ═══════════════════════════════════════════════════
+   ПРИНУДИТЕЛЬНЫЕ СТИЛИ ДЛЯ БОЛЬШОЙ КАРТОЧКИ
+   (Восстанавливаем то, что удалилось)
+   ═══════════════════════════════════════════════════ */
+.b-title{
+  font-family:var(--font-head) !important;
+  font-style:var(--font-style-head) !important;
+  font-weight:var(--font-weight-head) !important;
+  font-size:var(--title-size) !important;
+  letter-spacing:var(--letter-spacing-head) !important;
+  line-height:1.2 !important;
+  margin:0 !important;
+}
+
+.b-h{
+  font-family:var(--font-head) !important;
+  font-style:var(--font-style-head) !important;
+  font-weight:var(--font-weight-head) !important;
+  font-size:var(--ing-title-size) !important;
+  margin:6px 0 4px !important;
+}
+
+.b-badge{
+  font-family:var(--font-head) !important;
+  font-style:var(--font-style-head) !important;
+  font-weight:var(--font-weight-head) !important;
+  font-size:var(--badge-font-size) !important;
+  padding:var(--badge-pad-y) var(--badge-pad-x) !important;
+  border-radius:var(--radius-chip) !important;
+}
+
+.btag{
+  font-family:var(--font-body) !important;
+  font-style:var(--font-style-body) !important;
+  font-weight:var(--font-weight-body) !important;
+  font-size:var(--chip-font-size) !important;
+  padding:var(--chip-pad-y) var(--chip-pad-x) !important;
+  border-radius:var(--radius-chip) !important;
+}
+
+.b-kcal-row{
+  font-family:var(--font-body) !important;
+  font-style:var(--font-style-body) !important;
+  font-size:var(--kcal-size) !important;
+  gap:var(--kcal-gap) !important;
+}
+
+.b-ing li{
+  font-family:var(--font-body) !important;
+  font-style:var(--font-style-body) !important;
+  font-weight:var(--font-weight-body) !important;
+  font-size:var(--ing-size) !important;
+  gap:var(--ing-gap) !important;
+}
+
+.b-steps{
+  font-family:var(--font-body) !important;
+  font-style:var(--font-style-body) !important;
+  font-weight:var(--font-weight-body) !important;
+  font-size:var(--ing-size) !important;
+}
+
+.b-portions{
+  font-family:var(--font-head) !important;
+  font-style:var(--font-style-head) !important;
+  font-weight:var(--font-weight-head) !important;
+  font-size:var(--portions-size) !important;
+}
+
+/* ═══ Шаг 42: увеличенные шрифты для большой карточки ═══ */
+.modal-recipe-box.dm-scope {
+  --title-size: 28px !important;
+  --kcal-size: 16px !important;
+  --chip-font-size: 16px !important;
+  --ing-title-size: 20px !important;
+  --ing-size: 18px !important;
+  --note-font-size: 17px !important;
+  --unit-name-size: 19px !important;
+  --actions-btn-font: 17px !important;
+  --portions-size: 20px !important;
+  --badge-font-size: 15px !important;
 }
