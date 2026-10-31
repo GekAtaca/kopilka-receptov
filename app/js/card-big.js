@@ -324,9 +324,40 @@ modalRecipeBox.addEventListener('click', async (e) => {
     return;
   }
   
-  if (action === 'share'){ closeMoreDropdown(); openSoon('📤 Поделиться', 'Поделиться появится позже.'); return; }
-  if (action === 'copy'){ closeMoreDropdown(); openSoon('📋 Копировать текст', 'Копирование появится позже.'); return; }
-  if (action === 'print'){ closeMoreDropdown(); openSoon('🖨 Печать', 'Печать появится позже.'); return; }
+  if (action === 'share'){ 
+    closeMoreDropdown(); 
+    const text = getRecipeText(currentRecipeObj);
+    const url = window.location.origin + window.location.pathname + '?recipe=' + currentRecipeId;
+    
+    if (navigator.share) {
+      navigator.share({
+        title: currentRecipeObj.name,
+        text: text,
+        url: url
+      }).catch(err => console.log('Поделиться отменено', err));
+    } else {
+      // Для ПК, где нет системного окна
+      navigator.clipboard.writeText(text + '\n\nСсылка: ' + url).then(() => {
+        showToastMsg('Текст и ссылка скопированы');
+      });
+    }
+    return; 
+  }
+  
+  if (action === 'copy'){ 
+    closeMoreDropdown(); 
+    const text = getRecipeText(currentRecipeObj);
+    navigator.clipboard.writeText(text).then(() => {
+      showToastMsg('Текст рецепта скопирован');
+    });
+    return; 
+  }
+  
+  if (action === 'print'){ 
+    closeMoreDropdown(); 
+    window.print(); 
+    return; 
+  }
   
   if (action === 'delete'){
     closeMoreDropdown();
@@ -406,7 +437,24 @@ modalRecipeBox.addEventListener('click', async (e) => {
     if (typeof renderAllRecipes === 'function') renderAllRecipes();
     return;
   }
-  if (action === 'edit-tags'){ openSoon('🏷 Теги', 'Модалка тегов появится позже.'); return; }
+  if (action === 'edit-tags'){
+    if (typeof window.openTagModal === 'function') {
+      window.openTagModal(currentRecipeObj.tags || [], async (newTags) => {
+        // Обновляем теги в текущем рецепте
+        currentRecipeObj.tags = newTags;
+        
+        // Сохраняем в базу
+        await Storage.saveRecipe(currentRecipeObj);
+        
+        // Перерисовываем большую карточку и маленькие на фоне
+        refreshCurrentRecipeCard();
+        if (typeof renderAllRecipes === 'function') renderAllRecipes();
+      });
+    } else {
+      console.error('ОШИБКА: Функция openTagModal не найдена!');
+    }
+    return;
+  }
 
   if (!currentRecipeId) return;
 
@@ -783,4 +831,49 @@ function updateSectionCounters() {
     const counter = section.querySelector('.recipes-section-count');
     if (counter) counter.textContent = visibleCards.length;
   });
+}
+
+// ─── Сборка текста рецепта для копирования ───
+function getRecipeText(r) {
+  if (!r) return '';
+  let text = `**${r.name}**\n`;
+  
+  if (r.kbzhuSnapshot) {
+    const k = r.kbzhuSnapshot;
+    text += `КБЖУ: ${k.kcal} ккал, Б ${k.protein}, Ж ${k.fat}, У ${k.carbs}\n\n`;
+  }
+  
+  text += `**Ингредиенты:**\n`;
+  (r.ingredients || []).forEach(i => { 
+    text += `- ${i.name}: ${i.amount} ${i.unit}\n`; 
+  });
+  
+  text += `\n**Приготовление:**\n`;
+  (r.steps || []).forEach((s, i) => { 
+    text += `${i+1}. ${s}\n`; 
+  });
+  
+  if (r.note) {
+    text += `\n*Заметка: ${r.note}*`;
+  }
+  
+  return text;
+}
+
+// ─── Простое уведомление (тост) ───
+function showToastMsg(message) {
+  const container = document.getElementById('toastContainer');
+  if (!container) return;
+  
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.textContent = message;
+  container.appendChild(toast);
+  
+  // Автоматически скрываем через 3 секунды
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    toast.style.transform = 'translateY(20px)';
+    setTimeout(() => toast.remove(), 300);
+  }, 3000);
 }

@@ -2386,27 +2386,34 @@ body:has(#modalTimerNew[style*="display: flex"]) #modalTimerList .modal-box {
   z-index: 100020;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 8px;
-  pointer-events: none; /* Контейнер пропускает клики сквозь себя */
+  pointer-events: none;
+  width: 100%;
+  max-width: 400px;
+  padding: 0 16px;
+  box-sizing: border-box;
 }
 
 .toast {
   background: #1a1618;
   color: #fff;
-  padding: 12px 24px;
-  border-radius: 20px;
+  padding: 12px 20px;
+  border-radius: 16px;
   font-family: 'Nunito', sans-serif;
   font-weight: 700;
   font-size: 14px;
   box-shadow: 0 10px 30px rgba(0,0,0,.4);
   
-  /* Только плавный переход, никаких анимаций по времени */
   transition: opacity 0.3s ease, transform 0.3s ease;
   opacity: 1;
   transform: translateY(0);
   
-  /* ВАЖНО: Разрешаем плашке ловить мышку */
   pointer-events: auto; 
+  
+  /* НОВОЕ: плашка на всю ширину контейнера */
+  width: 100%; 
+  box-sizing: border-box;
 }
 
 .toast-undo {
@@ -2466,4 +2473,449 @@ body:has(#modalTimerNew[style*="display: flex"]) #modalTimerList .modal-box {
 @keyframes toastOut {
   from { opacity: 1; transform: translateY(0); }
   to { opacity: 0; transform: translateY(20px); }
+}
+
+/* ═══ Автодополнение в форме продукта ═══ */
+.pf-autocomplete-wrap {
+  position: relative;
+}
+
+.pf-autocomplete-list {
+  position: absolute;
+  top: calc(100% - 2px);
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: var(--c1);
+  border: 1px solid var(--c3);
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0 6px 16px rgba(0,0,0,.15);
+  max-height: 300px; /* Увеличили высоту для прокрутки */
+  overflow-y: auto;
+  display: none;
+}
+
+.pf-autocomplete-list.active {
+  display: block;
+}
+
+.pf-autocomplete-item {
+  padding: 10px 14px;
+  cursor: pointer;
+  font-family: var(--font-ui, 'Nunito', sans-serif);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--c4);
+  border-bottom: 1px solid color-mix(in srgb, var(--c3) 30%, transparent);
+  transition: background 0.15s;
+  
+  /* ─── Чтобы всё было в одну строку ─── */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pf-autocomplete-item:last-child {
+  border-bottom: none;
+}
+
+.pf-autocomplete-item:hover {
+  background: color-mix(in srgb, var(--c3) 15%, transparent);
+}
+
+/* Тёмная тема */
+body[data-theme="dark"] .pf-autocomplete-list {
+  background: var(--c4);
+  border-color: var(--c2);
+}
+body[data-theme="dark"] .pf-autocomplete-item {
+  color: #fff;
+  border-bottom-color: rgba(255,255,255,.1);
+}
+body[data-theme="dark"] .pf-autocomplete-item:hover {
+  background: rgba(255,255,255,.06);
+}
+
+/* ═══ Модалка тегов (полные стили) ═══ */
+.modal-tag {
+  position: fixed;
+  inset: 0;
+  z-index: 100005;
+  background: rgba(0,0,0,.78);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.modal-tag-box {
+  background: var(--c1);
+  color: var(--c4);
+  width: 100%;
+  max-width: 520px;
+  max-height: 90vh;
+  border-radius: 14px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.55);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  font-family: var(--font-body, 'Cormorant Garamond', serif);
+}
+
+.mt-head {
+  display: flex;
+  align-items: center;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--c3);
+  flex-shrink: 0;
+}
+.mt-title {
+  font-family: var(--font-head, 'Cormorant Garamond', serif);
+  font-style: var(--font-style-head, italic);
+  font-weight: var(--font-weight-head, 700);
+  font-size: 20px;
+}
+.mt-gear-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: var(--c4);
+  margin-left: auto;
+  margin-right: 12px;
+  padding: 4px;
+}
+.mt-close {
+  background: none;
+  border: none;
+  color: var(--c4);
+  font-size: 20px;
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+}
+
+.mt-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Важно: скролл будет только у списка */
+}
+
+/* Выбранные теги */
+.mt-selected-wrap {
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--c3);
+  flex-shrink: 0;
+  background: color-mix(in srgb, var(--c2) 30%, transparent);
+}
+.mt-selected-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.mt-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  background: var(--c3);
+  color: #fff;
+  border-radius: 12px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+}
+.mt-chip button {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  opacity: 0.7;
+}
+.mt-chip button:hover { opacity: 1; }
+.mt-empty {
+  font-family: 'Nunito', sans-serif;
+  font-size: 13px;
+  opacity: 0.5;
+  font-style: italic;
+}
+
+/* Поиск */
+.mt-search-row {
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--c3);
+  flex-shrink: 0;
+}
+.mt-search {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--c3);
+  background: var(--c2);
+  color: var(--c4);
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  outline: none;
+  box-sizing: border-box;
+}
+.mt-search::placeholder { color: var(--c4); opacity: 0.5; }
+.mt-search:focus { box-shadow: 0 0 0 2px color-mix(in srgb, var(--c3) 40%, transparent); }
+
+/* Список групп */
+.mt-list {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 10px 18px;
+}
+.mt-list::-webkit-scrollbar { width: 6px; }
+.mt-list::-webkit-scrollbar-thumb { background: rgba(0,0,0,.18); border-radius: 6px; }
+
+.mt-group {
+  margin-bottom: 12px;
+}
+.mt-group-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  font-family: 'Nunito', sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.7;
+  cursor: pointer;
+  user-select: none;
+}
+.mt-arrow {
+  font-size: 10px;
+  transition: transform 0.2s;
+}
+.mt-group.collapsed .mt-arrow { transform: rotate(-90deg); }
+.mt-group.collapsed .mt-group-body { display: none; }
+
+/* Кнопка Создать тег */
+.mt-create-wrap { margin-top: 10px; }
+.mt-create-btn {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px dashed var(--c3);
+  background: transparent;
+  color: var(--c4);
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.mt-create-btn:hover { background: color-mix(in srgb, var(--c3) 10%, transparent); }
+
+/* ═══ Строки с тегами и свайп ═══ */
+.mt-swipe-wrap {
+  position: relative;
+  overflow: hidden;
+  background: transparent; /* Убрали красный фон */
+  border-radius: 8px;
+  margin-bottom: 4px;
+}
+
+.mt-row-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: var(--c1);
+  transition: transform 0.2s ease-out;
+  position: relative;
+  z-index: 2;
+  cursor: pointer;
+  border-radius: 8px;
+}
+.mt-row-content:hover { background: color-mix(in srgb, var(--c2) 50%, var(--c1)); }
+
+/* Сдвиг строки влево при свайпе */
+.mt-row-content.swiped {
+  transform: translateX(-80px);
+}
+
+/* Красная кнопка удаления (прячется за строкой) */
+.mt-delete-action {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 80px;
+  background: #ff3b30;
+  color: #fff;
+  border: none;
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+/* Корзина для ПК */
+.mt-del-btn-pc {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  opacity: 0.5;
+  padding: 4px;
+  display: none;
+}
+.mt-del-btn-pc:hover { opacity: 1; }
+
+@media (hover: hover) and (pointer: fine) {
+  .mt-del-btn-pc { display: block; }
+  .mt-delete-action { display: none; } /* На ПК свайп не нужен */
+}
+
+/* ═══ Новая модалка Категорий ═══ */
+.tmg-create-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.tmg-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 45vh;
+  overflow-y: auto;
+}
+
+.tmg-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  background: var(--c2);
+  border-radius: 8px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.tmg-del-btn {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  opacity: 0.5;
+  transition: opacity 0.15s;
+}
+.tmg-del-btn:hover { opacity: 1; }
+
+/* Тёмная тема */
+body[data-theme="dark"] .modal-tag-box {
+  background: var(--c4);
+  color: #fff;
+}
+body[data-theme="dark"] .mt-head,
+body[data-theme="dark"] .mt-selected-wrap,
+body[data-theme="dark"] .mt-search-row {
+  border-color: var(--c2);
+}
+body[data-theme="dark"] .mt-close,
+body[data-theme="dark"] .mt-gear-btn {
+  color: #fff;
+}
+body[data-theme="dark"] .mt-search {
+  background: color-mix(in srgb, var(--c1) 15%, var(--c4) 85%);
+  border-color: var(--c2);
+  color: #fff;
+}
+body[data-theme="dark"] .mt-search::placeholder { color: #fff; }
+body[data-theme="dark"] .mt-row-content {
+  background: color-mix(in srgb, var(--c1) 5%, var(--c4) 95%);
+  color: #fff;
+}
+body[data-theme="dark"] .mt-row-content:hover {
+  background: color-mix(in srgb, var(--c1) 10%, var(--c4) 90%);
+}
+body[data-theme="dark"] .tmg-item {
+  background: color-mix(in srgb, var(--c1) 15%, var(--c4) 85%);
+  color: #fff;
+}
+
+.mt-group-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.mt-row-content span {
+  color: var(--c4); /* Принудительно задаем цвет тексту */
+}
+body[data-theme="dark"] .mt-row-content span {
+  color: #fff;
+}
+
+/* ═══ ФИКС: Строки тегов (чтобы были видны текст и чекбоксы) ═══ */
+.mt-row-content {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  padding: 10px 14px !important;
+  /* Делаем фон строки чуть темнее/светлее, чтобы он отличался от модалки */
+  background: color-mix(in srgb, var(--c1) 85%, var(--c3) 15%) !important; 
+  border: 1px solid var(--c3) !important; /* Добавим аккуратную рамку */
+  border-radius: 8px !important;
+  cursor: pointer !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* Принудительно задаем цвет текста и размер */
+.mt-row-content span {
+  color: var(--c4) !important;
+  font-family: 'Nunito', sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  display: block !important;
+  flex: 1 !important;
+  white-space: normal !important;
+}
+
+/* Делаем чекбокс видимым */
+.mt-row-content input[type="checkbox"] {
+  display: block !important;
+  width: 18px !important;
+  height: 18px !important;
+  accent-color: var(--c3) !important;
+  cursor: pointer !important;
+  flex-shrink: 0 !important;
+  margin: 0 !important;
+}
+
+/* Тёмная тема для строк */
+body[data-theme="dark"] .mt-row-content {
+  background: color-mix(in srgb, var(--c4) 85%, var(--c3) 15%) !important;
+  border-color: var(--c2) !important;
+}
+body[data-theme="dark"] .mt-row-content span {
+  color: #fff !important;
+}
+
+/* Убираем лишние отступы у обертки, чтобы не было пустых линий */
+.mt-group-body {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+  padding: 4px 0 !important;
+}
+.mt-swipe-wrap {
+  margin-bottom: 0 !important;
+  background: transparent !important;
 }

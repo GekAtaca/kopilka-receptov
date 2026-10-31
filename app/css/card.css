@@ -1805,11 +1805,51 @@ body[data-theme="dark"] .me-tag-more {
   position: fixed;
   inset: 0;
   z-index: 100008;
-  background: rgba(0,0,0,.78);
+  background: rgba(0,0,0,.4);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 16px;
+}
+
+/* Исправление отображения строк в модалке тегов */
+.mt-swipe-wrap {
+  position: relative;
+  overflow: hidden;
+  background: transparent !important;
+  margin-bottom: 4px;
+  border-radius: 8px;
+}
+.mt-row {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  padding: 10px 14px !important;
+  background: var(--c1) !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  transition: transform 0.2s ease-out !important;
+  cursor: pointer !important;
+  color: var(--c4) !important; /* Принудительный цвет текста */
+}
+.mt-row:hover {
+  background: color-mix(in srgb, var(--c2) 50%, var(--c1)) !important;
+}
+.mt-row span {
+  flex: 1 !important;
+  display: block !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: var(--c4) !important;
+}
+.mt-row input[type="checkbox"] {
+  display: block !important;
+  width: 18px !important;
+  height: 18px !important;
+  accent-color: var(--c3) !important;
+  cursor: pointer !important;
+  margin: 0 !important;
+  flex-shrink: 0 !important;
 }
 .modal-tag-box {
   background: var(--c1);
@@ -2540,4 +2580,161 @@ body[data-theme="dark"] .timer-alert-stop { background: color-mix(in srgb, var(-
   --actions-btn-font: 17px !important;
   --portions-size: 20px !important;
   --badge-font-size: 15px !important;
+}
+
+/* ═══ Версия для печати (А5) ═══ */
+@media print {
+  @page {
+    size: A5;
+    margin: 10mm;
+  }
+
+  /* Скрываем фоновый слой, шапку, все экраны, нижнее меню и плавающие кнопки */
+  .bg-layer, .app-header, .screen, .bottom-nav, .fab-stack, #loader, .modal:not(#modalRecipe) {
+    display: none !important;
+  }
+
+  /* Сбрасываем фон страницы */
+  body, html {
+    background: #fff !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    height: auto !important;
+  }
+  .app {
+    display: block !important;
+  }
+
+  /* Разворачиваем модалку на весь лист */
+  #modalRecipe {
+    position: static !important;
+    display: block !important;
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    z-index: auto !important;
+  }
+
+  /* Сама карточка: убираем тени, фон делаем белым, но оставляем цвета текста */
+  .modal-recipe-box {
+    display: block !important;
+    background: #fff !important; 
+    box-shadow: none !important;
+    border: none !important;
+    max-height: none !important;
+    height: auto !important;
+    overflow: visible !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    /* Убрали color: #000, теперь цвета будут как на сайте */
+  }
+
+  /* Отключаем внутреннюю прокрутку, чтобы рецепт не обрезался */
+  .modal-recipe-inner {
+    display: block !important;
+    overflow: visible !important;
+    height: auto !important;
+    max-height: none !important;
+  }
+
+  /* Скрываем лишние кнопки и меню, но ОСТАВЛЯЕМ порции и плюс/минус */
+  .b-photo, .b-icons, .b-actions-wrap, .b-plan-dropdown, .b-more-dropdown {
+    display: none !important;
+  }
+
+  /* Скрываем карандаш редактирования тегов и метёлку ингредиентов */
+  .b-tag-edit, .b-ing-clear {
+    display: none !important;
+  }
+
+  .b-body {
+    padding: 0 !important;
+  }
+}
+
+/* ═══ Свайпы и строки тегов ═══ */
+.mt-swipe-wrap {
+  position: relative;
+  overflow: hidden;
+  background: transparent !important;
+  margin-bottom: 4px;
+  border-radius: 8px;
+}
+
+.mt-row-content {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  padding: 10px 14px !important;
+  background: var(--c1) !important; /* Плотный фон, чтобы не было красных пятен */
+  width: 100% !important;
+  box-sizing: border-box !important;
+  transition: transform 0.2s ease-out !important;
+  cursor: pointer !important;
+  color: var(--c4) !important;
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+.mt-row-content:hover {
+  background: color-mix(in srgb, var(--c2) 50%, var(--c1)) !important;
+}
+
+.mt-row-content span {
+  flex: 1 !important;
+  display: block !important;
+  font-family: 'Nunito', sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: var(--c4) !important;
+}
+
+.mt-row-content input[type="checkbox"] {
+  display: block !important;
+  width: 18px !important;
+  height: 18px !important;
+  accent-color: var(--c3) !important;
+  cursor: pointer !important;
+  margin: 0 !important;
+  flex-shrink: 0 !important;
+}
+
+.mt-row-content.swiped {
+  transform: translateX(-80px) !important;
+}
+
+.mt-delete-action {
+  position: absolute;
+  right: 0; top: 0; bottom: 0;
+  width: 80px;
+  background: #ff3b30;
+  color: #fff;
+  border: none;
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.mt-del-btn-pc {
+  background: none; border: none;
+  font-size: 16px; cursor: pointer;
+  opacity: 0.5; padding: 4px; display: none;
+}
+.mt-del-btn-pc:hover { opacity: 1; }
+
+@media (hover: hover) and (pointer: fine) {
+  .mt-del-btn-pc { display: block; }
+  .mt-delete-action { display: none; }
+}
+
+body[data-theme="dark"] .mt-row-content {
+  background: color-mix(in srgb, var(--c4) 85%, var(--c3) 15%) !important;
+}
+body[data-theme="dark"] .mt-row-content span {
+  color: #fff !important;
 }

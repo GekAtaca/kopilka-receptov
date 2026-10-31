@@ -45,3 +45,27 @@ document.addEventListener('DOMContentLoaded', function(){
     });
   });
 });
+
+  // ─── Обработка кнопки "Добавить продукт" в модалке ➕ ───
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-action="create-product"]');
+    if (!btn) return;
+
+    // 1. Закрываем окошко Добавить
+    const addModal = document.getElementById('modalAdd');
+    if (addModal) addModal.style.display = 'none';
+    
+    // 2. Открываем форму продукта
+    if (typeof openProductForm === 'function') {
+      openProductForm({
+        onSaved: (product) => {
+          console.log('Новый продукт создан:', product);
+        },
+        onClose: () => {
+          console.log('Форма продукта закрыта');
+        }
+      });
+    } else {
+      console.error('ОШИБКА: Функция openProductForm не найдена! Проверьте, подключен ли product-form.js в index.html');
+    }
+  });

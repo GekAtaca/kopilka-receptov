@@ -247,9 +247,12 @@
       <div class="pf-body">
         <div class="pf-field">
           <label class="pf-label">Название <span class="pf-req">*</span></label>
-          <input type="text" class="pf-input" data-field="name"
-                 value="${escapeHtml(draft.name || '')}"
-                 placeholder="Например: Молоко Простоквашино 3.2%">
+          <div class="pf-autocomplete-wrap">
+            <input type="text" class="pf-input" data-field="name" id="pfNameInput"
+                   value="${escapeHtml(draft.name || '')}"
+                   placeholder="Например: Молоко Простоквашино 3.2%" autocomplete="off">
+            <div class="pf-autocomplete-list" id="pfAutocompleteList"></div>
+          </div>
         </div>
 
         <div class="pf-field">
@@ -362,6 +365,92 @@
         updateSaveState();
       });
     });
+
+    // ─── Автодополнение для поля Название ───
+    const nameInput = box.querySelector('#pfNameInput');
+    const autoList = box.querySelector('#pfAutocompleteList');
+    let searchTimeout = null;
+
+    if (nameInput && autoList) {
+      // При вводе текста
+      nameInput.addEventListener('input', (e) => {
+        const query = e.target.value.trim().toLowerCase();
+        
+        // Очищаем предыдущий таймер (чтобы не искать на каждую букву)
+        if (searchTimeout) clearTimeout(searchTimeout);
+
+        if (query.length < 2) {
+          autoList.classList.remove('active');
+          autoList.innerHTML = '';
+          return;
+        }
+
+        // Ждем 300 мс после последнего нажатия клавиши и ищем
+        searchTimeout = setTimeout(async () => {
+          const own = (typeof Storage !== 'undefined' && Storage.getAllProducts) 
+            ? await Storage.getAllProducts() : [];
+          const base = (typeof BASE_PRODUCTS !== 'undefined' && Array.isArray(BASE_PRODUCTS)) 
+            ? BASE_PRODUCTS : [];
+          const all = [...own, ...base];
+          
+          // Ищем все совпадения (без ограничений)
+          const matches = all
+            .filter(p => (p.name || '').toLowerCase().includes(query));
+          
+          if (matches.length > 0) {
+            autoList.innerHTML = matches.map(p => {
+              // Определяем базу: ⭐ - своя, 📚 - системная
+              const isOwn = p.source === 'own' || p.id.startsWith('product-');
+              const badge = isOwn ? '⭐ ' : '📚 ';
+              
+              // Марка (если есть)
+              const brandStr = p.brand ? ` — ${escapeHtml(p.brand)}` : '';
+              
+              // КБЖУ и единицы
+              const kcal = p.kcal !== null && p.kcal !== undefined ? p.kcal : '—';
+              const prot = p.protein !== null && p.protein !== undefined ? p.protein : '—';
+              const fat = p.fat !== null && p.fat !== undefined ? p.fat : '—';
+              const carb = p.carbs !== null && p.carbs !== undefined ? p.carbs : '—';
+              const unit = p.unit || 'г';
+              
+              const details = `(${kcal} ккал · Б${prot} · Ж${fat} · У${carb} · ${unit})`;
+              
+              return `
+                <div class="pf-autocomplete-item" data-val="${escapeHtml(p.name)}">
+                  ${badge}${escapeHtml(p.name)}${brandStr} <span style="opacity:0.6;">${details}</span>
+                </div>
+              `;
+            }).join('');
+            autoList.classList.add('active');
+          } else {
+            autoList.classList.remove('active');
+            autoList.innerHTML = '';
+          }
+        }, 300);
+      });
+
+      // При клике на подсказку
+      autoList.addEventListener('click', (e) => {
+        const item = e.target.closest('.pf-autocomplete-item');
+        if (!item) return;
+        
+        const val = item.dataset.val;
+        nameInput.value = val;
+        draft.name = val; // Обновляем черновик, чтобы кнопка "Сохранить" разблокировалась
+        
+        autoList.classList.remove('active');
+        nameInput.classList.remove('pf-invalid');
+        hideError();
+        updateSaveState();
+        nameInput.focus(); // Возвращаем курсор в поле
+      });
+
+      // При потере фокуса (клик в другое место) — скрываем список
+      nameInput.addEventListener('blur', () => {
+        // Небольшая задержка, чтобы клик по подсказке успел сработать до скрытия
+        setTimeout(() => autoList.classList.remove('active'), 200);
+      });
+    }
 
     updateConditionalFields();
   }
