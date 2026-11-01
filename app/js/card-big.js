@@ -200,7 +200,8 @@ function buildRecipeCard(recipe, marks, ingMarks){
       <div class="b-actions">
         <button type="button" class="b-act-btn b-act-primary" data-action="buy">🛒 ${ingCount}</button>
         <button type="button" class="b-act-btn" data-action="timer">⏱</button>
-        <button type="button" class="b-act-btn" data-action="edit">✎ Изменить</button>
+        <button type="button" class="b-act-btn" data-action="edit-note" title="Заметка">📝</button>
+        <button type="button" class="b-act-btn" data-action="edit" title="Редактировать">✎</button>
         ${versionsBtn}
         <button type="button" class="b-act-btn b-act-more" data-action="more">⋯</button>
       </div>

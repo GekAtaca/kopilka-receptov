@@ -6,6 +6,47 @@ const modalTag = document.getElementById('modalTag');
 const mtBody   = document.getElementById('mtBody');
 const modalTagManage = document.getElementById('modalTagManage');
 const tmgList  = document.getElementById('tmgList');
+// ═══ КАСТОМНЫЕ ОКНА ═══
+function mtCustomConfirm(text, onConfirm) {
+  const overlay = document.createElement('div');
+  overlay.className = 'mt-dialog-overlay';
+  overlay.innerHTML = `
+    <div class="mt-dialog">
+      <div class="mt-dialog-text">${text}</div>
+      <div class="mt-dialog-actions">
+        <button class="mt-dialog-btn" id="mtDlgCancel">Отмена</button>
+        <button class="mt-dialog-btn primary" id="mtDlgOk">ОК</button>
+      </div>
+    </div>`;
+  document.body.appendChild(overlay);
+  overlay.querySelector('#mtDlgCancel').onclick = () => overlay.remove();
+  overlay.querySelector('#mtDlgOk').onclick = () => { onConfirm(); overlay.remove(); };
+}
+
+function mtCustomPromptGroup(title, groups, onConfirm) {
+  const options = groups.map(g => {
+    const name = typeof g === 'string' ? g : g.name;
+    const code = typeof g === 'string' ? g : g.code;
+    return `<option value="${code}">${name}</option>`;
+  }).join('');
+  const overlay = document.createElement('div');
+  overlay.className = 'mt-dialog-overlay';
+  overlay.innerHTML = `
+    <div class="mt-dialog">
+      <div class="mt-dialog-title">${title}</div>
+      <select class="mt-dialog-input" id="mtDlgSelect">${options}</select>
+      <div class="mt-dialog-actions">
+        <button class="mt-dialog-btn" id="mtDlgCancel">Отмена</button>
+        <button class="mt-dialog-btn primary" id="mtDlgOk">Создать</button>
+      </div>
+    </div>`;
+  document.body.appendChild(overlay);
+  overlay.querySelector('#mtDlgCancel').onclick = () => overlay.remove();
+  overlay.querySelector('#mtDlgOk').onclick = () => {
+    onConfirm(overlay.querySelector('#mtDlgSelect').value);
+    overlay.remove();
+  };
+}
 
 let mtSelected = []; 
 let mtOnSave   = null;
@@ -25,7 +66,6 @@ const DEFAULT_GROUPS = [
   { code: 'misc', name: 'Разное' }
 ];
 
-// ─── ОТКРЫТИЕ МОДАЛКИ ТЕГОВ ───
 async function openTagModal(selectedTags, onSave) {
   if (!modalTag) return;
   
@@ -112,16 +152,25 @@ function mtRender() {
   mtRenderListOnly();
 }
 
+// 100% защищенная функция получения имени и группы
+function getTagName(t) {
+  if (!t) return '';
+  if (typeof t === 'string') return t;
+  return t.name || t.text || t.title || '';
+}
+
+function getTagGroup(t) {
+  if (!t) return 'misc';
+  if (typeof t === 'string') return 'misc';
+  return t.group || t.category || 'misc';
+}
+
 function mtRenderListOnly() {
   const listEl = document.getElementById('mtListArea');
   if (!listEl) return;
 
   const q = mtSearchQuery.trim().toLowerCase();
   let groupsHtml = '';
-
-  // Безопасное извлечение данных
-  const getTagName = (t) => typeof t === 'string' ? t : (t.name || t.text || '');
-  const getTagGroup = (t) => typeof t === 'string' ? 'misc' : (t.group || 'misc');
 
   if (q) {
     const filtered = mtAllTags.filter(t => getTagName(t).toLowerCase().includes(q));
@@ -138,14 +187,21 @@ function mtRenderListOnly() {
     }
   } else {
     mtGroups.forEach(g => {
-      const tagsInGroup = mtAllTags.filter(t => getTagGroup(t) === g.code);
-      if (!tagsInGroup.length) return;
+      // Поддерживаем и строки, и объекты для групп
+      const groupCode = typeof g === 'string' ? g : (g.code || g.name || 'misc');
+      const groupName = typeof g === 'string' ? g : (g.name || g.code || 'Разное');
       
-      const rows = tagsInGroup.map(t => mtBuildTagRow(t)).join('');
+      const tagsInGroup = mtAllTags.filter(t => getTagGroup(t) === groupCode);
+      
+      // if (!tagsInGroup.length) return;
+      
+      const rows = tagsInGroup.length 
+  ? tagsInGroup.map(t => mtBuildTagRow(t)).join('')
+  : `<div style="padding: 10px 14px; font-family: 'Nunito', sans-serif; font-size: 13px; opacity: 0.5; font-style: italic;">В этой категории пока нет тегов</div>`;
       groupsHtml += `
         <div class="mt-group">
           <div class="mt-group-head" data-action="toggle-group">
-            <span>${g.name}</span>
+            <span>${groupName}</span>
             <span class="mt-arrow">▼</span>
           </div>
           <div class="mt-group-body">${rows}</div>
@@ -159,7 +215,7 @@ function mtRenderListOnly() {
 }
 
 function mtBuildTagRow(tag) {
-  const tagName = typeof tag === 'string' ? tag : (tag.name || tag.text || '');
+  const tagName = getTagName(tag);
   const tagId = typeof tag === 'string' ? tag : (tag.id || tagName);
   const tagSource = typeof tag === 'string' ? 'own' : (tag.source || 'base');
   
@@ -256,12 +312,16 @@ function closeTagManageModal() {
 }
 
 function renderManageList() {
-  tmgList.innerHTML = mtGroups.map(g => `
-    <div class="tmg-item">
-      <span>${g.name}</span>
-      ${g.code !== 'misc' ? `<button class="tmg-del-btn" data-del-group="${g.code}">🗑</button>` : ''}
-    </div>
-  `).join('');
+  tmgList.innerHTML = mtGroups.map(g => {
+    const groupCode = typeof g === 'string' ? g : g.code;
+    const groupName = typeof g === 'string' ? g : g.name;
+    return `
+      <div class="tmg-item">
+        <span>${groupName}</span>
+        ${groupCode !== 'misc' ? `<button class="tmg-del-btn" data-del-group="${groupCode}">🗑</button>` : ''}
+      </div>
+    `;
+  }).join('');
 }
 
 if (modalTagManage) {
@@ -276,7 +336,15 @@ if (modalTagManage) {
     if (!name) return;
     
     const newGroup = { code: 'g_' + Date.now(), name: name };
-    mtGroups.push(newGroup);
+    // Ищем, где находится "Разное" (misc)
+const miscIndex = mtGroups.findIndex(g => (typeof g === 'string' ? g : g.code) === 'misc');
+if (miscIndex !== -1) {
+  // Вставляем перед "Разным"
+  mtGroups.splice(miscIndex, 0, newGroup);
+} else {
+  // Если "Разного" почему-то нет, кидаем в конец
+  mtGroups.push(newGroup);
+}
     await Storage.saveSetting('customTagGroups', mtGroups);
     
     input.value = '';
@@ -288,24 +356,25 @@ if (modalTagManage) {
     const btn = e.target.closest('[data-del-group]');
     if (!btn) return;
     const code = btn.dataset.delGroup;
-    if (!confirm('При удалении категории её теги переедут в "Разное". Продолжить?')) return;
     
-    mtGroups = mtGroups.filter(g => g.code !== code);
-    await Storage.saveSetting('customTagGroups', mtGroups);
-    
-    if (Storage.getAllTags) {
-      const ownTags = await Storage.getAllTags();
-      for (let tag of ownTags) {
-        if (tag.group === code) {
-          tag.group = 'misc';
-          await Storage.saveTag(tag);
+    mtCustomConfirm('При удалении категории её теги переедут в "Разное". Продолжить?', async () => {
+      mtGroups = mtGroups.filter(g => (typeof g === 'string' ? g : g.code) !== code);
+      await Storage.saveSetting('customTagGroups', mtGroups);
+      
+      if (Storage.getAllTags) {
+        const ownTags = await Storage.getAllTags();
+        for (let tag of ownTags) {
+          if (tag.group === code) {
+            tag.group = 'misc';
+            await Storage.saveTag(tag);
+          }
         }
       }
-    }
-    
-    await mtLoadData();
-    renderManageList();
-    mtRender();
+      
+      await mtLoadData();
+      renderManageList();
+      mtRender();
+    });
   });
 }
 
@@ -320,13 +389,16 @@ if (modalTag) {
     }
     if (e.target.closest('[data-action="delete-tag"]')) {
       const id = e.target.closest('[data-action="delete-tag"]').dataset.id;
-      if (confirm('Удалить этот тег навсегда?')) {
+      mtCustomConfirm('Удалить этот тег навсегда?', async () => {
         await Storage.deleteTag(id);
         await mtLoadData();
-        const deletedTag = mtAllTags.find(t => t.id === id);
-        if (deletedTag) mtSelected = mtSelected.filter(t => t !== deletedTag.name);
+        const deletedTag = mtAllTags.find(t => (typeof t === 'string' ? t : t.id) === id);
+        if (deletedTag) {
+          const dName = getTagName(deletedTag);
+          mtSelected = mtSelected.filter(t => t !== dName);
+        }
         mtRender();
-      }
+      });
       return;
     }
     if (e.target.closest('[data-action="toggle-group"]')) {
@@ -336,24 +408,19 @@ if (modalTag) {
     }
     if (e.target.closest('[data-action="create-tag"]')) {
       const newTagName = mtSearchQuery.trim();
-      let groupNamesStr = mtGroups.map((g, i) => `${i+1}. ${g.name}`).join('\n');
-      const res = window.prompt("Выберите номер группы для тега:\n" + groupNamesStr);
-      if (res === null) return;
-      
-      let selectedGroup = 'misc';
-      const idx = parseInt(res, 10) - 1;
-      if (mtGroups[idx]) selectedGroup = mtGroups[idx].code;
-      
-      if (Storage.saveTag) {
-        await Storage.saveTag({ name: newTagName, group: selectedGroup });
-        await mtLoadData();
-        if (!mtSelected.includes(newTagName)) mtSelected.push(newTagName);
-        mtSearchQuery = '';
-        mtRender();
-      }
+      mtCustomPromptGroup(`В какую группу добавить "${newTagName}"?`, mtGroups, async (selectedGroup) => {
+        if (Storage.saveTag) {
+          await Storage.saveTag({ name: newTagName, group: selectedGroup });
+          await mtLoadData();
+          if (!mtSelected.includes(newTagName)) mtSelected.push(newTagName);
+          mtSearchQuery = '';
+          mtRender();
+        }
+      });
       return;
     }
     if (e.target.closest('[data-action="close"]')) { closeTagModal(); return; }
+    if (e.target === modalTag) { closeTagModal(); return; }
     if (e.target.closest('[data-action="save"]')) {
       if (mtOnSave) mtOnSave(mtSelected);
       closeTagModal();
@@ -381,5 +448,18 @@ if (modalTag) {
     }
   });
 }
+// ═══ ЗАКРЫТИЕ ПО ESCAPE ═══
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    // Если открыто управление категориями — закрываем сначала его
+    if (modalTagManage && modalTagManage.style.display === 'flex') {
+      closeTagManageModal();
+    } 
+    // Иначе, если открыта модалка тегов — закрываем её
+    else if (modalTag && modalTag.style.display === 'flex') {
+      closeTagModal();
+    }
+  }
+});
 
 window.openTagModal = openTagModal;

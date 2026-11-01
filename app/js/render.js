@@ -68,6 +68,16 @@ function renderRecipeCard(recipe, ingMarks, isFav, isCooked, isWant, savedPortio
     </li>`;
   }).join('');
 
+  // Шаги для маленькой карточки (скрыты по умолчанию)
+  const smallStepsHtml = (recipe.steps && recipe.steps.length) ? `
+    <div class="small-steps-container">
+      <div class="small-steps-title">Приготовление:</div>
+      <ol class="small-steps-list">
+        ${recipe.steps.map(s => `<li>${escapeHtml(s)}</li>`).join('')}
+      </ol>
+    </div>
+  ` : '';
+
   const deviceHtml = recipe.device ? `
     <div class="cook-unit">
       <div class="unit-head">
@@ -124,11 +134,11 @@ function renderRecipeCard(recipe, ingMarks, isFav, isCooked, isWant, savedPortio
           </span>
         </div>
         <ul class="ing-list">${ingRows}</ul>
+        ${smallStepsHtml}
         <button class="ing-toggle" data-action="toggle-show-all">▼ показать все</button>
         ${deviceHtml}
         ${noteHtml}
       </div>
-      <div class="actions">
         <button class="primary">🛒 ${
           (() => {
             let marked = 0;
@@ -142,6 +152,7 @@ function renderRecipeCard(recipe, ingMarks, isFav, isCooked, isWant, savedPortio
         }</button>
         <button data-action="open-timer">⏱</button>
         <button data-action="edit-recipe">✎ Изменить</button>
+        <button data-action="edit-note-small" title="Заметка">📝</button>
         ${versionsBtn}
       </div>
     </div>

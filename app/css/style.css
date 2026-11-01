@@ -2716,34 +2716,6 @@ body[data-theme="dark"] .pf-autocomplete-item:hover {
 }
 .mt-create-btn:hover { background: color-mix(in srgb, var(--c3) 10%, transparent); }
 
-/* ═══ Строки с тегами и свайп ═══ */
-.mt-swipe-wrap {
-  position: relative;
-  overflow: hidden;
-  background: transparent; /* Убрали красный фон */
-  border-radius: 8px;
-  margin-bottom: 4px;
-}
-
-.mt-row-content {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 14px;
-  background: var(--c1);
-  transition: transform 0.2s ease-out;
-  position: relative;
-  z-index: 2;
-  cursor: pointer;
-  border-radius: 8px;
-}
-.mt-row-content:hover { background: color-mix(in srgb, var(--c2) 50%, var(--c1)); }
-
-/* Сдвиг строки влево при свайпе */
-.mt-row-content.swiped {
-  transform: translateX(-80px);
-}
-
 /* Красная кнопка удаления (прячется за строкой) */
 .mt-delete-action {
   position: absolute;
@@ -2838,13 +2810,7 @@ body[data-theme="dark"] .mt-search {
   color: #fff;
 }
 body[data-theme="dark"] .mt-search::placeholder { color: #fff; }
-body[data-theme="dark"] .mt-row-content {
-  background: color-mix(in srgb, var(--c1) 5%, var(--c4) 95%);
-  color: #fff;
-}
-body[data-theme="dark"] .mt-row-content:hover {
-  background: color-mix(in srgb, var(--c1) 10%, var(--c4) 90%);
-}
+
 body[data-theme="dark"] .tmg-item {
   background: color-mix(in srgb, var(--c1) 15%, var(--c4) 85%);
   color: #fff;
@@ -2855,58 +2821,6 @@ body[data-theme="dark"] .tmg-item {
   flex-direction: column;
   gap: 2px;
 }
-.mt-row-content span {
-  color: var(--c4); /* Принудительно задаем цвет тексту */
-}
-body[data-theme="dark"] .mt-row-content span {
-  color: #fff;
-}
-
-/* ═══ ФИКС: Строки тегов (чтобы были видны текст и чекбоксы) ═══ */
-.mt-row-content {
-  display: flex !important;
-  align-items: center !important;
-  gap: 10px !important;
-  padding: 10px 14px !important;
-  /* Делаем фон строки чуть темнее/светлее, чтобы он отличался от модалки */
-  background: color-mix(in srgb, var(--c1) 85%, var(--c3) 15%) !important; 
-  border: 1px solid var(--c3) !important; /* Добавим аккуратную рамку */
-  border-radius: 8px !important;
-  cursor: pointer !important;
-  width: 100% !important;
-  box-sizing: border-box !important;
-}
-
-/* Принудительно задаем цвет текста и размер */
-.mt-row-content span {
-  color: var(--c4) !important;
-  font-family: 'Nunito', sans-serif !important;
-  font-size: 14px !important;
-  font-weight: 600 !important;
-  display: block !important;
-  flex: 1 !important;
-  white-space: normal !important;
-}
-
-/* Делаем чекбокс видимым */
-.mt-row-content input[type="checkbox"] {
-  display: block !important;
-  width: 18px !important;
-  height: 18px !important;
-  accent-color: var(--c3) !important;
-  cursor: pointer !important;
-  flex-shrink: 0 !important;
-  margin: 0 !important;
-}
-
-/* Тёмная тема для строк */
-body[data-theme="dark"] .mt-row-content {
-  background: color-mix(in srgb, var(--c4) 85%, var(--c3) 15%) !important;
-  border-color: var(--c2) !important;
-}
-body[data-theme="dark"] .mt-row-content span {
-  color: #fff !important;
-}
 
 /* Убираем лишние отступы у обертки, чтобы не было пустых линий */
 .mt-group-body {
@@ -2914,8 +2828,4 @@ body[data-theme="dark"] .mt-row-content span {
   flex-direction: column !important;
   gap: 6px !important;
   padding: 4px 0 !important;
-}
-.mt-swipe-wrap {
-  margin-bottom: 0 !important;
-  background: transparent !important;
 }
