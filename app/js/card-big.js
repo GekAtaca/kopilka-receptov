@@ -319,6 +319,11 @@ modalRecipeBox.addEventListener('click', async (e) => {
     if (typeof openRecipeEditor === 'function') openRecipeEditor(currentRecipeId);
     return; 
   }
+
+  if (action === 'edit-note'){ 
+    openNoteEditor(currentRecipeId, true);
+    return; 
+  }
   
   if (action === 'versions'){
     openVersionsModal();
@@ -513,6 +518,10 @@ document.addEventListener('click', (e) => {
 
 document.addEventListener('keydown', (e) => {
   if (e.key !== 'Escape') return;
+
+  // Сначала закрываем заметку (если открыта)
+  if (modalNote && modalNote.style.display === 'flex'){ closeNoteEditor(); return; }
+
   const dp = document.getElementById('bPlanDropdown');
   if (dp && dp.classList.contains('open')){ dp.classList.remove('open'); return; }
   const dm = document.getElementById('bMoreDropdown');
@@ -812,6 +821,12 @@ document.addEventListener('click', async (e) => {
 
   if (action === 'edit-recipe') {
     if (typeof openRecipeEditor === 'function') openRecipeEditor(id);
+    return;
+  }
+
+  if (action === 'edit-note-small') {
+    openNoteEditor(id, false);
+    return;
   }
   
   if (action === 'open-versions') {
@@ -877,4 +892,88 @@ function showToastMsg(message) {
     toast.style.transform = 'translateY(20px)';
     setTimeout(() => toast.remove(), 300);
   }, 3000);
+}
+
+// ═══════════════════════════════════════════════════
+// ЗАМЕТКА РЕЦЕПТА (шаг 39)
+// ═══════════════════════════════════════════════════
+
+const modalNote         = document.getElementById('modalNote');
+const noteModalTextarea = document.getElementById('noteModalTextarea');
+
+let noteEditingRecipeId = null;
+let noteEditingIsBig    = false;
+
+async function openNoteEditor(recipeId, isBig) {
+  if (!recipeId) return;
+  const recipe = await Storage.getRecipe(recipeId);
+  if (!recipe) return;
+
+  noteEditingRecipeId = recipeId;
+  noteEditingIsBig    = !!isBig;
+
+  noteModalTextarea.value = recipe.note || '';
+
+  // Копируем оформление с главной страницы
+  applyDesignScope(modalNote.querySelector('.modal-box'));
+
+  modalNote.style.display = 'flex';
+  setTimeout(() => noteModalTextarea.focus(), 60);
+}
+
+function closeNoteEditor() {
+  modalNote.style.display = 'none';
+  noteEditingRecipeId = null;
+  noteEditingIsBig    = false;
+}
+
+async function saveNoteFromEditor() {
+  if (!noteEditingRecipeId) return;
+
+  const recipe = await Storage.getRecipe(noteEditingRecipeId);
+  if (!recipe) { closeNoteEditor(); return; }
+
+  const newNote = noteModalTextarea.value.trim();
+  recipe.note = newNote || null;
+
+  await Storage.saveRecipe(recipe);
+
+  const wasBig  = noteEditingIsBig;
+  const savedId = noteEditingRecipeId;
+  closeNoteEditor();
+
+  // Обновляем маленькие карточки на Главной
+  if (typeof renderAllRecipes === 'function') renderAllRecipes();
+
+  // Если заметку правили из большой карточки — перерисуем её
+  if (wasBig && typeof openRecipeCard === 'function' && currentRecipeId === savedId) {
+    await openRecipeCard(savedId);
+  }
+
+  if (typeof showToastMsg === 'function') {
+    showToastMsg(newNote ? 'Заметка сохранена' : 'Заметка удалена');
+  }
+}
+
+// Обработчики кнопок модалки
+document.getElementById('noteModalClose').addEventListener('click', closeNoteEditor);
+document.getElementById('noteModalCancel').addEventListener('click', closeNoteEditor);
+document.getElementById('noteModalSave').addEventListener('click', saveNoteFromEditor);
+
+// Клик по фону — закрыть
+modalNote.addEventListener('mousedown', (e) => {
+  if (e.target === modalNote) closeNoteEditor();
+});
+
+// ═══════════════════════════════════════════════════
+// ХЕЛПЕР: применяет текущее оформление с body
+// ═══════════════════════════════════════════════════
+function applyDesignScope(el) {
+  if (!el) return;
+  ['style', 'palette', 'theme', 'shadow'].forEach(key => {
+    const attr = 'data-' + key;
+    const val = document.body.getAttribute(attr);
+    if (val) el.setAttribute(attr, val);
+    else el.removeAttribute(attr);
+  });
 }
