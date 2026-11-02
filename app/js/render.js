@@ -1,9 +1,5 @@
 // ═══════════════════════════════════════════════════
 // render.js — превращает объект рецепта в HTML.
-// Загружается после demo-recipes.js, до bg.js.
-//
-// Пока умеет только маленькую карточку.
-// Большая карточка — отдельный шаг (шаг 35).
 // ═══════════════════════════════════════════════════
 
 // ─── Подписи приёма пищи (англ → русский капс) ───
@@ -78,7 +74,7 @@ function renderRecipeCard(recipe, ingMarks, isFav, isCooked, isWant, savedPortio
     </div>
   ` : '';
 
-  // Устройство — ОДИН раз
+  // Устройство
   const deviceHtml = recipe.device ? `
     <div class="cook-unit">
       <div class="unit-head">
@@ -90,7 +86,7 @@ function renderRecipeCard(recipe, ingMarks, isFav, isCooked, isWant, savedPortio
     </div>
   ` : '';
 
-  // Заметка — ОДИН раз
+  // Заметка
   const noteHtml = recipe.note ? `
     <div class="note">
       <span class="note-label">МОЯ ЗАМЕТКА</span>
@@ -108,7 +104,6 @@ function renderRecipeCard(recipe, ingMarks, isFav, isCooked, isWant, savedPortio
     ? `<img src="${escapeHtml(firstPhoto)}" alt="" onerror="this.style.display='none'">`
     : '';
 
-  // Счётчик для кнопки "Купить" — считаем заранее, не внутри шаблона
   const totalIng = (recipe.ingredients || []).length;
   let markedCount = 0;
   if (ingMarks) {
@@ -164,12 +159,10 @@ function renderRecipeCard(recipe, ingMarks, isFav, isCooked, isWant, savedPortio
 
 // ═══════════════════════════════════════════════════
 // Разложить все рецепты по секциям Главной.
-// Асинхронная: читает рецепты из IndexedDB.
 // ═══════════════════════════════════════════════════
 async function renderAllRecipes() {
   const all = await Storage.getAllRecipes();
   
-  // Загружаем все отметки
   const ingMarks = await Storage.getMarks('ingredient');
   const favMarks = await Storage.getMarks('favorite');
   const cookedMarks = await Storage.getMarks('cooked');
@@ -219,7 +212,6 @@ document.addEventListener('click', (e) => {
   const timerBtn = e.target.closest('.card [data-action="open-timer"]');
   if (!timerBtn) return;
   
-  // Находим ID рецепта у карточки
   const card = timerBtn.closest('.card');
   if (card && card.dataset.recipeId) {
     openTimerList(card.dataset.recipeId);
