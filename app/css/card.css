@@ -25,9 +25,9 @@ body[data-palette$="-glubokaya"],
   display:flex;
   flex-direction:column;
 
-  /* Настройки высоты: карточка подстраивается под контент, но не выше предела */
-  align-self: start;
-  max-height: calc(100dvh - 160px); 
+/* Настройки высоты: жесткий предел, чтобы карточки не скакали */
+align-self: start;
+max-height: 600px;
 
   /* ─── Переменные по умолчанию = стиль «Нежный» ─── */
   --font-head:'Cormorant Garamond',serif;
@@ -128,10 +128,15 @@ body[data-palette$="-glubokaya"],
   gap: var(--card-body-gap);
   flex: 1 1 auto;
   min-height: 0;
-  overflow-y: hidden; /* По умолчанию скролла нет */
+  overflow-y: hidden; /* Скролл выключен по умолчанию */
   padding-right: 4px;
   scrollbar-width: thin;
   scrollbar-color: var(--c3) transparent;
+}
+
+/* Скролл появляется ТОЛЬКО когда нажали "Показать всё" */
+.card.show-all .card-scroll-area {
+  overflow-y: auto;
 }
 
 /* Скролл появляется ТОЛЬКО когда нажали "Показать всё" */
@@ -294,6 +299,7 @@ body[data-palette$="-glubokaya"],
 
 /* ─── Заметка ─── */
 .note{
+  display: none !important; /* ВРЕМЕННО, для теста высоты */
   padding:var(--note-pad-y) var(--note-pad-x);
   background:var(--plate-bg);
   border-left:3px solid var(--c3);
