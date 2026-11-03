@@ -27,8 +27,7 @@ body[data-palette$="-glubokaya"],
 
   /* Настройки высоты: жесткий предел, чтобы карточки не скакали */
   align-self: start;
-  max-height: 1000px; /* Максимальный потолок */
-  min-height: 680px;  /* Минимальный пол (попробуй 700, если мало - 750) */
+  max-height: 680px; /* Максимальный потолок */
 
   /* ─── Переменные по умолчанию = стиль «Нежный» ─── */
   --font-head:'Cormorant Garamond',serif;
@@ -300,7 +299,6 @@ body[data-palette$="-glubokaya"],
 
 /* ─── Заметка ─── */
 .note{
-  display: none !important; /* ВРЕМЕННО, для теста высоты */
   padding:var(--note-pad-y) var(--note-pad-x);
   background:var(--plate-bg);
   border-left:3px solid var(--c3);
