@@ -183,7 +183,9 @@ body[data-palette$="-glubokaya"],
 /* ─── Ингредиенты ─── */
 .ing-header{
   display:flex;justify-content:space-between;align-items:center;
-  gap:10px;margin-top:2px;
+  gap:10px;
+  margin-top: 4px; /* Немного отступа от верха зоны скролла */
+  margin-bottom: 6px; /* Отступ до списка ингредиентов */
 }
 .ing-header-left{
   display:flex;
@@ -2854,4 +2856,29 @@ body[data-theme="dark"] .mt-row-content:hover {
 }
 body[data-theme="dark"] .mt-row-content span {
   color: #fff !important;
+}
+
+/* ═══ Стили для шагов в маленькой карточке ═══ */
+.small-steps-container {
+  margin-top: 12px; /* Отступ от ингредиентов */
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.small-steps-title {
+  font-family: var(--font-head);
+  font-style: var(--font-style-head);
+  font-weight: var(--font-weight-head);
+  font-size: var(--ing-title-size);
+  opacity: 0.9;
+}
+
+.small-steps-list {
+  padding-left: 20px;
+  margin: 0;
+  font-family: var(--font-body);
+  font-style: var(--font-style-body);
+  font-size: var(--ing-size);
+  line-height: 1.4;
 }

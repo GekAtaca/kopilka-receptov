@@ -1,9 +1,5 @@
 // ═══════════════════════════════════════════════════
 // render.js — превращает объект рецепта в HTML.
-// Загружается после demo-recipes.js, до bg.js.
-//
-// Пока умеет только маленькую карточку.
-// Большая карточка — отдельный шаг (шаг 35).
 // ═══════════════════════════════════════════════════
 
 // ─── Подписи приёма пищи (англ → русский капс) ───
@@ -14,7 +10,10 @@ const MEAL_LABEL = {
   snack:     'ПЕРЕКУС'
 };
 
-// ─── Экранирование HTML (защита от случайных < > & " ') ───
+// Память для раскрытых карточек, чтобы они не сворачивались при обновлении
+window.expandedRecipes = window.expandedRecipes || new Set();
+
+// ─── Экранирование HTML ───
 function escapeHtml(str) {
   if (str == null) return '';
   return String(str)
@@ -25,7 +24,7 @@ function escapeHtml(str) {
     .replace(/'/g, '&#39;');
 }
 
-// ─── Красивое число: 60 → «60», 4.5 → «4,5», 0.25 → «0,25» ───
+// ─── Красивое число ───
 function formatAmount(n) {
   if (n == null) return '';
   const r = Math.round(n * 100) / 100;
@@ -36,6 +35,7 @@ function formatAmount(n) {
 // ─── Карточка рецепта (маленькая) ───
 function renderRecipeCard(recipe, ingMarks, isFav, isCooked, isWant, savedPortions) {
   const label = MEAL_LABEL[recipe.meal] || '';
+  const isExpanded = window.expandedRecipes.has(String(recipe.id)); // Проверяем раскрыта ли карточка
   
   const baseP = recipe.portions || 2;
   const currP = savedPortions || 4;
@@ -68,7 +68,6 @@ function renderRecipeCard(recipe, ingMarks, isFav, isCooked, isWant, savedPortio
     </li>`;
   }).join('');
 
-  // Возвращаем шаги
   const smallStepsHtml = (recipe.steps && recipe.steps.length) ? `
     <div class="small-steps-container">
       <div class="small-steps-title">Приготовление:</div>
@@ -78,11 +77,12 @@ function renderRecipeCard(recipe, ingMarks, isFav, isCooked, isWant, savedPortio
     </div>
   ` : '';
 
-  // Умная кнопка "Показать все"
   const hasMoreThan3Ings = (recipe.ingredients || []).length > 3;
   const hasSteps = recipe.steps && recipe.steps.length > 0;
   const showToggleBtn = hasMoreThan3Ings || hasSteps;
-  const toggleBtnHtml = showToggleBtn ? `<button class="ing-toggle" data-action="toggle-show-all">▼ показать все</button>` : '';
+  
+  // Кнопка меняет текст в зависимости от состояния
+  const toggleBtnHtml = showToggleBtn ? `<button class="ing-toggle" data-action="toggle-show-all">${isExpanded ? '▲ скрыть' : '▼ показать все'}</button>` : '';
 
   const deviceHtml = recipe.device ? `
     <div class="cook-unit">
@@ -122,7 +122,7 @@ function renderRecipeCard(recipe, ingMarks, isFav, isCooked, isWant, savedPortio
   const buyCount = markedCount > 0 ? markedCount : totalIng;
 
   return `
-    <div class="card" data-recipe-id="${escapeHtml(recipe.id)}">
+    <div class="card ${isExpanded ? 'show-all' : ''}" data-recipe-id="${escapeHtml(recipe.id)}">
       <div class="card-img">
         ${imgHtml}
         <span class="badge">${label}</span>
@@ -137,20 +137,20 @@ function renderRecipeCard(recipe, ingMarks, isFav, isCooked, isWant, savedPortio
         <div class="title">${escapeHtml(recipe.name)}</div>
         <div class="tags">${tagsHtml}</div>
         ${kcalRow}
-        <div class="ing-header">
-          <div class="ing-header-left">
-            <span class="ing-title">Ингредиенты:</span>
-            <button type="button" class="ing-clear" data-action="clear-ingredients-small" title="Очистить отметки">🧹</button>
-          </div>
-          <span class="portions" data-base="${baseP}">
-            <button data-action="portions-minus-small">−</button>
-            <span class="num" data-action="reset-portions-small" style="cursor:pointer;">${currP}</span>
-            <button data-action="portions-plus-small">+</button>
-          </span>
-        </div>
         
-        <!-- Зона скролла -->
+        <!-- Зона скролла (теперь сюда входит и заголовок ингредиентов) -->
         <div class="card-scroll-area">
+          <div class="ing-header">
+            <div class="ing-header-left">
+              <span class="ing-title">Ингредиенты:</span>
+              <button type="button" class="ing-clear" data-action="clear-ingredients-small" title="Очистить отметки">🧹</button>
+            </div>
+            <span class="portions" data-base="${baseP}">
+              <button data-action="portions-minus-small">−</button>
+              <span class="num" data-action="reset-portions-small" style="cursor:pointer;">${currP}</span>
+              <button data-action="portions-plus-small">+</button>
+            </span>
+          </div>
           <ul class="ing-list">${ingRows}</ul>
           ${smallStepsHtml}
         </div>
@@ -172,12 +172,10 @@ function renderRecipeCard(recipe, ingMarks, isFav, isCooked, isWant, savedPortio
 
 // ═══════════════════════════════════════════════════
 // Разложить все рецепты по секциям Главной.
-// Асинхронная: читает рецепты из IndexedDB.
 // ═══════════════════════════════════════════════════
 async function renderAllRecipes() {
   const all = await Storage.getAllRecipes();
   
-  // Загружаем все отметки
   const ingMarks = await Storage.getMarks('ingredient');
   const favMarks = await Storage.getMarks('favorite');
   const cookedMarks = await Storage.getMarks('cooked');
@@ -222,14 +220,28 @@ async function renderAllRecipes() {
   });
 }
 
-// ─── Открытие таймера из маленькой карточки на Главной ───
+// ─── Обработчики кликов ───
 document.addEventListener('click', (e) => {
   const timerBtn = e.target.closest('.card [data-action="open-timer"]');
-  if (!timerBtn) return;
-  
-  // Находим ID рецепта у карточки
-  const card = timerBtn.closest('.card');
-  if (card && card.dataset.recipeId) {
-    openTimerList(card.dataset.recipeId);
+  if (timerBtn) {
+    const card = timerBtn.closest('.card');
+    if (card && card.dataset.recipeId) {
+      openTimerList(card.dataset.recipeId);
+    }
+    return;
+  }
+
+  // ─── Запоминаем состояние кнопки "Показать всё / Скрыть" ───
+  const toggleBtn = e.target.closest('[data-action="toggle-show-all"]');
+  if (toggleBtn) {
+    const card = toggleBtn.closest('.card');
+    if (card && card.dataset.recipeId) {
+      const id = String(card.dataset.recipeId);
+      if (card.classList.contains('show-all')) {
+        window.expandedRecipes.delete(id); // Запоминаем, что скрыто
+      } else {
+        window.expandedRecipes.add(id); // Запоминаем, что раскрыто
+      }
+    }
   }
 });
