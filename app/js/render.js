@@ -74,12 +74,6 @@ function renderRecipeCard(recipe, ingMarks, isFav, isCooked, isWant, savedPortio
     </div>
   ` : '';
 
-  // Проверяем, нужно ли показывать кнопку "показать все"
-  const hasMoreThan3Ings = (recipe.ingredients || []).length > 3;
-  const hasSteps = recipe.steps && recipe.steps.length > 0;
-  const showToggleBtn = hasMoreThan3Ings || hasSteps;
-  const toggleBtnHtml = showToggleBtn ? `<button class="ing-toggle" data-action="toggle-show-all">▼ показать все</button>` : '';
-
   // Устройство
   const deviceHtml = recipe.device ? `
     <div class="cook-unit">
@@ -146,11 +140,9 @@ function renderRecipeCard(recipe, ingMarks, isFav, isCooked, isWant, savedPortio
             <button data-action="portions-plus-small">+</button>
           </span>
         </div>
-        <div class="card-scroll-area">
-          <ul class="ing-list">${ingRows}</ul>
-          ${smallStepsHtml}
-        </div>
-        ${toggleBtnHtml}
+        <ul class="ing-list">${ingRows}</ul>
+        ${smallStepsHtml}
+        <button class="ing-toggle" data-action="toggle-show-all">▼ показать все</button>
         ${deviceHtml}
         ${noteHtml}
       </div>
