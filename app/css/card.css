@@ -28,8 +28,8 @@ body[data-palette$="-glubokaya"],
   /* Настройки высоты: жесткий предел, чтобы карточки не скакали */
   align-self: start;
   max-height: 1000px; /* Максимальный потолок */
-  min-height: 700px;  /* Минимальный пол (попробуй 700, если мало - 750) */
-  
+  min-height: 670px;  /* Минимальный пол (попробуй 700, если мало - 750) */
+
   /* ─── Переменные по умолчанию = стиль «Нежный» ─── */
   --font-head:'Cormorant Garamond',serif;
   --font-body:'Cormorant Garamond',serif;
