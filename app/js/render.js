@@ -260,6 +260,16 @@ document.addEventListener('click', (e) => {
     }
   }
 
+  // ─── Открытие заметки ───
+  const noteBtn = e.target.closest('[data-action="open-note-small"]') || e.target.closest('[data-action="edit-note-small"]');
+  if (noteBtn) {
+    const card = noteBtn.closest('.card');
+    if (card && card.dataset.recipeId) {
+      openNoteModal(card.dataset.recipeId);
+    }
+    return;
+  }
+
   // ─── Запоминаем состояние кнопки "Показать всё / Скрыть" ───
   const toggleBtn = e.target.closest('[data-action="toggle-show-all"]');
   if (toggleBtn) {
@@ -273,5 +283,63 @@ document.addEventListener('click', (e) => {
         window.expandedRecipes.add(id); // Запоминаем, что раскрыто
       }
     }
+  }
+});
+
+// ═══ Логика модалки заметки ═══
+let currentNoteRecipeId = null;
+
+async function openNoteModal(recipeId) {
+  currentNoteRecipeId = recipeId;
+  const all = await Storage.getAllRecipes();
+  const recipe = all.find(r => String(r.id) === String(recipeId));
+  
+  if (recipe) {
+    document.getElementById('noteInput').value = recipe.note || '';
+    document.getElementById('modalNote').style.display = 'flex';
+  }
+}
+
+// Обработчики кнопок внутри модалки
+document.addEventListener('DOMContentLoaded', () => {
+  const closeBtn = document.getElementById('noteClose');
+  const cancelBtn = document.getElementById('noteCancel');
+  const saveBtn = document.getElementById('noteSave');
+
+  const hideModal = () => {
+    document.getElementById('modalNote').style.display = 'none';
+    currentNoteRecipeId = null;
+  };
+
+  if (closeBtn) closeBtn.onclick = hideModal;
+  if (cancelBtn) cancelBtn.onclick = hideModal;
+
+  if (saveBtn) {
+    saveBtn.onclick = async () => {
+      const text = document.getElementById('noteInput').value.trim();
+      if (currentNoteRecipeId) {
+        const all = await Storage.getAllRecipes();
+        const recipe = all.find(r => String(r.id) === String(currentNoteRecipeId));
+        
+        if (recipe) {
+          recipe.note = text;
+          // Сохраняем в базу (используем стандартный метод сохранения)
+          await Storage.saveRecipe(recipe); 
+          
+          hideModal();
+          await renderAllRecipes(); // Перерисовываем маленькие карточки
+          
+          // Если открыта большая карточка этого рецепта, обновляем и её
+          if (typeof refreshCurrentRecipeCard === 'function' && document.getElementById('modalRecipe').style.display === 'flex') {
+            refreshCurrentRecipeCard();
+          }
+
+          // Показываем уведомление
+          if (typeof showToastMsg === 'function') {
+            showToastMsg('Заметка сохранена');
+          }
+        }
+      }
+    };
   }
 });

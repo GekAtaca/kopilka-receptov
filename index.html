@@ -622,6 +622,23 @@
     </div>
   </div>
 
+    <!-- ═══ Модалка «Заметка» ═══ -->
+  <div id="modalNote" class="modal" style="display:none; z-index:100005;">
+    <div class="modal-box dm-scope" style="max-width:440px;">
+      <div class="modal-head">
+        <span class="modal-title">📝 Заметка к рецепту</span>
+        <button type="button" class="modal-close" id="noteClose">✕</button>
+      </div>
+      <div style="padding: 0 0 14px 0;">
+        <textarea class="me-input" id="noteInput" rows="6" placeholder="Напишите что-нибудь важное о рецепте..." style="width:100%; resize:none; font-family:var(--font-ui); line-height:1.5;"></textarea>
+      </div>
+      <div class="apply-to-actions">
+        <button type="button" class="apply-to-btn" id="noteCancel">Отмена</button>
+        <button type="button" class="apply-to-btn primary" id="noteSave">Сохранить</button>
+      </div>
+    </div>
+  </div>
+  
   <!-- ═══ Контейнер для уведомлений (Тостов) ═══ -->
   <div id="toastContainer" class="toast-container"></div>
 

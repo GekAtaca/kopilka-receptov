@@ -200,6 +200,7 @@ function buildRecipeCard(recipe, marks, ingMarks){
       <div class="b-actions">
         <button type="button" class="b-act-btn b-act-primary" data-action="buy">🛒 ${ingCount}</button>
         <button type="button" class="b-act-btn" data-action="timer">⏱</button>
+        <button type="button" class="b-act-btn" data-action="edit-note-big" title="Заметка">📝</button>
         <button type="button" class="b-act-btn" data-action="edit">✎ Изменить</button>
         ${versionsBtn}
         <button type="button" class="b-act-btn b-act-more" data-action="more">⋯</button>
@@ -313,6 +314,10 @@ modalRecipeBox.addEventListener('click', async (e) => {
   if (action === 'more'){ toggleMoreDropdown(); return; }
   if (action === 'buy'){ openSoon('🛒 Купить', 'Кладовая появится позже.'); return; }
   if (action === 'timer'){ openRecipeTimer(); return; }
+    if (action === 'edit-note-big'){ 
+    if (typeof openNoteModal === 'function') openNoteModal(currentRecipeId);
+    return; 
+  }
   
   if (action === 'edit'){ 
     if (typeof openRecipeEditor === 'function') openRecipeEditor(currentRecipeId);

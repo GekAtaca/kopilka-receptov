@@ -2919,3 +2919,21 @@ body[data-theme="dark"] .mt-row-content span {
   margin-bottom: 0 !important;
   background: transparent !important;
 }
+
+/* ═══ Стили для модалки заметки ═══ */
+#noteInput {
+  border-radius: 10px;
+  border: 1px solid var(--c3);
+  background: var(--c2);
+  color: var(--c4);
+  outline: none;
+  transition: box-shadow .15s;
+}
+#noteInput:focus {
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--c3) 40%, transparent);
+}
+body[data-theme="dark"] #noteInput {
+  background: color-mix(in srgb, var(--c1) 15%, var(--c4) 85%);
+  border-color: var(--c2);
+  color: #fff;
+}
