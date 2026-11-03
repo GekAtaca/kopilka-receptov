@@ -38,7 +38,7 @@ function renderRecipeCard(recipe, ingMarks, isFav, isCooked, isWant, savedPortio
   const label = MEAL_LABEL[recipe.meal] || '';
   
   const baseP = recipe.portions || 2;
-  const currP = savedPortions || 4; // Если нет сохранённых, ставим 4, как в большой карточке
+  const currP = savedPortions || 4;
 
   const tagsHtml = (recipe.tags || [])
     .map(t => `<span>${escapeHtml(t)}</span>`)
@@ -68,6 +68,16 @@ function renderRecipeCard(recipe, ingMarks, isFav, isCooked, isWant, savedPortio
     </li>`;
   }).join('');
 
+  // ВОЗВРАЩАЕМ ШАГИ
+  const smallStepsHtml = (recipe.steps && recipe.steps.length) ? `
+    <div class="small-steps-container">
+      <div class="small-steps-title">Приготовление:</div>
+      <ol class="small-steps-list">
+        ${recipe.steps.map(s => `<li>${escapeHtml(s)}</li>`).join('')}
+      </ol>
+    </div>
+  ` : '';
+
   const deviceHtml = recipe.device ? `
     <div class="cook-unit">
       <div class="unit-head">
@@ -96,6 +106,15 @@ function renderRecipeCard(recipe, ingMarks, isFav, isCooked, isWant, savedPortio
     ? `<img src="${escapeHtml(firstPhoto)}" alt="" onerror="this.style.display='none'">`
     : '';
 
+  const totalIng = (recipe.ingredients || []).length;
+  let markedCount = 0;
+  if (ingMarks) {
+    (recipe.ingredients || []).forEach(ing => {
+      if (ingMarks.has(ing.name)) markedCount++;
+    });
+  }
+  const buyCount = markedCount > 0 ? markedCount : totalIng;
+
   return `
     <div class="card" data-recipe-id="${escapeHtml(recipe.id)}">
       <div class="card-img">
@@ -123,24 +142,18 @@ function renderRecipeCard(recipe, ingMarks, isFav, isCooked, isWant, savedPortio
             <button data-action="portions-plus-small">+</button>
           </span>
         </div>
+        
         <ul class="ing-list">${ingRows}</ul>
+        ${smallStepsHtml}
         <button class="ing-toggle" data-action="toggle-show-all">▼ показать все</button>
+        
         ${deviceHtml}
         ${noteHtml}
       </div>
       <div class="actions">
-        <button class="primary">🛒 ${
-          (() => {
-            let marked = 0;
-            if (ingMarks) {
-              (recipe.ingredients || []).forEach(ing => {
-                if (ingMarks.has(ing.name)) marked++;
-              });
-            }
-            return marked > 0 ? marked : (recipe.ingredients || []).length;
-          })()
-        }</button>
+        <button class="primary">🛒 ${buyCount}</button>
         <button data-action="open-timer">⏱</button>
+        <button data-action="edit-note-small" title="Заметка">📝</button>
         <button data-action="edit-recipe">✎ Изменить</button>
         ${versionsBtn}
       </div>

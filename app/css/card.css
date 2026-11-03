@@ -364,9 +364,17 @@ body[data-theme="dark"] .actions button.primary{
   color:var(--c4) !important;
   border-color:var(--c2) !important;
 }
-/* ═══ Ограничение количества ингредиентов ═══ */
-.ing-list li:nth-child(n+5){display:none}
-.card:has(.cook-unit):has(.note) .ing-list li:nth-child(n+4){display:none}
+/* ═══ Ограничение количества ингредиентов (строго 3) ═══ */
+.card:not(.show-all) .ing-list li:nth-child(n+4) {
+  display: none !important;
+}
+.card:not(.show-all) .small-steps-container {
+  display: none !important;
+}
+.card.show-all .ing-list li,
+.card.show-all .small-steps-container {
+  display: flex !important;
+}
 
 /* ═══════════════════════════════════════════════════
    БОЛЬШАЯ КАРТОЧКА РЕЦЕПТА (шаг 35.1)
@@ -2652,94 +2660,7 @@ body[data-theme="dark"] .timer-alert-stop { background: color-mix(in srgb, var(-
   }
 }
 
-/* ═══ Свайпы и строки тегов ═══ */
-.mt-swipe-wrap {
-  position: relative;
-  overflow: hidden;
-  background: transparent !important;
-  margin-bottom: 4px;
-  border-radius: 8px;
-}
-
-.mt-row-content {
-  display: flex !important;
-  align-items: center !important;
-  gap: 10px !important;
-  padding: 10px 14px !important;
-  background: var(--c1) !important; /* Плотный фон, чтобы не было красных пятен */
-  width: 100% !important;
-  box-sizing: border-box !important;
-  transition: transform 0.2s ease-out !important;
-  cursor: pointer !important;
-  color: var(--c4) !important;
-  position: relative !important;
-  z-index: 2 !important;
-}
-
-.mt-row-content:hover {
-  background: color-mix(in srgb, var(--c2) 50%, var(--c1)) !important;
-}
-
-.mt-row-content span {
-  flex: 1 !important;
-  display: block !important;
-  font-family: 'Nunito', sans-serif !important;
-  font-size: 14px !important;
-  font-weight: 600 !important;
-  color: var(--c4) !important;
-}
-
-.mt-row-content input[type="checkbox"] {
-  display: block !important;
-  width: 18px !important;
-  height: 18px !important;
-  accent-color: var(--c3) !important;
-  cursor: pointer !important;
-  margin: 0 !important;
-  flex-shrink: 0 !important;
-}
-
-.mt-row-content.swiped {
-  transform: translateX(-80px) !important;
-}
-
-.mt-delete-action {
-  position: absolute;
-  right: 0; top: 0; bottom: 0;
-  width: 80px;
-  background: #ff3b30;
-  color: #fff;
-  border: none;
-  font-family: 'Nunito', sans-serif;
-  font-size: 14px;
-  font-weight: 700;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1;
-}
-
-.mt-del-btn-pc {
-  background: none; border: none;
-  font-size: 16px; cursor: pointer;
-  opacity: 0.5; padding: 4px; display: none;
-}
-.mt-del-btn-pc:hover { opacity: 1; }
-
-@media (hover: hover) and (pointer: fine) {
-  .mt-del-btn-pc { display: block; }
-  .mt-delete-action { display: none; }
-}
-
-body[data-theme="dark"] .mt-row-content {
-  background: color-mix(in srgb, var(--c4) 85%, var(--c3) 15%) !important;
-}
-body[data-theme="dark"] .mt-row-content span {
-  color: #fff !important;
-}
-
-/* ═══ ИСПРАВЛЕНИЕ МОДАЛКИ ТЕГОВ (ПУСТЫЕ ПОЛОСКИ) ═══ */
+/* ═══ ИСПРАВЛЕНИЕ МОДАЛКИ ТЕГОВ (ПУСТЫЕ ПОЛОСКИ) И СТРОК ═══ */
 .mt-list {
   display: flex !important;
   flex-direction: column !important;
@@ -2785,6 +2706,7 @@ body[data-theme="dark"] .mt-row-content span {
   height: auto !important;
 }
 
+/* Обертка для свайпа */
 .mt-swipe-wrap {
   position: relative !important;
   overflow: hidden !important;
@@ -2796,6 +2718,7 @@ body[data-theme="dark"] .mt-row-content span {
   flex-shrink: 0 !important; 
 }
 
+/* Сама строка с чекбоксом */
 .mt-row-content {
   display: flex !important;
   align-items: center !important;
@@ -2810,6 +2733,8 @@ body[data-theme="dark"] .mt-row-content span {
   cursor: pointer !important;
   flex-shrink: 0 !important;
   transition: background 0.15s !important;
+  position: relative !important;
+  z-index: 2 !important;
 }
 
 .mt-row-content:hover {
@@ -2835,6 +2760,39 @@ body[data-theme="dark"] .mt-row-content span {
   cursor: pointer !important;
   margin: 0 !important;
   flex-shrink: 0 !important;
+}
+
+.mt-row-content.swiped {
+  transform: translateX(-80px) !important;
+}
+
+.mt-delete-action {
+  position: absolute;
+  right: 0; top: 0; bottom: 0;
+  width: 80px;
+  background: #ff3b30;
+  color: #fff;
+  border: none;
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.mt-del-btn-pc {
+  background: none; border: none;
+  font-size: 16px; cursor: pointer;
+  opacity: 0.5; padding: 4px; display: none;
+}
+.mt-del-btn-pc:hover { opacity: 1; }
+
+@media (hover: hover) and (pointer: fine) {
+  .mt-del-btn-pc { display: block; }
+  .mt-delete-action { display: none; }
 }
 
 .mt-group.collapsed .mt-group-body {
