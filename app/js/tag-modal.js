@@ -139,7 +139,6 @@ function mtRenderListOnly() {
   } else {
     mtGroups.forEach(g => {
       const tagsInGroup = mtAllTags.filter(t => getTagGroup(t) === g.code);
-      if (!tagsInGroup.length) return;
       
       const rows = tagsInGroup.map(t => mtBuildTagRow(t)).join('');
       groupsHtml += `
@@ -276,7 +275,15 @@ if (modalTagManage) {
     if (!name) return;
     
     const newGroup = { code: 'g_' + Date.now(), name: name };
-    mtGroups.push(newGroup);
+    
+    // Ищем "Разное" (misc), чтобы вставить новую категорию ПЕРЕД ней
+    const miscIndex = mtGroups.findIndex(g => g.code === 'misc');
+    if (miscIndex !== -1) {
+      mtGroups.splice(miscIndex, 0, newGroup);
+    } else {
+      mtGroups.push(newGroup);
+    }
+    
     await Storage.saveSetting('customTagGroups', mtGroups);
     
     input.value = '';
@@ -312,12 +319,16 @@ if (modalTagManage) {
 // ═══ ОБРАБОТЧИКИ ТЕГОВ ═══
 if (modalTag) {
   modalTag.addEventListener('click', async (e) => {
+    // Закрытие по клику на тёмный фон
+    if (e.target === modalTag) { closeTagModal(); return; }
+
     if (e.target.closest('[data-action="del-tag"]')) {
       const tag = e.target.closest('[data-action="del-tag"]').dataset.tag;
       mtSelected = mtSelected.filter(t => t !== tag);
       mtRender();
       return;
     }
+    
     if (e.target.closest('[data-action="delete-tag"]')) {
       const id = e.target.closest('[data-action="delete-tag"]').dataset.id;
       if (confirm('Удалить этот тег навсегда?')) {
@@ -329,11 +340,13 @@ if (modalTag) {
       }
       return;
     }
+    
     if (e.target.closest('[data-action="toggle-group"]')) {
       const group = e.target.closest('.mt-group');
       group.classList.toggle('collapsed');
       return;
     }
+    
     if (e.target.closest('[data-action="create-tag"]')) {
       const newTagName = mtSearchQuery.trim();
       let groupNamesStr = mtGroups.map((g, i) => `${i+1}. ${g.name}`).join('\n');
@@ -353,7 +366,9 @@ if (modalTag) {
       }
       return;
     }
+    
     if (e.target.closest('[data-action="close"]')) { closeTagModal(); return; }
+    
     if (e.target.closest('[data-action="save"]')) {
       if (mtOnSave) mtOnSave(mtSelected);
       closeTagModal();
@@ -383,3 +398,21 @@ if (modalTag) {
 }
 
 window.openTagModal = openTagModal;
+
+// ─── Закрытие модалок тегов по Escape ───
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    // Если открыто управление категориями — закрываем только его
+    if (modalTagManage && modalTagManage.style.display === 'flex') {
+      closeTagManageModal();
+      e.stopPropagation(); // Останавливаем событие, чтобы не закрылись другие окна
+      return;
+    }
+    // Если открыта сама модалка тегов — закрываем её
+    if (modalTag && modalTag.style.display === 'flex') {
+      closeTagModal();
+      e.stopPropagation();
+      return;
+    }
+  }
+});
