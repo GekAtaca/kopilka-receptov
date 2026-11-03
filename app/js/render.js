@@ -38,7 +38,7 @@ function renderRecipeCard(recipe, ingMarks, isFav, isCooked, isWant, savedPortio
   const label = MEAL_LABEL[recipe.meal] || '';
   
   const baseP = recipe.portions || 2;
-  const currP = savedPortions || 4;
+  const currP = savedPortions || 4; // Если нет сохранённых, ставим 4, как в большой карточке
 
   const tagsHtml = (recipe.tags || [])
     .map(t => `<span>${escapeHtml(t)}</span>`)
@@ -68,7 +68,7 @@ function renderRecipeCard(recipe, ingMarks, isFav, isCooked, isWant, savedPortio
     </li>`;
   }).join('');
 
-  // Шаги (скрыты по умолчанию, показываются при "показать все")
+  // Шаги для маленькой карточки (скрыты по умолчанию)
   const smallStepsHtml = (recipe.steps && recipe.steps.length) ? `
     <div class="small-steps-container">
       <div class="small-steps-title">Приготовление:</div>
@@ -78,7 +78,6 @@ function renderRecipeCard(recipe, ingMarks, isFav, isCooked, isWant, savedPortio
     </div>
   ` : '';
 
-  // Устройство — ОДИН раз
   const deviceHtml = recipe.device ? `
     <div class="cook-unit">
       <div class="unit-head">
@@ -90,7 +89,6 @@ function renderRecipeCard(recipe, ingMarks, isFav, isCooked, isWant, savedPortio
     </div>
   ` : '';
 
-  // Заметка — ОДИН раз
   const noteHtml = recipe.note ? `
     <div class="note">
       <span class="note-label">МОЯ ЗАМЕТКА</span>
@@ -107,16 +105,6 @@ function renderRecipeCard(recipe, ingMarks, isFav, isCooked, isWant, savedPortio
   const imgHtml = firstPhoto
     ? `<img src="${escapeHtml(firstPhoto)}" alt="" onerror="this.style.display='none'">`
     : '';
-
-  // Счётчик для кнопки "Купить" — считаем заранее, не внутри шаблона
-  const totalIng = (recipe.ingredients || []).length;
-  let markedCount = 0;
-  if (ingMarks) {
-    (recipe.ingredients || []).forEach(ing => {
-      if (ingMarks.has(ing.name)) markedCount++;
-    });
-  }
-  const buyCount = markedCount > 0 ? markedCount : totalIng;
 
   return `
     <div class="card" data-recipe-id="${escapeHtml(recipe.id)}">
@@ -151,11 +139,20 @@ function renderRecipeCard(recipe, ingMarks, isFav, isCooked, isWant, savedPortio
         ${deviceHtml}
         ${noteHtml}
       </div>
-      <div class="actions">
-        <button class="primary">🛒 ${buyCount}</button>
+        <button class="primary">🛒 ${
+          (() => {
+            let marked = 0;
+            if (ingMarks) {
+              (recipe.ingredients || []).forEach(ing => {
+                if (ingMarks.has(ing.name)) marked++;
+              });
+            }
+            return marked > 0 ? marked : (recipe.ingredients || []).length;
+          })()
+        }</button>
         <button data-action="open-timer">⏱</button>
-        <button data-action="edit-note-small" title="Заметка">📝</button>
         <button data-action="edit-recipe">✎ Изменить</button>
+        <button data-action="edit-note-small" title="Заметка">📝</button>
         ${versionsBtn}
       </div>
     </div>
