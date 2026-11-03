@@ -68,7 +68,7 @@ function renderRecipeCard(recipe, ingMarks, isFav, isCooked, isWant, savedPortio
     </li>`;
   }).join('');
 
-  // ВОЗВРАЩАЕМ ШАГИ
+  // Возвращаем шаги
   const smallStepsHtml = (recipe.steps && recipe.steps.length) ? `
     <div class="small-steps-container">
       <div class="small-steps-title">Приготовление:</div>
@@ -77,6 +77,12 @@ function renderRecipeCard(recipe, ingMarks, isFav, isCooked, isWant, savedPortio
       </ol>
     </div>
   ` : '';
+
+  // Умная кнопка "Показать все"
+  const hasMoreThan3Ings = (recipe.ingredients || []).length > 3;
+  const hasSteps = recipe.steps && recipe.steps.length > 0;
+  const showToggleBtn = hasMoreThan3Ings || hasSteps;
+  const toggleBtnHtml = showToggleBtn ? `<button class="ing-toggle" data-action="toggle-show-all">▼ показать все</button>` : '';
 
   const deviceHtml = recipe.device ? `
     <div class="cook-unit">
@@ -143,10 +149,13 @@ function renderRecipeCard(recipe, ingMarks, isFav, isCooked, isWant, savedPortio
           </span>
         </div>
         
-        <ul class="ing-list">${ingRows}</ul>
-        ${smallStepsHtml}
-        <button class="ing-toggle" data-action="toggle-show-all">▼ показать все</button>
+        <!-- Зона скролла -->
+        <div class="card-scroll-area">
+          <ul class="ing-list">${ingRows}</ul>
+          ${smallStepsHtml}
+        </div>
         
+        ${toggleBtnHtml}
         ${deviceHtml}
         ${noteHtml}
       </div>

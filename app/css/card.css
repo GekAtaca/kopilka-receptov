@@ -25,6 +25,14 @@ body[data-palette$="-glubokaya"],
   display:flex;
   flex-direction:column;
 
+  /* Настройки высоты */
+  align-self: start;
+  max-height: calc(100dvh - 160px); 
+
+  /* Максимальная высота. Карточка может быть меньше, но не больше. */
+  align-self: start;
+  max-height: calc(100dvh - 160px); 
+
   /* ─── Переменные по умолчанию = стиль «Нежный» ─── */
   --font-head:'Cormorant Garamond',serif;
   --font-body:'Cormorant Garamond',serif;
@@ -107,8 +115,30 @@ body[data-palette$="-glubokaya"],
 .card-body{
   padding:var(--card-body-pad-y) var(--card-body-pad-x);
   display:flex;flex-direction:column;gap:var(--card-body-gap);
-  flex:1 1 auto;min-height:0;
+  flex:1 1 auto;
+  min-height:0;
+  overflow:hidden; /* Чтобы ничего не вылезало наружу */
 }
+
+/* Запрещаем сжиматься верхним блокам и нижним кнопкам */
+.card-img, .title, .tags, .kcal-row, .ing-header, .ing-toggle, .cook-unit, .note, .actions {
+  flex-shrink: 0 !important;
+}
+
+/* Зона скролла для ингредиентов и шагов */
+.card-scroll-area {
+  display: flex;
+  flex-direction: column;
+  gap: var(--card-body-gap);
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding-right: 4px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--c3) transparent;
+}
+.card-scroll-area::-webkit-scrollbar { width: 4px; }
+.card-scroll-area::-webkit-scrollbar-thumb { background: var(--c3); border-radius: 4px; }
 
 .title{
   font-family:var(--font-head);
