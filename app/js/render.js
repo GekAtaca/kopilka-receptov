@@ -12,6 +12,8 @@ const MEAL_LABEL = {
 
 // Память для раскрытых карточек, чтобы они не сворачивались при обновлении
 window.expandedRecipes = window.expandedRecipes || new Set();
+// Память для позиции скролла, чтобы чекбоксы не выбрасывали наверх
+window.cardScrollPositions = window.cardScrollPositions || {};
 
 // ─── Экранирование HTML ───
 function escapeHtml(str) {
@@ -217,6 +219,19 @@ async function renderAllRecipes() {
       );
     }).join('');
     if (counter) counter.textContent = list.length;
+      // Восстанавливаем позицию скролла, если она была сохранена
+    list.forEach(r => {
+      const id = String(r.id);
+      if (window.cardScrollPositions[id]) {
+        const cardEl = grid.querySelector(`.card[data-recipe-id="${id}"]`);
+        if (cardEl) {
+          const scrollArea = cardEl.querySelector('.card-scroll-area');
+          if (scrollArea) {
+            scrollArea.scrollTop = window.cardScrollPositions[id];
+          }
+        }
+      }
+    });
   });
 }
 
@@ -230,6 +245,20 @@ document.addEventListener('click', (e) => {
     }
     return;
   }
+  // ─── Сохраняем позицию скролла перед кликом на чекбокс или порции ───
+  const isActionInsideScroll = e.target.closest('[data-action="toggle-ing-small"]') || 
+                               e.target.closest('.portions button') || 
+                               e.target.closest('.portions .num');
+  
+  if (isActionInsideScroll) {
+    const card = e.target.closest('.card');
+    if (card && card.dataset.recipeId) {
+      const scrollArea = card.querySelector('.card-scroll-area');
+      if (scrollArea) {
+        window.cardScrollPositions[String(card.dataset.recipeId)] = scrollArea.scrollTop;
+      }
+    }
+  }
 
   // ─── Запоминаем состояние кнопки "Показать всё / Скрыть" ───
   const toggleBtn = e.target.closest('[data-action="toggle-show-all"]');
@@ -237,8 +266,9 @@ document.addEventListener('click', (e) => {
     const card = toggleBtn.closest('.card');
     if (card && card.dataset.recipeId) {
       const id = String(card.dataset.recipeId);
-      if (card.classList.contains('show-all')) {
-        window.expandedRecipes.delete(id); // Запоминаем, что скрыто
+            if (card.classList.contains('show-all')) {
+        window.expandedRecipes.add(id); // Запомнили, что раскрыто
+        delete window.cardScrollPositions[id]; // Сбрасываем скролл при закрытии
       } else {
         window.expandedRecipes.add(id); // Запоминаем, что раскрыто
       }
