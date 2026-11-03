@@ -96,7 +96,7 @@ function renderRecipeCard(recipe, ingMarks, isFav, isCooked, isWant, savedPortio
   ` : '';
 
   const noteHtml = recipe.note ? `
-    <div class="note">
+    <div class="note" data-action="open-note-small" data-recipe-id="${escapeHtml(recipe.id)}" style="cursor: pointer;">
       <span class="note-label">МОЯ ЗАМЕТКА</span>
       <span class="note-text">${escapeHtml(recipe.note)}</span>
     </div>

@@ -25,11 +25,7 @@ body[data-palette$="-glubokaya"],
   display:flex;
   flex-direction:column;
 
-  /* Настройки высоты */
-  align-self: start;
-  max-height: calc(100dvh - 160px); 
-
-  /* Максимальная высота. Карточка может быть меньше, но не больше. */
+  /* Настройки высоты: карточка подстраивается под контент, но не выше предела */
   align-self: start;
   max-height: calc(100dvh - 160px); 
 
@@ -132,10 +128,15 @@ body[data-palette$="-glubokaya"],
   gap: var(--card-body-gap);
   flex: 1 1 auto;
   min-height: 0;
-  overflow-y: auto;
+  overflow-y: hidden; /* По умолчанию скролла нет */
   padding-right: 4px;
   scrollbar-width: thin;
   scrollbar-color: var(--c3) transparent;
+}
+
+/* Скролл появляется ТОЛЬКО когда нажали "Показать всё" */
+.card.show-all .card-scroll-area {
+  overflow-y: auto;
 }
 .card-scroll-area::-webkit-scrollbar { width: 4px; }
 .card-scroll-area::-webkit-scrollbar-thumb { background: var(--c3); border-radius: 4px; }
@@ -310,7 +311,13 @@ body[data-palette$="-glubokaya"],
   font-style:normal;font-family:var(--font-ui);
   letter-spacing:.04em;
 }
-.note-text{display:block}
+.note-text{
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important; /* Ограничиваем 2 строками */
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important; /* Ставим троеточие */
+}
 
 /* ─── Нижние кнопки ─── */
 .actions{
