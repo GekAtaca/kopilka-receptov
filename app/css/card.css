@@ -22,7 +22,16 @@ body[data-palette$="-glubokaya"],
 
   /* ─── Вот наши правки ─── */
   align-self: start; 
-  height: auto;
+  
+  /* Максимальная высота для iPhone (вычитаем место под шапку и меню) */
+  max-height: calc(100dvh - 170px); 
+
+/* Максимальная высота для iPad и ПК */
+@media (min-width: 768px) {
+  .card {
+    max-height: 750px; /* Подбери это число, если на iPad захочешь выше/ниже */
+  }
+}
 
   /* ─── Переменные по умолчанию = стиль «Нежный» ─── */
   --font-head:'Cormorant Garamond',serif;
@@ -107,6 +116,27 @@ body[data-palette$="-glubokaya"],
   padding:var(--card-body-pad-y) var(--card-body-pad-x);
   display:flex;flex-direction:column;gap:var(--card-body-gap);
   flex:1 1 auto;min-height:0;
+  overflow:hidden; /* Важно! Прячем всё, что вылезает за пределы карточки */
+}
+
+/* ═══ Зона прокрутки для ингредиентов и шагов ═══ */
+.card-scroll-area {
+  display: flex;
+  flex-direction: column;
+  gap: var(--card-body-gap);
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding-right: 4px; /* Чтобы текст не прилипал к полосе прокрутки */
+  scrollbar-width: thin;
+  scrollbar-color: var(--c3) transparent;
+}
+.card-scroll-area::-webkit-scrollbar {
+  width: 4px;
+}
+.card-scroll-area::-webkit-scrollbar-thumb {
+  background: var(--c3);
+  border-radius: 4px;
 }
 
 .title{
@@ -234,9 +264,19 @@ body[data-palette$="-glubokaya"],
   cursor:pointer;
 }
 
-/* Раскрытие всех ингредиентов */
+/* Скрываем лишние ингредиенты, если не нажата кнопка "показать все" */
+.card:not(.show-all) .ing-list li:nth-child(n+4) {
+  display: none !important;
+}
+
+/* Скрываем шаги по умолчанию */
+.card:not(.show-all) .small-steps-container {
+  display: none !important;
+}
+
+/* Раскрытие всех ингредиентов и шагов */
 .card.show-all .ing-list li,
-.card.show-all:has(.cook-unit):has(.note) .ing-list li {
+.card.show-all .small-steps-container {
   display: flex !important;
 }
 
