@@ -25,7 +25,107 @@ const DEFAULT_GROUPS = [
   { code: 'misc', name: 'Разное' }
 ];
 
-// ─── ОТКРЫТИЕ МОДАЛКИ ТЕГОВ ───
+// ═══════════════════════════════════════════════════
+// НОВЫЕ КАСТОМНЫЕ ОКОШКА (вместо системных)
+// ═══════════════════════════════════════════════════
+
+function showCustomConfirm(title, text, onConfirm) {
+  const overlay = document.createElement('div');
+  overlay.className = 'custom-modal-overlay';
+  
+  overlay.innerHTML = `
+    <div class="custom-modal-box">
+      <div class="custom-modal-head">
+        <span class="custom-modal-title">${title}</span>
+        <button type="button" class="custom-modal-close">✕</button>
+      </div>
+      <div class="custom-modal-body">${text}</div>
+      <div class="custom-modal-footer">
+        <button type="button" class="custom-btn cancel-btn">Отмена</button>
+        <button type="button" class="custom-btn primary confirm-btn">Удалить</button>
+      </div>
+    </div>
+  `;
+  
+  document.body.appendChild(overlay);
+  
+  const close = () => overlay.remove();
+  
+  overlay.querySelector('.custom-modal-close').addEventListener('click', close);
+  overlay.querySelector('.cancel-btn').addEventListener('click', close);
+  overlay.querySelector('.confirm-btn').addEventListener('click', () => {
+    close();
+    onConfirm();
+  });
+}
+
+function showCustomCreateTagModal(tagName, groups, onConfirm) {
+  const overlay = document.createElement('div');
+  overlay.className = 'custom-modal-overlay';
+  
+  // Сортируем группы: "Разное" всегда в конце
+  const sortedGroups = [...groups].sort((a, b) => {
+    if (a.code === 'misc') return 1;
+    if (b.code === 'misc') return -1;
+    return 0;
+  });
+
+  const radiosHtml = sortedGroups.map(g => `
+    <label class="custom-group-item">
+      <input type="radio" name="custom-tag-group" value="${g.code}" ${g.code === 'misc' ? 'checked' : ''}>
+      <span>${g.name}</span>
+    </label>
+  `).join('');
+
+  overlay.innerHTML = `
+    <div class="custom-modal-box">
+      <div class="custom-modal-head">
+        <span class="custom-modal-title">Создать тег</span>
+        <button type="button" class="custom-modal-close">✕</button>
+      </div>
+      <div class="custom-modal-body">
+        <div style="margin-bottom: 12px; font-weight: 600; font-size: 15px;">Название: <span style="color: var(--c3);">${tagName}</span></div>
+        <input type="text" class="custom-search" placeholder="Поиск категории...">
+        <div class="custom-group-list">
+          ${radiosHtml}
+        </div>
+      </div>
+      <div class="custom-modal-footer">
+        <button type="button" class="custom-btn cancel-btn">Отмена</button>
+        <button type="button" class="custom-btn primary confirm-btn">Создать</button>
+      </div>
+    </div>
+  `;
+  
+  document.body.appendChild(overlay);
+  
+  const close = () => overlay.remove();
+  const searchInput = overlay.querySelector('.custom-search');
+  const groupItems = overlay.querySelectorAll('.custom-group-item');
+
+  // Логика поиска по категориям
+  searchInput.addEventListener('input', (e) => {
+    const q = e.target.value.trim().toLowerCase();
+    groupItems.forEach(item => {
+      const text = item.textContent.toLowerCase();
+      item.style.display = text.includes(q) ? 'flex' : 'none';
+    });
+  });
+
+  overlay.querySelector('.custom-modal-close').addEventListener('click', close);
+  overlay.querySelector('.cancel-btn').addEventListener('click', close);
+  overlay.querySelector('.confirm-btn').addEventListener('click', () => {
+    const selected = overlay.querySelector('input[name="custom-tag-group"]:checked');
+    const groupCode = selected ? selected.value : 'misc';
+    close();
+    onConfirm(groupCode);
+  });
+}
+
+// ═══════════════════════════════════════════════════
+// ОСНОВНАЯ ЛОГИКА ТЕГОВ
+// ═══════════════════════════════════════════════════
+
 async function openTagModal(selectedTags, onSave) {
   if (!modalTag) return;
   
@@ -58,6 +158,16 @@ async function openTagModal(selectedTags, onSave) {
   
   modalTag.style.display = 'flex';
   document.body.style.overflow = 'hidden';
+    modalTag.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+  
+  // Автофокус на поиск (только на ПК, чтобы на телефоне не выскакивала клавиатура)
+  if (window.innerWidth > 768) {
+    setTimeout(() => {
+      const searchInput = mtBody.querySelector('.mt-search');
+      if (searchInput) searchInput.focus();
+    }, 100);
+  }
 }
 
 function closeTagModal() {
@@ -119,7 +229,6 @@ function mtRenderListOnly() {
   const q = mtSearchQuery.trim().toLowerCase();
   let groupsHtml = '';
 
-  // Безопасное извлечение данных
   const getTagName = (t) => typeof t === 'string' ? t : (t.name || t.text || '');
   const getTagGroup = (t) => typeof t === 'string' ? 'misc' : (t.group || 'misc');
 
@@ -139,6 +248,9 @@ function mtRenderListOnly() {
   } else {
     mtGroups.forEach(g => {
       const tagsInGroup = mtAllTags.filter(t => getTagGroup(t) === g.code);
+      
+      // Если в категории нет тегов — не показываем её в списке выбора
+      if (tagsInGroup.length === 0) return;
       
       const rows = tagsInGroup.map(t => mtBuildTagRow(t)).join('');
       groupsHtml += `
@@ -276,7 +388,6 @@ if (modalTagManage) {
     
     const newGroup = { code: 'g_' + Date.now(), name: name };
     
-    // Ищем "Разное" (misc), чтобы вставить новую категорию ПЕРЕД ней
     const miscIndex = mtGroups.findIndex(g => g.code === 'misc');
     if (miscIndex !== -1) {
       mtGroups.splice(miscIndex, 0, newGroup);
@@ -295,31 +406,37 @@ if (modalTagManage) {
     const btn = e.target.closest('[data-del-group]');
     if (!btn) return;
     const code = btn.dataset.delGroup;
-    if (!confirm('При удалении категории её теги переедут в "Разное". Продолжить?')) return;
     
-    mtGroups = mtGroups.filter(g => g.code !== code);
-    await Storage.saveSetting('customTagGroups', mtGroups);
-    
-    if (Storage.getAllTags) {
-      const ownTags = await Storage.getAllTags();
-      for (let tag of ownTags) {
-        if (tag.group === code) {
-          tag.group = 'misc';
-          await Storage.saveTag(tag);
+    // ═══ ЗАМЕНА СИСТЕМНОГО CONFIRM ═══
+    const groupName = mtGroups.find(g => g.code === code)?.name || 'этой группы';
+    showCustomConfirm(
+      'Удалить группу?', 
+      `Теги из группы «${groupName}» переедут в «Разное». Ничего не потеряется.`, 
+      async () => {
+        mtGroups = mtGroups.filter(g => g.code !== code);
+        await Storage.saveSetting('customTagGroups', mtGroups);
+        
+        if (Storage.getAllTags) {
+          const ownTags = await Storage.getAllTags();
+          for (let tag of ownTags) {
+            if (tag.group === code) {
+              tag.group = 'misc';
+              await Storage.saveTag(tag);
+            }
+          }
         }
+        
+        await mtLoadData();
+        renderManageList();
+        mtRender();
       }
-    }
-    
-    await mtLoadData();
-    renderManageList();
-    mtRender();
+    );
   });
 }
 
 // ═══ ОБРАБОТЧИКИ ТЕГОВ ═══
 if (modalTag) {
   modalTag.addEventListener('click', async (e) => {
-    // Закрытие по клику на тёмный фон
     if (e.target === modalTag) { closeTagModal(); return; }
 
     if (e.target.closest('[data-action="del-tag"]')) {
@@ -331,13 +448,19 @@ if (modalTag) {
     
     if (e.target.closest('[data-action="delete-tag"]')) {
       const id = e.target.closest('[data-action="delete-tag"]').dataset.id;
-      if (confirm('Удалить этот тег навсегда?')) {
-        await Storage.deleteTag(id);
-        await mtLoadData();
-        const deletedTag = mtAllTags.find(t => t.id === id);
-        if (deletedTag) mtSelected = mtSelected.filter(t => t !== deletedTag.name);
-        mtRender();
-      }
+      
+      // ═══ ЗАМЕНА СИСТЕМНОГО CONFIRM ═══
+      showCustomConfirm(
+        'Удалить тег?', 
+        'Этот тег будет удалён навсегда.', 
+        async () => {
+          await Storage.deleteTag(id);
+          await mtLoadData();
+          const deletedTag = mtAllTags.find(t => t.id === id);
+          if (deletedTag) mtSelected = mtSelected.filter(t => t !== deletedTag.name);
+          mtRender();
+        }
+      );
       return;
     }
     
@@ -349,21 +472,17 @@ if (modalTag) {
     
     if (e.target.closest('[data-action="create-tag"]')) {
       const newTagName = mtSearchQuery.trim();
-      let groupNamesStr = mtGroups.map((g, i) => `${i+1}. ${g.name}`).join('\n');
-      const res = window.prompt("Выберите номер группы для тега:\n" + groupNamesStr);
-      if (res === null) return;
       
-      let selectedGroup = 'misc';
-      const idx = parseInt(res, 10) - 1;
-      if (mtGroups[idx]) selectedGroup = mtGroups[idx].code;
-      
-      if (Storage.saveTag) {
-        await Storage.saveTag({ name: newTagName, group: selectedGroup });
-        await mtLoadData();
-        if (!mtSelected.includes(newTagName)) mtSelected.push(newTagName);
-        mtSearchQuery = '';
-        mtRender();
-      }
+      // ═══ ЗАМЕНА СИСТЕМНОГО PROMPT ═══
+      showCustomCreateTagModal(newTagName, mtGroups, async (selectedGroupCode) => {
+        if (Storage.saveTag) {
+          await Storage.saveTag({ name: newTagName, group: selectedGroupCode });
+          await mtLoadData();
+          if (!mtSelected.includes(newTagName)) mtSelected.push(newTagName);
+          mtSearchQuery = '';
+          mtRender();
+        }
+      });
       return;
     }
     
@@ -399,16 +518,13 @@ if (modalTag) {
 
 window.openTagModal = openTagModal;
 
-// ─── Закрытие модалок тегов по Escape ───
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
-    // Если открыто управление категориями — закрываем только его
     if (modalTagManage && modalTagManage.style.display === 'flex') {
       closeTagManageModal();
-      e.stopPropagation(); // Останавливаем событие, чтобы не закрылись другие окна
+      e.stopPropagation();
       return;
     }
-    // Если открыта сама модалка тегов — закрываем её
     if (modalTag && modalTag.style.display === 'flex') {
       closeTagModal();
       e.stopPropagation();

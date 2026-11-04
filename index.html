@@ -68,9 +68,9 @@
     <div class="contents-head" id="contentsHead">
       <span class="head-label">📖 СОДЕРЖАНИЕ</span>
       <span class="toggle">▼</span>
-      <button type="button" class="head-btn" title="Поиск">🔍</button>
-      <button type="button" class="head-btn" title="Фильтры">🏷</button>
-      <button type="button" class="head-btn" title="Случайный">🎲</button>
+      <button type="button" class="head-btn" title="Поиск" id="btnHeaderSearch" onclick="openSearchModal()">🔍</button>
+<button type="button" class="head-btn" title="Фильтры" id="btnOpenFilters" onclick="openFiltersModal()">🏷</button>
+<button type="button" class="head-btn" title="Случайный" id="btnRandomRecipe">🎲</button>
     </div>
 
     <div class="contents-body">
@@ -414,13 +414,28 @@
     </div>
   </div>
 
-  <div id="modalSearch" class="modal" style="display:none">
-    <div class="modal-box">
+  <div id="modalSearch" class="modal" style="display:none; z-index: 100002;">
+    <div class="modal-box search-modal-box dm-scope">
       <div class="modal-head">
         <span class="modal-title">🔍 Поиск</span>
         <button type="button" class="modal-close" data-modal-close>✕</button>
       </div>
-      <div class="modal-stub">Тут будет Поиск</div>
+
+      <!-- Вкладки -->
+      <div class="search-tabs">
+        <button type="button" class="search-tab active" data-tab="recipes">Рецепты</button>
+        <button type="button" class="search-tab" data-tab="products">Продукты</button>
+      </div>
+
+      <!-- Строка поиска -->
+      <div class="search-input-wrap">
+        <input type="text" id="searchInput" class="search-input" placeholder="Что ищем? (название, ингредиент, тег)" autocomplete="off">
+      </div>
+
+      <!-- Результаты -->
+      <div class="search-results" id="searchResults">
+        <!-- Сюда будут выводиться результаты -->
+      </div>
     </div>
   </div>
 
@@ -669,6 +684,8 @@
   <script src="app/js/screens.js"></script>
   <script src="app/js/modals.js"></script>
   <script src="app/js/fab.js"></script>
+  <script src="app/js/search.js"></script>
+  <script src="app/js/filter.js"></script>
   <script src="app/js/main.js"></script>
 
   <nav class="bottom-nav">
@@ -684,6 +701,65 @@
   <button type="button" class="fab-btn primary" data-modal="add" title="Добавить рецепт"><span>➕</span></button>
 </div>
 </div><!-- /.app -->
+  <!-- ═══ Модалка Фильтров ═══ -->
+  <div id="modalFilters" class="modal" style="display:none; z-index:100003;">
+    <div class="modal-box filter-modal-box dm-scope">
+      <div class="modal-head">
+        <span class="modal-title">🏷 Фильтры</span>
+        <button type="button" class="modal-close" id="filterCloseBtn">✕</button>
+      </div>
+      
+      <div class="filter-body">
+        <!-- Секция: Приём пищи -->
+        <div class="filter-section open">
+          <div class="filter-section-head">Приём пищи <span class="filter-arrow">▼</span></div>
+          <div class="filter-section-content" id="filterMeals">
+            <label class="filter-check"><input type="checkbox" value="breakfast"><span>Завтраки</span></label>
+            <label class="filter-check"><input type="checkbox" value="lunch"><span>Обеды</span></label>
+            <label class="filter-check"><input type="checkbox" value="dinner"><span>Ужины</span></label>
+            <label class="filter-check"><input type="checkbox" value="snack"><span>Перекусы</span></label>
+          </div>
+        </div>
+
+        <!-- Секция: Время -->
+        <div class="filter-section">
+          <div class="filter-section-head">Время готовки <span class="filter-arrow">▼</span></div>
+          <div class="filter-section-content" id="filterTime">
+            <label class="filter-check"><input type="radio" name="f-time" value="15"><span>До 15 минут</span></label>
+            <label class="filter-check"><input type="radio" name="f-time" value="30"><span>До 30 минут</span></label>
+            <label class="filter-check"><input type="radio" name="f-time" value="60"><span>До 60 минут</span></label>
+            <label class="filter-check"><input type="radio" name="f-time" value="999"><span>Любое время</span></label>
+          </div>
+        </div>
+
+        <!-- Секция: Теги (заполнится из JS) -->
+        <div class="filter-section">
+          <div class="filter-section-head">Теги <span class="filter-arrow">▼</span></div>
+          <div class="filter-section-content" id="filterTags">
+            <!-- Сюда JS добавит популярные теги -->
+          </div>
+        </div>
+
+        <!-- Секция: Дополнительно -->
+        <div class="filter-section">
+          <div class="filter-section-head">Дополнительно <span class="filter-arrow">▼</span></div>
+          <div class="filter-section-content">
+            <label class="filter-check"><input type="checkbox" id="filterFav"><span>Только избранное ❤</span></label>
+            <label class="filter-check"><input type="checkbox" id="filterCooked"><span>Только приготовленные 👨‍🍳</span></label>
+            <label class="filter-check"><input type="checkbox" id="filterPP"><span>Только ПП (полезное)</span></label>
+          </div>
+        </div>
+      </div>
+
+      <div class="filter-footer">
+        <div class="filter-count" id="filterCount">Найдено: 9</div>
+        <div class="filter-actions">
+          <button type="button" class="custom-btn" id="filterResetBtn">Сбросить</button>
+          <button type="button" class="custom-btn primary" id="filterApplyBtn">Применить</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 </body>
 </html>

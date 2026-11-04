@@ -38,3 +38,40 @@ if (document.readyState === 'loading'){
 } else {
   boot();
 }
+
+// ═══ Логика кнопки «Случайный рецепт» 🎲 ═══
+const btnRandomRecipe = document.getElementById('btnRandomRecipe');
+
+if (btnRandomRecipe) {
+  btnRandomRecipe.addEventListener('click', async () => {
+    console.log('--- Кубик нажат! ---'); // Проверка, что клик сработал
+    
+    try {
+      const recipes = await Storage.getAllRecipes();
+      console.log('Загружено рецептов из базы:', recipes.length); // Проверка, что база отвечает
+
+      if (!recipes || recipes.length === 0) {
+        if (typeof showToastMsg === 'function') {
+          showToastMsg('В копилке пока нет рецептов');
+        } else {
+          alert('В копилке пока нет рецептов');
+        }
+        return;
+      }
+
+      const randomIndex = Math.floor(Math.random() * recipes.length);
+      const randomRecipe = recipes[randomIndex];
+      console.log('Выбран рецепт:', randomRecipe.name); // Проверка, какой рецепт выпал
+
+      if (typeof openRecipeCard === 'function') {
+        openRecipeCard(randomRecipe.id);
+      } else {
+        console.error('ОШИБКА: функция openRecipeCard не найдена!');
+      }
+    } catch (err) {
+      console.error('ОШИБКА при работе кубика:', err);
+    }
+  });
+} else {
+  console.warn('ОШИБКА: Кнопка с id="btnRandomRecipe" не найдена в HTML!');
+}

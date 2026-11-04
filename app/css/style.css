@@ -2584,7 +2584,10 @@ body[data-theme="dark"] .pf-autocomplete-item:hover {
   margin-left: auto;
   margin-right: 12px;
   padding: 4px;
+  opacity: 0.6;
+  transition: opacity 0.15s;
 }
+.mt-gear-btn:hover { opacity: 1; }
 .mt-close {
   background: none;
   border: none;
@@ -2593,14 +2596,17 @@ body[data-theme="dark"] .pf-autocomplete-item:hover {
   cursor: pointer;
   padding: 0 4px;
   line-height: 1;
+  opacity: 0.6;
+  transition: opacity 0.15s;
 }
+.mt-close:hover { opacity: 1; }
 
 .mt-body {
   flex: 1 1 auto;
   min-height: 0;
   display: flex;
   flex-direction: column;
-  overflow: hidden; /* Важно: скролл будет только у списка */
+  overflow: hidden; /* Скролл будет только у списка */
 }
 
 /* Выбранные теги */
@@ -2636,6 +2642,7 @@ body[data-theme="dark"] .pf-autocomplete-item:hover {
   padding: 0;
   line-height: 1;
   opacity: 0.7;
+  transition: opacity 0.15s;
 }
 .mt-chip button:hover { opacity: 1; }
 .mt-empty {
@@ -2662,6 +2669,7 @@ body[data-theme="dark"] .pf-autocomplete-item:hover {
   font-size: 14px;
   outline: none;
   box-sizing: border-box;
+  transition: box-shadow 0.15s;
 }
 .mt-search::placeholder { color: var(--c4); opacity: 0.5; }
 .mt-search:focus { box-shadow: 0 0 0 2px color-mix(in srgb, var(--c3) 40%, transparent); }
@@ -2671,28 +2679,35 @@ body[data-theme="dark"] .pf-autocomplete-item:hover {
   flex: 1 1 auto;
   min-height: 0;
   overflow-y: auto;
-  padding: 10px 18px;
+  padding: 0 18px 10px;
 }
 .mt-list::-webkit-scrollbar { width: 6px; }
 .mt-list::-webkit-scrollbar-thumb { background: rgba(0,0,0,.18); border-radius: 6px; }
 
-.mt-group {
-  margin-bottom: 12px;
-}
+.mt-group { margin-bottom: 12px; }
+
+/* Липкие заголовки групп */
 .mt-group-head {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 0;
+  padding: 12px 4px 8px;
   font-family: 'Nunito', sans-serif;
   font-size: 12px;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  color: var(--c4);
   opacity: 0.7;
   cursor: pointer;
   user-select: none;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--c1);
+  transition: opacity 0.15s;
 }
+.mt-group-head:hover { opacity: 1; }
 .mt-arrow {
   font-size: 10px;
   transition: transform 0.2s;
@@ -2701,50 +2716,57 @@ body[data-theme="dark"] .pf-autocomplete-item:hover {
 .mt-group.collapsed .mt-group-body { display: none; }
 
 /* Кнопка Создать тег */
-.mt-create-wrap { margin-top: 10px; }
+.mt-create-wrap { margin-top: 16px; margin-bottom: 8px; }
 .mt-create-btn {
   width: 100%;
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px dashed var(--c3);
+  padding: 12px;
+  border-radius: 10px;
+  border: 2px dashed var(--c3);
   background: transparent;
   color: var(--c4);
   font-family: 'Nunito', sans-serif;
-  font-weight: 700;
+  font-weight: 800;
+  font-size: 14px;
   cursor: pointer;
   transition: background 0.15s;
 }
-.mt-create-btn:hover { background: color-mix(in srgb, var(--c3) 10%, transparent); }
+.mt-create-btn:hover { background: color-mix(in srgb, var(--c3) 15%, transparent); }
 
 /* ═══ Строки с тегами и свайп ═══ */
 .mt-swipe-wrap {
   position: relative;
   overflow: hidden;
-  background: transparent; /* Убрали красный фон */
-  border-radius: 8px;
-  margin-bottom: 4px;
+  background: transparent;
+  border-radius: 10px;
+  margin-bottom: 6px;
 }
 
 .mt-row-content {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 10px 14px;
-  background: var(--c1);
-  transition: transform 0.2s ease-out;
+  gap: 12px;
+  padding: 12px 14px;
+  background: color-mix(in srgb, var(--c1) 85%, var(--c3) 15%);
+  border: 1px solid var(--c3);
+  border-radius: 10px;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: background 0.15s, transform 0.2s ease-out, box-shadow 0.2s;
   position: relative;
   z-index: 2;
-  cursor: pointer;
-  border-radius: 8px;
+  width: 100%;
 }
-.mt-row-content:hover { background: color-mix(in srgb, var(--c2) 50%, var(--c1)); }
+.mt-row-content:hover {
+  background: color-mix(in srgb, var(--c2) 70%, var(--c1));
+}
 
-/* Сдвиг строки влево при свайпе */
+/* Сдвиг строки влево при свайпе (с красивой тенью) */
 .mt-row-content.swiped {
   transform: translateX(-80px);
+  box-shadow: -4px 0 16px rgba(0,0,0,0.15);
 }
 
-/* Красная кнопка удаления (прячется за строкой) */
+/* Красная кнопка удаления */
 .mt-delete-action {
   position: absolute;
   right: 0;
@@ -2756,12 +2778,13 @@ body[data-theme="dark"] .pf-autocomplete-item:hover {
   border: none;
   font-family: 'Nunito', sans-serif;
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 800;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1;
+  border-radius: 0 10px 10px 0;
 }
 
 /* Корзина для ПК */
@@ -2770,15 +2793,42 @@ body[data-theme="dark"] .pf-autocomplete-item:hover {
   border: none;
   font-size: 16px;
   cursor: pointer;
-  opacity: 0.5;
+  opacity: 0.4;
   padding: 4px;
   display: none;
+  transition: opacity 0.15s;
 }
 .mt-del-btn-pc:hover { opacity: 1; }
 
 @media (hover: hover) and (pointer: fine) {
   .mt-del-btn-pc { display: block; }
-  .mt-delete-action { display: none; } /* На ПК свайп не нужен */
+  .mt-delete-action { display: none; }
+}
+
+/* Внутренности строки */
+.mt-row-content span {
+  color: var(--c4);
+  font-family: 'Nunito', sans-serif;
+  font-size: 14.5px;
+  font-weight: 600;
+  flex: 1;
+  white-space: normal;
+}
+
+.mt-row-content input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--c3);
+  cursor: pointer;
+  flex-shrink: 0;
+  margin: 0;
+}
+
+.mt-group-body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-bottom: 4px;
 }
 
 /* ═══ Новая модалка Категорий ═══ */
@@ -2800,12 +2850,17 @@ body[data-theme="dark"] .pf-autocomplete-item:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 14px;
+  padding: 12px 16px;
   background: var(--c2);
-  border-radius: 8px;
+  border: 1px solid var(--c3);
+  border-radius: 10px;
   font-family: 'Nunito', sans-serif;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 14px;
+  transition: background 0.15s;
+}
+.tmg-item:hover {
+  background: color-mix(in srgb, var(--c2) 80%, var(--c3));
 }
 
 .tmg-del-btn {
@@ -2818,122 +2873,353 @@ body[data-theme="dark"] .pf-autocomplete-item:hover {
 }
 .tmg-del-btn:hover { opacity: 1; }
 
-/* Тёмная тема */
-body[data-theme="dark"] .modal-tag-box {
-  background: var(--c4);
-  color: #fff;
-}
+/* ═══ Тёмная тема ═══ */
+body[data-theme="dark"] .modal-tag-box { background: var(--c4); color: #fff; }
 body[data-theme="dark"] .mt-head,
 body[data-theme="dark"] .mt-selected-wrap,
-body[data-theme="dark"] .mt-search-row {
-  border-color: var(--c2);
-}
+body[data-theme="dark"] .mt-search-row { border-color: var(--c2); }
 body[data-theme="dark"] .mt-close,
-body[data-theme="dark"] .mt-gear-btn {
-  color: #fff;
-}
+body[data-theme="dark"] .mt-gear-btn { color: #fff; }
 body[data-theme="dark"] .mt-search {
   background: color-mix(in srgb, var(--c1) 15%, var(--c4) 85%);
   border-color: var(--c2);
   color: #fff;
 }
 body[data-theme="dark"] .mt-search::placeholder { color: #fff; }
-body[data-theme="dark"] .mt-row-content {
-  background: color-mix(in srgb, var(--c1) 5%, var(--c4) 95%);
+
+body[data-theme="dark"] .mt-group-head {
+  background: var(--c4);
   color: #fff;
+  opacity: 0.9;
+}
+
+body[data-theme="dark"] .mt-row-content {
+  background: color-mix(in srgb, var(--c4) 85%, var(--c3) 15%);
+  border-color: var(--c2);
 }
 body[data-theme="dark"] .mt-row-content:hover {
-  background: color-mix(in srgb, var(--c1) 10%, var(--c4) 90%);
+  background: color-mix(in srgb, var(--c4) 75%, var(--c3) 25%);
 }
+body[data-theme="dark"] .mt-row-content span { color: #fff; }
+body[data-theme="dark"] .mt-row-content.swiped {
+  box-shadow: -4px 0 16px rgba(0,0,0,0.5);
+}
+
 body[data-theme="dark"] .tmg-item {
-  background: color-mix(in srgb, var(--c1) 15%, var(--c4) 85%);
+  background: color-mix(in srgb, var(--c4) 85%, var(--c3) 15%);
+  border-color: var(--c2);
   color: #fff;
 }
 
-.mt-group-body {
+/* ═══ Модалка Поиска ═══ */
+.search-modal-box {
+  height: 80vh;
   display: flex;
   flex-direction: column;
-  gap: 2px;
-}
-.mt-row-content span {
-  color: var(--c4); /* Принудительно задаем цвет тексту */
-}
-body[data-theme="dark"] .mt-row-content span {
-  color: #fff;
+  padding: 0;
 }
 
-/* ═══ ФИКС: Строки тегов (чтобы были видны текст и чекбоксы) ═══ */
-.mt-row-content {
-  display: flex !important;
-  align-items: center !important;
-  gap: 10px !important;
-  padding: 10px 14px !important;
-  /* Делаем фон строки чуть темнее/светлее, чтобы он отличался от модалки */
-  background: color-mix(in srgb, var(--c1) 85%, var(--c3) 15%) !important; 
-  border: 1px solid var(--c3) !important; /* Добавим аккуратную рамку */
-  border-radius: 8px !important;
-  cursor: pointer !important;
-  width: 100% !important;
-  box-sizing: border-box !important;
+.search-modal-box .modal-head {
+  padding: 16px 18px 8px;
+  border-bottom: none;
+  margin-bottom: 0;
 }
 
-/* Принудительно задаем цвет текста и размер */
-.mt-row-content span {
-  color: var(--c4) !important;
-  font-family: 'Nunito', sans-serif !important;
-  font-size: 14px !important;
-  font-weight: 600 !important;
-  display: block !important;
-  flex: 1 !important;
-  white-space: normal !important;
+.search-tabs {
+  display: flex;
+  padding: 10px 14px 0;
+  background: transparent; 
+  gap: 6px;
+  border-bottom: 1px solid var(--c3); /* Возвращаем линию */
 }
 
-/* Делаем чекбокс видимым */
-.mt-row-content input[type="checkbox"] {
-  display: block !important;
-  width: 18px !important;
-  height: 18px !important;
-  accent-color: var(--c3) !important;
-  cursor: pointer !important;
-  flex-shrink: 0 !important;
-  margin: 0 !important;
+.search-tab {
+  flex: 1;
+  padding: 12px 16px;
+  background: color-mix(in srgb, var(--c3) 12%, transparent);
+  border: 1px solid transparent;
+  border-bottom: none;
+  border-radius: 12px 12px 0 0;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--c4);
+  opacity: 0.6;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  bottom: -1px; 
+  outline: none;
 }
 
-/* Тёмная тема для строк */
-body[data-theme="dark"] .mt-row-content {
-  background: color-mix(in srgb, var(--c4) 85%, var(--c3) 15%) !important;
-  border-color: var(--c2) !important;
-}
-body[data-theme="dark"] .mt-row-content span {
-  color: #fff !important;
-}
-
-/* Убираем лишние отступы у обертки, чтобы не было пустых линий */
-.mt-group-body {
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 6px !important;
-  padding: 4px 0 !important;
-}
-.mt-swipe-wrap {
-  margin-bottom: 0 !important;
-  background: transparent !important;
+.search-tab.active {
+  opacity: 1;
+  background: var(--c1);
+  border: 1px solid var(--c3);
+  border-bottom: 1px solid var(--c1); /* Прячем линию под активной вкладкой */
+  font-weight: 800;
+  box-shadow: 0 -3px 8px rgba(0,0,0,0.06);
+  z-index: 2;
 }
 
-/* ═══ Стили для модалки заметки ═══ */
-#noteInput {
+.search-input-wrap {
+  padding: 14px 18px;
+  border-bottom: none;
+}
+
+.search-input {
+  width: 100%;
+  padding: 12px 16px;
   border-radius: 10px;
   border: 1px solid var(--c3);
   background: var(--c2);
   color: var(--c4);
+  font-family: 'Nunito', sans-serif;
+  font-size: 15px;
   outline: none;
-  transition: box-shadow .15s;
+  box-sizing: border-box;
 }
-#noteInput:focus {
+.search-input:focus {
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--c3) 40%, transparent);
 }
-body[data-theme="dark"] #noteInput {
-  background: color-mix(in srgb, var(--c1) 15%, var(--c4) 85%);
-  border-color: var(--c2);
+
+.search-results {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px 0;
+}
+
+.search-result-item {
+  padding: 12px 18px;
+  border-bottom: 1px solid color-mix(in srgb, var(--c3) 30%, transparent);
+  cursor: pointer;
+  transition: background 0.15s;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.search-result-item:hover {
+  background: color-mix(in srgb, var(--c3) 10%, transparent);
+}
+
+.search-result-title {
+  font-family: var(--font-head, 'Cormorant Garamond', serif);
+  font-style: italic;
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--c4);
+}
+
+.search-result-desc {
+  font-family: 'Nunito', sans-serif;
+  font-size: 13px;
+  color: var(--c4);
+  opacity: 0.7;
+}
+
+.search-result-title mark {
+  background: color-mix(in srgb, var(--c3) 40%, transparent);
+  color: var(--c4);
+  border-radius: 3px;
+  padding: 0 2px;
+}
+
+.search-empty {
+  padding: 40px 20px;
+  text-align: center;
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  opacity: 0.6;
+}
+
+/* Тёмная тема для поиска */
+body[data-theme="dark"] .search-tabs { 
+  border-bottom: 1px solid var(--c2); /* Линия в темной теме */
+}
+body[data-theme="dark"] .search-tab { 
+  color: #fff; 
+  background: color-mix(in srgb, var(--c1) 5%, transparent);
+}
+body[data-theme="dark"] .search-tab.active { 
+  background: var(--c4);
+  border-color: var(--c2); 
+  border-bottom: 1px solid var(--c4); /* Прячем линию под активной */
+  box-shadow: 0 -4px 10px rgba(0,0,0,0.25);
+}
+body[data-theme="dark"] .search-input-wrap { 
+  border-bottom: none;
+  padding-top: 10px;
+}
+body[data-theme="dark"] .search-input { 
+  background: color-mix(in srgb, var(--c1) 15%, var(--c4) 85%); 
+  border-color: var(--c2); 
+  color: #fff; 
+}
+body[data-theme="dark"] .search-input::placeholder {
   color: #fff;
+  opacity: 0.5;
+}
+body[data-theme="dark"] .search-empty {
+  color: #fff;
+  opacity: 0.7;
+}
+body[data-theme="dark"] .search-result-item { border-bottom-color: rgba(255,255,255,0.1); }
+body[data-theme="dark"] .search-result-item:hover { background: rgba(255,255,255,0.05); }
+body[data-theme="dark"] .search-result-title, 
+body[data-theme="dark"] .search-result-desc { color: #fff; }
+body[data-theme="dark"] .search-result-title mark { background: var(--c3); color: #fff; }
+
+/* На телефоне поиск открывается на весь экран */
+@media (max-width: 640px) {
+  .search-modal-box {
+    height: 100vh;
+    max-width: 100%;
+    border-radius: 0;
+  }
+}
+
+/* ═══ Модалка Фильтров ═══ */
+.filter-modal-box {
+  height: 85vh;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+/* Фикс заголовка */
+.filter-modal-box .modal-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 700;
+  font-size: 22px;
+  color: var(--c4);
+}
+
+.filter-body {
+  flex: 1 1 auto;
+  min-height: 0; /* ВАЖНО: заставляет блок сжиматься и работать скроллу */
+  overflow-y: auto;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Сама секция */
+.filter-section {
+  border: 1px solid var(--c3);
+  border-radius: 12px;
+  background: var(--c1);
+  overflow: hidden;
+  transition: all 0.2s ease;
+  flex-shrink: 0; /* Чтобы секции не сплющивались */
+}
+
+/* Шапка секции */
+.filter-section-head {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--c4);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  padding: 14px 16px;
+  background: color-mix(in srgb, var(--c2) 40%, transparent);
+  transition: background 0.15s;
+}
+.filter-section-head:hover {
+  background: color-mix(in srgb, var(--c2) 70%, transparent);
+}
+
+.filter-arrow {
+  font-size: 10px;
+  transition: transform 0.2s;
+  opacity: 0.6;
+}
+.filter-section:not(.open) .filter-arrow {
+  transform: rotate(-90deg);
+}
+
+/* Контент внутри секции */
+.filter-section-content {
+  display: none;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 14px 16px;
+  border-top: 1px solid var(--c3);
+}
+.filter-section.open .filter-section-content {
+  display: flex;
+}
+
+/* Кнопки-чипсы */
+.filter-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--c2);
+  border: 1px solid var(--c3);
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--c4);
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.15s;
+}
+.filter-check:hover {
+  filter: brightness(0.95);
+}
+.filter-check:has(input:checked) {
+  background: var(--c3);
+  color: #fff;
+  border-color: var(--c3);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+.filter-check input {
+  display: none;
+}
+
+/* Футер с кнопками */
+.filter-footer {
+  padding: 16px 18px;
+  border-top: 1px solid var(--c3);
+  background: var(--c1);
+  border-radius: 0 0 14px 14px;
+  flex-shrink: 0;
+}
+.filter-count {
+  font-family: 'Nunito', sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  margin-bottom: 12px;
+  color: var(--c4);
+  opacity: 0.8;
+}
+.filter-actions {
+  display: flex;
+  gap: 10px;
+}
+
+/* Темная тема для заголовка */
+body[data-theme="dark"] .filter-modal-box .modal-title { color: #fff; }
+
+/* Тёмная тема */
+body[data-theme="dark"] .filter-section { border-color: var(--c2); }
+body[data-theme="dark"] .filter-check { background: color-mix(in srgb, var(--c1) 10%, var(--c4) 90%); border-color: var(--c2); color: #fff; }
+body[data-theme="dark"] .filter-check:has(input:checked) { background: var(--c3); border-color: var(--c3); }
+body[data-theme="dark"] .filter-footer { background: var(--c4); border-color: var(--c2); }
+body[data-theme="dark"] .active-filters-bar { background: var(--c4); border-color: var(--c2); color: #fff; }
+body[data-theme="dark"] .active-filters-reset { color: #fff; }
+
+@media (max-width: 640px) {
+  .filter-modal-box { height: 100vh; max-width: 100%; border-radius: 0; }
+  .filter-footer { border-radius: 0; }
 }
