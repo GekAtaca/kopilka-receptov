@@ -46,37 +46,6 @@ code{font-family:ui-monospace,Consolas,monospace;font-size:13px;background:rgba(
 
 <h2>Что уже сделано</h2>
 <div class="step done">
-  <div class="num">18</div>
-  <div class="body">
-    <div class="title">Красивые окна вместо системных <span class="badge done">Готово</span></div>
-    <div class="desc">Заменены стандартные окна браузера (<code>confirm</code> и <code>prompt</code>) на кастомные модалки в стиле сайта. Настроено правильное затемнение вложенных модалок (без «черного экрана») и починена читаемость заголовков в темной теме.</div>
-  </div>
-</div>
-
-<div class="step done">
-  <div class="num">19</div>
-  <div class="body">
-    <div class="title">Случайный рецепт 🎲 <span class="badge done">Готово</span></div>
-    <div class="desc">Кнопка в шапке «Содержания» открывает случайный рецепт из базы. Если база пуста — показывается уведомление.</div>
-  </div>
-</div>
-<div class="step done">
-  <div class="num">20</div>
-  <div class="body">
-    <div class="title">Умный поиск (п. 4.2) <span class="badge done">Готово</span></div>
-    <div class="desc">Создана модалка поиска с вкладками «Рецепты» и «Продукты». Поиск понимает синонимы («хочется сладкого»), игнорирует слова-паразиты и ищет по названию, тегам, ингредиентам и заметкам. Кнопка поиска в шапке теперь работает.</div>
-  </div>
-</div>
-
-<div class="step done">
-  <div class="num">21</div>
-  <div class="body">
-    <div class="title">Фильтры (п. 4.3) <span class="badge done">Готово</span></div>
-    <div class="desc">Создана модалка фильтров с карточками-секциями (Приём пищи, Время, Теги, Дополнительно). Работает живой счётчик найденных рецептов. На главном экране появляется плашка со сбросом фильтров.</div>
-  </div>
-</div>
-
-<div class="step done">
   <div class="num">1</div>
   <div class="body">
     <div class="title">Каркас сайта <span class="badge done">Готово</span></div>
@@ -112,7 +81,7 @@ code{font-family:ui-monospace,Consolas,monospace;font-size:13px;background:rgba(
   <div class="num">5</div>
   <div class="body">
     <div class="title">Разрезание index.html <span class="badge done">Готово</span></div>
-    <div class="desc">JavaScript вынесен в 14 файлов в <code>app/js/</code>. Порядок подключения важен — он описан в <code>arch.html</code>.</div>
+    <div class="desc">JavaScript вынесен в 20 файлов в <code>app/js/</code>. Порядок подключения важен — он описан в <code>arch.html</code>.</div>
   </div>
 </div>
 
@@ -163,6 +132,7 @@ code{font-family:ui-monospace,Consolas,monospace;font-size:13px;background:rgba(
     <div class="desc">Модалка списка таймеров и модалка «Новый таймер». Кольцевые колёсики выбора времени (часы 0–23, минуты/секунды 0–59) без мигания, с шагом в один клик. Привязка к шагу. Тумблер «Со звуком». Фоновый отсчёт (продолжается при закрытии сайта). Мягкий двойной звуковой сигнал (Web Audio API). Уведомление о конце таймера с возможностью перейти в рецепт. Идеальная иерархия затемнения без наложения слоев.</div>
   </div>
 </div>
+
 <div class="step done">
   <div class="num">12</div>
   <div class="body">
@@ -172,7 +142,7 @@ code{font-family:ui-monospace,Consolas,monospace;font-size:13px;background:rgba(
 </div>
 
 <div class="step done">
-  <div class="num">14</div>
+  <div class="num">13</div>
   <div class="body">
     <div class="title">Отмена удаления (Undo) <span class="badge done">Готово</span></div>
     <div class="desc">Менеджер <code>undo.js</code>. Удаление рецептов и продуктов с таймером 15 сек. Плашка «Отменить» с паузой при наведении. Удаление без перерисовки всего экрана.</div>
@@ -180,7 +150,7 @@ code{font-family:ui-monospace,Consolas,monospace;font-size:13px;background:rgba(
 </div>
 
 <div class="step done">
-  <div class="num">15</div>
+  <div class="num">14</div>
   <div class="body">
     <div class="title">Автодополнение продуктов <span class="badge done">Готово</span></div>
     <div class="desc">Живой поиск в форме продукта. Показывает марку, КБЖУ, единицы и иконку базы (своя/системная). С прокруткой без лимитов. Кнопка «Добавить продукт» в FAB ➕.</div>
@@ -188,63 +158,86 @@ code{font-family:ui-monospace,Consolas,monospace;font-size:13px;background:rgba(
 </div>
 
 <div class="step done">
-  <div class="num">16</div>
+  <div class="num">15</div>
   <div class="body">
     <div class="title">Кнопки большой карточки <span class="badge done">Готово</span></div>
     <div class="desc">Работают «Копировать текст» (в буфер), «Поделиться» (системное окно) и «Печать» (формат А5 с сохранением цветов сайта).</div>
   </div>
 </div>
 
-<div class="step current">
+<div class="step done">
+  <div class="num">16</div>
+  <div class="body">
+    <div class="title">Модалка тегов <span class="badge done">Готово</span></div>
+    <div class="desc">Открывается, есть поиск, группы, чипсы, сохранение. Свайпы для удаления (iOS-стиль). Управление категориями (создание, удаление), пустые категории видны.</div>
+  </div>
+</div>
+
+<div class="step done">
   <div class="num">17</div>
   <div class="body">
-    <div class="title">Модалка тегов <span class="badge current">В процессе</span></div>
-    <div class="desc">Открывается, есть поиск, группы, чипсы, сохранение. <b>Не сделано:</b> свайпы для удаления (iOS-стиль) и управление категориями (нужно вынести в отдельную модалку, чтобы не перегружать интерфейс).</div>
+    <div class="title">Кастомные окна подтверждения <span class="badge done">Готово</span></div>
+    <div class="desc">Заменены стандартные <code>confirm</code> и <code>prompt</code> браузера на кастомные модалки в стиле сайта (для удаления версий и категорий тегов).</div>
+  </div>
+</div>
+
+<div class="step done">
+  <div class="num">18</div>
+  <div class="body">
+    <div class="title">Случайный рецепт 🎲 <span class="badge done">Готово</span></div>
+    <div class="desc">Кнопка в шапке «Содержания» открывает случайный рецепт из базы. Если база пуста — показывается уведомление.</div>
+  </div>
+</div>
+
+<div class="step done">
+  <div class="num">19</div>
+  <div class="body">
+    <div class="title">Умный поиск (модалка 🔍) <span class="badge done">Готово</span></div>
+    <div class="desc">Поиск с вкладками «Рецепты» и «Продукты». Понимает синонимы, игнорирует слова-паразиты и ищет по названию, тегам, ингредиентам и заметкам. Кнопка поиска в шапке теперь работает.</div>
+  </div>
+</div>
+
+<div class="step done">
+  <div class="num">20</div>
+  <div class="body">
+    <div class="title">Фильтры (модалка 🏷) <span class="badge done">Готово</span></div>
+    <div class="desc">Модалка фильтров с карточками-секциями (Приём пищи, Время, Теги, Дополнительно). Работает живой счётчик найденных рецептов. На главном экране появляется плашка со сбросом фильтров.</div>
+  </div>
+</div>
+
+<div class="step done">
+  <div class="num">21</div>
+  <div class="body">
+    <div class="title">Полировка поиска, фильтров и тегов <span class="badge done">Готово</span></div>
+    <div class="desc">В тегах: липкие заголовки групп, пустые группы больше не скрываются, кнопка «Создать тег» всегда внизу. В поиске: отсечены короткие слова (паста с курицей больше не вылезает на «сладкое»), починено закрытие окна при выделении текста мышкой. В фильтрах: теги разделены по группам с кнопками-стрелками для листания, активные фильтры можно удалять по одному.</div>
+  </div>
+</div>
+
+<div class="step done">
+  <div class="num">22</div>
+  <div class="body">
+    <div class="title">Фикс базы (застрявший рецепт) <span class="badge done">Готово</span></div>
+    <div class="desc">Почистили рецепт «ТЕСТ ТЕСТНЫЙ», который застрял из-за таймера Undo. Удалён напрямую из IndexedDB через консоль браузера.</div>
   </div>
 </div>
 
 <h2>Что делаем сейчас</h2>
 
-<b>Полировка модалки тегов и создание карточки продукта.</b> Нужно доработать визуал модалки тегов (довести до идеала) и сделать модалку просмотра продукта (чтобы при клике в поиске открывалась красивая карточка с КБЖУ, а не форма редактирования).
-<br><b>Следующее по коду:</b> Карточка продукта, затем экран «Кладовая».
+<b>Создание карточки продукта.</b> Нужно сделать модалку просмотра продукта, чтобы при клике в поиске или базе открывалась красивая карточка с КБЖУ, маркой и кнопкой «Изменить» (для своих), а не форма редактирования.
+<br><b>Следующее по коду:</b> Карточка продукта, затем глобальное оформление модалок и экран «Кладовая».
 
 <h2>Что впереди</h2>
 
-<!-- Шаг "Таймер рецепта" перенесен в раздел "Что уже сделано" -->
-
-<div class="step current">
-  <div class="num">1</div>
+<div class="step next">
+  <div class="num">23</div>
   <div class="body">
-    <div class="title">Отмена действий (Undo) <span class="badge current">Следующее</span></div>
-    <div class="desc">Глобальная система отмены удаления для всех карточек. Если случайно удалили рецепт, продукт или версию — должна появиться плашка «Отменить» на несколько секунд.</div>
+    <div class="title">Глобальное оформление модалок <span class="badge next">Дальше</span></div>
+    <div class="desc">У экранов (Главная, Избранное, План, Кладовая) могут быть разные стили оформления. Нужно сделать так, чтобы модалки, открываемые с этих экранов, автоматически подхватывали их стилистику (цвета, шрифты, тени).</div>
   </div>
 </div>
 
-<h2>Бэклог задач (Ноябрь 2026)</h2>
-<div class="box note">
-<b>Записано 4 ноября 2026.</b> Список доработок, которые нужно сделать в ближайшее время.
-</div>
-
-<h3>2. Модалки и редакторы</h3>
-<ul>
-  <li><b>Модалка просмотра продукта:</b> Сделать отдельное окно для просмотра КБЖУ продукта (открывается из поиска и пикера).</li>
-  <li><b>Модалка таймеров рецепта:</b> Доработать существующую логику.</li>
-  <li><b>Модалка «Добавить рецепт» и «Редактор»:</b> Добавить поле «Устройство готовки» (выбор из списка сковорода, духовка и т.д.).</li>
-  <li><b>Фон модалок:</b> Сделать затемнение за пределами модальных окон (оверлей) более светлым, чтобы не было ощущения «черного экрана».</li>
-  <li><b>Модалка общего таймера</b> (из плавающей кнопки FAB ⏲).</li>
-  <li><b>Модалка поиска</b> (из плавающей кнопки FAB 🔍).</li>
-</ul>
-
-<h3>3. Карточки и Шапка сайта</h3>
-<ul>
-  <li><b>Большая карточка:</b> Вывести время приготовления (сейчас его там нет, нужно добавить в блок с КБЖУ).</li>
-  <li><b>Кнопка «Общие заметки»:</b> Добавить в правый верхний угол шапки новую иконку (например, 📝 или 📖). Внутри — большая модалка для хранения полезной справочной информации (сезонность фруктов/овощей, меры весов, таблица калорий и т.д.).</li>
-  <li><b>Модалка «Уведомления»</b> (из кнопки-колокольчика 🔔 в шапке).</li>
-  <li><b>Модалка «Настройки»</b> (из кнопки-шестеренки ⚙ в шапке).</li>
-</ul>
-
 <div class="step next">
-  <div class="num">11</div>
+  <div class="num">24</div>
   <div class="body">
     <div class="title">storage.js — слой 3 <span class="badge next">Дальше</span></div>
     <div class="desc">Кладовая, план, корзина. Сейчас — заглушки. Функции: <code>getPantry</code>, <code>savePlanItem</code>, <code>getShopping</code> и т.д.</div>
@@ -252,7 +245,7 @@ code{font-family:ui-monospace,Consolas,monospace;font-size:13px;background:rgba(
 </div>
 
 <div class="step next">
-  <div class="num">12</div>
+  <div class="num">25</div>
   <div class="body">
     <div class="title">storage.js — слой 4 <span class="badge next">Дальше</span></div>
     <div class="desc">Фото (сжатие, blob), экспорт/импорт ZIP, напоминание о бэкапе.</div>
@@ -260,7 +253,7 @@ code{font-family:ui-monospace,Consolas,monospace;font-size:13px;background:rgba(
 </div>
 
 <div class="step next">
-  <div class="num">13</div>
+  <div class="num">26</div>
   <div class="body">
     <div class="title">Фичи по одной <span class="badge next">Дальше</span></div>
     <div class="desc">Избранное, План (три вкладки), Кладовая (🛒 Купить / 🏠 Есть дома / 📚 База продуктов), Добавление рецепта, Настройки, Фото.</div>
@@ -268,7 +261,7 @@ code{font-family:ui-monospace,Consolas,monospace;font-size:13px;background:rgba(
 </div>
 
 <div class="step next">
-  <div class="num">14</div>
+  <div class="num">27</div>
   <div class="body">
     <div class="title">Маленькая карточка — привести к карте <span class="badge next">Дальше</span></div>
     <div class="desc">4 иконки на фото (убрать ⏱), 4 кнопки внизу (🛒 ⏱ ✎ 🕐). Отдельный шаг, не смешивать с большой карточкой.</div>
@@ -276,15 +269,7 @@ code{font-family:ui-monospace,Consolas,monospace;font-size:13px;background:rgba(
 </div>
 
 <div class="step next">
-  <div class="num">15</div>
-  <div class="body">
-    <div class="title">Модалка тегов в большой карточке <span class="badge next">Дальше</span></div>
-    <div class="desc">Поиск по 58 базовым + своим тегам. Группировка по 16 группам. Создание своего тега.</div>
-  </div>
-</div>
-
-<div class="step next">
-  <div class="num">16</div>
+  <div class="num">28</div>
   <div class="body">
     <div class="title">Шторка FAB ➕ — наполнить содержимым <span class="badge next">Дальше</span></div>
     <div class="desc">Сейчас открывается пустая заглушка «Тут будет Добавить». Должна стать шторкой снизу с выбором: Добавить рецепт / Создать продукт / (на Кладовой — Добавить в кладовую).</div>
@@ -292,7 +277,7 @@ code{font-family:ui-monospace,Consolas,monospace;font-size:13px;background:rgba(
 </div>
 
 <div class="step next">
-  <div class="num">17</div>
+  <div class="num">29</div>
   <div class="body">
     <div class="title">PWA <span class="badge next">Позже</span></div>
     <div class="desc">Манифест, Service Worker, добавление на экран «Домой». После этого — пуш-уведомления для таймеров.</div>
@@ -300,7 +285,7 @@ code{font-family:ui-monospace,Consolas,monospace;font-size:13px;background:rgba(
 </div>
 
 <div class="step next">
-  <div class="num">18</div>
+  <div class="num">30</div>
   <div class="body">
     <div class="title">Наполнение 150 рецептами <span class="badge next">Позже</span></div>
     <div class="desc">Вручную, через редактор рецепта. Сначала 5 (Ролл с тунцом, Салат Мимоза, Куриные стожки, Пряная индейка, Печенье протеиновое), потом остальные. КБЖУ пересчитывается через базу продуктов.</div>
@@ -308,7 +293,7 @@ code{font-family:ui-monospace,Consolas,monospace;font-size:13px;background:rgba(
 </div>
 
 <div class="step next">
-  <div class="num">19</div>
+  <div class="num">31</div>
   <div class="body">
     <div class="title">Синхронизация и трекер питания <span class="badge next">Позже</span></div>
     <div class="desc">Общий аккаунт с парнем, отдельный сайт для мамы. Обмен рецептами. Трекер питания с целями. Отдельный этап, далеко.</div>
@@ -361,7 +346,7 @@ code{font-family:ui-monospace,Consolas,monospace;font-size:13px;background:rgba(
 </div>
 
 <div class="footer">
-<p><b>Копилка рецептов · План · 31 октября 2026</b></p>
+<p><b>Копилка рецептов · План · 5 ноября 2026</b></p>
 <p>Скидывать в новую сессию, когда нужно понять «куда мы идём».</p>
 </div>
 

@@ -96,7 +96,7 @@ pre code{background:none;padding:0;color:inherit;font-size:inherit}
 │   │   ├── card.css        ← база карточки + тени + тёмная тема + большая карточка (.b-*) + .dm-scope расширения
 │   │   ├── palettes/       ← 9 файлов палитр
 │   │   └── styles/         ← 8 файлов стилей
-│   ├── js/                 ← 17 файлов (см. ниже)
+│   ├── js/                 ← 20 файлов (см. ниже)
 │   └── img/                ← пока пусто
 └── images/                 ← 19 фоновых картинок (01–05, 07–20, без 06)</code></pre>
 
@@ -110,16 +110,19 @@ pre code{background:none;padding:0;color:inherit;font-size:inherit}
 <tr><td><code>shared.js</code></td><td>Общие переменные и утилиты: <code>bgSettings</code>, <code>currentBg</code>, <code>designDraft</code>, <code>getDeviceType</code>, <code>saveSettingsToStorage</code>, <code>loadSharedFromStorage</code>.</td></tr>
 <tr><td><code>render.js</code></td><td>Превращает объект рецепта в HTML маленькой карточки. Раскладывает рецепты по секциям Главной.</td></tr>
 <tr><td><code>card-big.js</code></td><td>Большая карточка рецепта: открытие, закрытие, порции, чекбоксы, dropdown «В план» и «Ещё», нижние кнопки.</td></tr>
-<tr><td><code>product-picker.js</code></td><td>Модалка «База продуктов»: поиск, группировка, свёрнутость, сортировка, контекстное меню, <code>afterCreate</code>.</td></tr>
-<tr><td><code>tag-modal.js</code></td><td>Модалка тегов: поиск по 58 базовым и своим, группировка по 16 группам, создание своего тега.</td></tr>
-<tr><td><code>recipe-editor.js</code></td><td>Редактор рецепта (шаг 37): поля, ингредиенты с пикером, шаги с перетаскиванием, время, теги, создание версий, пересчёт КБЖУ, валидация.</td></tr>
 <tr><td><code>timer.js</code></td><td>Таймеры рецептов (шаг 38.3): модалка списка, кольцевые колесики выбора времени, звук (Web Audio API), фоновый тик, уведомления, проверка просроченных при загрузке.</td></tr>
+<tr><td><code>product-picker.js</code></td><td>Модалка «База продуктов»: поиск, группировка, свёрнутость, сортировка, контекстное меню, <code>afterCreate</code>.</td></tr>
+<tr><td><code>tag-modal.js</code></td><td>Модалка тегов: поиск по 58 базовым и своим, липкие заголовки групп, кастомные окна подтверждения и создания, управление категориями.</td></tr>
+<tr><td><code>recipe-editor.js</code></td><td>Редактор рецепта (шаг 37): поля, ингредиенты с пикером, шаги с перетаскиванием, время, теги, создание версий, пересчёт КБЖУ, валидация.</td></tr>
 <tr><td><code>product-form.js</code></td><td>Форма создания/редактирования продукта: поля, валидация, дубликаты, сохранение.</td></tr>
 <tr><td><code>bg.js</code></td><td>Фон сайта и редактор позиции: <code>applyBg</code>, <code>openBgEditor</code>, зум, перетаскивание.</td></tr>
+<tr><td><code>undo.js</code></td><td>Менеджер отмены удаления (Undo). Плашка «Отменить» с таймером 15 секунд и паузой при наведении.</td></tr>
 <tr><td><code>design.js</code></td><td>Панель 🖌, черновик, макет, «Применить к…», предпросмотр, оформление по экранам.</td></tr>
 <tr><td><code>screens.js</code></td><td>Переключение 4 экранов. Сворачивание содержания.</td></tr>
 <tr><td><code>modals.js</code></td><td>Модалки-заглушки FAB (⏲ 🔍 ➕).</td></tr>
 <tr><td><code>fab.js</code></td><td>Автоскрытие плавающих кнопок.</td></tr>
+<tr><td><code>search.js</code></td><td>Модалка поиска: вкладки «Рецепты»/«Продукты», строгий поиск по стемам (отсекает короткие слова), защита от закрытия при выделении текста.</td></tr>
+<tr><td><code>filter.js</code></td><td>Модалка фильтров: секции-гармошки, вкладки групп тегов с кнопками-стрелками (показ целых вкладок), живой подсчёт, плашка активных фильтров с крестиками.</td></tr>
 <tr><td><code>main.js</code></td><td>Запуск всего: <code>Storage.init → seedDemoRecipes → loadDesignFromStorage → loadSharedFromStorage → initScreens → renderAllRecipes → заставка</code>.</td></tr>
 </table>
 
@@ -141,11 +144,14 @@ pre code{background:none;padding:0;color:inherit;font-size:inherit}
 10. recipe-editor.js   (редактор рецепта)
 11. product-form.js    (форма продукта)
 12. bg.js              (фон и редактор позиции)
-13. design.js          (панель 🖌, черновик, макет)
-14. screens.js         (переключение экранов)
-15. modals.js          (модалки FAB)
-16. fab.js             (автоскрытие FAB)
-17. main.js            (запуск всего)</code></pre>
+13. undo.js            (отмена удаления)
+14. design.js          (панель 🖌, черновик, макет)
+15. screens.js         (переключение экранов)
+16. modals.js          (модалки FAB)
+17. fab.js             (автоскрытие FAB)
+18. search.js          (модалка поиска)
+19. filter.js          (модалка фильтров)
+20. main.js            (запуск всего)</code></pre>
 
 <h2>IndexedDB — где что живёт</h2>
 
@@ -457,7 +463,7 @@ pre code{background:none;padding:0;color:inherit;font-size:inherit}
 </div>
 
 <div class="footer">
-<p><b>Копилка рецептов · Архитектура · 13 октября 2026</b></p>
+<tr><td><code>filter.js</code></td><td>Модалка фильтров: секции-гармошки, вкладки групп тегов с кнопками-стрелками (показ целых вкладок), живой подсчёт, плашка активных фильтров с крестиками.<<p><b>Копилка рецептов · Архитектура · 5 ноября 2026</b></p>/td></tr>
 <p>Скидывать в новую сессию, когда работаем с кодом, файлами, хранилищем.</p>
 </div>
 

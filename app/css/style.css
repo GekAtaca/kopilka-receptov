@@ -3223,3 +3223,697 @@ body[data-theme="dark"] .active-filters-reset { color: #fff; }
   .filter-modal-box { height: 100vh; max-width: 100%; border-radius: 0; }
   .filter-footer { border-radius: 0; }
 }
+
+/* ═══ Стили кастомных окошек (возвращаем) ═══ */
+.custom-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100050;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+.custom-modal-box {
+  background: var(--c1);
+  color: var(--c4);
+  border-radius: 14px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
+  font-family: 'Nunito', sans-serif;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.custom-modal-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--c3);
+}
+.custom-modal-title {
+  font-family: var(--font-head, 'Cormorant Garamond', serif);
+  font-style: italic;
+  font-weight: 700;
+  font-size: 20px;
+}
+.custom-modal-close {
+  background: none;
+  border: none;
+  color: var(--c4);
+  font-size: 20px;
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+  opacity: 0.6;
+}
+.custom-modal-close:hover { opacity: 1; }
+.custom-modal-body {
+  padding: 20px 18px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.custom-modal-footer {
+  display: flex;
+  gap: 8px;
+  padding: 12px 18px 16px;
+  border-top: 1px solid var(--c3);
+}
+.custom-btn {
+  flex: 1;
+  padding: 11px 16px;
+  border-radius: 10px;
+  border: 1px solid var(--c3);
+  background: var(--c2);
+  color: var(--c4);
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  transition: filter 0.15s;
+}
+.custom-btn:hover { filter: brightness(1.05); }
+.custom-btn.primary {
+  background: var(--c3);
+  color: #fff;
+  border-color: var(--c3);
+}
+.custom-search {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--c3);
+  background: var(--c2);
+  color: var(--c4);
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  outline: none;
+  margin-bottom: 14px;
+  box-sizing: border-box;
+}
+.custom-search:focus {
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--c3) 40%, transparent);
+}
+.custom-group-list {
+  max-height: 220px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.custom-group-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--c1) 85%, var(--c3) 15%);
+  border: 1px solid var(--c3);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: background 0.15s;
+}
+.custom-group-item:hover {
+  background: color-mix(in srgb, var(--c1) 70%, var(--c3) 30%);
+}
+.custom-group-item input[type="radio"] {
+  accent-color: var(--c3);
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+/* Тёмная тема для кастомных окошек */
+body[data-theme="dark"] .custom-modal-box { background: var(--c4); color: #fff; border: 1px solid var(--c2); }
+body[data-theme="dark"] .custom-modal-head, body[data-theme="dark"] .custom-modal-footer { border-color: var(--c2); }
+body[data-theme="dark"] .custom-modal-close { color: #fff; }
+body[data-theme="dark"] .custom-btn { background: color-mix(in srgb, var(--c1) 15%, var(--c4) 85%); border-color: var(--c2); color: #fff; }
+body[data-theme="dark"] .custom-btn.primary { background: var(--c3); border-color: var(--c3); }
+body[data-theme="dark"] .custom-search { background: color-mix(in srgb, var(--c1) 15%, var(--c4) 85%); border-color: var(--c2); color: #fff; }
+body[data-theme="dark"] .custom-group-item { background: color-mix(in srgb, var(--c4) 85%, var(--c3) 15%); border-color: var(--c2); color: #fff; }
+body[data-theme="dark"] .custom-group-item:hover { background: color-mix(in srgb, var(--c4) 70%, var(--c3) 30%); }
+
+/* ═══ Фиксы для темной темы ═══ */
+body[data-theme="dark"] .mt-group-head {
+  background: var(--c4) !important;
+  color: #fff !important;
+  opacity: 1 !important;
+}
+body[data-theme="dark"] .mt-create-btn {
+  color: #fff !important;
+  border-color: var(--c2) !important;
+  background: rgba(255,255,255,.05) !important;
+}
+body[data-theme="dark"] .mt-create-btn:hover {
+  background: rgba(255,255,255,.15) !important;
+}
+
+/* ═══ Заглушка для пустых категорий ═══ */
+.mt-empty-group {
+  padding: 12px 14px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 13px;
+  font-style: italic;
+  opacity: 0.5;
+  text-align: center;
+}
+
+/* ═══ ФИНАЛЬНЫЕ ФИКСЫ ДЛЯ МОДАЛКИ ТЕГОВ И ОКОШЕК ═══ */
+
+/* 1. Убираем прозрачность и ставим нормальный клик для окошек */
+.custom-modal-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 100050 !important;
+  background: rgba(0, 0, 0, 0.6) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 16px !important;
+  pointer-events: auto !important;
+}
+
+.custom-modal-box {
+  background: var(--c1) !important;
+  color: var(--c4) !important;
+  border-radius: 14px !important;
+  width: 100% !important;
+  max-width: 400px !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55) !important;
+  font-family: 'Nunito', sans-serif !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+  pointer-events: auto !important;
+}
+
+/* 2. Фикс кнопки "Создать тег" */
+.mt-create-btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 2px dashed var(--c3);
+  background: transparent;
+  color: var(--c4);
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  pointer-events: auto !important;
+  z-index: 10;
+  position: relative;
+}
+
+/* 3. Пустые категории */
+.mt-empty-group {
+  padding: 12px 14px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 13px;
+  font-style: italic;
+  opacity: 0.5;
+  text-align: center;
+}
+
+/* 4. Тёмная тема для заголовков и кнопок (чтобы читалось) */
+body[data-theme="dark"] .mt-group-head {
+  background: var(--c4) !important;
+  color: #fff !important;
+  opacity: 1 !important;
+}
+body[data-theme="dark"] .mt-create-btn {
+  color: #fff !important;
+  border-color: var(--c2) !important;
+  background: rgba(255,255,255,.05) !important;
+}
+body[data-theme="dark"] .mt-create-btn:hover {
+  background: rgba(255,255,255,.15) !important;
+}
+body[data-theme="dark"] .custom-modal-box {
+  background: var(--c4) !important;
+  color: #fff !important;
+  border: 1px solid var(--c2) !important;
+}
+
+/* ═══ Фикс подписей и полей в окошке создания тега ═══ */
+.custom-label {
+  margin-bottom: 8px;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--c4); /* Темный текст для светлой темы */
+}
+body[data-theme="dark"] .custom-label {
+  color: #fff !important; /* Белый текст для темной темы */
+}
+
+/* Делаем подсказки внутри полей видимыми в темной теме */
+body[data-theme="dark"] .custom-search {
+  color: #fff !important;
+}
+body[data-theme="dark"] .custom-search::placeholder {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+/* ═══ СТИЛИ ДЛЯ МОДАЛКИ ФИЛЬТРОВ ═══ */
+
+/* Делаем шапку как в тегах */
+.filter-modal-box .mt-head {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--c3);
+}
+.filter-modal-box .mt-title {
+  font-size: 20px;
+}
+.filter-modal-box .mt-close {
+  margin-left: auto;
+}
+
+/* Настройка основного контейнера */
+.filter-modal-box {
+  height: 85vh;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  max-width: 520px; /* Ширина как у тегов */
+}
+
+/* Секции (гармошки) */
+.filter-section {
+  border: 1px solid var(--c3);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--c1) 85%, var(--c3) 15%);
+  overflow: hidden;
+  flex-shrink: 0;
+  margin-bottom: 10px;
+}
+
+/* Заголовок секции */
+.filter-section-head {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--c4);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  padding: 14px 16px;
+  background: transparent;
+  transition: background 0.15s;
+}
+.filter-section-head:hover {
+  background: color-mix(in srgb, var(--c2) 50%, transparent);
+}
+
+/* Контент внутри секции */
+.filter-section-content {
+  display: none;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 4px 16px 16px;
+  border-top: none !important; /* Убираем линию */
+}
+.filter-section.open .filter-section-content {
+  display: flex;
+}
+
+/* Кнопки-чипсы (как в модалке тегов) */
+.filter-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--c2);
+  border: 1px solid var(--c3);
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--c4);
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.15s;
+}
+.filter-check:hover {
+  background: color-mix(in srgb, var(--c3) 20%, var(--c2));
+}
+
+/* Активная кнопка */
+.filter-check:has(input:checked) {
+  background: var(--c3);
+  color: #fff;
+  border-color: var(--c3);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+.filter-check input {
+  display: none;
+}
+
+/* Футер (кнопки внизу) */
+.filter-footer {
+  padding: 16px 18px;
+  border-top: 1px solid var(--c3);
+  background: var(--c1);
+  flex-shrink: 0;
+}
+
+/* Тёмная тема для фильтров */
+body[data-theme="dark"] .filter-section {
+  background: color-mix(in srgb, var(--c4) 85%, var(--c3) 15%);
+  border-color: var(--c2);
+}
+body[data-theme="dark"] .filter-section-head {
+  color: #fff;
+}
+body[data-theme="dark"] .filter-check {
+  background: color-mix(in srgb, var(--c4) 85%, var(--c3) 15%);
+  border-color: var(--c2);
+  color: #fff;
+}
+body[data-theme="dark"] .filter-check:has(input:checked) {
+  background: var(--c3);
+  border-color: var(--c3);
+  color: #fff;
+}
+body[data-theme="dark"] .filter-footer {
+  background: var(--c4);
+  border-color: var(--c2);
+}
+
+/* ═══ СТИЛИ ДЛЯ ПЛАШКИ АКТИВНЫХ ФИЛЬТРОВ (той самой полоски сверху) ═══ */
+.active-filters-bar {
+  display: none; /* Скрыто по умолчанию */
+  justify-content: space-between;
+  align-items: center;
+  background: var(--c2);
+  color: var(--c4);
+  padding: 10px 16px;
+  border-radius: 12px;
+  margin: 10px 16px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  border: 1px solid var(--c3);
+}
+.active-filters-bar.visible {
+  display: flex; /* Показывается только когда JS добавляет класс visible */
+}
+.active-filters-reset {
+  background: none;
+  border: none;
+  color: #d63859;
+  font-size: 18px;
+  cursor: pointer;
+  line-height: 1;
+}
+body[data-theme="dark"] .active-filters-bar {
+  background: color-mix(in srgb, var(--c4) 85%, var(--c3) 15%);
+  border-color: var(--c2);
+  color: #fff;
+}
+
+/* ═══ Убираем лишние полоски в фильтрах ═══ */
+.filter-section-content {
+  border-top: none !important; /* Убираем линию между заголовком и контентом */
+  padding: 8px 16px 16px !important;
+}
+
+/* Наводим красоту для заголовков внутри фильтров (чтобы не было двойных рамок) */
+.filter-section {
+  border: 1px solid var(--c3) !important;
+  background: var(--c1) !important;
+  margin-bottom: 12px !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+}
+
+.filter-section-head {
+  border: none !important;
+  background: color-mix(in srgb, var(--c2) 40%, transparent) !important;
+}
+
+/* Тёмная тема для фильтров */
+body[data-theme="dark"] .filter-section {
+  border-color: var(--c2) !important;
+  background: var(--c4) !important;
+}
+body[data-theme="dark"] .filter-section-head {
+  background: color-mix(in srgb, var(--c1) 10%, var(--c4) 90%) !important;
+  color: #fff !important;
+}
+
+/* ═══ Вкладки групп тегов в фильтрах ═══ */
+.ft-tabs::-webkit-scrollbar { display: none; }
+
+.ft-tab {
+  padding: 6px 12px;
+  background: var(--c2);
+  border: 1px solid var(--c3);
+  border-radius: 12px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--c4);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.ft-tab.active {
+  background: var(--c3);
+  color: #fff;
+  border-color: var(--c3);
+}
+
+.ft-tags-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* Тёмная тема */
+body[data-theme="dark"] .ft-tab {
+  background: color-mix(in srgb, var(--c4) 85%, var(--c3) 15%);
+  border-color: var(--c2);
+  color: #fff;
+}
+body[data-theme="dark"] .ft-tab.active {
+  background: var(--c3);
+  color: #fff;
+}
+body[data-theme="dark"] .ft-tabs {
+  border-bottom-color: var(--c2);
+}
+
+/* ═══ Обертка и стрелки для вкладок тегов ═══ */
+.ft-tabs-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px dashed color-mix(in srgb, var(--c3) 40%, transparent);
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden; /* Прячем всё, что вылезает за пределы */
+}
+
+/* Окно просмотра вкладок */
+.ft-tabs-viewport {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden; 
+  position: relative;
+}
+
+/* Контейнер с самими вкладками */
+.ft-tabs {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 6px;
+  justify-content: center; /* Центрируем видимые вкладки */
+  width: 100%;
+  position: relative;
+}
+
+/* Кнопки-стрелки */
+.ft-arrow {
+  background: var(--c2) !important;
+  border: 1px solid var(--c3) !important;
+  color: var(--c4) !important;
+  border-radius: 50% !important;
+  width: 28px !important;
+  height: 28px !important;
+  min-width: 28px !important;
+  min-height: 28px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer;
+  font-size: 10px !important;
+  flex-shrink: 0 !important;
+  transition: all 0.15s;
+  padding: 0 !important;
+  box-shadow: none !important;
+}
+.ft-arrow:hover:not(:disabled) {
+  background: var(--c3) !important;
+  color: #fff !important;
+}
+.ft-arrow:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* Сами вкладки */
+.ft-tab {
+  padding: 6px 12px;
+  background: var(--c2);
+  border: 1px solid var(--c3);
+  border-radius: 12px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--c4);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+.ft-tab.active {
+  background: var(--c3);
+  color: #fff;
+  border-color: var(--c3);
+}
+
+/* Тёмная тема */
+body[data-theme="dark"] .ft-arrow {
+  background: color-mix(in srgb, var(--c4) 85%, var(--c3) 15%) !important;
+  border-color: var(--c2) !important;
+  color: #fff !important;
+}
+body[data-theme="dark"] .ft-arrow:hover:not(:disabled) {
+  background: var(--c3) !important;
+}
+body[data-theme="dark"] .ft-tab {
+  background: color-mix(in srgb, var(--c4) 85%, var(--c3) 15%);
+  border-color: var(--c2);
+  color: #fff;
+}
+body[data-theme="dark"] .ft-tab.active {
+  background: var(--c3);
+  color: #fff;
+}
+body[data-theme="dark"] .ft-tabs-wrapper {
+  border-bottom-color: var(--c2);
+}
+
+/* ═══ Красивые плашки активных фильтров ═══ */
+.active-filters-bar {
+  display: none;
+  align-items: center; /* Выравниваем всё по центру по вертикали */
+  justify-content: space-between;
+  background: var(--c2);
+  color: var(--c4);
+  padding: 12px 16px;
+  border-radius: 12px;
+  margin: 10px 16px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  border: 1px solid var(--c3);
+  gap: 12px;
+}
+.active-filters-bar.visible {
+  display: flex;
+}
+
+.active-filters-content {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+
+.active-filters-label {
+  font-weight: 800;
+  opacity: 0.7;
+}
+
+.active-filters-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.af-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--c1);
+  border: 1px solid var(--c3);
+  padding: 4px 8px 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--c4);
+}
+
+.af-chip-remove {
+  background: none;
+  border: none;
+  color: var(--c4);
+  font-size: 16px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0 2px;
+  opacity: 0.5;
+  transition: opacity 0.15s;
+}
+
+.af-chip-remove:hover {
+  opacity: 1;
+  color: #d63859;
+}
+
+.active-filters-reset {
+  background: none;
+  border: none;
+  color: var(--c4);
+  font-size: 20px;
+  cursor: pointer;
+  line-height: 1;
+  opacity: 0.6;
+  transition: opacity 0.15s;
+  flex-shrink: 0;
+}
+.active-filters-reset:hover {
+  opacity: 1;
+}
+
+/* Тёмная тема */
+body[data-theme="dark"] .active-filters-bar {
+  background: color-mix(in srgb, var(--c4) 85%, var(--c3) 15%);
+  border-color: var(--c2);
+  color: #fff;
+}
+body[data-theme="dark"] .af-chip {
+  background: var(--c4);
+  border-color: var(--c2);
+  color: #fff;
+}
+body[data-theme="dark"] .af-chip-remove {
+  color: #fff;
+}
+body[data-theme="dark"] .af-chip-remove:hover {
+  color: #ff8098;
+}
+body[data-theme="dark"] .active-filters-reset {
+  color: #fff;
+}

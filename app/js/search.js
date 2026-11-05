@@ -56,6 +56,27 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('searchResults').innerHTML = '<div class="search-empty">Начните вводить запрос...</div>';
     });
   });
+
+  // Защита от закрытия при выделении текста
+  const modalSearch = document.getElementById('modalSearch');
+  if (modalSearch) {
+    let startX = 0, startY = 0;
+    
+    modalSearch.addEventListener('mousedown', (e) => {
+      startX = e.clientX;
+      startY = e.clientY;
+    });
+    
+    modalSearch.addEventListener('mouseup', (e) => {
+      if (e.target === modalSearch) {
+        const distance = Math.sqrt(Math.pow(e.clientX - startX, 2) + Math.pow(e.clientY - startY, 2));
+        if (distance < 10) {
+          // Если мышь почти не двигалась — это обычный клик по фону, закрываем
+          modalSearch.style.display = 'none';
+        }
+      }
+    });
+  }
 });
 
 function getStem(word) {
@@ -87,34 +108,51 @@ async function performSearch(query) {
   cleanQuery = cleanQuery.replace(/\s+/g, ' ');
   if (!cleanQuery) cleanQuery = rawQuery;
 
-  const searchTerms = new Set();
-  const words = cleanQuery.split(' ');
-  
-  words.forEach(word => {
-    const wordStem = getStem(word);
-    searchTerms.add(wordStem);
-    for (const [key, synonyms] of Object.entries(SEARCH_DICTIONARY)) {
-      if (key.includes(wordStem) || wordStem.includes(key) || synonyms.some(syn => syn.includes(wordStem) || wordStem.includes(syn))) {
-         searchTerms.add(key);
-         synonyms.forEach(syn => searchTerms.add(syn));
-      }
-    }
-  });
-  const termsArray = Array.from(searchTerms);
-
   if (currentSearchTab === 'recipes') {
     const allRecipes = await Storage.getAllRecipes();
+    
+    // Отсекаем слова короче 3 букв, чтобы предлоги и союзы не ломали поиск
+    let terms = cleanQuery.split(' ').filter(t => t.length > 2);
+    if (terms.length === 0) terms = [cleanQuery];
+
+    // Ищем синонимы для наших слов (например, "сладкое" -> "десерт", "выпечка")
+    const searchSynonyms = new Set();
+    terms.forEach(term => {
+      for (const [key, synonyms] of Object.entries(SEARCH_DICTIONARY)) {
+        if (key.includes(term) || term.includes(key)) {
+          synonyms.forEach(syn => searchSynonyms.add(syn));
+        }
+      }
+    });
+
     const scoredRecipes = allRecipes.map(r => {
       const rName = (r.name || '').toLowerCase();
-      const rTags = (r.tags || []).join(' ');
-      const rIngs = (r.ingredients || []).map(i => i.name).join(' ');
+      const rTags = (r.tags || []).join(' ').toLowerCase();
+      const rIngs = (r.ingredients || []).map(i => i.name.toLowerCase()).join(' ');
       const rNote = (r.note || '').toLowerCase();
-      let score = countMatches(rName, termsArray)*10 + countMatches(rTags, termsArray)*5 + countMatches(rIngs, termsArray)*3 + countMatches(rNote, termsArray)*1;
+      
+      let score = 0;
+      
+      // Оцениваем основные слова
+      terms.forEach(term => {
+        const stem = getStem(term);
+        if (rName.includes(stem)) score += 30;
+        if (rTags.includes(stem)) score += 15;
+        if (rIngs.includes(stem)) score += 5;
+      });
+      
+      // Оцениваем синонимы (если совпали по словарю)
+      searchSynonyms.forEach(syn => {
+        if (rName.includes(syn)) score += 20;
+        if (rTags.includes(syn)) score += 10;
+        if (rIngs.includes(syn)) score += 3;
+      });
+      
       return { recipe: r, score };
     }).filter(item => item.score > 0);
 
     scoredRecipes.sort((a, b) => b.score - a.score);
-    renderRecipeResults(scoredRecipes.map(i => i.recipe), words[0] ? words[0].slice(0, 4) : cleanQuery); 
+    renderRecipeResults(scoredRecipes.map(i => i.recipe), terms[0]); 
   } else {
     renderProductResults(await Storage.searchProducts(cleanQuery), cleanQuery);
   }
