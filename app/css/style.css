@@ -2716,51 +2716,21 @@ body[data-theme="dark"] .pf-autocomplete-item:hover {
 .mt-group.collapsed .mt-group-body { display: none; }
 
 /* Кнопка Создать тег */
-.mt-create-wrap { 
-  margin-top: 16px; 
-  margin-bottom: 16px;
-  padding-top: 12px;
-  border-top: 1px dashed color-mix(in srgb, var(--c3) 40%, transparent);
-}
+.mt-create-wrap { margin-top: 16px; margin-bottom: 8px; }
 .mt-create-btn {
   width: 100%;
-  padding: 14px;
-  border-radius: 12px;
-  border: 2px solid var(--c3);
-  background: color-mix(in srgb, var(--c3) 10%, transparent);
+  padding: 12px;
+  border-radius: 10px;
+  border: 2px dashed var(--c3);
+  background: transparent;
   color: var(--c4);
   font-family: 'Nunito', sans-serif;
   font-weight: 800;
   font-size: 14px;
   cursor: pointer;
-  transition: all 0.15s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
-.mt-create-btn:hover { 
-  background: var(--c3); 
-  color: #fff; 
-}
-body[data-theme="dark"] .mt-create-btn {
-  color: #fff;
-  border-color: var(--c2);
-  background: rgba(255,255,255,.05);
-}
-body[data-theme="dark"] .mt-create-btn:hover {
-  background: var(--c3);
-  border-color: var(--c3);
+  transition: background 0.15s;
 }
 .mt-create-btn:hover { background: color-mix(in srgb, var(--c3) 15%, transparent); }
-
-body[data-theme="dark"] .mt-create-btn {
-  color: #fff !important;
-  border-color: var(--c2);
-}
-body[data-theme="dark"] .mt-create-btn:hover {
-  background: rgba(255,255,255,.1);
-}
 
 /* ═══ Строки с тегами и свайп ═══ */
 .mt-swipe-wrap {
@@ -2918,9 +2888,9 @@ body[data-theme="dark"] .mt-search {
 body[data-theme="dark"] .mt-search::placeholder { color: #fff; }
 
 body[data-theme="dark"] .mt-group-head {
-  background: var(--c4) !important;
-  color: #fff !important;
-  opacity: 1 !important;
+  background: var(--c4);
+  color: #fff;
+  opacity: 0.9;
 }
 
 body[data-theme="dark"] .mt-row-content {
@@ -3252,10 +3222,4 @@ body[data-theme="dark"] .active-filters-reset { color: #fff; }
 @media (max-width: 640px) {
   .filter-modal-box { height: 100vh; max-width: 100%; border-radius: 0; }
   .filter-footer { border-radius: 0; }
-}
-
-/* Затемняем окно тегов, когда поверх открылось наше окошко (создание/удаление) */
-body:has(.custom-modal-overlay) #modalTag .modal-tag-box {
-  filter: brightness(0.6);
-  pointer-events: none;
 }
