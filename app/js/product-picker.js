@@ -107,7 +107,10 @@
       </div>
       <div class="pp-list" id="ppList"></div>
       <div class="pp-ctx-menu" id="ppCtxMenu" style="display:none">
+        <button type="button" class="pp-ctx-item" data-pp-view>👁 Просмотр</button>
+        <button type="button" class="pp-ctx-item" data-pp-copy>📋 Скопировать в мои</button>
         <button type="button" class="pp-ctx-item" data-pp-edit>✎ Редактировать</button>
+        <button type="button" class="pp-ctx-item" data-pp-dup>📋 Дублировать</button>
         <button type="button" class="pp-ctx-item pp-ctx-danger" data-pp-delete>🗑 Удалить</button>
       </div>
     `;
@@ -265,6 +268,14 @@
     const menu = box.querySelector('#ppCtxMenu');
     if (!menu) return;
     ctxTargetId = productId;
+    
+    // Проверяем, свой это продукт или базовый
+    const isOwn = !!findOwnProduct(productId);
+    menu.querySelector('[data-pp-copy]').style.display = isOwn ? 'none' : 'block';
+    menu.querySelector('[data-pp-edit]').style.display = isOwn ? 'block' : 'none';
+    menu.querySelector('[data-pp-dup]').style.display = isOwn ? 'block' : 'none';
+    menu.querySelector('[data-pp-delete]').style.display = isOwn ? 'block' : 'none';
+
     menu.style.display = 'block';
     menu.style.visibility = 'hidden';
     const mw = menu.offsetWidth;
@@ -464,7 +475,6 @@
     const item = e.target.closest('.pp-item');
     if (!item) return;
     const id = item.dataset.id;
-    if (!findOwnProduct(id)) return; // на базовых — системное меню работает
     e.preventDefault();
     if (ctxTargetId) return;
     openCtxMenu(id, e.clientX, e.clientY);
@@ -475,7 +485,6 @@
     const item = e.target.closest('.pp-item');
     if (!item) return;
     const id = item.dataset.id;
-    if (!findOwnProduct(id)) return;
     const t = e.touches[0];
     const x = t.clientX;
     const y = t.clientY;
@@ -504,6 +513,64 @@
  box.addEventListener('click', (e) => {
     if (e.target.closest('[data-pp-close]')){
       closeProductPicker();
+      return;
+    }
+
+    // Клик по пункту контекстного меню — Просмотр
+    if (e.target.closest('[data-pp-view]')){
+      const id = ctxTargetId;
+      closeCtxMenu();
+      if (id && typeof openProductCard === 'function'){
+        openProductCard(id, {
+          onCopy: async () => {
+            if (typeof Storage !== 'undefined' && Storage.getAllProducts){
+              allOwn = await Storage.getAllProducts();
+            }
+            renderList();
+          }
+        });
+      }
+      return;
+    }
+
+    // Клик по пункту контекстного меню — Скопировать в мои
+    if (e.target.closest('[data-pp-copy]')){
+      const id = ctxTargetId;
+      closeCtxMenu();
+      if (id && typeof openProductCard === 'function'){
+        const product = Storage.getBaseProduct ? Storage.getBaseProduct(id) : null;
+        if (product) {
+           openProductCard(product, {
+             onCopy: async () => {
+               if (typeof Storage !== 'undefined' && Storage.getAllProducts){
+                 allOwn = await Storage.getAllProducts();
+               }
+               renderList();
+             }
+           });
+           // Сразу нажимаем "Скопировать" в карточке? Нет, пусть пользователь сам решит.
+           // Либо можно сразу открыть форму. Оставим открытие карточки.
+        }
+      }
+      return;
+    }
+
+    // Клик по пункту контекстного меню — Дублировать
+    if (e.target.closest('[data-pp-dup]')){
+      const id = ctxTargetId;
+      closeCtxMenu();
+      const product = findOwnProduct(id);
+      if (product && typeof openProductForm === 'function') {
+        openProductForm({
+          initialData: { ...product, id: null, name: product.name + ' (копия)' },
+          onSaved: async () => {
+            if (typeof Storage !== 'undefined' && Storage.getAllProducts){
+              allOwn = await Storage.getAllProducts();
+            }
+            renderList();
+          }
+        });
+      }
       return;
     }
 

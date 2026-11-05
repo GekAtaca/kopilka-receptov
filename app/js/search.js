@@ -45,10 +45,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  const clearBtn = document.getElementById('searchClearBtn');
   input.addEventListener('input', (e) => {
+    input.parentElement.classList.toggle('has-value', e.target.value.length > 0);
     clearTimeout(searchTimeout);
     searchTimeout = setTimeout(() => performSearch(e.target.value), 300);
   });
+  if (clearBtn) {
+    clearBtn.addEventListener('click', () => {
+      input.value = '';
+      input.parentElement.classList.remove('has-value');
+      performSearch('');
+      input.focus();
+    });
+  }
 
   document.querySelectorAll('#modalSearch [data-modal-close]').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -60,21 +70,13 @@ document.addEventListener('DOMContentLoaded', () => {
   // Защита от закрытия при выделении текста
   const modalSearch = document.getElementById('modalSearch');
   if (modalSearch) {
-    let startX = 0, startY = 0;
-    
-    modalSearch.addEventListener('mousedown', (e) => {
-      startX = e.clientX;
-      startY = e.clientY;
-    });
-    
+    let mouseDownTarget = null;
+    modalSearch.addEventListener('mousedown', (e) => { mouseDownTarget = e.target; });
     modalSearch.addEventListener('mouseup', (e) => {
-      if (e.target === modalSearch) {
-        const distance = Math.sqrt(Math.pow(e.clientX - startX, 2) + Math.pow(e.clientY - startY, 2));
-        if (distance < 10) {
-          // Если мышь почти не двигалась — это обычный клик по фону, закрываем
-          modalSearch.style.display = 'none';
-        }
+      if (mouseDownTarget === modalSearch && e.target === modalSearch) {
+        modalSearch.style.display = 'none';
       }
+      mouseDownTarget = null;
     });
   }
 });
@@ -154,7 +156,16 @@ async function performSearch(query) {
     scoredRecipes.sort((a, b) => b.score - a.score);
     renderRecipeResults(scoredRecipes.map(i => i.recipe), terms[0]); 
   } else {
-    renderProductResults(await Storage.searchProducts(cleanQuery), cleanQuery);
+    let rawProducts = await Storage.searchProducts(cleanQuery);
+    const ownProducts = await Storage.getAllProducts();
+    const ownIds = new Set(ownProducts.map(p => p.id));
+    
+    rawProducts.forEach(p => {
+      if (ownIds.has(p.id)) p.source = 'own';
+      else p.source = 'base';
+    });
+    
+    renderProductResults(rawProducts, cleanQuery);
   }
 }
 
@@ -185,20 +196,134 @@ function renderProductResults(products, query) {
     resultsEl.innerHTML = `<div class="search-empty">По запросу «${query}» продуктов не найдено.</div>`;
     return;
   }
-  resultsEl.innerHTML = products.map(p => `
+
+  const own = products.filter(p => p.source === 'own');
+  const base = products.filter(p => p.source !== 'own');
+
+  const renderItem = (p) => {
+    const kcal = (p.kcal === 0 || p.kcal) ? p.kcal : '—';
+    const prot = (p.protein === 0 || p.protein) ? p.protein : '—';
+    const fat = (p.fat === 0 || p.fat) ? p.fat : '—';
+    const carb = (p.carbs === 0 || p.carbs) ? p.carbs : '—';
+    const brandStr = p.brand ? ` · ${escapeHtml(p.brand)}` : '';
+    
+    return `
     <div class="search-result-item" data-product-id="${p.id}">
-      <div class="search-result-title">${highlightText(p.name, query)}${p.brand ? ` (${p.brand})` : ''}</div>
-      <div class="search-result-desc">${p.kbzhu?.kcal ? `${p.kbzhu.kcal} ккал · Б ${p.kbzhu.protein} · Ж ${p.kbzhu.fat} · У ${p.kbzhu.carbs}` : 'КБЖУ не указано'} · ${p.source === 'own' ? '⭐ Свой' : '📚 База'}</div>
+      <div class="search-result-title">${highlightText(p.name, query)}</div>
+      <div class="search-result-desc">${kcal} ккал · Б ${prot} · Ж ${fat} · У ${carb}${brandStr}</div>
     </div>
-  `).join('');
+  `;
+  };
+
+  let html = '';
+  if (own.length) {
+    html += `<div class="search-group-title">⭐ Мои продукты</div>`;
+    html += own.map(renderItem).join('');
+  }
+  if (base.length) {
+    html += `<div class="search-group-title">📚 База продуктов</div>`;
+    html += base.map(renderItem).join('');
+  }
+
+  resultsEl.innerHTML = html;
 
   resultsEl.querySelectorAll('.search-result-item').forEach(item => {
     item.addEventListener('click', () => {
-      document.getElementById('modalSearch').style.display = 'none';
-      if (typeof showToastMsg === 'function') showToastMsg('Карточка продукта появится чуть позже');
+      const id = item.dataset.productId;
+      if (typeof openProductCard === 'function') {
+        openProductCard(id);
+      }
     });
   });
 }
+
+// Глобальное контекстное меню для поиска
+document.addEventListener('DOMContentLoaded', () => {
+  const resultsEl = document.getElementById('searchResults');
+  if (!resultsEl) return;
+
+  resultsEl.addEventListener('contextmenu', (e) => {
+    const item = e.target.closest('.search-result-item[data-product-id]');
+    if (!item) return;
+    e.preventDefault();
+    
+    const id = item.dataset.productId;
+    const menu = document.getElementById('globalProductCtx');
+    if (!menu) return;
+
+    const isOwn = id.startsWith('product-');
+    menu.dataset.targetId = id;
+    
+    menu.querySelector('[data-ctx="copy"]').style.display = isOwn ? 'none' : 'block';
+    menu.querySelector('[data-ctx="edit"]').style.display = isOwn ? 'block' : 'none';
+    menu.querySelector('[data-ctx="dup"]').style.display = isOwn ? 'block' : 'none';
+    menu.querySelector('[data-ctx="delete"]').style.display = isOwn ? 'block' : 'none';
+
+    menu.style.display = 'block';
+    menu.style.visibility = 'hidden';
+    let left = e.clientX, top = e.clientY;
+    const mw = menu.offsetWidth, mh = menu.offsetHeight;
+    if (left + mw > window.innerWidth - 6) left = window.innerWidth - mw - 6;
+    if (top + mh > window.innerHeight - 6) top = window.innerHeight - mh - 6;
+    menu.style.left = left + 'px';
+    menu.style.top = top + 'px';
+    menu.style.visibility = 'visible';
+  });
+
+  document.addEventListener('click', async (e) => {
+    const menu = document.getElementById('globalProductCtx');
+    if (!menu || menu.style.display === 'none') return;
+
+    const btn = e.target.closest('[data-ctx]');
+    if (!btn) { menu.style.display = 'none'; return; }
+
+    e.preventDefault(); e.stopPropagation();
+    menu.style.display = 'none';
+    
+    const id = menu.dataset.targetId;
+    const action = btn.dataset.ctx;
+
+    if (action === 'view' && typeof openProductCard === 'function') {
+      openProductCard(id);
+    } else if (action === 'copy') {
+      const product = Storage.getBaseProduct ? Storage.getBaseProduct(id) : null;
+      if (product && typeof openProductForm === 'function') {
+        const copy = { ...product };
+        delete copy.id;
+        copy.sourceId = product.id;
+        copy.createdAt = Date.now();
+        copy.source = 'own';
+        openProductForm({
+          initialData: copy,
+          skipDuplicateCheck: true,
+          onSaved: () => { const inp = document.getElementById('searchInput'); if (inp) performSearch(inp.value); }
+        });
+      }
+    } else if (action === 'edit' && typeof openProductForm === 'function') {
+      openProductForm({
+        productId: id,
+        onSaved: () => { const inp = document.getElementById('searchInput'); if (inp) performSearch(inp.value); }
+      });
+    } else if (action === 'dup') {
+      const p = await Storage.getProduct(id);
+      if (p && typeof openProductForm === 'function') {
+        openProductForm({
+          initialData: { ...p, id: null, name: p.name + ' (копия)' },
+          skipDuplicateCheck: true,
+          onSaved: () => { const inp = document.getElementById('searchInput'); if (inp) performSearch(inp.value); }
+        });
+      }
+    }
+  });
+
+  const searchModal = document.getElementById('modalSearch');
+  if (searchModal) {
+    searchModal.addEventListener('scroll', () => {
+      const menu = document.getElementById('globalProductCtx');
+      if (menu) menu.style.display = 'none';
+    }, true);
+  }
+});
 
 function highlightText(text, query) {
   if (!text || !query) return escapeHtml(text);

@@ -3917,3 +3917,446 @@ body[data-theme="dark"] .af-chip-remove:hover {
 body[data-theme="dark"] .active-filters-reset {
   color: #fff;
 }
+
+/* ═══ Карточка продукта ═══ */
+.modal-product-card {
+  position: fixed;
+  inset: 0;
+  z-index: 100008; /* Поверх поиска и пикера */
+  background: transparent; /* Прозрачный фон, чтобы не чернело! */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.modal-product-card-box {
+  background: var(--c1);
+  color: var(--c4);
+  width: 100%;
+  max-width: 400px;
+  border-radius: 14px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.55);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  font-family: var(--font-body, 'Cormorant Garamond', serif);
+  font-style: var(--font-style-body, italic);
+  font-weight: var(--font-weight-body, 400);
+  border: 1px solid var(--c3);
+}
+
+body[data-theme="dark"] .modal-product-card-box {
+  background: var(--c4);
+  color: #fff;
+  border-color: var(--c2);
+}
+
+.pc-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--c3);
+  flex-shrink: 0;
+}
+body[data-theme="dark"] .pc-head { border-color: var(--c2); }
+
+.pc-title {
+  font-family: var(--font-head, 'Cormorant Garamond', serif);
+  font-style: var(--font-style-head, italic);
+  font-weight: var(--font-weight-head, 700);
+  font-size: 22px;
+  line-height: 1.2;
+}
+
+.pc-close {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: none; border: none; color: var(--c4);
+  font-size: 18px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; padding: 0;
+}
+body[data-theme="dark"] .pc-close { color: #fff; }
+.pc-close:hover { opacity: .7; }
+
+.pc-body {
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pc-toggle-wrap {
+  display: flex;
+  background: var(--c2);
+  border-radius: 10px;
+  padding: 4px;
+  border: 1px solid var(--c3);
+}
+body[data-theme="dark"] .pc-toggle-wrap { background: rgba(255,255,255,0.05); border-color: var(--c2); }
+
+.pc-toggle-btn {
+  flex: 1;
+  padding: 8px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  color: var(--c4);
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+body[data-theme="dark"] .pc-toggle-btn { color: #fff; }
+.pc-toggle-btn.active {
+  background: var(--c1);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+body[data-theme="dark"] .pc-toggle-btn.active { background: var(--c4); color: #fff; }
+
+.pc-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pc-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+}
+
+.pc-label {
+  font-weight: 700;
+  opacity: 0.6;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.pc-value {
+  font-weight: 600;
+  text-align: right;
+}
+
+.pc-kbzhu-block {
+  background: color-mix(in srgb, var(--c2) 50%, transparent);
+  border-radius: 12px;
+  padding: 14px;
+  border: 1px solid var(--c3);
+}
+body[data-theme="dark"] .pc-kbzhu-block { background: rgba(0,0,0,0.2); border-color: var(--c2); }
+
+.pc-kbzhu-title {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.7;
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.pc-kbzhu-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  text-align: center;
+}
+
+.pc-kbzhu-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.pc-kbzhu-val {
+  font-family: var(--font-head, 'Cormorant Garamond', serif);
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1;
+}
+
+.pc-kbzhu-lbl {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 10px;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+.pc-note {
+  font-family: 'Nunito', sans-serif;
+  font-size: 12px;
+  text-align: center;
+  opacity: 0.6;
+  margin-top: 10px;
+  font-style: italic;
+}
+
+.pc-actions {
+  display: flex;
+  gap: 8px;
+  padding: 12px 18px 16px;
+  border-top: 1px solid var(--c3);
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+body[data-theme="dark"] .pc-actions { border-color: var(--c2); }
+
+.pc-btn {
+  flex: 1;
+  min-width: 120px;
+  padding: 11px 16px;
+  border-radius: 10px;
+  border: 1px solid var(--c3);
+  background: var(--c2);
+  color: var(--c4);
+  font-family: var(--font-head, 'Cormorant Garamond', serif);
+  font-style: var(--font-style-head, italic);
+  font-weight: var(--font-weight-head, 700);
+  font-size: 15px;
+  cursor: pointer;
+  transition: filter .15s;
+  text-align: center;
+}
+.pc-btn:hover { filter: brightness(1.05); }
+.pc-btn-primary {
+  background: var(--c3);
+  border-color: var(--c3);
+  color: #fff;
+}
+
+body[data-theme="dark"] .pc-btn {
+  background: color-mix(in srgb, var(--c1) 15%, var(--c4) 85%);
+  border-color: var(--c2);
+  color: #fff;
+}
+body[data-theme="dark"] .pc-btn-primary {
+  background: var(--c3);
+  border-color: var(--c3);
+}
+
+@media (max-width: 640px) {
+  .modal-product-card { padding: 0; }
+  .modal-product-card-box {
+    height: 100vh;
+    max-width: 100%;
+    border-radius: 0;
+    border: none;
+  }
+}
+
+/* ═══ ФИКСЫ И УЛУЧШЕНИЯ ═══ */
+
+/* 1. Убираем фон у карточки продукта и дубликатов, чтобы не было черноты */
+.modal-product-card,
+.modal-dup {
+  background: transparent !important;
+  pointer-events: none; /* Пропускаем клики сквозь фон к окну поиска/формы */
+}
+.modal-product-card-box,
+.modal-dup-box {
+  pointer-events: auto; /* Само окно кликабельно */
+}
+
+/* А если модалка дубликатов открыта поверх формы продукта */
+body:has(#modalProductForm[style*="display: flex"]) .modal-dup {
+  background: transparent !important;
+}
+
+/* 2. Скроллбар в окне поиска (и в пикере тоже) */
+.search-results::-webkit-scrollbar,
+.pp-list::-webkit-scrollbar {
+  width: 6px;
+}
+.search-results::-webkit-scrollbar-track,
+.pp-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+.search-results::-webkit-scrollbar-thumb,
+.pp-list::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--c3) 60%, transparent);
+  border-radius: 6px;
+}
+.search-results::-webkit-scrollbar-thumb:hover,
+.pp-list::-webkit-scrollbar-thumb:hover {
+  background: var(--c3);
+}
+
+/* 3. Вкладки База/Моя как в поиске */
+.pc-toggle-wrap {
+  display: flex;
+  gap: 6px;
+  border-bottom: 1px solid var(--c3);
+  padding: 0 18px;
+  margin-bottom: 0;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--c3);
+  border-radius: 0;
+}
+.pc-toggle-btn {
+  flex: 1;
+  padding: 12px 16px;
+  background: color-mix(in srgb, var(--c3) 12%, transparent);
+  border: 1px solid transparent;
+  border-bottom: none;
+  border-radius: 12px 12px 0 0;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--c4);
+  opacity: 0.6;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  bottom: -1px; 
+  box-shadow: none;
+}
+.pc-toggle-btn.active {
+  opacity: 1;
+  background: var(--c1);
+  border: 1px solid var(--c3);
+  border-bottom: 1px solid var(--c1);
+  font-weight: 800;
+  box-shadow: 0 -3px 8px rgba(0,0,0,0.06);
+  z-index: 2;
+}
+body[data-theme="dark"] .pc-toggle-wrap { border-bottom-color: var(--c2); }
+body[data-theme="dark"] .pc-toggle-btn { color: #fff; background: color-mix(in srgb, var(--c1) 5%, transparent); }
+body[data-theme="dark"] .pc-toggle-btn.active { background: var(--c4); border-color: var(--c2); border-bottom-color: var(--c4); }
+
+/* 4. Объемное контекстное меню в пикере */
+.pp-ctx-menu {
+  background: var(--c1);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.3), 0 2px 8px rgba(0,0,0,0.15);
+  border: 1px solid var(--c3);
+  border-radius: 12px;
+  padding: 6px;
+}
+.pp-ctx-item {
+  border-radius: 8px;
+  padding: 10px 14px;
+}
+body[data-theme="dark"] .pp-ctx-menu {
+  background: var(--c4);
+  border-color: var(--c2);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+}
+
+/* 5. КБЖУ в карточке — подписи сверху, цифры снизу */
+.pc-kbzhu-item {
+  flex-direction: column;
+  align-items: center;
+}
+.pc-kbzhu-lbl {
+  font-size: 10px;
+  order: -1; /* Ставим подпись ПЕРЕД цифрой */
+  margin-bottom: 2px;
+}
+.pc-kbzhu-val {
+  font-size: 18px; /* Чуть уменьшим, чтобы влезали полные названия */
+}
+
+/* 6. Добавляем отступ для body карточки, так как вкладки теперь вплотную */
+.pc-body {
+  padding-top: 16px;
+}
+
+/* 7. Полоски под вкладками (как в поиске) */
+.pc-toggle-wrap { 
+  border-bottom: 1px solid var(--c3) !important; 
+  border-radius: 0 !important; 
+  margin-top: 4px; 
+  padding: 0 !important;
+  background: transparent !important;
+  display: flex !important;
+  gap: 6px !important;
+}
+.pc-toggle-btn {
+  background: color-mix(in srgb, var(--c3) 12%, transparent) !important;
+  border: 1px solid transparent !important;
+  border-bottom: none !important;
+  border-radius: 12px 12px 0 0 !important;
+  opacity: 0.6 !important;
+  box-shadow: none !important;
+  bottom: -1px !important;
+  position: relative !important;
+}
+.pc-toggle-btn.active { 
+  opacity: 1 !important;
+  background: var(--c1) !important;
+  border: 1px solid var(--c3) !important;
+  border-bottom: 1px solid var(--c1) !important;
+  box-shadow: 0 -3px 8px rgba(0,0,0,0.06) !important;
+}
+body[data-theme="dark"] .pc-toggle-wrap { border-bottom-color: var(--c2) !important; }
+body[data-theme="dark"] .pc-toggle-btn { color: #fff !important; background: color-mix(in srgb, var(--c1) 5%, transparent) !important; }
+body[data-theme="dark"] .pc-toggle-btn.active { background: var(--c4) !important; border-color: var(--c2) !important; border-bottom-color: var(--c4) !important; }
+
+.pc-head { border-bottom: none !important; }
+.pc-actions { border-top: none !important; }
+
+/* 8. Скроллбар не вылезает */
+.search-modal-box { overflow: hidden; }
+.search-results, .pp-list { border-radius: 0 0 14px 14px; }
+
+/* Управление затемнением перенесено в JS, чтобы работало надежно */
+
+/* 10. Стили для крестика в поиске */
+.search-input-wrap { position: relative; }
+.search-clear-btn {
+  position: absolute; right: 28px; top: 50%; transform: translateY(-50%);
+  background: none; border: none; font-size: 16px; color: var(--c4); cursor: pointer;
+  display: none; opacity: 0.6; transition: opacity 0.15s;
+}
+body[data-theme="dark"] .search-clear-btn { color: #fff; }
+.search-input-wrap.has-value .search-clear-btn { display: block; }
+.search-clear-btn:hover { opacity: 1; }
+
+/* 11. Заголовки групп в поиске */
+.search-group-title {
+  padding: 14px 18px 6px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;
+  color: var(--c4); opacity: 0.7;
+}
+body[data-theme="dark"] .search-group-title { color: #fff; }
+#globalProductCtx { background: var(--c1); }
+body[data-theme="dark"] #globalProductCtx { background: var(--c4); }
+
+/* 12. Окно дубликатов в две строки */
+.dup-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding: 8px 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--c3) 30%, transparent);
+}
+
+/* Задаем единый базовый фон для всех модалок (50% затемнения) */
+.modal, 
+.modal-product-picker, 
+.modal-product-form, 
+.modal-product-card, 
+.modal-dup {
+  background: rgba(0, 0, 0, 0.5);
+}
+.dup-item-name {
+  font-family: var(--font-body, 'Cormorant Garamond', serif);
+  font-style: italic;
+  font-size: 16px;
+}
+.dup-item-meta {
+  font-size: 12px;
+  opacity: 0.7;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}

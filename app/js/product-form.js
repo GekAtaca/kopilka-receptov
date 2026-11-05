@@ -14,6 +14,7 @@
   let editingId  = null;    // id, если редактируем существующий
   let draft      = null;    // черновик продукта
   let dupModal   = null;    // DOM модалки дубликатов (создаётся один раз)
+  let currentSkipDup = false; // флаг: пропускать ли проверку на дубликаты
 
   // ─── Экранирование ───
   function escapeHtml(s){
@@ -82,6 +83,7 @@
     onSavedCb = typeof options.onSaved === 'function' ? options.onSaved : null;
     onCloseCb = typeof options.onClose === 'function' ? options.onClose : null;
     editingId = options.productId || null;
+    currentSkipDup = options.skipDuplicateCheck || false;
 
      // Черновик: или загружаем существующий, или пустой
     if (editingId){
@@ -97,6 +99,9 @@
         draft.fat     = draft.kbzhuMl.fat;
         draft.carbs   = draft.kbzhuMl.carbs;
       }
+    } else if (options.initialData) {
+      draft = { ...options.initialData };
+      editingId = null;
     } else {
       draft = {
         id: null,
@@ -168,11 +173,11 @@
     document.body.appendChild(dupModal);
 
     // Клик по тёмному фону — отмена
-    let backdropDown = false;
-    dupModal.addEventListener('mousedown', (e) => { backdropDown = (e.target === dupModal); });
+    let mouseDownTarget = null;
+    dupModal.addEventListener('mousedown', (e) => { mouseDownTarget = e.target; });
     dupModal.addEventListener('mouseup', (e) => {
-      if (backdropDown && e.target === dupModal) closeDupModal();
-      backdropDown = false;
+      if (mouseDownTarget === dupModal && e.target === dupModal) closeDupModal();
+      mouseDownTarget = null;
     });
 
     return dupModal;
@@ -180,6 +185,11 @@
 
   function closeDupModal(){
     if (dupModal) dupModal.style.display = 'none';
+    
+    const formModal = document.getElementById('modalProductForm');
+    if (formModal && formModal.style.display === 'flex') {
+      formModal.style.background = 'rgba(0, 0, 0, 0.5)';
+    }
   }
 
   // Показать модалку. onConfirm — что делать при «Создать всё равно»
@@ -187,22 +197,33 @@
     ensureDupModal();
     const list = dupModal.querySelector('#dupList');
     list.innerHTML = similar.map(item => {
-      const p = item.product;
-      const isOwn = item.source === 'own';
-      const badge = isOwn ? '⭐ ' : '📚 ';
-      const kbzhu = [
-        (p.kcal ?? '—'),
-        'Б' + (p.protein ?? '—'),
-        'Ж' + (p.fat ?? '—'),
-        'У' + (p.carbs ?? '—')
-      ].join(' · ');
-      return `
-        <div class="dup-item">
-          <span class="dup-item-name">${badge}${escapeHtml(p.name || '')}</span>
-          <span class="dup-item-kbzhu">${escapeHtml(kbzhu)}</span>
+    const p = item.product;
+    const isOwn = item.source === 'own';
+    const badge = isOwn ? '⭐ ' : '📚 ';
+    const kbzhu = [
+      (p.kcal ?? '—'),
+      'Б' + (p.protein ?? '—'),
+      'Ж' + (p.fat ?? '—'),
+      'У' + (p.carbs ?? '—')
+    ].join(' · ');
+    const brandStr = p.brand ? `<span>· ${escapeHtml(p.brand)}</span>` : '';
+    
+    return `
+      <div class="dup-item">
+        <div class="dup-item-name">${badge}${escapeHtml(p.name || '')}</div>
+        <div class="dup-item-meta">
+          <span>${escapeHtml(kbzhu)}</span>
+          ${brandStr}
         </div>
-      `;
+      </div>
+    `;
     }).join('');
+
+    // Умное затемнение: убираем фон у формы
+    const formModal = document.getElementById('modalProductForm');
+    if (formModal && formModal.style.display === 'flex') {
+      formModal.style.background = 'transparent';
+    }
 
     dupModal.style.display = 'flex';
 
@@ -554,6 +575,7 @@
 
     // Собираем объект.
     const p = { ...draft };
+    // sourceId сохраняем, если есть
 
     // Короткое имя = длинному, если пусто.
     if (!p.shortName || !p.shortName.trim()){
@@ -588,7 +610,7 @@
     }
 
     // Проверка на дубликаты — только при создании нового
-    if (!editingId){
+    if (!editingId && !currentSkipDup){
       let similar = [];
       try { similar = await findSimilarProducts(p); }
       catch(e){ console.warn('[product-form] Поиск похожих упал', e); }
