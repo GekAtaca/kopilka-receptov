@@ -4153,21 +4153,7 @@ body[data-theme="dark"] .pc-btn-primary {
 
 /* ═══ ФИКСЫ И УЛУЧШЕНИЯ ═══ */
 
-/* 1. Убираем фон у карточки продукта и дубликатов, чтобы не было черноты */
-.modal-product-card,
-.modal-dup {
-  background: transparent !important;
-  pointer-events: none; /* Пропускаем клики сквозь фон к окну поиска/формы */
-}
-.modal-product-card-box,
-.modal-dup-box {
-  pointer-events: auto; /* Само окно кликабельно */
-}
-
-/* А если модалка дубликатов открыта поверх формы продукта */
-body:has(#modalProductForm[style*="display: flex"]) .modal-dup {
-  background: transparent !important;
-}
+/* Затемнение управляется через JS, а не через CSS */
 
 /* 2. Скроллбар в окне поиска (и в пикере тоже) */
 .search-results::-webkit-scrollbar,

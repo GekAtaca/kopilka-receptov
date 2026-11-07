@@ -54,7 +54,7 @@
     if (isBase) {
       currentBase = product;
       currentOwn = await findOwnCopy(product.id);
-      viewMode = currentOwn ? 'base' : 'base'; // Всегда начинаем с базы, если есть переключатель
+      viewMode = currentOwn ? 'base' : 'base';
     } else {
       currentOwn = product;
       currentBase = null;
@@ -191,7 +191,7 @@
       if (typeof openProductForm === 'function') {
         openProductForm({
           initialData: copy,
-          skipDuplicateCheck: true, // Не ищем дубликаты при копировании
+          skipDuplicateCheck: true,
           onSaved: (saved) => {
             if (typeof performSearch === 'function') {
               const input = document.getElementById('searchInput');
@@ -231,7 +231,7 @@
       if (typeof openProductForm === 'function') {
         openProductForm({
           initialData: { ...currentOwn, id: null, name: currentOwn.name + ' (копия)' },
-          skipDuplicateCheck: true, // Не ищем дубликаты при дублировании
+          skipDuplicateCheck: true,
           onSaved: (saved) => {
             if (typeof performSearch === 'function') {
               const input = document.getElementById('searchInput');
@@ -265,18 +265,20 @@
   let mouseDownTarget = null;
   modal.addEventListener('mousedown', (e) => {
     mouseDownTarget = e.target;
+    if (e.target === modal) e.stopPropagation(); // Блокируем клик от поиска
   });
   modal.addEventListener('mouseup', (e) => {
     if (mouseDownTarget === modal && e.target === modal) {
       closeProductCard();
+      e.stopPropagation(); // Блокируем клик от поиска
     }
     mouseDownTarget = null;
   });
 
-  // Escape
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal.style.display === 'flex') closeProductCard();
-  });
+  // Escape (теперь обрабатывается глобально в modals.js)
+  // document.addEventListener('keydown', (e) => {
+  //   if (e.key === 'Escape' && modal.style.display === 'flex') closeProductCard();
+  // });
 
   // Публичное API
   window.openProductCard = openProductCard;

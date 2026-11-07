@@ -37,12 +37,28 @@ document.addEventListener('DOMContentLoaded', function(){
     });
   });
 
-  // ─── Escape — закрыть все открытые модалки ───
+  // ─── Escape — закрыть только верхнюю открытую модалку ───
   document.addEventListener('keydown', (e) => {
     if (e.key !== 'Escape') return;
-    document.querySelectorAll('.modal').forEach(m => {
-      if (m.style.display === 'flex') closeModal(m);
-    });
+    
+    const allModals = Array.from(document.querySelectorAll('.modal, .modal-product-picker, .modal-product-form, .modal-product-card, .modal-dup, .modal-recipe'));
+    const openModals = allModals.filter(m => m.style.display === 'flex');
+    
+    if (openModals.length > 0) {
+      // Сортируем по z-index (кто выше), чтобы закрыть именно верхнее окно
+      openModals.sort((a, b) => {
+        const zA = parseInt(window.getComputedStyle(a).zIndex) || 0;
+        const zB = parseInt(window.getComputedStyle(b).zIndex) || 0;
+        return zB - zA;
+      });
+      
+      openModals[0].style.display = 'none';
+      
+      // Если закрыли последнее окно, возвращаем скролл странице
+      if (openModals.length === 1) {
+        document.body.style.overflow = '';
+      }
+    }
   });
 });
 

@@ -200,12 +200,11 @@
     const p = item.product;
     const isOwn = item.source === 'own';
     const badge = isOwn ? '⭐ ' : '📚 ';
-    const kbzhu = [
-      (p.kcal ?? '—'),
-      'Б' + (p.protein ?? '—'),
-      'Ж' + (p.fat ?? '—'),
-      'У' + (p.carbs ?? '—')
-    ].join(' · ');
+    const kcalStr = (p.kcal !== null && p.kcal !== undefined && p.kcal !== '') ? p.kcal : '—';
+    const protStr = (p.protein !== null && p.protein !== undefined && p.protein !== '') ? p.protein : '—';
+    const fatStr  = (p.fat !== null && p.fat !== undefined && p.fat !== '') ? p.fat : '—';
+    const carbStr = (p.carbs !== null && p.carbs !== undefined && p.carbs !== '') ? p.carbs : '—';
+    const kbzhu = `${kcalStr} · Б${protStr} · Ж${fatStr} · У${carbStr}`;
     const brandStr = p.brand ? `<span>· ${escapeHtml(p.brand)}</span>` : '';
     
     return `
