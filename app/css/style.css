@@ -4160,6 +4160,8 @@ body[data-theme="dark"] .pc-btn-primary {
 .pp-list::-webkit-scrollbar {
   width: 6px;
 }
+
+
 .search-results::-webkit-scrollbar-track,
 .pp-list::-webkit-scrollbar-track {
   background: transparent;
