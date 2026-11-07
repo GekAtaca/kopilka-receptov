@@ -179,6 +179,23 @@
       });
     });
 
+    // Умное скрытие/показ карточки, чтобы не терять фон поиска
+    const hideCard = () => {
+      modal.style.display = 'none';
+      const searchModal = document.getElementById('modalSearch');
+      const pickerModal = document.getElementById('modalProductPicker');
+      if (searchModal && searchModal.style.display === 'flex') searchModal.style.background = 'rgba(0,0,0,0.5)';
+      if (pickerModal && pickerModal.style.display === 'flex') pickerModal.style.background = 'rgba(0,0,0,0.5)';
+    };
+
+    const showCard = () => {
+      modal.style.display = 'flex';
+      const searchModal = document.getElementById('modalSearch');
+      const pickerModal = document.getElementById('modalProductPicker');
+      if (searchModal && searchModal.style.display === 'flex') searchModal.style.background = 'transparent';
+      if (pickerModal && pickerModal.style.display === 'flex') pickerModal.style.background = 'transparent';
+    };
+
     // Кнопки действий
     box.querySelector('[data-pc-action="copy"]')?.addEventListener('click', async () => {
       const copy = { ...currentBase };
@@ -187,18 +204,23 @@
       copy.createdAt = Date.now();
       copy.source = 'own';
       
-      closeProductCard();
+      hideCard();
       if (typeof openProductForm === 'function') {
         openProductForm({
           initialData: copy,
           skipDuplicateCheck: true,
           onSaved: (saved) => {
+            showCard();
+            openProductCard(saved, options); // Открываем карточку созданной копии
             if (typeof performSearch === 'function') {
               const input = document.getElementById('searchInput');
               if (input) performSearch(input.value);
             }
             if (options.onCopy) options.onCopy(saved);
             if (typeof showToastMsg === 'function') showToastMsg('Продукт скопирован в мои');
+          },
+          onClose: () => {
+            showCard(); // Возвращаем карточку при отмене
           }
         });
       }
@@ -210,35 +232,44 @@
     });
 
     box.querySelector('[data-pc-action="edit"]')?.addEventListener('click', () => {
-      closeProductCard();
+      hideCard();
       if (typeof openProductForm === 'function') {
         openProductForm({
           productId: currentOwn.id,
           onSaved: async () => {
             currentOwn = await Storage.getProduct(currentOwn.id);
-            openProductCard(currentOwn, options);
+            showCard();
+            renderCard(options); // Обновляем данные в текущей карточке
             if (typeof performSearch === 'function') {
               const input = document.getElementById('searchInput');
               if (input) performSearch(input.value);
             }
+          },
+          onClose: () => {
+            showCard(); // Возвращаем карточку при отмене
           }
         });
       }
     });
 
     box.querySelector('[data-pc-action="dup"]')?.addEventListener('click', () => {
-      closeProductCard();
+      hideCard();
       if (typeof openProductForm === 'function') {
         openProductForm({
           initialData: { ...currentOwn, id: null, name: currentOwn.name + ' (копия)' },
           skipDuplicateCheck: true,
           onSaved: (saved) => {
+            showCard();
+            openProductCard(saved, options); // Открываем карточку дубликата
             if (typeof performSearch === 'function') {
               const input = document.getElementById('searchInput');
               if (input) performSearch(input.value);
             }
             if (options.onCopy) options.onCopy(saved);
             if (typeof showToastMsg === 'function') showToastMsg('Продукт дублирован');
+          },
+          onClose: () => {
+            showCard(); // Возвращаем карточку при отмене
           }
         });
       }

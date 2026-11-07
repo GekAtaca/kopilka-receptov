@@ -4155,25 +4155,48 @@ body[data-theme="dark"] .pc-btn-primary {
 
 /* Затемнение управляется через JS, а не через CSS */
 
-/* 2. Скроллбар в окне поиска (и в пикере тоже) */
+/* ═══ ЧЕРНЫЙ ПОЛУПРОЗРАЧНЫЙ СКРОЛЛБАР (как в большой карточке) ═══ */
 .search-results::-webkit-scrollbar,
-.pp-list::-webkit-scrollbar {
+.pp-list::-webkit-scrollbar,
+.filter-body::-webkit-scrollbar,
+.mt-list::-webkit-scrollbar {
   width: 6px;
 }
 
-
 .search-results::-webkit-scrollbar-track,
-.pp-list::-webkit-scrollbar-track {
+.pp-list::-webkit-scrollbar-track,
+.filter-body::-webkit-scrollbar-track,
+.mt-list::-webkit-scrollbar-track {
   background: transparent;
 }
+
 .search-results::-webkit-scrollbar-thumb,
-.pp-list::-webkit-scrollbar-thumb {
-  background: color-mix(in srgb, var(--c3) 60%, transparent);
+.pp-list::-webkit-scrollbar-thumb,
+.filter-body::-webkit-scrollbar-thumb,
+.mt-list::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.18);
   border-radius: 6px;
 }
+
 .search-results::-webkit-scrollbar-thumb:hover,
-.pp-list::-webkit-scrollbar-thumb:hover {
-  background: var(--c3);
+.pp-list::-webkit-scrollbar-thumb:hover,
+.filter-body::-webkit-scrollbar-thumb:hover,
+.mt-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.32);
+}
+
+/* Для тёмной темы (чтобы не сливался с черным фоном) */
+body[data-theme="dark"] .search-results::-webkit-scrollbar-thumb,
+body[data-theme="dark"] .pp-list::-webkit-scrollbar-thumb,
+body[data-theme="dark"] .filter-body::-webkit-scrollbar-thumb,
+body[data-theme="dark"] .mt-list::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+}
+body[data-theme="dark"] .search-results::-webkit-scrollbar-thumb:hover,
+body[data-theme="dark"] .pp-list::-webkit-scrollbar-thumb:hover,
+body[data-theme="dark"] .filter-body::-webkit-scrollbar-thumb:hover,
+body[data-theme="dark"] .mt-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.35);
 }
 
 /* 3. Вкладки База/Моя как в поиске */
