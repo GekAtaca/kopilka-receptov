@@ -4371,3 +4371,129 @@ body[data-theme="dark"] #globalProductCtx { background: var(--c4); }
   gap: 6px;
   align-items: center;
 }
+
+/* ═══ Активное сердечко в маленькой карточке — красное, как в большой ═══ */
+.card-img .img-icons .ic.active {
+  color: #e6304a;
+  filter: drop-shadow(0 0 3px rgba(230, 48, 74, 0.5));
+}
+
+/* ═══ Выпадающее меню "В план" в маленькой карточке ═══ */
+.card-img {
+  position: relative;
+}
+
+.card-plan-dropdown {
+  display: none;
+  position: absolute;
+  top: 44px;
+  right: 8px;
+  z-index: 20;
+  background: var(--c1);
+  border: 1px solid var(--c3);
+  border-radius: 10px;
+  padding: 6px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.2);
+  min-width: 150px;
+}
+
+.card-plan-dropdown.open {
+  display: block;
+}
+
+.card-plan-dropdown .b-plan-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: 'Nunito', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--c4);
+  transition: background .15s;
+  user-select: none;
+}
+
+.card-plan-dropdown .b-plan-row:hover {
+  background: color-mix(in srgb, var(--c3) 20%, transparent);
+}
+
+.card-plan-dropdown .b-plan-row input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--c3);
+  cursor: pointer;
+}
+
+body[data-theme="dark"] .card-plan-dropdown {
+  background: var(--c4);
+  border-color: var(--c2);
+}
+
+body[data-theme="dark"] .card-plan-dropdown .b-plan-row {
+  color: #fff;
+}
+
+body[data-theme="dark"] .card-plan-dropdown .b-plan-row:hover {
+  background: rgba(255,255,255,.06);
+}
+
+/* ═══ ВЕРХНИЕ КНОПКИ (как на скринах) ═══ */
+
+/* Маленькая карточка */
+.card-img .img-icons .ic {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.28); /* Неактивная: тёмный полупрозрачный фон */
+  color: #ffffff; /* Неактивная: белая иконка */
+  border: none;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15); /* Легкая тень для объема */
+  filter: none !important; /* Убиваем любое свечение */
+}
+
+.card-img .img-icons .ic.active {
+  background: #ffffff; /* Активная: белый фон */
+  color: var(--c4); /* Активная: темная иконка */
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25); /* Чуть больше тень для объема */
+}
+
+/* Большая карточка */
+.b-photo .b-icons .b-icon {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.28);
+  color: #ffffff;
+  border: none;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 17px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  filter: none !important;
+}
+
+.b-photo .b-icons .b-icon.active {
+  background: #ffffff;
+  color: var(--c4);
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+}
+
+/* Тёмная тема (активные кнопки остаются белыми с темной иконкой) */
+body[data-theme="dark"] .card-img .img-icons .ic.active,
+body[data-theme="dark"] .b-photo .b-icons .b-icon.active {
+  background: #ffffff;
+  color: var(--c4);
+}
+
+/* Тёмная тема (чтобы активная кнопка оставалась белой и читаемой) */
+body[data-theme="dark"] .card-img .img-icons .ic.active,
+body[data-theme="dark"] .b-photo .b-icons .b-icon.active {
+  background: #ffffff;
+  color: var(--c4);
+}

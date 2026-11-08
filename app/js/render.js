@@ -134,6 +134,11 @@ function renderRecipeCard(recipe, ingMarks, isFav, isCooked, isWant, savedPortio
           <button class="ic ${isWant ? 'active' : ''}" data-action="toggle-want-small">🔖</button>
           <button class="ic" data-action="open-plan-small">📅</button>
         </div>
+        <div class="card-plan-dropdown">
+          <label class="b-plan-row"><input type="checkbox" value="family"><span>Семейный</span></label>
+          <label class="b-plan-row"><input type="checkbox" value="child"><span>Для ребёнка</span></label>
+          <label class="b-plan-row"><input type="checkbox" value="events"><span>События</span></label>
+        </div>
       </div>
       <div class="card-body">
         <div class="title">${escapeHtml(recipe.name)}</div>

@@ -91,6 +91,10 @@ window.openFiltersModal = async function() {
         let currentPage = 0;
 
         const calculatePages = () => {
+          // Запоминаем текущую страницу: последнюю видимую вкладку
+          const prevPage = pages[currentPage];
+          const anchorIndex = prevPage ? prevPage.end : 0;
+
           // 1. Показываем все вкладки для замера
           tabs.forEach(t => t.style.display = 'inline-flex');
 
@@ -119,7 +123,15 @@ window.openFiltersModal = async function() {
             pages.push({ start: currentStart, end: tabs.length - 1 });
           }
 
-          currentPage = 0;
+          // 2. Восстанавливаем страницу, содержащую последнюю видимую вкладку
+          let newPage = 0;
+          if (pages.length > 0) {
+            for (let i = 0; i < pages.length; i++) {
+              newPage = i;
+              if (anchorIndex <= pages[i].end) break;
+            }
+          }
+          currentPage = newPage;
           updateView();
         };
 

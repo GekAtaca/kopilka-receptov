@@ -104,8 +104,8 @@ code{font-family:ui-monospace,Consolas,monospace;font-size:13px;background:rgba(
 <div class="step done">
   <div class="num">8</div>
   <div class="body">
-    <div class="title">База продуктов <span class="badge done">Почти готово</span></div>
-    <div class="desc">309 продуктов в 19 группах (готовая база в коде). Своя база в IndexedDB. Пикер с поиском, группировкой и сортировкой. Форма создания/редактирования. Проверка на дубликаты. Контекстное меню. Поведение <code>afterCreate</code>.</div>
+    <div class="title">База продуктов <span class="badge done">Готово</span></div>
+    <div class="desc">309 продуктов в 19 группах. Пикер. Форма. Дубликаты. Контекстное меню. Карточка продукта (просмотр, База/Моя, копирование, возврат в карточку). Умное затемнение окон.</div>
   </div>
 </div>
 
@@ -271,8 +271,39 @@ code{font-family:ui-monospace,Consolas,monospace;font-size:13px;background:rgba(
 <div class="step next">
   <div class="num">28</div>
   <div class="body">
-    <div class="title">Шторка FAB ➕ — наполнить содержимым <span class="badge next">Дальше</span></div>
-    <div class="desc">Сейчас открывается пустая заглушка «Тут будет Добавить». Должна стать шторкой снизу с выбором: Добавить рецепт / Создать продукт / (на Кладовой — Добавить в кладовую).</div>
+    <div class="title">Модалка FAB ➕ — наполнить содержимым <span class="badge next">Дальше</span></div>
+    <div class="desc">Сейчас открывается пустая заглушка «Тут будет Добавить». Должна стать обычной модалкой с выбором: Добавить рецепт / Создать продукт / (на Кладовой — Добавить в кладовую). <i>(Решено: шторку снизу не делаем).</i></div>
+  </div>
+</div>
+<div class="step next">
+  <div class="num">28.1</div>
+  <div class="body">
+    <div class="title">Таймеры в карточках и FAB <span class="badge next">Дальше</span></div>
+    <div class="desc">Сделать рабочие кнопки таймера в маленькой и большой карточках, синхронизировать с общей логикой таймеров (<code>timer.js</code>) и плавающей кнопкой.</div>
+  </div>
+</div>
+
+<div class="step next">
+  <div class="num">28.2</div>
+  <div class="body">
+    <div class="title">Сброс прокрутки тегов в фильтрах <span class="badge next">Дальше</span></div>
+    <div class="desc">Когда пользователь прокручивает теги в фильтрах и открывает другую секцию (появляется скроллбар окна), лента тегов откатывается в начало. Нужно сохранять <code>scrollLeft</code>.</div>
+  </div>
+</div>
+
+<div class="step next">
+  <div class="num">28.3</div>
+  <div class="body">
+    <div class="title">Синхронизация иконок (Избранное и План) <span class="badge next">Дальше</span></div>
+    <div class="desc">Сердечко ❤ в маленькой и большой карточке должно быть визуально одинаковым (красная заливка при добавлении). Кнопка 📅 (В план) в маленькой карточке должна открывать такой же дропдаун, как в большой.</div>
+  </div>
+</div>
+
+<div class="step next">
+  <div class="num">28.4</div>
+  <div class="body">
+    <div class="title">Устройства в редакторе рецепта <span class="badge next">Дальше</span></div>
+    <div class="desc">Добавить поле «Устройство» (сковорода, духовка, аэрогриль и т.д.) в редактор рецепта и в окно создания. Стилизовать в общем дизайне.</div>
   </div>
 </div>
 
@@ -315,7 +346,6 @@ code{font-family:ui-monospace,Consolas,monospace;font-size:13px;background:rgba(
 <b>Осталось:</b>
 <ul>
 <li>Удалить старые файлы <code>Структурная карта 6.html</code> … <code>11.html</code> из проекта. <b>И <code>Структурная карта 12.html</code></b> — её содержимое разложено по 7 файлам документации.</li>
-<li>Косметика: в <code>storage.js</code> пропала разделительная строка над блоком «Статистика».</li>
 </ul>
 </div>
 

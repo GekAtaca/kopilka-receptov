@@ -513,6 +513,10 @@ document.addEventListener('click', (e) => {
       dm.classList.remove('open');
     }
   }
+    // Закрываем меню "В план" в маленьких карточках
+  if (!e.target.closest('.card-plan-dropdown') && !e.target.closest('[data-action="open-plan-small"]')) {
+    document.querySelectorAll('.card-plan-dropdown.open').forEach(dd => dd.classList.remove('open'));
+  }
 });
 
 document.addEventListener('keydown', (e) => {
@@ -525,16 +529,39 @@ document.addEventListener('keydown', (e) => {
   if (modalRecipe.style.display === 'flex'){ closeRecipeCard(); return; }
 });
 
+// ═══ 1. Закрытие меню "В план" и блокировка клика (фаза перехвата) ═══
+// Срабатывает ДО того, как клик дойдет до фотографии или названия
+document.addEventListener('click', (e) => {
+  const openMenus = document.querySelectorAll('.card-plan-dropdown.open');
+  if (openMenus.length === 0) return;
+
+  // Если кликнули по самой кнопке 📅 или внутри меню — не мешаем им работать
+  if (e.target.closest('[data-action="open-plan-small"]') || e.target.closest('.card-plan-dropdown')) {
+    return;
+  }
+
+  // Если кликнули в любое другое место (фон, фото, текст) — закрываем меню
+  openMenus.forEach(m => m.classList.remove('open'));
+  
+  // И УБИВАЕМ этот клик, чтобы карточка не открылась
+  e.stopPropagation(); 
+}, true); // true означает фазу перехвата (срабатывает раньше всех)
+
+// ═══ 2. Обработчик открытия большой карточки ═══
 document.addEventListener('click', (e) => {
   const card = e.target.closest('.card');
   if (!card) return;
+  
   if (e.target.closest('button')) return;
   if (e.target.closest('.portions')) return;
   if (e.target.closest('.ing-list')) return;
   if (e.target.closest('.chk')) return;
+  if (e.target.closest('.card-plan-dropdown')) return; // ← Вот она, спасительная строчка
+
   const isTitle = e.target.closest('.title');
   const isPhoto = e.target.closest('.card-img');
   if (!isTitle && !isPhoto) return;
+  
   const id = card.dataset.recipeId;
   if (id && typeof openRecipeCard === 'function') openRecipeCard(id);
 });
@@ -788,6 +815,7 @@ document.addEventListener('click', async (e) => {
     if (was) await Storage.removeMark('favorite', id);
     else await Storage.addMark('favorite', id);
     btn.classList.toggle('active', !was);
+    if (typeof renderAllRecipes === 'function') renderAllRecipes();
     return;
   }
 
@@ -798,6 +826,7 @@ document.addEventListener('click', async (e) => {
     const now = !was;
     btn.classList.toggle('active', now);
     btn.innerHTML = now ? '✅' : '&#128104;&#8205;&#127859;';
+    if (typeof renderAllRecipes === 'function') renderAllRecipes();
     return;
   }
 
@@ -806,11 +835,22 @@ document.addEventListener('click', async (e) => {
     if (was) await Storage.removeMark('want', id);
     else await Storage.addMark('want', id);
     btn.classList.toggle('active', !was);
+    if (typeof renderAllRecipes === 'function') renderAllRecipes();
     return;
   }
 
   if (action === 'open-plan-small') {
-    if (typeof openSoon === 'function') openSoon('📅 В план', 'Выбор плана из карточки на Главной появится чуть позже.');
+    const cardEl = btn.closest('.card');
+    if (cardEl) {
+      const dd = cardEl.querySelector('.card-plan-dropdown');
+      if (dd) {
+        // Закрываем все другие открытые меню
+        document.querySelectorAll('.card-plan-dropdown.open').forEach(d => {
+          if (d !== dd) d.classList.remove('open');
+        });
+        dd.classList.toggle('open');
+      }
+    }
     return;
   }
 
