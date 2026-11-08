@@ -16,6 +16,7 @@ let meCurrentTab    = 'manual';
 let meDraft         = null;   
 let meKbzhuOpen     = false;  
 let meDragSrcEl     = null;
+let meDevices       = [];
 const meSaveBtn     = document.getElementById('meSave');
 
 const ME_MEALS = [
@@ -199,6 +200,14 @@ function meBuildFields(){
       </div>
 
       <div class="me-field">
+        <div class="me-ing-header" style="margin-top:0; margin-bottom:6px;">
+          <span class="me-label">Устройство</span>
+          <button type="button" class="me-add-btn" data-action="manage-devices">⚙ Настроить</button>
+        </div>
+        ${meBuildDropdown('device', 'Не выбрано', meDevices.map(d => ({ val: d, label: d })), meDraft ? meDraft.device : '')}
+      </div>
+
+      <div class="me-field">
         <div class="me-ing-header" style="margin-top:0;">
           <span class="me-label">Теги</span>
           <button type="button" class="me-add-btn" data-action="edit-tags">✎ Изменить</button>
@@ -333,12 +342,14 @@ function meCollectForm(){
   const mealDD   = meBody.querySelector('[data-field="meal"]');
   const sourceDD = meBody.querySelector('[data-field="source"]');
   const compDD   = meBody.querySelector('[data-field="complexity"]');
+    const deviceDD = meBody.querySelector('[data-field="device"]');
   const vnEl     = document.getElementById('meVersionName');
 
   meDraft.name       = document.getElementById('meRecipeName').value;
   meDraft.source     = sourceDD ? sourceDD.dataset.val : 'Мои';
   meDraft.meal       = mealDD ? mealDD.dataset.val : '';
   meDraft.complexity = compDD ? compDD.dataset.val : '';
+    if (deviceDD) meDraft.device = deviceDD.dataset.val;
   if (vnEl) meDraft.versionName = vnEl.value;
 }
 
@@ -347,6 +358,7 @@ async function openRecipeEditor(recipeId){
   meCurrentTab    = 'manual';
   meKbzhuOpen     = false;
   meCurrentRecipe = null;
+    meDevices = await Storage.getDevices();
 
   const box = modalRecipeEditor.querySelector('.modal-editor-box');
   if (box) {
@@ -370,6 +382,7 @@ async function openRecipeEditor(recipeId){
       meal: recipe.meal || '',
       source: recipe.source || 'Мои',
       complexity: recipe.complexity || '',
+      device: recipe.device || '',
       portions: recipe.portions || 2,
       versionName: recipe.versionName || '',
       currentVersion: recipe.currentVersion || 1,
@@ -389,7 +402,7 @@ async function openRecipeEditor(recipeId){
     });
     
     meDraft = {
-      name: '', meal: '', source: 'Мои', complexity: '',
+      name: '', meal: '', source: 'Мои', complexity: '', device: '',
       portions: 2, versionName: 'Версия 1', currentVersion: 1, versions: [],
       tags: [], ingredients: [], steps: [], time: '', timeSplit: false, timeStages: []
     };
@@ -438,18 +451,29 @@ meBody.addEventListener('click', async (e) => {
     const field = dd.dataset.field;
     let valToSet = val;
     if (field === 'complexity' && dd.dataset.val === val) valToSet = '';
-    const options = field === 'meal' ? ME_MEALS : field === 'source' ? ME_SOURCES : ME_COMPLEXITY;
+    let options = field === 'meal' ? ME_MEALS : field === 'source' ? ME_SOURCES : ME_COMPLEXITY;
+    if (field === 'device') options = meDevices.map(d => ({ val: d, label: d }));
+    
     meSetDropdownValue(dd, valToSet, options);
     dd.classList.remove('open');
     
     if (field === 'meal') meDraft.meal = valToSet;
     if (field === 'source') meDraft.source = valToSet;
     if (field === 'complexity') meDraft.complexity = valToSet;
+    if (field === 'device') meDraft.device = valToSet;
 
     if (field === 'meal' && valToSet) {
       const b = dd.querySelector('.me-dropdown-btn');
       if (b) b.classList.remove('invalid');
     }
+    return;
+  }
+
+    if (e.target.closest('[data-action="manage-devices"]')) {
+    openDeviceManager(async () => {
+      meDevices = await Storage.getDevices();
+      meRenderBody();
+    });
     return;
   }
 
@@ -971,4 +995,57 @@ async function meSaveRecipe() {
 
 if (meSaveBtn) {
   meSaveBtn.addEventListener('click', meSaveRecipe);
+}
+
+// ═══ Управление устройствами ═══
+function openDeviceManager(onSave) {
+  const modal = document.getElementById('modalDeviceManage');
+  const list = document.getElementById('devList');
+  const input = document.getElementById('devNewName');
+  if (!modal) return;
+
+  let currentDevices = [];
+  
+  const renderList = () => {
+    list.innerHTML = currentDevices.map((d, i) => `
+      <div class="tmg-item">
+        <span>${d}</span>
+        <button type="button" class="tmg-del-btn" data-idx="${i}">🗑</button>
+      </div>
+    `).join('');
+  };
+
+  Storage.getDevices().then(devs => {
+    currentDevices = devs;
+    renderList();
+  });
+
+  modal.style.display = 'flex';
+
+  const close = () => {
+    modal.style.display = 'none';
+    if (onSave) onSave();
+  };
+
+  document.getElementById('devManageClose').onclick = close;
+
+  document.getElementById('devCreateBtn').onclick = async () => {
+    const val = input.value.trim();
+    if (val && !currentDevices.includes(val)) {
+      currentDevices.push(val);
+      await Storage.saveDevices(currentDevices);
+      input.value = '';
+      renderList();
+    }
+  };
+
+  list.onclick = async (e) => {
+    const btn = e.target.closest('.tmg-del-btn');
+    if (btn) {
+      const idx = parseInt(btn.dataset.idx);
+      currentDevices.splice(idx, 1);
+      await Storage.saveDevices(currentDevices);
+      renderList();
+    }
+  };
 }

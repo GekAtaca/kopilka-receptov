@@ -826,6 +826,22 @@
   // Заглушки — появятся в следующих слоях
   // ═══════════════════════════════════════════════════
 
+  // ═══════════════════════════════════════════════════
+  // Устройства (Сковорода, Духовка и т.д.)
+  // ═══════════════════════════════════════════════════
+  const DEFAULT_DEVICES = ['Сковорода', 'Духовка', 'Мультиварка', 'Аэрогриль', 'Блендер', 'Без готовки'];
+
+  async function getDevices() {
+    if (!available) return DEFAULT_DEVICES;
+    const v = await getSetting('customDevices');
+    if (Array.isArray(v) && v.length > 0) return v;
+    return DEFAULT_DEVICES;
+  }
+
+  async function saveDevices(devices) {
+    await saveSetting('customDevices', devices);
+  }
+
   function stub(name, empty){
     return async function(){
       console.warn('[storage] ' + name + '() пока не реализована');
@@ -847,6 +863,8 @@
     getSetting,
     saveSetting,
     deleteSetting,
+    getDevices,
+    saveDevices,
 
      // ── рецепты ──
     saveRecipe,

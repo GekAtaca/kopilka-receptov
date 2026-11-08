@@ -715,6 +715,7 @@ async function switchVersion(idx) {
   currentRecipeObj.meal = selectedVersion.meal;
   currentRecipeObj.source = selectedVersion.source;
   currentRecipeObj.complexity = selectedVersion.complexity;
+  currentRecipeObj.device = selectedVersion.device;
   currentRecipeObj.versionName = selectedVersion.versionName;
   currentRecipeObj.currentVersion = selectedVersion.currentVersion;
   currentRecipeObj.ingredients = selectedVersion.ingredients;

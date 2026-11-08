@@ -579,6 +579,22 @@
   </div>
 
   <!-- ═══ Модалка «Версии рецепта» ═══ -->
+     <!-- ═══ Модалка «Управление устройствами» ═══ -->
+  <div id="modalDeviceManage" class="modal" style="display:none; z-index:100010;">
+    <div class="modal-box dm-scope" style="max-width:420px;">
+      <div class="modal-head">
+        <span class="modal-title">🍳 Устройства</span>
+        <button type="button" class="modal-close" id="devManageClose">✕</button>
+      </div>
+      
+      <div class="tmg-create-row">
+        <input type="text" class="me-input" id="devNewName" placeholder="Новое устройство..." style="flex:1;">
+        <button type="button" class="me-btn me-btn-primary" id="devCreateBtn">Добавить</button>
+      </div>
+      
+      <div class="tmg-list" id="devList"></div>
+    </div>
+  </div>
   <div id="modalVersions" class="modal" style="display:none; z-index:100006;">
     <div class="modal-box dm-scope" style="max-width:400px;">
       <div class="modal-head">
