@@ -204,7 +204,7 @@ function meBuildFields(){
           <span class="me-label">Устройство</span>
           <button type="button" class="me-add-btn" data-action="manage-devices">⚙ Настроить</button>
         </div>
-        ${meBuildDropdown('device', 'Не выбрано', meDevices.map(d => ({ val: d, label: d })), meDraft ? meDraft.device : '')}
+        ${meBuildDropdown('device', 'Не выбрано', [{ val: '', label: 'Не выбрано' }, ...meDevices.map(d => ({ val: d, label: d }))], meDraft ? meDraft.device : '')}
       </div>
 
       <div class="me-field">
@@ -472,6 +472,10 @@ meBody.addEventListener('click', async (e) => {
     if (e.target.closest('[data-action="manage-devices"]')) {
     openDeviceManager(async () => {
       meDevices = await Storage.getDevices();
+      // Если текущее выбранное устройство удалили из базы — сбрасываем его
+      if (meDraft.device && !meDevices.includes(meDraft.device)) {
+        meDraft.device = ''; 
+      }
       meRenderBody();
     });
     return;
@@ -1043,9 +1047,29 @@ function openDeviceManager(onSave) {
     const btn = e.target.closest('.tmg-del-btn');
     if (btn) {
       const idx = parseInt(btn.dataset.idx);
+      const deletedDev = currentDevices[idx];
+      
       currentDevices.splice(idx, 1);
       await Storage.saveDevices(currentDevices);
       renderList();
+
+      // 1. Убираем из всех рецептов в базе
+      const allRecipes = await Storage.getAllRecipes();
+      for (const r of allRecipes) {
+        if (r.device === deletedDev) {
+          r.device = '';
+          await Storage.saveRecipe(r);
+        }
+      }
+      
+      // 2. Если это устройство сейчас выбрано в открытом редакторе — сбрасываем его
+      if (meDraft && meDraft.device === deletedDev) {
+        meDraft.device = '';
+      }
+
+      // 3. Обновляем карточки на фоне и в открытом редакторе
+      if (typeof renderAllRecipes === 'function') renderAllRecipes();
+      meRenderBody(); 
     }
   };
 }

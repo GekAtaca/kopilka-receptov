@@ -106,7 +106,7 @@ pre code{background:none;padding:0;color:inherit;font-size:inherit}
 <tr><th>Файл</th><th>Что делает</th></tr>
 <tr><td><code>tags-base.js</code></td><td>58 базовых тегов, 16 групп. ID <code>btag-NNN</code>. Только данные.</td></tr>
 <tr><td><code>products-base.js</code></td><td>19 групп продуктов, 309 продуктов. ID — транслит (<code>milk-3-2</code>). Только данные.</td></tr>
-<tr><td><code>storage.js</code></td><td>Единая точка входа в IndexedDB. Все операции с рецептами, продуктами, отметками, тегами, настройками. Подробно — ниже.</td></tr>
+<tr><td><code>storage.js</code></td><td>Единая точка входа в IndexedDB. Все операции с рецептами, продуктами, отметками, тегами, устройствами, настройками. Подробно — ниже.</td></tr>
 <tr><td><code>shared.js</code></td><td>Общие переменные и утилиты: <code>bgSettings</code>, <code>currentBg</code>, <code>designDraft</code>, <code>getDeviceType</code>, <code>saveSettingsToStorage</code>, <code>loadSharedFromStorage</code>.</td></tr>
 <tr><td><code>render.js</code></td><td>Превращает объект рецепта в HTML маленькой карточки. Раскладывает рецепты по секциям Главной.</td></tr>
 <tr><td><code>card-big.js</code></td><td>Большая карточка рецепта: открытие, закрытие, порции, чекбоксы, dropdown «В план» и «Ещё», нижние кнопки.</td></tr>
@@ -114,7 +114,7 @@ pre code{background:none;padding:0;color:inherit;font-size:inherit}
 <tr><td><code>product-picker.js</code></td><td>Модалка «База продуктов»: поиск, группировка, свёрнутость, сортировка, контекстное меню, <code>afterCreate</code>.</td></tr>
 <tr><td><code>product-card.js</code></td><td>Карточка просмотра продукта: КБЖУ, марка, переключатель База/Моя, кнопки копирования, редактирования, дублирования. Управляет затемнением окон.</td></tr>
 <tr><td><code>tag-modal.js</code></td><td>Модалка тегов: поиск по 58 базовым и своим, липкие заголовки групп, кастомные окна подтверждения и создания, управление категориями.</td></tr>
-<tr><td><code>recipe-editor.js</code></td><td>Редактор рецепта (шаг 37): поля, ингредиенты с пикером, шаги с перетаскиванием, время, теги, создание версий, пересчёт КБЖУ, валидация.</td></tr>
+<tr><td><code>recipe-editor.js</code></td><td>Редактор рецепта (шаг 37): поля, ингредиенты с пикером, шаги с перетаскиванием, время, теги, устройства, создание версий, пересчёт КБЖУ, валидация.</td></tr>
 <tr><td><code>product-form.js</code></td><td>Форма создания/редактирования продукта: поля, валидация, дубликаты, сохранение.</td></tr>
 <tr><td><code>bg.js</code></td><td>Фон сайта и редактор позиции: <code>applyBg</code>, <code>openBgEditor</code>, зум, перетаскивание.</td></tr>
 <tr><td><code>undo.js</code></td><td>Менеджер отмены удаления (Undo). Плашка «Отменить» с таймером 15 секунд и паузой при наведении.</td></tr>
@@ -283,6 +283,12 @@ pre code{background:none;padding:0;color:inherit;font-size:inherit}
 <li><code>getAllTags()</code> — только свои.</li>
 <li><code>deleteTag(id)</code> — удалить свой.</li>
 <li><code>getAllTagsMerged()</code> — свои + базовые (<code>btag-NNN</code>). Сначала свои, потом базовые.</li>
+</ul>
+
+<h3>Устройства <span class="chip done">работает</span></h3>
+<ul>
+<li><code>getDevices()</code> — получить список устройств (базовые + кастомные).</li>
+<li><code>saveDevices(devices)</code> — сохранить кастомный список устройств.</li>
 </ul>
 
 <h3>Кладовая, План, Корзина <span class="chip wait">заглушки</span></h3>

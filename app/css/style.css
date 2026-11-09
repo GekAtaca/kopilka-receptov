@@ -4159,21 +4159,24 @@ body[data-theme="dark"] .pc-btn-primary {
 .search-results::-webkit-scrollbar,
 .pp-list::-webkit-scrollbar,
 .filter-body::-webkit-scrollbar,
-.mt-list::-webkit-scrollbar {
+.mt-list::-webkit-scrollbar,
+#devList::-webkit-scrollbar {
   width: 6px;
 }
 
 .search-results::-webkit-scrollbar-track,
 .pp-list::-webkit-scrollbar-track,
 .filter-body::-webkit-scrollbar-track,
-.mt-list::-webkit-scrollbar-track {
+.mt-list::-webkit-scrollbar-track,
+#devList::-webkit-scrollbar-track {
   background: transparent;
 }
 
 .search-results::-webkit-scrollbar-thumb,
 .pp-list::-webkit-scrollbar-thumb,
 .filter-body::-webkit-scrollbar-thumb,
-.mt-list::-webkit-scrollbar-thumb {
+.mt-list::-webkit-scrollbar-thumb,
+#devList::-webkit-scrollbar-thumb {
   background: rgba(0, 0, 0, 0.18);
   border-radius: 6px;
 }
@@ -4181,7 +4184,8 @@ body[data-theme="dark"] .pc-btn-primary {
 .search-results::-webkit-scrollbar-thumb:hover,
 .pp-list::-webkit-scrollbar-thumb:hover,
 .filter-body::-webkit-scrollbar-thumb:hover,
-.mt-list::-webkit-scrollbar-thumb:hover {
+.mt-list::-webkit-scrollbar-thumb:hover,
+#devList::-webkit-scrollbar-thumb:hover {
   background: rgba(0, 0, 0, 0.32);
 }
 
@@ -4189,13 +4193,15 @@ body[data-theme="dark"] .pc-btn-primary {
 body[data-theme="dark"] .search-results::-webkit-scrollbar-thumb,
 body[data-theme="dark"] .pp-list::-webkit-scrollbar-thumb,
 body[data-theme="dark"] .filter-body::-webkit-scrollbar-thumb,
-body[data-theme="dark"] .mt-list::-webkit-scrollbar-thumb {
+body[data-theme="dark"] .mt-list::-webkit-scrollbar-thumb,
+body[data-theme="dark"] #devList::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.2);
 }
 body[data-theme="dark"] .search-results::-webkit-scrollbar-thumb:hover,
 body[data-theme="dark"] .pp-list::-webkit-scrollbar-thumb:hover,
 body[data-theme="dark"] .filter-body::-webkit-scrollbar-thumb:hover,
-body[data-theme="dark"] .mt-list::-webkit-scrollbar-thumb:hover {
+body[data-theme="dark"] .mt-list::-webkit-scrollbar-thumb:hover,
+body[data-theme="dark"] #devList::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.35);
 }
 
@@ -4496,4 +4502,60 @@ body[data-theme="dark"] .card-img .img-icons .ic.active,
 body[data-theme="dark"] .b-photo .b-icons .b-icon.active {
   background: #ffffff;
   color: var(--c4);
+}
+
+/* ═══ ФИНАЛЬНЫЙ ФИКС СКРОЛЛБАРА УСТРОЙСТВ ═══ */
+#devList {
+  max-height: 50vh !important; /* Ограничиваем высоту, чтобы появился скролл */
+  overflow-y: auto !important;
+  padding-right: 12px !important; /* Отодвигаем текст от ползунка */
+}
+
+#devList::-webkit-scrollbar {
+  width: 6px !important; /* Тонкий */
+}
+
+#devList::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+
+#devList::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.18) !important; /* Темный полупрозрачный */
+  border-radius: 6px !important;
+}
+
+body[data-theme="dark"] #devList::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* ═══ ГЛОБАЛЬНЫЙ СКРОЛЛБАР ДЛЯ ВСЕГО САЙТА ═══ */
+/* Принудительно задаем ширину и стили */
+::-webkit-scrollbar {
+  width: 6px !important;
+  height: 6px !important;
+}
+::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.18) !important;
+  border-radius: 6px !important;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.32) !important;
+}
+
+/* Тёмная тема */
+body[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2) !important;
+}
+body[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.35) !important;
+}
+
+/* ═══ ФИКС СПИСКА УСТРОЙСТВ (высота в пикселях) ═══ */
+#devList, .tmg-list {
+  max-height: 300px !important; /* Жесткая высота в пикселях, как ты просила */
+  overflow-y: auto !important;  /* Включаем прокрутку только внутри списка */
+  padding-right: 12px !important; /* Отодвигаем ползунок от текста и корзинок */
 }

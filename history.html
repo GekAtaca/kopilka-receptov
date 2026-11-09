@@ -113,6 +113,12 @@ pre code{background:none;padding:0;color:inherit;font-size:inherit}
 
 <h2>Известные баги браузеров</h2>
 
+<div class="lesson">
+<div class="title">Системные скроллбары в Windows 11 игнорируют CSS</div>
+<b>9 ноября 2026.</b> При настройке модалки устройств кастомный тонкий скроллбар отказывался применяться. Вместо него браузер рисовал широкую серую системную полосу, которая перекрывала контент.
+<div class="fix">В Windows 11 браузеры (Chrome/Edge) иногда игнорируют <code>::-webkit-scrollbar</code> для контейнеров, если у них нет жестко заданной высоты. <b>Решение:</b> задать контейнеру жесткую высоту в пикселях (например, <code>max-height: 300px</code>) и <code>overflow-y: auto</code>. После этого стили начинают применяться. Также пришлось добавить глобальные стили <code>::-webkit-scrollbar</code> для всего сайта.</div>
+</div>
+
 <table class="table">
 <tr><th>Где</th><th>Что</th><th>Решение</th></tr>
 <tr><td>iOS Safari</td><td><code>position:fixed</code> + <code>z-index:-1</code> — не отрисовывается</td><td>Фон — <code>position:fixed; z-index:0</code>, контент в <code>.app</code> с <code>z-index:1</code>.</td></tr>
