@@ -1,6 +1,5 @@
 // ═══════════════════════════════════════════════════
-// recipe-editor.js — модалка редактора рецепта (шаг 37).
-// Загружается после card-big.js, до product-picker.js.
+// recipe-editor.js — модалка редактора рецепта (с вкладками устройств).
 // ═══════════════════════════════════════════════════
 
 const modalRecipeEditor = document.getElementById('modalRecipeEditor');
@@ -17,6 +16,7 @@ let meDraft         = null;
 let meKbzhuOpen     = false;  
 let meDragSrcEl     = null;
 let meDevices       = [];
+let meActiveDeviceIndex = 0; // Какая вкладка устройства сейчас открыта
 const meSaveBtn     = document.getElementById('meSave');
 
 const ME_MEALS = [
@@ -63,7 +63,8 @@ function meBuildDropdown(field, placeholder, options, defaultValue) {
 }
 
 function meBuildIngredientsHtml() {
-  const listHtml = (meDraft.ingredients || []).map((ing, idx) => `
+  const activeData = meDraft.devicesData[meActiveDeviceIndex];
+  const listHtml = (activeData.ingredients || []).map((ing, idx) => `
     <li class="me-ing-item" data-idx="${idx}">
       <button type="button" class="me-ing-name-btn" title="${ing.name}">${ing.name}</button>
       <input type="number" name="ingAmount" class="me-input me-ing-amt" value="${ing.amount}" data-action="change-amt" placeholder="0">
@@ -100,7 +101,8 @@ function meBuildIngredientsHtml() {
 }
 
 function meBuildStepsHtml() {
-  const listHtml = (meDraft.steps || []).map((s, idx) => `
+  const activeData = meDraft.devicesData[meActiveDeviceIndex];
+  const listHtml = (activeData.steps || []).map((s, idx) => `
     <li class="me-step-item" draggable="true" data-idx="${idx}">
       <div class="me-step-drag" title="Перетащить">⋮⋮</div>
       <div class="me-step-num">${idx + 1}.</div>
@@ -126,8 +128,9 @@ function meBuildStepsHtml() {
 }
 
 function meBuildTimeHtml() {
-  const split = meDraft.timeSplit;
-  const stagesHtml = (meDraft.timeStages || []).map((st, idx) => `
+  const activeData = meDraft.devicesData[meActiveDeviceIndex];
+  const split = activeData.timeSplit;
+  const stagesHtml = (activeData.timeStages || []).map((st, idx) => `
     <li class="me-time-stage" data-idx="${idx}">
       <select name="stageName" class="me-input me-time-select" data-action="change-stage-name">
         ${ME_TIME_STAGES.map(n => `<option value="${n}" ${st.name === n ? 'selected' : ''}>${n}</option>`).join('')}
@@ -150,7 +153,7 @@ function meBuildTimeHtml() {
       </div>
 
       <div class="me-time-total-wrap" style="display:${split ? 'none' : 'flex'}">
-        <input type="number" name="timeTotal" class="me-input me-time-total-input" value="${meDraft.time || ''}" data-action="change-time-total" placeholder="0">
+        <input type="number" name="timeTotal" class="me-input me-time-total-input" value="${activeData.time || ''}" data-action="change-time-total" placeholder="0">
         <span>мин</span>
       </div>
 
@@ -177,8 +180,27 @@ function meBuildKbzhuHtml() {
 }
 
 function meBuildFields(){
+  const activeData = meDraft.devicesData[meActiveDeviceIndex];
+  
+  // Панель вкладок устройств
+  let tabsHtml = `<div class="me-device-tabs-wrap">`;
+  meDraft.devicesData.forEach((d, idx) => {
+    const isActive = idx === meActiveDeviceIndex;
+    const devName = d.device || 'Без названия';
+    tabsHtml += `
+      <div class="me-device-tab ${isActive ? 'active' : ''}" data-action="switch-device" data-idx="${idx}">
+        ${devName}
+        ${meDraft.devicesData.length > 1 ? `<span class="me-tab-del" data-action="del-device" data-idx="${idx}">✕</span>` : ''}
+      </div>
+    `;
+  });
+  tabsHtml += `<button type="button" class="me-device-tab-add" data-action="add-device">+ Добавить</button>`;
+  tabsHtml += `</div>`;
+
   return `
     <div class="me-form">
+      ${tabsHtml}
+
       <div class="me-field">
         <label class="me-label" for="meRecipeName">Название <span class="me-req">*</span></label>
         <input type="text" name="recipeName" class="me-input" id="meRecipeName" placeholder="Например: Овсянка с ягодами" value="${meDraft ? meDraft.name : ''}">
@@ -201,14 +223,6 @@ function meBuildFields(){
 
       <div class="me-field">
         <div class="me-ing-header" style="margin-top:0; margin-bottom:6px;">
-          <span class="me-label">Устройство</span>
-          <button type="button" class="me-add-btn" data-action="manage-devices">⚙ Настроить</button>
-        </div>
-        ${meBuildDropdown('device', 'Не выбрано', [{ val: '', label: 'Не выбрано' }, ...meDevices.map(d => ({ val: d, label: d }))], meDraft ? meDraft.device : '')}
-      </div>
-
-      <div class="me-field">
-        <div class="me-ing-header" style="margin-top:0;">
           <span class="me-label">Теги</span>
           <button type="button" class="me-add-btn" data-action="edit-tags">✎ Изменить</button>
         </div>
@@ -222,13 +236,18 @@ function meBuildFields(){
         </div>
       </div>
 
-      ${meBuildIngredientsHtml()}
-      ${meBuildStepsHtml()}
-      ${meBuildTimeHtml()}
+      <div class="me-device-fields">
+        <div class="me-field" style="margin-bottom: 16px;">
+          <div class="me-ing-header" style="margin-top:0; margin-bottom:6px;">
+            <span class="me-label">Устройство для этой вкладки</span>
+            <button type="button" class="me-add-btn" data-action="manage-devices">⚙ Настроить</button>
+          </div>
+          ${meBuildDropdown('device', 'Выбрать', [{ val: '', label: 'Не выбрано' }, ...meDevices.map(d => ({ val: d, label: d }))], activeData.device || '')}
+        </div>
 
-      <div class="me-field me-version-field" style="display:none">
-        <label class="me-label" for="meVersionName">Название версии</label>
-        <input type="text" name="versionName" class="me-input" id="meVersionName" placeholder="Версия N">
+        ${meBuildIngredientsHtml()}
+        ${meBuildStepsHtml()}
+        ${meBuildTimeHtml()}
       </div>
     </div>
   `;
@@ -255,12 +274,13 @@ function meSetDropdownValue(dd, val, options) {
 }
 
 function meRecalcKbzhu() {
+  const activeData = meDraft.devicesData[meActiveDeviceIndex];
   let totalKcal = 0, totalProt = 0, totalFat = 0, totalCarb = 0;
   const detailsList = document.getElementById('meKbzhuList');
   if (detailsList) detailsList.innerHTML = '';
 
-  if (meDraft.ingredients) {
-    meDraft.ingredients.forEach(ing => {
+  if (activeData.ingredients) {
+    activeData.ingredients.forEach(ing => {
       let grams = parseFloat(ing.amount) || 0;
       if (ing.unit === 'мл') grams = grams * (ing.density || 1);
       if (ing.unit === 'шт') grams = grams * (ing.weightPerPiece || 100);
@@ -301,10 +321,11 @@ function meRecalcKbzhu() {
 }
 
 function meRecalcTotalTime() {
-  if (!meDraft.timeSplit) return;
+  const activeData = meDraft.devicesData[meActiveDeviceIndex];
+  if (!activeData.timeSplit) return;
   let sum = 0;
-  (meDraft.timeStages || []).forEach(st => sum += (parseFloat(st.mins) || 0));
-  meDraft.time = sum;
+  (activeData.timeStages || []).forEach(st => sum += (parseFloat(st.mins) || 0));
+  activeData.time = sum;
   const input = document.querySelector('[data-action="change-time-total"]');
   if (input) input.value = sum || '';
 }
@@ -321,13 +342,7 @@ function meRenderBody(){
   meBody.innerHTML = meBuildFields();
   meRecalcKbzhu();
 
-  if (meCurrentRecipe) {
-    const vf = meBody.querySelector('.me-version-field');
-    if (vf) {
-      vf.style.display = '';
-      document.getElementById('meVersionName').value = meDraft.versionName || '';
-    }
-  }
+/* Этот блок удалён, так как нижнее поле версии больше не используется */
 
   setTimeout(() => {
     meBody.querySelectorAll('.me-step-text').forEach(ta => {
@@ -342,14 +357,19 @@ function meCollectForm(){
   const mealDD   = meBody.querySelector('[data-field="meal"]');
   const sourceDD = meBody.querySelector('[data-field="source"]');
   const compDD   = meBody.querySelector('[data-field="complexity"]');
-    const deviceDD = meBody.querySelector('[data-field="device"]');
+  const deviceDD = meBody.querySelector('[data-field="device"]');
   const vnEl     = document.getElementById('meVersionName');
 
   meDraft.name       = document.getElementById('meRecipeName').value;
   meDraft.source     = sourceDD ? sourceDD.dataset.val : 'Мои';
   meDraft.meal       = mealDD ? mealDD.dataset.val : '';
   meDraft.complexity = compDD ? compDD.dataset.val : '';
-    if (deviceDD) meDraft.device = deviceDD.dataset.val;
+  
+  // Сохраняем устройство в активную вкладку
+  if (deviceDD) {
+    meDraft.devicesData[meActiveDeviceIndex].device = deviceDD.dataset.val;
+  }
+  
   if (vnEl) meDraft.versionName = vnEl.value;
 }
 
@@ -358,7 +378,8 @@ async function openRecipeEditor(recipeId){
   meCurrentTab    = 'manual';
   meKbzhuOpen     = false;
   meCurrentRecipe = null;
-    meDevices = await Storage.getDevices();
+  meActiveDeviceIndex = 0; // Сбрасываем на первую вкладку
+  meDevices = await Storage.getDevices();
 
   const box = modalRecipeEditor.querySelector('.modal-editor-box');
   if (box) {
@@ -377,22 +398,32 @@ async function openRecipeEditor(recipeId){
     meTitle.textContent = 'Редактировать: ' + (recipe.name || 'рецепт');
     meTabs.style.display = 'none';
     
+    // Конвертация старого формата в новый (devicesData)
+    let devicesData = [];
+    if (recipe.devicesData && recipe.devicesData.length > 0) {
+      devicesData = JSON.parse(JSON.stringify(recipe.devicesData));
+    } else {
+      devicesData = [{
+        device: recipe.device || '',
+        ingredients: recipe.ingredients ? [...recipe.ingredients] : [],
+        steps: recipe.steps ? [...recipe.steps] : [],
+        time: recipe.time || '',
+        timeSplit: !!recipe.timeSplit,
+        timeStages: recipe.timeStages ? recipe.timeStages.map(s => ({ ...s })) : []
+      }];
+    }
+
     meDraft = {
       name: recipe.name || '',
       meal: recipe.meal || '',
       source: recipe.source || 'Мои',
       complexity: recipe.complexity || '',
-      device: recipe.device || '',
       portions: recipe.portions || 2,
       versionName: recipe.versionName || '',
       currentVersion: recipe.currentVersion || 1,
       versions: recipe.versions ? [...recipe.versions] : [],
       tags: recipe.tags ? [...recipe.tags] : [],
-      ingredients: (recipe.ingredients || []).map(i => ({ ...i })),
-      steps: recipe.steps ? [...recipe.steps] : [],
-      time: recipe.time || '',
-      timeSplit: !!recipe.timeSplit,
-      timeStages: recipe.timeStages ? recipe.timeStages.map(s => ({ ...s })) : []
+      devicesData: devicesData
     };
   } else {
     meTitle.textContent = 'Добавить рецепт';
@@ -402,9 +433,12 @@ async function openRecipeEditor(recipeId){
     });
     
     meDraft = {
-      name: '', meal: '', source: 'Мои', complexity: '', device: '',
+      name: '', meal: '', source: 'Мои', complexity: '',
       portions: 2, versionName: 'Версия 1', currentVersion: 1, versions: [],
-      tags: [], ingredients: [], steps: [], time: '', timeSplit: false, timeStages: []
+      tags: [],
+      devicesData: [{
+        device: '', ingredients: [], steps: [], time: '', timeSplit: false, timeStages: []
+      }]
     };
   }
 
@@ -434,6 +468,41 @@ meTabs.addEventListener('click', (e) => {
 meBody.addEventListener('click', async (e) => {
   if (meCurrentTab === 'manual') meCollectForm();
 
+  // ─── ВКЛАДКИ УСТРОЙСТВ ───
+  const tabBtn = e.target.closest('.me-device-tab');
+  if (tabBtn) {
+    const delBtn = e.target.closest('.me-tab-del');
+    if (delBtn) {
+      e.stopPropagation();
+      if (meDraft.devicesData.length <= 1) return;
+      const idx = parseInt(delBtn.dataset.idx, 10);
+      if (confirm('Удалить эту вкладку устройства? Все ингредиенты и шаги внутри неё удалятся.')) {
+        meDraft.devicesData.splice(idx, 1);
+        if (meActiveDeviceIndex >= meDraft.devicesData.length) {
+          meActiveDeviceIndex = meDraft.devicesData.length - 1;
+        }
+        meRenderBody();
+      }
+      return;
+    }
+    const idx = parseInt(tabBtn.dataset.idx, 10);
+    if (idx !== meActiveDeviceIndex) {
+      meActiveDeviceIndex = idx;
+      meRenderBody();
+    }
+    return;
+  }
+
+  if (e.target.closest('[data-action="add-device"]')) {
+    meDraft.devicesData.push({
+      device: '', ingredients: [], steps: [], time: '', timeSplit: false, timeStages: []
+    });
+    meActiveDeviceIndex = meDraft.devicesData.length - 1;
+    meRenderBody();
+    return;
+  }
+
+  // ─── ОСТАЛЬНЫЕ КНОПКИ ───
   const btn = e.target.closest('.me-dropdown-btn');
   if (btn) {
     e.stopPropagation();
@@ -452,7 +521,7 @@ meBody.addEventListener('click', async (e) => {
     let valToSet = val;
     if (field === 'complexity' && dd.dataset.val === val) valToSet = '';
     let options = field === 'meal' ? ME_MEALS : field === 'source' ? ME_SOURCES : ME_COMPLEXITY;
-    if (field === 'device') options = meDevices.map(d => ({ val: d, label: d }));
+    if (field === 'device') options = [{ val: '', label: 'Не выбрано' }, ...meDevices.map(d => ({ val: d, label: d }))];
     
     meSetDropdownValue(dd, valToSet, options);
     dd.classList.remove('open');
@@ -460,7 +529,15 @@ meBody.addEventListener('click', async (e) => {
     if (field === 'meal') meDraft.meal = valToSet;
     if (field === 'source') meDraft.source = valToSet;
     if (field === 'complexity') meDraft.complexity = valToSet;
-    if (field === 'device') meDraft.device = valToSet;
+    if (field === 'device') {
+      meDraft.devicesData[meActiveDeviceIndex].device = valToSet;
+      // Обновляем название на самой вкладке
+      const activeTabEl = meBody.querySelector(`.me-device-tab[data-idx="${meActiveDeviceIndex}"]`);
+      if (activeTabEl) {
+        const delBtn = activeTabEl.querySelector('.me-tab-del');
+        activeTabEl.innerHTML = (valToSet || 'Без названия') + (delBtn ? delBtn.outerHTML : '');
+      }
+    }
 
     if (field === 'meal' && valToSet) {
       const b = dd.querySelector('.me-dropdown-btn');
@@ -469,12 +546,12 @@ meBody.addEventListener('click', async (e) => {
     return;
   }
 
-    if (e.target.closest('[data-action="manage-devices"]')) {
+  if (e.target.closest('[data-action="manage-devices"]')) {
     openDeviceManager(async () => {
       meDevices = await Storage.getDevices();
-      // Если текущее выбранное устройство удалили из базы — сбрасываем его
-      if (meDraft.device && !meDevices.includes(meDraft.device)) {
-        meDraft.device = ''; 
+      const activeData = meDraft.devicesData[meActiveDeviceIndex];
+      if (activeData.device && !meDevices.includes(activeData.device)) {
+        activeData.device = ''; 
       }
       meRenderBody();
     });
@@ -492,12 +569,13 @@ meBody.addEventListener('click', async (e) => {
   }
 
   if (e.target.closest('[data-action="add-ing"]')) {
-    const excludeIds = (meDraft.ingredients || []).map(i => i.productId).filter(id => id);
+    const activeData = meDraft.devicesData[meActiveDeviceIndex];
+    const excludeIds = (activeData.ingredients || []).map(i => i.productId).filter(id => id);
     if (typeof openProductPicker === 'function') {
       openProductPicker({
         excludeIds: excludeIds,
         onSelect: (product) => {
-          meDraft.ingredients.push({
+          activeData.ingredients.push({
             productId: product.id,
             name: product.shortName || product.name,
             amount: product.unit === 'шт' ? 1 : 100,
@@ -513,11 +591,12 @@ meBody.addEventListener('click', async (e) => {
   }
   
   if (e.target.closest('[data-action="del-ing"]')) {
+    const activeData = meDraft.devicesData[meActiveDeviceIndex];
     const idx = parseInt(e.target.closest('.me-ing-item').dataset.idx, 10);
-    const deleted = meDraft.ingredients.splice(idx, 1)[0]; 
+    const deleted = activeData.ingredients.splice(idx, 1)[0]; 
     meRenderBody();
     showToast('Ингредиент удалён', () => {
-      meDraft.ingredients.splice(idx, 0, deleted);
+      activeData.ingredients.splice(idx, 0, deleted);
       meRenderBody();
     });
     return;
@@ -544,43 +623,48 @@ meBody.addEventListener('click', async (e) => {
   }
 
   if (e.target.closest('[data-action="add-step"]')) {
-    meDraft.steps.push('');
+    const activeData = meDraft.devicesData[meActiveDeviceIndex];
+    activeData.steps.push('');
     meRenderBody();
     const tas = meBody.querySelectorAll('.me-step-text');
     if (tas.length) tas[tas.length-1].focus();
     return;
   }
   if (e.target.closest('[data-action="del-step"]')) {
+    const activeData = meDraft.devicesData[meActiveDeviceIndex];
     const idx = parseInt(e.target.closest('.me-step-item').dataset.idx, 10);
-    const deleted = meDraft.steps.splice(idx, 1)[0];
+    const deleted = activeData.steps.splice(idx, 1)[0];
     meRenderBody();
     showToast('Шаг удалён', () => {
-      meDraft.steps.splice(idx, 0, deleted);
+      activeData.steps.splice(idx, 0, deleted);
       meRenderBody();
     });
     return;
   }
 
   if (e.target.closest('[data-action="toggle-time-split"]')) {
+    const activeData = meDraft.devicesData[meActiveDeviceIndex];
     const cb = e.target.closest('[data-action="toggle-time-split"]');
-    meDraft.timeSplit = cb.checked;
-    meDraft.time = '';
-    if (meDraft.timeSplit) {
-      meDraft.timeStages = [{ name: 'Подготовка', mins: '' }];
+    activeData.timeSplit = cb.checked;
+    activeData.time = '';
+    if (activeData.timeSplit) {
+      activeData.timeStages = [{ name: 'Подготовка', mins: '' }];
     } else {
-      meDraft.timeStages = [];
+      activeData.timeStages = [];
     }
     meRenderBody();
     return;
   }
   if (e.target.closest('[data-action="add-stage"]')) {
-    meDraft.timeStages.push({ name: 'Готовка', mins: '' });
+    const activeData = meDraft.devicesData[meActiveDeviceIndex];
+    activeData.timeStages.push({ name: 'Готовка', mins: '' });
     meRenderBody();
     return;
   }
   if (e.target.closest('[data-action="del-stage"]')) {
+    const activeData = meDraft.devicesData[meActiveDeviceIndex];
     const idx = parseInt(e.target.closest('.me-time-stage').dataset.idx, 10);
-    meDraft.timeStages.splice(idx, 1);
+    activeData.timeStages.splice(idx, 1);
     meRecalcTotalTime();
     meRenderBody();
     return;
@@ -588,26 +672,28 @@ meBody.addEventListener('click', async (e) => {
 });
 
 meBody.addEventListener('input', (e) => {
+  const activeData = meDraft.devicesData[meActiveDeviceIndex];
+  
   if (e.target.dataset.action === 'change-amt') {
     const idx = parseInt(e.target.closest('.me-ing-item').dataset.idx, 10);
-    meDraft.ingredients[idx].amount = parseFloat(e.target.value) || 0;
+    activeData.ingredients[idx].amount = parseFloat(e.target.value) || 0;
     meRecalcKbzhu();
   }
   
   if (e.target.dataset.action === 'change-step') {
     const idx = parseInt(e.target.closest('.me-step-item').dataset.idx, 10);
-    meDraft.steps[idx] = e.target.value;
+    activeData.steps[idx] = e.target.value;
     e.target.style.height = 'auto';
     e.target.style.height = e.target.scrollHeight + 'px';
   }
 
   if (e.target.dataset.action === 'change-time-total') {
-    meDraft.time = parseFloat(e.target.value) || '';
+    activeData.time = parseFloat(e.target.value) || '';
   }
 
   if (e.target.dataset.action === 'change-stage-mins') {
     const idx = parseInt(e.target.closest('.me-time-stage').dataset.idx, 10);
-    meDraft.timeStages[idx].mins = parseFloat(e.target.value) || '';
+    activeData.timeStages[idx].mins = parseFloat(e.target.value) || '';
     meRecalcTotalTime();
   }
 
@@ -621,20 +707,21 @@ meBody.addEventListener('input', (e) => {
 
   if (e.target.classList.contains('me-time-custom')) {
     const idx = parseInt(e.target.closest('.me-time-stage').dataset.idx, 10);
-    meDraft.timeStages[idx].name = e.target.value;
+    activeData.timeStages[idx].name = e.target.value;
   }
 });
 meBody.addEventListener('change', (e) => {
+  const activeData = meDraft.devicesData[meActiveDeviceIndex];
   if (e.target.dataset.action === 'change-unit') {
     const idx = parseInt(e.target.closest('.me-ing-item').dataset.idx, 10);
-    meDraft.ingredients[idx].unit = e.target.value;
+    activeData.ingredients[idx].unit = e.target.value;
     meRecalcKbzhu();
   }
   if (e.target.dataset.action === 'change-stage-name') {
     const val = e.target.value;
     if (val !== 'custom') {
       const idx = parseInt(e.target.closest('.me-time-stage').dataset.idx, 10);
-      meDraft.timeStages[idx].name = val;
+      activeData.timeStages[idx].name = val;
     }
   }
 });
@@ -669,10 +756,11 @@ meBody.addEventListener('drop', (e) => {
   const target = e.target.closest('.me-step-item');
   if (target && meDragSrcEl && target !== meDragSrcEl) {
     target.classList.remove('drag-over');
+    const activeData = meDraft.devicesData[meActiveDeviceIndex];
     const fromIdx = parseInt(meDragSrcEl.dataset.idx, 10);
     const toIdx = parseInt(target.dataset.idx, 10);
-    const moved = meDraft.steps.splice(fromIdx, 1)[0];
-    meDraft.steps.splice(toIdx, 0, moved);
+    const moved = activeData.steps.splice(fromIdx, 1)[0];
+    activeData.steps.splice(toIdx, 0, moved);
     meRenderBody();
   }
 });
@@ -755,13 +843,56 @@ if (mvnCancelBtn && modalVersionName) {
   });
 }
 
+// ─── ФУНКЦИЯ ПОДГОТОВКИ К СОХРАНЕНИЮ (собирает плоские поля из 1-й вкладки) ───
+function prepareRecipeToSave(draft) {
+  meCollectForm();
+  const mainData = draft.devicesData[0]; // Берем данные из первой вкладки для совместимости
+  
+  let totalTime = mainData.time;
+  if (mainData.timeSplit) {
+    totalTime = 0;
+    (mainData.timeStages || []).forEach(st => totalTime += (parseFloat(st.mins) || 0));
+  }
+
+  let totalKcal = 0, totalProt = 0, totalFat = 0, totalCarb = 0;
+  (mainData.ingredients || []).forEach(ing => {
+    let grams = parseFloat(ing.amount) || 0;
+    if (ing.unit === 'мл') grams = grams * (ing.density || 1);
+    if (ing.unit === 'шт') grams = grams * (ing.weightPerPiece || 100);
+    const ratio = grams / 100;
+    totalKcal += (ing.kcal || 0) * ratio;
+    totalProt += (ing.protein || 0) * ratio;
+    totalFat += (ing.fat || 0) * ratio;
+    totalCarb += (ing.carbs || 0) * ratio;
+  });
+  
+  const portions = draft.portions || 1;
+  const snapshot = {
+    kcal: Math.round(totalKcal / portions),
+    protein: Math.round((totalProt / portions) * 10) / 10,
+    fat: Math.round((totalFat / portions) * 10) / 10,
+    carbs: Math.round((totalCarb / portions) * 10) / 10
+  };
+
+  return {
+    ...draft,
+    device: mainData.device || '',
+    ingredients: mainData.ingredients || [],
+    steps: mainData.steps || [],
+    time: totalTime,
+    timeSplit: mainData.timeSplit,
+    timeStages: mainData.timeStages || [],
+    kbzhuSnapshot: snapshot
+  };
+}
+
 const mvnSaveBtn = document.getElementById('mvnSave');
 if (mvnSaveBtn && modalVersionName && mvnInput) {
   mvnSaveBtn.addEventListener('click', async () => {
     const newName = mvnInput.value.trim();
     const nextVer = meGetNextVersionNumber();
     
-    // 1. Снимок СТАРОЙ версии (до внесения новых правок)
+    // 1. Снимок СТАРОЙ версии
     let oldVersionSnapshot = null;
     if (meCurrentRecipe) {
       oldVersionSnapshot = JSON.parse(JSON.stringify(meCurrentRecipe));
@@ -780,8 +911,8 @@ if (mvnSaveBtn && modalVersionName && mvnInput) {
     
     meDraft.currentVersion = nextVer;
     meDraft.versionName = newName || ('Версия ' + nextVer);
+    meDraft.name = newName || meDraft.name; // Название версии подставляется в верхнее поле
     
-    // АВТОСОХРАНЕНИЕ В БАЗУ
     if (!meValidate()) {
       meDraft.versions.pop();
       meDraft.currentVersion = nextVer - 1;
@@ -789,41 +920,8 @@ if (mvnSaveBtn && modalVersionName && mvnInput) {
       return;
     }
 
-    let totalTime = meDraft.time;
-    if (meDraft.timeSplit) {
-      totalTime = 0;
-      (meDraft.timeStages || []).forEach(st => totalTime += (parseFloat(st.mins) || 0));
-    }
-
-    let totalKcal = 0, totalProt = 0, totalFat = 0, totalCarb = 0;
-    (meDraft.ingredients || []).forEach(ing => {
-      let grams = parseFloat(ing.amount) || 0;
-      if (ing.unit === 'мл') grams = grams * (ing.density || 1);
-      if (ing.unit === 'шт') grams = grams * (ing.weightPerPiece || 100);
-      const ratio = grams / 100;
-      totalKcal += (ing.kcal || 0) * ratio;
-      totalProt += (ing.protein || 0) * ratio;
-      totalFat += (ing.fat || 0) * ratio;
-      totalCarb += (ing.carbs || 0) * ratio;
-    });
-    
-    const portions = meDraft.portions || 1;
-    const snapshot = {
-      kcal: Math.round(totalKcal / portions),
-      protein: Math.round((totalProt / portions) * 10) / 10,
-      fat: Math.round((totalFat / portions) * 10) / 10,
-      carbs: Math.round((totalCarb / portions) * 10) / 10
-    };
-
-    const recipeToSave = {
-      ...meDraft,
-      time: totalTime,
-      kbzhuSnapshot: snapshot
-    };
-
-    if (meEditId) {
-      recipeToSave.id = meEditId;
-    }
+    const recipeToSave = prepareRecipeToSave(meDraft);
+    if (meEditId) recipeToSave.id = meEditId;
 
     try {
       const saved = await Storage.saveRecipe(recipeToSave);
@@ -903,8 +1001,14 @@ function meValidate() {
     mealBtn.classList.remove('invalid');
   }
 
+  // Проверяем, что хотя бы в одной вкладке есть ингредиенты
+  let hasIngredients = false;
+  meDraft.devicesData.forEach(d => {
+    if (d.ingredients && d.ingredients.length > 0) hasIngredients = true;
+  });
+
   const ingSection = document.querySelector('.me-ing-section');
-  if (!meDraft.ingredients || meDraft.ingredients.length === 0) {
+  if (!hasIngredients) {
     if (ingSection) {
       ingSection.classList.add('invalid');
       if (!firstErrorEl) firstErrorEl = ingSection;
@@ -937,47 +1041,20 @@ async function meSaveRecipe() {
   meCollectForm();
   if (!meValidate()) return;
 
-  let totalTime = meDraft.time;
-  if (meDraft.timeSplit) {
-    totalTime = 0;
-    (meDraft.timeStages || []).forEach(st => totalTime += (parseFloat(st.mins) || 0));
-  }
-
-  let totalKcal = 0, totalProt = 0, totalFat = 0, totalCarb = 0;
-  (meDraft.ingredients || []).forEach(ing => {
-    let grams = parseFloat(ing.amount) || 0;
-    if (ing.unit === 'мл') grams = grams * (ing.density || 1);
-    if (ing.unit === 'шт') grams = grams * (ing.weightPerPiece || 100);
-    const ratio = grams / 100;
-    totalKcal += (ing.kcal || 0) * ratio;
-    totalProt += (ing.protein || 0) * ratio;
-    totalFat += (ing.fat || 0) * ratio;
-    totalCarb += (ing.carbs || 0) * ratio;
-  });
-  
-  const portions = meDraft.portions || 1;
-  const snapshot = {
-    kcal: Math.round(totalKcal / portions),
-    protein: Math.round((totalProt / portions) * 10) / 10,
-    fat: Math.round((totalFat / portions) * 10) / 10,
-    carbs: Math.round((totalCarb / portions) * 10) / 10
-  };
-
-  const recipeToSave = {
-    ...meDraft,
-    time: totalTime,
-    kbzhuSnapshot: snapshot
-  };
+  const recipeToSave = prepareRecipeToSave(meDraft);
 
   if (meEditId) {
     recipeToSave.id = meEditId;
-
+    
+    // Умная очистка галочек ингредиентов (проверяем по всем устройствам)
     const oldIngredients = meCurrentRecipe.ingredients || [];
-    const newIngredients = recipeToSave.ingredients || [];
-    const newNames = newIngredients.map(i => i.name);
+    const newNamesSet = new Set();
+    recipeToSave.devicesData.forEach(d => {
+      (d.ingredients || []).forEach(i => newNamesSet.add(i.name));
+    });
     
     for (const oldIng of oldIngredients) {
-      if (!newNames.includes(oldIng.name)) {
+      if (!newNamesSet.has(oldIng.name)) {
         await Storage.removeMark('ingredient', meEditId, oldIng.name);
       }
     }
@@ -1053,18 +1130,24 @@ function openDeviceManager(onSave) {
       await Storage.saveDevices(currentDevices);
       renderList();
 
-      // 1. Убираем из всех рецептов в базе
+      // 1. Убираем из всех рецептов в базе (включая devicesData)
       const allRecipes = await Storage.getAllRecipes();
       for (const r of allRecipes) {
-        if (r.device === deletedDev) {
-          r.device = '';
-          await Storage.saveRecipe(r);
+        let changed = false;
+        if (r.device === deletedDev) { r.device = ''; changed = true; }
+        if (r.devicesData) {
+          r.devicesData.forEach(d => {
+            if (d.device === deletedDev) { d.device = ''; changed = true; }
+          });
         }
+        if (changed) await Storage.saveRecipe(r);
       }
       
       // 2. Если это устройство сейчас выбрано в открытом редакторе — сбрасываем его
-      if (meDraft && meDraft.device === deletedDev) {
-        meDraft.device = '';
+      if (meDraft) {
+        meDraft.devicesData.forEach(d => {
+          if (d.device === deletedDev) d.device = '';
+        });
       }
 
       // 3. Обновляем карточки на фоне и в открытом редакторе
