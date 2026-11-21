@@ -984,6 +984,7 @@ body[data-theme="dark"] .b-plan-row:hover{ background:rgba(255,255,255,.06); }
   padding:16px;
 }
 .modal-editor-box{
+  position: relative; /* Чтобы крестик не вылетал за пределы окна */
   background:var(--c1);
   color:var(--c4);
   width:100%;
@@ -1007,12 +1008,22 @@ body[data-theme="dark"] .b-plan-row:hover{ background:rgba(255,255,255,.06); }
 }
 
 .me-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:14px 18px 4px; /* Уменьшили нижний отступ */
-  border-bottom:none;    /* Убрали полоску */
-  flex-shrink:0;
+  position: absolute;
+  top: 14px; /* Чуть опустили */
+  right: 18px; /* Прижали вправо */
+  z-index: 50;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  pointer-events: none; 
+}
+.me-close {
+  pointer-events: auto; /* Кликается только сама кнопка */
+  background: var(--c1); 
+  border-radius: 50%;
+}
+body[data-theme="dark"] .me-close {
+  background: var(--c4);
 }
 .me-title{
   font-family:var(--font-head, 'Cormorant Garamond', serif);
