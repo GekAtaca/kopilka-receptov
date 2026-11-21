@@ -606,8 +606,17 @@ function openVersionsModal() {
   allVersions.forEach(v => {
     if (v.isCurrent) {
       html += `
-        <div class="version-row active" data-ver="${v.num}">
-          <span>${v.num}. ${v.name} (текущая)</span>
+        <div class="version-row active" data-ver="${v.num}" data-idx="-1">
+          <span>${v.num}. ${v.name}</span>
+          <button type="button" class="version-del-btn" data-action="del-version" data-idx="-1" title="Удалить версию">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="3 6 5 6 21 6"></polyline>
+              <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"></path>
+              <path d="M10 11v6"></path>
+              <path d="M14 11v6"></path>
+              <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path>
+            </svg>
+          </button>
         </div>
       `;
     } else {
@@ -659,9 +668,7 @@ versionsList.addEventListener('touchstart', (e) => {
   if (!row || row.classList.contains('active')) return;
   longPressTimer = setTimeout(() => {
     const idx = parseInt(row.dataset.idx, 10);
-    if (confirm('Удалить эту версию?')) {
-      deleteVersion(idx);
-    }
+    deleteVersion(idx); // Функция сама вызовет красивое окно
   }, 600);
 }, { passive: true });
 
@@ -670,11 +677,42 @@ versionsList.addEventListener('touchmove', () => clearTimeout(longPressTimer), {
 
 async function deleteVersion(idx) {
   if (!currentRecipeObj) return;
-  if (!confirm('Удалить эту версию?')) return;
-  if (!currentRecipeObj.versions) currentRecipeObj.versions = [];
   
-  currentRecipeObj.versions.splice(idx, 1);
-  renumberVersions(currentRecipeObj);
+  const msg = idx === -1 ? 'Текущая версия будет удалена. Откроется предыдущая.' : 'Эта версия рецепта будет удалена навсегда.';
+  
+  if (typeof showCustomConfirm === 'function') {
+    showCustomConfirm('Удалить версию?', msg, () => {
+      doDeleteVersion(idx);
+    });
+  } else {
+    if (confirm(msg)) doDeleteVersion(idx);
+  }
+}
+
+async function doDeleteVersion(idx) {
+  if (!currentRecipeObj) return;
+
+  if (idx === -1) {
+    // Удаление ТЕКУЩЕЙ версии
+    if (!currentRecipeObj.versions || currentRecipeObj.versions.length === 0) {
+      if (typeof showToastMsg === 'function') showToastMsg('Нельзя удалить единственную версию');
+      return;
+    }
+    
+    // Находим предыдущую (или последнюю из архива), чтобы сделать её текущей
+    const nextVersion = currentRecipeObj.versions.pop(); 
+    
+    // Перезаписываем текущие данные найденной версией
+    Object.assign(currentRecipeObj, nextVersion);
+    renumberVersions(currentRecipeObj);
+
+  } else {
+    // Удаление версии из архива
+    if (!currentRecipeObj.versions) currentRecipeObj.versions = [];
+    currentRecipeObj.versions.splice(idx, 1);
+    renumberVersions(currentRecipeObj);
+  }
+  
   await Storage.saveRecipe(currentRecipeObj);
   
   openRecipeCard(currentRecipeId);

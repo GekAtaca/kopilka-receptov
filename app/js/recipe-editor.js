@@ -199,7 +199,9 @@ function meBuildFields(){
 
   return `
     <div class="me-form">
-      ${tabsHtml}
+      <div style="margin: -34px -18px 16px -18px; padding: 14px 60px 0 18px;">
+        ${tabsHtml}
+      </div>
 
       <div class="me-field">
         <label class="me-label" for="meRecipeName">Название <span class="me-req">*</span></label>
@@ -216,8 +218,20 @@ function meBuildFields(){
           ${meBuildDropdown('source', 'Выбрать', ME_SOURCES, meDraft ? meDraft.source : 'Мои')}
         </div>
         <div class="me-field">
-          <label class="me-label">Сложность</label>
-          ${meBuildDropdown('complexity', 'Нет', ME_COMPLEXITY, meDraft ? meDraft.complexity : '')}
+          <label class="me-label">Устройство</label>
+          <div class="me-dropdown ${activeData.device ? 'has-value' : ''}" data-field="device" data-val="${activeData.device || ''}" data-placeholder="Выбрать">
+            <button type="button" class="me-dropdown-btn">
+              <span class="me-dd-label">${activeData.device || 'Выбрать'}</span>
+              <span class="me-dd-arrow">▼</span>
+            </button>
+            <div class="me-dropdown-menu">
+              <div class="me-device-list-scroll">
+                <div class="me-dropdown-item" data-val="">Не выбрано</div>
+                ${meDevices.map(d => `<div class="me-dropdown-item" data-val="${d}">${d}</div>`).join('')}
+              </div>
+              <div class="me-dropdown-item me-device-settings-btn" data-action="manage-devices">⚙ Настроить устройства...</div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -236,19 +250,9 @@ function meBuildFields(){
         </div>
       </div>
 
-      <div class="me-device-fields">
-        <div class="me-field" style="margin-bottom: 16px;">
-          <div class="me-ing-header" style="margin-top:0; margin-bottom:6px;">
-            <span class="me-label">Устройство для этой вкладки</span>
-            <button type="button" class="me-add-btn" data-action="manage-devices">⚙ Настроить</button>
-          </div>
-          ${meBuildDropdown('device', 'Выбрать', [{ val: '', label: 'Не выбрано' }, ...meDevices.map(d => ({ val: d, label: d }))], activeData.device || '')}
-        </div>
-
-        ${meBuildIngredientsHtml()}
-        ${meBuildStepsHtml()}
-        ${meBuildTimeHtml()}
-      </div>
+      ${meBuildIngredientsHtml()}
+      ${meBuildStepsHtml()}
+      ${meBuildTimeHtml()}
     </div>
   `;
 }
@@ -395,7 +399,7 @@ async function openRecipeEditor(recipeId){
     const recipe = await Storage.getRecipe(meEditId);
     if (!recipe){ console.warn('[editor] рецепт не найден:', meEditId); return; }
     meCurrentRecipe = recipe;
-    meTitle.textContent = 'Редактировать: ' + (recipe.name || 'рецепт');
+    if (meTitle) meTitle.style.display = 'none'; // Убираем заголовок
     meTabs.style.display = 'none';
     
     // Конвертация старого формата в новый (devicesData)
@@ -426,7 +430,7 @@ async function openRecipeEditor(recipeId){
       devicesData: devicesData
     };
   } else {
-    meTitle.textContent = 'Добавить рецепт';
+    if (meTitle) meTitle.style.display = 'none'; // Убираем заголовок
     meTabs.style.display = '';
     meTabs.querySelectorAll('.me-tab').forEach(t => {
       t.classList.toggle('active', t.dataset.tab === 'manual');
@@ -476,12 +480,22 @@ meBody.addEventListener('click', async (e) => {
       e.stopPropagation();
       if (meDraft.devicesData.length <= 1) return;
       const idx = parseInt(delBtn.dataset.idx, 10);
-      if (confirm('Удалить эту вкладку устройства? Все ингредиенты и шаги внутри неё удалятся.')) {
-        meDraft.devicesData.splice(idx, 1);
-        if (meActiveDeviceIndex >= meDraft.devicesData.length) {
-          meActiveDeviceIndex = meDraft.devicesData.length - 1;
+      if (typeof showCustomConfirm === 'function') {
+        showCustomConfirm('Удалить вкладку?', 'Все ингредиенты и шаги внутри неё удалятся.', () => {
+          meDraft.devicesData.splice(idx, 1);
+          if (meActiveDeviceIndex >= meDraft.devicesData.length) {
+            meActiveDeviceIndex = meDraft.devicesData.length - 1;
+          }
+          meRenderBody();
+        });
+      } else {
+        if (confirm('Удалить эту вкладку устройства? Все ингредиенты и шаги внутри неё удалятся.')) {
+          meDraft.devicesData.splice(idx, 1);
+          if (meActiveDeviceIndex >= meDraft.devicesData.length) {
+            meActiveDeviceIndex = meDraft.devicesData.length - 1;
+          }
+          meRenderBody();
         }
-        meRenderBody();
       }
       return;
     }
@@ -547,6 +561,7 @@ meBody.addEventListener('click', async (e) => {
   }
 
   if (e.target.closest('[data-action="manage-devices"]')) {
+    meBody.querySelectorAll('.me-dropdown').forEach(d => d.classList.remove('open')); // Закрываем меню
     openDeviceManager(async () => {
       meDevices = await Storage.getDevices();
       const activeData = meDraft.devicesData[meActiveDeviceIndex];
@@ -766,10 +781,21 @@ meBody.addEventListener('drop', (e) => {
 });
 
 document.addEventListener('click', (e) => {
-  if (!e.target.closest('.me-dropdown')) {
-    meBody.querySelectorAll('.me-dropdown').forEach(d => d.classList.remove('open'));
+  const openDropdowns = meBody.querySelectorAll('.me-dropdown.open');
+  if (openDropdowns.length > 0) {
+    // Если кликнули мимо списка
+    if (!e.target.closest('.me-dropdown')) {
+      openDropdowns.forEach(d => d.classList.remove('open'));
+      e.stopPropagation(); // Блокируем клик, чтобы он не нажал кнопку под списком
+      e.preventDefault();
+    }
+  } else {
+    // Стандартное закрытие
+    if (!e.target.closest('.me-dropdown')) {
+      meBody.querySelectorAll('.me-dropdown').forEach(d => d.classList.remove('open'));
+    }
   }
-});
+}, true); // Фаза перехвата (true) гарантирует, что мы поймаем клик раньше кнопок
 
 meClose.addEventListener('click', closeRecipeEditor);
 meCancel.addEventListener('click', closeRecipeEditor);

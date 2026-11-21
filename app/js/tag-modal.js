@@ -49,8 +49,20 @@ function showCustomConfirm(title, text, onConfirm) {
   
   document.body.appendChild(overlay);
   
-  const close = () => overlay.remove();
+  const close = () => {
+    overlay.remove();
+    document.removeEventListener('keydown', escHandler);
+  };
+
+  const escHandler = (e) => {
+    if (e.key === 'Escape') close();
+  };
+  document.addEventListener('keydown', escHandler);
   
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) close(); // Закрытие по клику на фон
+  });
+
   overlay.querySelector('.custom-modal-close').addEventListener('click', close);
   overlay.querySelector('.cancel-btn').addEventListener('click', close);
   overlay.querySelector('.confirm-btn').addEventListener('click', () => {
@@ -245,9 +257,34 @@ function mtRenderListOnly() {
   const getTagGroup = (t) => typeof t === 'string' ? 'misc' : (t.group || 'misc');
 
   if (q) {
-    const filtered = mtAllTags.filter(t => getTagName(t).toLowerCase().includes(q));
-    if (filtered.length) {
-      groupsHtml = `<div class="mt-group"><div class="mt-group-body">${filtered.map(t => mtBuildTagRow(t)).join('')}</div></div>`;
+    let matchedTagsByGroup = {};
+    mtGroups.forEach(g => {
+      const tagsInGroup = mtAllTags.filter(t => getTagGroup(t) === g.code);
+      const groupMatches = g.name.toLowerCase().includes(q);
+      const matchedTags = tagsInGroup.filter(t => getTagName(t).toLowerCase().includes(q));
+
+      if (groupMatches) {
+        matchedTagsByGroup[g.code] = { group: g, tags: tagsInGroup };
+      } else if (matchedTags.length > 0) {
+        matchedTagsByGroup[g.code] = { group: g, tags: matchedTags };
+      }
+    });
+
+    const keys = Object.keys(matchedTagsByGroup);
+    if (keys.length > 0) {
+      groupsHtml = keys.map(code => {
+        const data = matchedTagsByGroup[code];
+        const rows = data.tags.map(t => mtBuildTagRow(t)).join('');
+        return `
+          <div class="mt-group">
+            <div class="mt-group-head" data-action="toggle-group">
+              <span>${data.group.name}</span>
+              <span class="mt-arrow">▼</span>
+            </div>
+            <div class="mt-group-body">${rows}</div>
+          </div>
+        `;
+      }).join('');
     } else {
       groupsHtml = `<div style="padding: 20px; text-align: center; opacity: 0.5; font-family: 'Nunito';">Ничего не найдено</div>`;
     }
