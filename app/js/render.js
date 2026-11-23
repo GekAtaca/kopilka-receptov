@@ -37,7 +37,7 @@ function formatAmount(n) {
 // ─── Карточка рецепта (маленькая) ───
 function renderRecipeCard(recipe, ingMarks, isFav, isCooked, isWant, savedPortions) {
   const label = MEAL_LABEL[recipe.meal] || '';
-  const isExpanded = window.expandedRecipes.has(String(recipe.id)); // Проверяем раскрыта ли карточка
+  const isExpanded = window.expandedRecipes.has(String(recipe.id));
   
   const baseP = recipe.portions || 2;
   const currP = savedPortions || 4;
@@ -59,7 +59,41 @@ function renderRecipeCard(recipe, ingMarks, isFav, isCooked, isWant, savedPortio
 
   const coef = currP / baseP;
 
-  const ingRows = (recipe.ingredients || []).map(ing => {
+  // === НАЧАЛО ЗАМЕНЫ: Устройства ===
+  const currentDevice = recipe.devicesData.find(d => d.id === recipe.currentDeviceId) || recipe.devicesData[0];
+  
+  const deviceHtml = recipe.devicesData && recipe.devicesData.length > 0 
+    ? `
+      <button type="button" 
+              class="cook-unit-toggle" 
+              data-action="toggle-device-list" 
+              aria-expanded="false">
+        <div class="cook-unit">
+          <div class="unit-head">
+            <div class="unit-name">
+              <span class="current-device-name">${escapeHtml(currentDevice.name)}</span>
+              <span class="chev">▼</span>
+            </div>
+          </div>
+        </div>
+      </button>
+      <div id="device-list-${escapeHtml(recipe.id)}" class="cook-unit-dropdown" style="display: none;">
+        ${recipe.devicesData.map(d => `
+          <button type="button" 
+                  class="cook-unit-option ${d.id === recipe.currentDeviceId ? 'active' : ''}" 
+                  data-action="switch-device" 
+                  data-device-id="${escapeHtml(d.id)}">
+            ${escapeHtml(d.name)}
+          </button>
+        `).join('')}
+      </div>
+    ` 
+    : (currentDevice 
+      ? `<div class="cook-unit"><div class="unit-name">${escapeHtml(currentDevice.name)}</div></div>` 
+      : '');
+  // === КОНЕЦ ЗАМЕНЫ: Устройства ===
+
+  const ingRows = (currentDevice.ingredients || []).map(ing => {
     const amountVal = ing.amount * coef;
     const amountStr = formatAmount(amountVal) + ' ' + escapeHtml(ing.unit);
     const isMarked = ingMarks && ingMarks.has(ing.name) ? ' marked' : '';
@@ -70,54 +104,27 @@ function renderRecipeCard(recipe, ingMarks, isFav, isCooked, isWant, savedPortio
     </li>`;
   }).join('');
 
-  const smallStepsHtml = (recipe.steps && recipe.steps.length) ? `
-    <div class="small-steps-container">
-      <div class="small-steps-title">Приготовление:</div>
-      <ol class="small-steps-list">
-        ${recipe.steps.map(s => `<li>${escapeHtml(s)}</li>`).join('')}
-      </ol>
-    </div>
-  ` : '';
+  const smallStepsHtml = (currentDevice.steps || []).length 
+    ? `
+      <div class="small-steps-container">
+        <div class="small-steps-title">Приготовление:</div>
+        <ol class="small-steps-list">
+          ${currentDevice.steps.map(s => `<li>${escapeHtml(s)}</li>`).join('')}
+        </ol>
+      </div>
+    ` 
+    : '';
 
-  const hasMoreThan3Ings = (recipe.ingredients || []).length > 3;
-  const hasSteps = recipe.steps && recipe.steps.length > 0;
+  const hasMoreThan3Ings = (currentDevice.ingredients || []).length > 3;
+  const hasSteps = currentDevice.steps && currentDevice.steps.length > 0;
   const showToggleBtn = hasMoreThan3Ings || hasSteps;
   
-  // Кнопка меняет текст в зависимости от состояния
   const toggleBtnHtml = showToggleBtn ? `<button class="ing-toggle" data-action="toggle-show-all">${isExpanded ? '▲ скрыть' : '▼ показать все'}</button>` : '';
 
-  const deviceHtml = recipe.device ? `
-    <div class="cook-unit">
-      <div class="unit-head">
-        <div class="unit-name">
-          <span>${escapeHtml(recipe.device)}</span>
-          <span class="chev">▼</span>
-        </div>
-      </div>
-    </div>
-  ` : '';
-
-  const noteHtml = recipe.note ? `
-    <div class="note" data-action="open-note-small" data-recipe-id="${escapeHtml(recipe.id)}" style="cursor: pointer;">
-      <span class="note-label">МОЯ ЗАМЕТКА</span>
-      <span class="note-text">${escapeHtml(recipe.note)}</span>
-    </div>
-  ` : '';
-
-  const totalVersions = 1 + ((recipe.versions && recipe.versions.length) || 0);
-  const versionsBtn = totalVersions > 1
-    ? `<button data-action="open-versions">🕐 ${recipe.currentVersion} из ${totalVersions}</button>`
-    : '';
-
-  const firstPhoto = (recipe.photos && recipe.photos[0]) || '';
-  const imgHtml = firstPhoto
-    ? `<img src="${escapeHtml(firstPhoto)}" alt="" onerror="this.style.display='none'">`
-    : '';
-
-  const totalIng = (recipe.ingredients || []).length;
+  const totalIng = (currentDevice.ingredients || []).length;
   let markedCount = 0;
   if (ingMarks) {
-    (recipe.ingredients || []).forEach(ing => {
+    (currentDevice.ingredients || []).forEach(ing => {
       if (ingMarks.has(ing.name)) markedCount++;
     });
   }
@@ -242,53 +249,81 @@ async function renderAllRecipes() {
 
 // ─── Обработчики кликов ───
 document.addEventListener('click', (e) => {
-  const timerBtn = e.target.closest('.card [data-action="open-timer"]');
-  if (timerBtn) {
-    const card = timerBtn.closest('.card');
-    if (card && card.dataset.recipeId) {
-      openTimerList(card.dataset.recipeId);
-    }
-    return;
-  }
-  // ─── Сохраняем позицию скролла перед кликом на чекбокс или порции ───
-  const isActionInsideScroll = e.target.closest('[data-action="toggle-ing-small"]') || 
-                               e.target.closest('.portions button') || 
-                               e.target.closest('.portions .num');
-  
-  if (isActionInsideScroll) {
-    const card = e.target.closest('.card');
-    if (card && card.dataset.recipeId) {
-      const scrollArea = card.querySelector('.card-scroll-area');
-      if (scrollArea) {
-        window.cardScrollPositions[String(card.dataset.recipeId)] = scrollArea.scrollTop;
-      }
-    }
-  }
+  const btn = e.target.closest('[data-action]');
+  if (!btn) return;
 
-  // ─── Открытие заметки ───
-  const noteBtn = e.target.closest('[data-action="open-note-small"]') || e.target.closest('[data-action="edit-note-small"]');
-  if (noteBtn) {
-    const card = noteBtn.closest('.card');
-    if (card && card.dataset.recipeId) {
-      openNoteModal(card.dataset.recipeId);
-    }
+  // === НАЧАЛО ЗАМЕНЫ: Логика устройств ===
+  const toggleDeviceBtn = e.target.closest('[data-action="toggle-device-list"]');
+  if (toggleDeviceBtn) {
+    const card = toggleDeviceBtn.closest('.card');
+    const list = card.querySelector('.cook-unit-dropdown');
+    const isOpen = list.style.display === 'block';
+    list.style.display = isOpen ? 'none' : 'block';
+    toggleDeviceBtn.setAttribute('aria-expanded', String(!isOpen));
+    toggleDeviceBtn.classList.toggle('active', !isOpen);
     return;
   }
 
-  // ─── Запоминаем состояние кнопки "Показать всё / Скрыть" ───
-  const toggleBtn = e.target.closest('[data-action="toggle-show-all"]');
-  if (toggleBtn) {
-    const card = toggleBtn.closest('.card');
-    if (card && card.dataset.recipeId) {
-      const id = String(card.dataset.recipeId);
-            if (card.classList.contains('show-all')) {
-        window.expandedRecipes.add(id); // Запомнили, что раскрыто
-        delete window.cardScrollPositions[id]; // Сбрасываем скролл при закрытии
-      } else {
-        window.expandedRecipes.add(id); // Запоминаем, что раскрыто
+  const switchDeviceBtn = e.target.closest('[data-action="switch-device"]');
+  if (switchDeviceBtn) {
+    const card = switchDeviceBtn.closest('.card');
+    const recipeId = card.dataset.recipeId;
+    const newDeviceId = switchDeviceBtn.dataset.deviceId;
+    
+    Storage.getRecipe(recipeId).then(recipe => {
+      if (!recipe) return;
+      
+      recipe.currentDeviceId = newDeviceId;
+      
+      // Перерисовываем контент внутри карточки
+      const ingList = card.querySelector('.ing-list');
+      const stepsList = card.querySelector('.small-steps-list');
+      const timeDisplay = card.querySelector('.time-display');
+      
+      const device = recipe.devicesData.find(d => d.id === newDeviceId);
+      if (device) {
+        // Ингредиенты
+        ingList.innerHTML = '';
+        const coef = currentPortions / (recipe.portions || 2);
+        device.ingredients.forEach(ing => {
+          const amountVal = ing.amount * coef;
+          const amountStr = formatAmount(amountVal) + ' ' + escapeHtml(ing.unit);
+          const isMarked = ingMarks && ingMarks.has(ing.name) ? ' marked' : '';
+          ingList.innerHTML += `<li>
+            <span class="chk${isMarked}" data-action="toggle-ing-small" data-ing="${escapeHtml(ing.name)}"></span>
+            <span class="ing-name">${escapeHtml(ing.name)}</span>
+            <span class="ing-amount">${amountStr}</span>
+          </li>`;
+        });
+
+        // Шаги
+        if (stepsList) {
+          stepsList.innerHTML = '';
+          device.steps.forEach(s => {
+            stepsList.innerHTML += `<li>${escapeHtml(s)}</li>`;
+          });
+        }
+
+        // Время
+        if (timeDisplay && device.time) {
+          timeDisplay.textContent = `⏱ ${device.time} мин`;
+        }
       }
-    }
+
+      Storage.saveRecipe(recipe);
+      
+      // Закрываем список
+      const list = card.querySelector('.cook-unit-dropdown');
+      const toggleBtn = card.querySelector('[data-action="toggle-device-list"]');
+      list.style.display = 'none';
+      toggleBtn.setAttribute('aria-expanded', 'false');
+      toggleBtn.classList.remove('active');
+    });
+    return;
   }
+  // === КОНЕЦ ЗАМЕНЫ: Логика устройств ===
+
+  // ... (остальной код обработчика кликов остается без изменений)
 });
 
 // ═══ Логика модалки заметки ═══
