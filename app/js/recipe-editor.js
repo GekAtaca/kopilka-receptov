@@ -199,7 +199,7 @@ function meBuildFields(){
 
   return `
     <div class="me-form">
-      <div style="margin: -34px -18px 16px -18px; padding: 14px 60px 0 18px;">
+      <div class="me-tabs-sticky">
         ${tabsHtml}
       </div>
 

@@ -1009,8 +1009,8 @@ body[data-theme="dark"] .b-plan-row:hover{ background:rgba(255,255,255,.06); }
 
 .me-head{
   position: absolute;
-  top: 14px; /* Чуть опустили */
-  right: 18px; /* Прижали вправо */
+  top: 10px; /* Подняли выше, чтобы встал ровно с вкладками */
+  right: 18px;
   z-index: 50;
   display: flex;
   justify-content: flex-end;
