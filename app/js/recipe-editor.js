@@ -529,7 +529,7 @@ meBody.addEventListener('click', async (e) => {
 
   const item = e.target.closest('.me-dropdown-item');
   if (item) {
-    const dd = item.parentElement.parentElement;
+    const dd = item.closest('.me-dropdown');
     const val = item.dataset.val;
     const field = dd.dataset.field;
     let valToSet = val;
